@@ -36,22 +36,29 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;fl
 .rail-badge{position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid rgb(229,233,240)}
 
 /* ── SIDEBAR (L2) ── */
-.sidebar{width:262px;background:rgb(229,233,240);border-right:none;overflow-y:auto;flex-shrink:0;padding:8px 12px}
+.sidebar{width:222px;background:#fff;border-right:1px solid rgb(234,234,234);overflow-y:auto;flex-shrink:0;padding:0}
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-thumb{background:rgb(199,214,246);border-radius:4px}
-.sb-search{display:flex;align-items:center;gap:6px;margin:0 0 8px;background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:5px 8px}
-.sb-search svg{width:16px;height:16px;color:rgb(85,85,85);flex-shrink:0}
-.sb-search input{border:none;background:transparent;font-size:14px;color:rgb(33,33,33);outline:none;width:100%}
-.sb-section-lbl{font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;color:rgb(85,85,85);padding:8px 4px 4px}
-.sb-group-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 4px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgb(33,33,33);border-radius:4px}
-.sb-group-hdr:hover{background:rgb(242,244,247)}
-.sb-group-hdr svg{width:16px;height:16px;color:rgb(85,85,85)}
-.sb-group-hdr.open{color:rgb(33,33,33)}
-.sb-item{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 4px 16px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgb(33,33,33);border-radius:4px}
-.sb-item:hover{background:rgb(242,244,247)}
-.sb-item.active{background:rgb(199,214,246);color:rgb(33,33,33);font-weight:400}
-.sb-item .badge{font-size:12px;color:rgb(143,143,143);background:transparent;border-radius:10px;padding:1px 4px;font-weight:400}
-.sb-item.active .badge{color:rgb(85,85,85)}
+/* title inside sidebar */
+.sb-title{height:52px;background:#fafafa;display:flex;align-items:center;padding:15px 24px;font-size:18px;font-weight:400;color:rgba(33,33,33,1);font-family:'Roboto',sans-serif;letter-spacing:-0.02em;flex-shrink:0}
+/* search */
+.sb-search-wrap{padding:0 24px;background:#fafafa}
+.sb-search{display:flex;align-items:center;gap:8px;background:#fafafa;border:1px solid rgb(229,233,240);border-radius:4px;padding:8px 0;margin-bottom:0}
+.sb-search svg{width:20px;height:20px;color:rgba(48,48,48,1);flex-shrink:0;margin-left:8px}
+.sb-search input{border:none;background:transparent;font-size:14px;font-family:'Roboto',sans-serif;color:rgba(33,33,33,1);outline:none;width:100%;padding-right:8px}
+.sb-search input::placeholder{color:rgba(143,143,143,1)}
+/* content body */
+.sb-body{background:#fafafa;padding:8px 16px;display:flex;flex-direction:column;gap:8px}
+.sb-section-lbl{font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(143,143,143,1);padding:0 4px 0 8px;height:24px;display:flex;align-items:center}
+.sb-group-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgba(33,33,33,1);border-radius:4px}
+.sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
+.sb-group-hdr svg{width:20px;height:20px;color:rgba(48,48,48,1);flex-shrink:0}
+.sb-group-hdr.open{color:rgba(33,33,33,1)}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgba(33,33,33,1);border-radius:4px}
+.sb-item:hover{background:rgba(0,0,0,0.04)}
+.sb-item.active{background:rgba(199,214,246,1);color:rgba(33,33,33,1);font-weight:400}
+.sb-item .badge{font-size:12px;color:rgba(143,143,143,1);background:transparent;border-radius:10px;padding:0 4px;font-weight:400}
+.sb-item.active .badge{color:rgba(85,85,85,1)}
 
 /* ── MAIN ── */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
@@ -232,33 +239,42 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;fl
 
   <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="sb-search">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-      <input placeholder="Search"/>
+    <div class="sb-title">Reports</div>
+    <div class="sb-search-wrap">
+      <div class="sb-search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input placeholder="Search"/>
+      </div>
     </div>
-    <div class="sb-section-lbl">Dashboards</div>
-    <div class="sb-group-hdr open">Default <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Created by me <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Shared with me <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-section-lbl" style="margin-top:6px">Reports</div>
-    <div class="sb-group-hdr open" style="color:rgb(25,118,210)">Reviews <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgb(25,118,210)" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></div>
-    <div class="sb-item active">Reviews &amp; ratings <span class="badge">4</span></div>
-    <div class="sb-item">Relative location rank <span class="badge">4</span></div>
-    <div class="sb-item">Reviews distribution <span class="badge">4</span></div>
-    <div class="sb-item">Response time <span class="badge">4</span></div>
-    <div class="sb-item">Response time distribu... <span class="badge">4</span></div>
-    <div class="sb-item">Response rate distribut... <span class="badge">4</span></div>
-    <div class="sb-item">Review NPS <span class="badge">4</span></div>
-    <div class="sb-item">Review tags <span class="badge">4</span></div>
-    <div class="sb-item">Leaderboard <span class="badge">4</span></div>
-    <div class="sb-group-hdr" style="margin-top:4px">Inbox <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Listings <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Social <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Surveys <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Campaigns <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Workflows</div>
-    <div class="sb-group-hdr">Ticketing <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-    <div class="sb-group-hdr">Contacts <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-body">
+      <div>
+        <div class="sb-section-lbl">Dashboards</div>
+        <div class="sb-group-hdr open">Default <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Created by me <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Shared with me <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+      <div>
+        <div class="sb-section-lbl">Reports</div>
+        <div class="sb-group-hdr open" style="color:rgb(25,118,210)">Reviews <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgb(25,118,210)" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></div>
+        <div class="sb-item active">Reviews &amp; ratings <span class="badge">4</span></div>
+        <div class="sb-item">Relative location rank <span class="badge">4</span></div>
+        <div class="sb-item">Reviews distribution <span class="badge">4</span></div>
+        <div class="sb-item">Response time <span class="badge">4</span></div>
+        <div class="sb-item">Response time distribu... <span class="badge">4</span></div>
+        <div class="sb-item">Response rate distribut... <span class="badge">4</span></div>
+        <div class="sb-item">Review NPS <span class="badge">4</span></div>
+        <div class="sb-item">Review tags <span class="badge">4</span></div>
+        <div class="sb-item">Leaderboard <span class="badge">4</span></div>
+        <div class="sb-group-hdr">Inbox <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Listings <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Social <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Surveys <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Campaigns <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Workflows</div>
+        <div class="sb-group-hdr">Ticketing <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-hdr">Contacts <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </div>
+    </div>
   </div>
 
   <!-- MAIN -->
