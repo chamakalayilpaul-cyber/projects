@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reports – Reviews & ratings over time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;flex-direction:column;height:100vh;overflow:hidden;color:rgb(33,33,33);font-size:14px}
+
+/* ── TOP NAV ── */
+.topnav{height:52px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:8px 24px;gap:8px;flex-shrink:0;z-index:50}
+.topnav-logo{width:28px;height:28px;flex-shrink:0}
+.topnav-logo svg{width:28px;height:28px}
+.topnav-title{font-size:18px;font-weight:400;color:rgb(33,33,33);flex:1}
+.topnav-right{display:flex;align-items:center;gap:8px}
+.topnav-right svg{width:20px;height:20px;color:rgb(48,48,48);cursor:pointer}
+.topnav-right svg:hover{color:rgb(33,33,33)}
+.topnav-avatar{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.topnav-actions{display:flex;align-items:center;gap:6px;border:1px solid #d1d5db;border-radius:4px;padding:8px 12px;font-size:14px;font-weight:400;color:rgb(33,33,33);cursor:pointer;background:#fff}
+.topnav-actions:hover{background:rgb(242,244,247)}
+.topnav-actions svg{width:16px;height:16px;color:rgb(48,48,48)}
+
+/* ── LAYOUT ── */
+.body-wrap{display:flex;flex:1;overflow:hidden}
+
+/* ── RAIL (L1) ── */
+.rail{width:56px;background:rgb(229,233,240);border-right:none;display:flex;flex-direction:column;align-items:center;padding:8px 12px;gap:4px;flex-shrink:0}
+.rail-btn{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgb(48,48,48);position:relative}
+.rail-btn:hover{background:rgb(242,244,247)}
+.rail-btn.active{background:rgb(199,214,246);color:rgb(33,33,33)}
+.rail-btn svg{width:20px;height:20px}
+.rail-badge{position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid rgb(229,233,240)}
+
+/* ── SIDEBAR (L2) ── */
+.sidebar{width:262px;background:rgb(229,233,240);border-right:none;overflow-y:auto;flex-shrink:0;padding:8px 12px}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgb(199,214,246);border-radius:4px}
+.sb-search{display:flex;align-items:center;gap:6px;margin:0 0 8px;background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:5px 8px}
+.sb-search svg{width:16px;height:16px;color:rgb(85,85,85);flex-shrink:0}
+.sb-search input{border:none;background:transparent;font-size:14px;color:rgb(33,33,33);outline:none;width:100%}
+.sb-section-lbl{font-size:12px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;color:rgb(85,85,85);padding:8px 4px 4px}
+.sb-group-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 4px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgb(33,33,33);border-radius:4px}
+.sb-group-hdr:hover{background:rgb(242,244,247)}
+.sb-group-hdr svg{width:16px;height:16px;color:rgb(85,85,85)}
+.sb-group-hdr.open{color:rgb(33,33,33)}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 4px 16px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgb(33,33,33);border-radius:4px}
+.sb-item:hover{background:rgb(242,244,247)}
+.sb-item.active{background:rgb(199,214,246);color:rgb(33,33,33);font-weight:400}
+.sb-item .badge{font-size:12px;color:rgb(143,143,143);background:transparent;border-radius:10px;padding:1px 4px;font-weight:400}
+.sb-item.active .badge{color:rgb(85,85,85)}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.main::-webkit-scrollbar{width:6px}
+.main::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+.page-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 0}
+.page-hdr h1{font-size:18px;font-weight:400;color:rgb(33,33,33)}
+.page-hdr-right{display:flex;align-items:center;gap:10px}
+.page-hdr-right svg{width:16px;height:16px;color:#6b7280;cursor:pointer}
+
+/* ── TABS ── */
+.tabs{display:flex;align-items:center;padding:0 24px;border-bottom:1px solid #e5e7eb;margin-top:6px;gap:0;background:#fff}
+.tabs-list{display:flex;align-items:center;flex:1;overflow-x:auto;gap:8px}
+.tabs-list::-webkit-scrollbar{display:none}
+.tab{display:flex;flex-direction:column;justify-content:space-between;padding:0;height:37px;font-size:14px;font-weight:400;color:rgb(85,85,85);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.tab-inner{padding:8px 8px;flex:1;display:flex;align-items:center}
+.tab-indicator{height:1px;background:transparent}
+.tab:hover .tab-inner{background:rgb(242,244,247);color:rgb(33,33,33)}
+.tab.active .tab-inner{color:rgb(33,33,33)}
+.tab.active .tab-indicator{background:rgb(25,118,210)}
+.tabs-gear{width:28px;height:28px;margin-left:8px;flex-shrink:0;border:1px solid #e5e7eb;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgb(48,48,48);background:#fff;transition:background .15s,color .15s}
+.tabs-gear:hover{background:rgb(242,244,247)}
+.tabs-gear.active{background:rgb(199,214,246);color:rgb(33,33,33);border-color:rgb(199,214,246)}
+.tabs-gear svg{width:16px;height:16px}
+
+/* ── SETTINGS PANEL ── */
+.panel-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.18);z-index:199;display:none}
+.panel-backdrop.open{display:block}
+.tab-settings-panel{position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;border-left:1px solid #e5e7eb;box-shadow:-4px 0 24px rgba(0,0,0,0.08);transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:200;display:flex;flex-direction:column}
+.tab-settings-panel.open{transform:translateX(0)}
+
+.tsp-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #e5e7eb;flex-shrink:0}
+.tsp-title{font-size:13.5px;font-weight:700;color:#111}
+.tsp-close{width:26px;height:26px;border-radius:5px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#6b7280}
+.tsp-close:hover{background:#f3f4f6;color:#111}
+.tsp-close svg{width:15px;height:15px}
+
+/* ── ADD VIEW ── */
+.tsp-add-wrap{padding:12px 18px;flex-shrink:0;position:relative}
+.add-view-btn{display:flex;align-items:center;gap:6px;width:100%;padding:7px 12px;background:rgb(25,118,210);border:none;border-radius:6px;font-size:12.5px;font-weight:600;color:#fff;cursor:pointer;justify-content:center;transition:background .15s}
+.add-view-btn:hover{background:rgb(15,69,124)}
+.add-view-btn svg{width:14px;height:14px}
+
+/* ── ADD VIEW POPOVER (inline inside panel) ── */
+.av-popover{
+  position:absolute;top:calc(100% - 8px);left:18px;right:18px;
+  background:#fff;border:1px solid #e5e7eb;border-radius:8px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.12);z-index:10;
+  display:none;flex-direction:column;max-height:320px;overflow:hidden;
+}
+.av-popover.open{display:flex}
+
+.av-tab-bar{display:flex;border-bottom:1px solid #e5e7eb;flex-shrink:0}
+.av-tab{flex:1;text-align:center;padding:9px 0;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s}
+.av-tab:hover{color:#111}
+.av-tab.active{color:rgb(25,118,210);border-bottom-color:rgb(25,118,210);font-weight:600}
+
+.av-search{padding:8px 10px;border-bottom:1px solid #f3f4f6;flex-shrink:0}
+.av-search input{width:100%;border:1px solid #e5e7eb;border-radius:5px;padding:5px 8px;font-size:12px;color:#374151;outline:none;background:#f9fafb}
+.av-search input:focus{border-color:rgb(25,118,210);background:#fff}
+
+.av-list{overflow-y:auto;padding:4px 0}
+.av-list::-webkit-scrollbar{width:3px}
+.av-list::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:3px}
+
+.av-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;font-size:12.5px;color:#374151;transition:background .1s}
+.av-item:hover:not(.av-item-added){background:#f3f4f6}
+.av-item-added{color:#9ca3af;cursor:default}
+.av-item-added .av-check{display:flex}
+.av-check{display:none;align-items:center;color:rgb(25,118,210)}
+.av-check svg{width:13px;height:13px}
+.av-empty{padding:16px 12px;text-align:center;font-size:12px;color:#9ca3af}
+
+/* ── PANEL LIST (only enabled items) ── */
+.tsp-list{flex:1;overflow-y:auto;padding:4px 0}
+.tsp-list::-webkit-scrollbar{width:4px}
+.tsp-list::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:4px}
+
+.tsp-row{display:flex;align-items:center;padding:8px 12px 8px 10px;transition:background .1s;user-select:none}
+.tsp-row:hover{background:#f9fafb}
+.tsp-row-name{font-size:12.5px;color:#374151;flex:1}
+.tsp-row-tag{font-size:10px;padding:1px 6px;border-radius:10px;font-weight:500;margin-left:6px;flex-shrink:0}
+.tsp-row-tag.field{background:#ede9fe;color:#7c3aed}
+.tsp-row-tag.group{background:#dcfce7;color:#16a34a}
+
+/* drag handle */
+.tsp-drag-handle{width:20px;height:20px;flex-shrink:0;margin-right:6px;display:flex;align-items:center;justify-content:center;color:#d1d5db;cursor:grab;border-radius:3px}
+.tsp-row:hover .tsp-drag-handle{color:#9ca3af}
+.tsp-drag-handle svg{width:12px;height:12px;pointer-events:none}
+
+/* remove button */
+.tsp-remove-btn{width:22px;height:22px;border-radius:4px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#d1d5db;flex-shrink:0;opacity:0;transition:opacity .15s,color .15s,background .15s}
+.tsp-row:hover .tsp-remove-btn{opacity:1}
+.tsp-remove-btn:hover{color:#ef4444;background:#fee2e2}
+.tsp-remove-btn svg{width:12px;height:12px;pointer-events:none}
+
+/* drag states */
+.tsp-row.dragging{opacity:.35;background:#f9fafb}
+.tsp-row.drag-over{background:#eff6ff;border-top:2px solid rgb(25,118,210)}
+
+/* footer */
+.tsp-footer{border-top:1px solid #e5e7eb;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tsp-count{font-size:12px;color:#6b7280}
+.tsp-count strong{color:#111}
+.tsp-max-warn{font-size:11px;color:#dc2626;font-weight:500;display:none}
+.tsp-max-warn.show{display:block}
+
+/* ── CARD ── */
+.content-pad{padding:16px 24px 24px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;padding:16px 20px 12px}
+.card-title{font-size:13.5px;font-weight:700;color:#111}
+.date-range-pill{display:flex;align-items:center;border:1px solid #e5e7eb;border-radius:20px;font-size:11.5px;overflow:hidden}
+.drp-seg{display:flex;align-items:center;gap:5px;padding:5px 12px;cursor:pointer;color:#374151}
+.drp-seg:first-child{border-right:1px solid #e5e7eb}
+.drp-seg .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.drp-seg .dot.gray{background:#cbd5e1}
+.drp-seg .dot.blue{background:rgb(25,118,210)}
+.drp-badge{background:rgb(25,118,210);color:#fff;font-size:9px;font-weight:700;border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center}
+.vs-sep{padding:0 6px;color:#9ca3af;font-size:11px}
+.card-actions{display:flex;align-items:center;gap:6px;margin-left:10px}
+.card-icon-btn{width:28px;height:28px;border:1px solid #e5e7eb;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;color:#6b7280}
+.card-icon-btn:hover{background:#f9fafb}
+.card-icon-btn svg{width:14px;height:14px}
+.stats-row{display:flex;align-items:flex-end;gap:20px;padding:0 20px 12px}
+.stat{display:flex;flex-direction:column;gap:1px}
+.stat-main{display:flex;align-items:baseline;gap:6px}
+.stat-val{font-size:20px;font-weight:800;color:#111}
+.stat-delta{font-size:11px;font-weight:600;padding:1px 5px;border-radius:10px}
+.stat-delta.up{background:#dcfce7;color:#16a34a}
+.stat-delta.down{background:#fee2e2;color:#dc2626}
+.stat-lbl{font-size:11px;color:#9ca3af;margin-top:1px}
+.star{color:#f59e0b;font-size:14px}
+.chart-section{padding:0 20px}
+.chart-divider{height:1px;background:#f3f4f6;margin:0 20px}
+.legend-row{display:flex;align-items:center;gap:16px;padding:10px 20px 16px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11.5px;color:#6b7280}
+.scroll-bar-wrap{padding:0 20px 14px}
+.scroll-bar-track{height:6px;background:#f3f4f6;border-radius:6px}
+.scroll-bar-thumb{height:6px;width:40%;background:#cbd5e1;border-radius:6px;margin-left:45%}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topnav">
+  <div class="topnav-logo">
+    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#1847ED"/><path d="M8 20c2-4 5-7 8-7s6 3 8 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="11" r="3" fill="#fff"/></svg>
+  </div>
+  <span class="topnav-title">Reports</span>
+  <div class="topnav-right">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <div class="topnav-avatar" style="background:#6366f1;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;width:28px;height:28px;border-radius:50%">AC</div>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button class="topnav-actions">Actions <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <!-- RAIL -->
+  <div class="rail">
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+    <div class="rail-btn" style="position:relative"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="rail-badge"></div></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+    <div class="rail-btn active"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+    <div style="flex:1"></div>
+    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sb-search">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input placeholder="Search"/>
+    </div>
+    <div class="sb-section-lbl">Dashboards</div>
+    <div class="sb-group-hdr open">Default <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Created by me <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Shared with me <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-section-lbl" style="margin-top:6px">Reports</div>
+    <div class="sb-group-hdr open" style="color:rgb(25,118,210)">Reviews <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgb(25,118,210)" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></div>
+    <div class="sb-item active">Reviews &amp; ratings <span class="badge">4</span></div>
+    <div class="sb-item">Relative location rank <span class="badge">4</span></div>
+    <div class="sb-item">Reviews distribution <span class="badge">4</span></div>
+    <div class="sb-item">Response time <span class="badge">4</span></div>
+    <div class="sb-item">Response time distribu... <span class="badge">4</span></div>
+    <div class="sb-item">Response rate distribut... <span class="badge">4</span></div>
+    <div class="sb-item">Review NPS <span class="badge">4</span></div>
+    <div class="sb-item">Review tags <span class="badge">4</span></div>
+    <div class="sb-item">Leaderboard <span class="badge">4</span></div>
+    <div class="sb-group-hdr" style="margin-top:4px">Inbox <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Listings <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Social <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Surveys <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Campaigns <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Workflows</div>
+    <div class="sb-group-hdr">Ticketing <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="sb-group-hdr">Contacts <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="page-hdr">
+      <h1>Reviews &amp; ratings over time</h1>
+      <div class="page-hdr-right">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <button class="topnav-actions">Actions <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+      </div>
+    </div>
+
+    <div class="tabs" id="tabs-bar">
+      <div class="tabs-list" id="tabs-list"></div>
+      <button class="tabs-gear" id="tabs-gear-btn" title="Manage tabs">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <div class="content-pad">
+      <div class="card">
+        <div class="card-top">
+          <div class="card-title">Reviews &amp; ratings over time</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="date-range-pill">
+              <div class="drp-seg"><div class="dot gray"></div><span>Sep 30 - Nov 31, 2023</span></div>
+              <div class="vs-sep">vs</div>
+              <div class="drp-seg"><div class="dot blue"></div><span>Dec 1, 2023 - Jan 31, 2024</span><div class="drp-badge">2</div></div>
+            </div>
+            <div class="card-actions">
+              <div class="card-icon-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="12" y1="18" x2="20" y2="18"/></svg></div>
+              <div class="card-icon-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg></div>
+            </div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><div class="stat-main"><span class="stat-val">11.3k</span><span class="stat-delta up">+1.3%</span></div><div class="stat-lbl">Reviews</div></div>
+          <div class="stat"><div class="stat-main"><span class="stat-val">4.4</span><span class="star">★</span><span class="stat-delta down">-1.3%</span></div><div class="stat-lbl">Rating</div></div>
+        </div>
+        <div class="chart-section" style="height:140px"><canvas id="lineChart"></canvas></div>
+        <div class="chart-divider"></div>
+        <div class="chart-section" style="height:200px;margin-top:4px"><canvas id="barChart"></canvas></div>
+        <div class="legend-row">
+          <div class="leg"><div style="border-top:2px dashed #94a3b8;width:20px;height:0"></div> Legend 1</div>
+          <div class="leg"><div style="border-top:2px solid #1e3a5f;width:20px;height:0"></div> Legend 1</div>
+        </div>
+        <div class="scroll-bar-wrap"><div class="scroll-bar-track"><div class="scroll-bar-thumb"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS PANEL -->
+<div class="panel-backdrop" id="panel-backdrop"></div>
+<div class="tab-settings-panel" id="tab-settings-panel">
+
+  <div class="tsp-header">
+    <span class="tsp-title">Manage Tabs</span>
+    <button class="tsp-close" id="tsp-close-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Add view button + popover -->
+  <div class="tsp-add-wrap" id="tsp-add-wrap">
+    <button class="add-view-btn" id="add-view-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add view
+    </button>
+    <div class="av-popover" id="av-popover">
+      <div class="av-tab-bar">
+        <div class="av-tab active" data-cat="fields">Fields</div>
+        <div class="av-tab" data-cat="groups">Groups</div>
+      </div>
+      <div class="av-search">
+        <input id="av-search-input" placeholder="Search…" autocomplete="off"/>
+      </div>
+      <div class="av-list" id="av-list"></div>
+    </div>
+  </div>
+
+  <div class="tsp-list" id="tsp-list"></div>
+
+  <div class="tsp-footer">
+    <span class="tsp-count"><strong id="tsp-count-num">3</strong> / 7 views active</span>
+    <span class="tsp-max-warn" id="tsp-max-warn">Max 7 reached</span>
+  </div>
+</div>
+
+<script>
+// ─── DATA ───
+const MAX_VIEWS = 7;
+
+const AVAILABLE = {
+  fields: [
+    'Over time', 'By rating', 'By sentiment', 'By source',
+    'Response time', 'Response rate', 'Review NPS', 'Review count',
+    'Avg rating', 'Review volume', 'Sentiment score', 'NPS score',
+  ],
+  groups: [
+    'North region', 'Southern regions', 'Reputation mgmt team', 'Jennifer Hall',
+    'By employee', 'By location', 'By custom test', 'By new alpha beta test',
+    'By room custom', 'By region manager', 'By area code', 'By department',
+  ],
+};
+
+// panelItems = currently active views shown in panel + tab bar
+// { name, category: 'fields'|'groups' }
+let panelItems = [
+  { name: 'Over time',      category: 'fields' },
+  { name: 'By rating',      category: 'fields' },
+  { name: 'By sentiment',   category: 'fields' },
+];
+
+let activeTab = 'Over time';
+let dragSrcIndex = null;
+let dragOverIndex = null;
+let avActiveCat = 'fields';
+
+// ─── TAB BAR ───
+function renderTabs() {
+  const list = document.getElementById('tabs-list');
+  list.innerHTML = '';
+  panelItems.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'tab' + (t.name === activeTab ? ' active' : '');
+    el.innerHTML = `<div class="tab-inner">${t.name}</div><div class="tab-indicator"></div>`;
+    el.addEventListener('click', () => { activeTab = t.name; renderTabs(); });
+    list.appendChild(el);
+  });
+}
+
+// ─── PANEL LIST (only active items) ───
+function clearDragStyles() {
+  document.querySelectorAll('.tsp-row').forEach(r => r.classList.remove('drag-over','dragging'));
+}
+
+function renderPanel() {
+  const list = document.getElementById('tsp-list');
+  list.innerHTML = '';
+
+  panelItems.forEach((t, i) => {
+    const row = document.createElement('div');
+    row.className = 'tsp-row';
+    row.setAttribute('draggable', 'true');
+    row.dataset.index = i;
+
+    // drag handle
+    const handle = document.createElement('div');
+    handle.className = 'tsp-drag-handle';
+    handle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" fill="currentColor">
+      <circle cx="4" cy="2" r="1.2"/><circle cx="8" cy="2" r="1.2"/>
+      <circle cx="4" cy="6" r="1.2"/><circle cx="8" cy="6" r="1.2"/>
+      <circle cx="4" cy="10" r="1.2"/><circle cx="8" cy="10" r="1.2"/>
+      <circle cx="4" cy="14" r="1.2"/><circle cx="8" cy="14" r="1.2"/>
+    </svg>`;
+
+    // name
+    const nameEl = document.createElement('span');
+    nameEl.className = 'tsp-row-name';
+    nameEl.textContent = t.name;
+
+    // category tag
+    const tag = document.createElement('span');
+    tag.className = 'tsp-row-tag ' + t.category;
+    tag.textContent = t.category === 'fields' ? 'Field' : 'Group';
+
+    // remove button
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'tsp-remove-btn';
+    removeBtn.title = 'Remove';
+    removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+    removeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      panelItems.splice(i, 1);
+      if (activeTab === t.name) {
+        activeTab = panelItems[0]?.name || '';
+      }
+      updateFooter();
+      renderPanel();
+      renderTabs();
+      renderAvList();
+    });
+
+    // drag events
+    row.addEventListener('dragstart', e => {
+      dragSrcIndex = i;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', String(i));
+      requestAnimationFrame(() => row.classList.add('dragging'));
+    });
+    row.addEventListener('dragenter', e => {
+      e.preventDefault();
+      if (dragSrcIndex === null || dragSrcIndex === i) return;
+      dragOverIndex = i;
+      clearDragStyles();
+      row.classList.add('drag-over');
+      document.querySelector(`[data-index="${dragSrcIndex}"]`)?.classList.add('dragging');
+    });
+    row.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
+    row.addEventListener('dragleave', e => { if (!row.contains(e.relatedTarget)) row.classList.remove('drag-over'); });
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrcIndex === null || dragSrcIndex === dragOverIndex) return;
+      const moved = panelItems.splice(dragSrcIndex, 1)[0];
+      panelItems.splice(dragOverIndex, 0, moved);
+      dragSrcIndex = null; dragOverIndex = null;
+      renderPanel(); renderTabs();
+    });
+    row.addEventListener('dragend', () => { dragSrcIndex = null; dragOverIndex = null; clearDragStyles(); });
+
+    row.appendChild(handle);
+    row.appendChild(nameEl);
+    row.appendChild(tag);
+    row.appendChild(removeBtn);
+    list.appendChild(row);
+  });
+}
+
+// ─── ADD VIEW POPOVER ───
+function isAdded(name) { return panelItems.some(p => p.name === name); }
+
+function renderAvList() {
+  const list = document.getElementById('av-list');
+  const query = document.getElementById('av-search-input').value.trim().toLowerCase();
+  const items = AVAILABLE[avActiveCat].filter(n => n.toLowerCase().includes(query));
+  list.innerHTML = '';
+
+  if (items.length === 0) {
+    list.innerHTML = '<div class="av-empty">No results</div>';
+    return;
+  }
+
+  items.forEach(name => {
+    const added = isAdded(name);
+    const row = document.createElement('div');
+    row.className = 'av-item' + (added ? ' av-item-added' : '');
+    row.innerHTML = `
+      <span>${name}</span>
+      <span class="av-check">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>`;
+
+    if (!added) {
+      row.addEventListener('click', () => {
+        if (panelItems.length >= MAX_VIEWS) { showMaxWarn(); return; }
+        panelItems.push({ name, category: avActiveCat });
+        updateFooter();
+        renderPanel();
+        renderTabs();
+        renderAvList(); // refresh checkmarks
+      });
+    }
+    list.appendChild(row);
+  });
+}
+
+function openAvPopover() {
+  document.getElementById('av-popover').classList.add('open');
+  document.getElementById('add-view-btn').style.background = 'rgb(15,69,124)';
+  renderAvList();
+}
+function closeAvPopover() {
+  document.getElementById('av-popover').classList.remove('open');
+  document.getElementById('add-view-btn').style.background = '';
+  document.getElementById('av-search-input').value = '';
+}
+
+// tab switching inside popover
+document.querySelectorAll('.av-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.av-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    avActiveCat = tab.dataset.cat;
+    document.getElementById('av-search-input').value = '';
+    renderAvList();
+  });
+});
+
+document.getElementById('add-view-btn').addEventListener('click', e => {
+  e.stopPropagation();
+  const popover = document.getElementById('av-popover');
+  if (popover.classList.contains('open')) closeAvPopover();
+  else openAvPopover();
+});
+
+document.getElementById('av-search-input').addEventListener('input', renderAvList);
+
+// close popover on outside click
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('tsp-add-wrap');
+  if (!wrap.contains(e.target)) closeAvPopover();
+});
+
+// ─── FOOTER ───
+function updateFooter() {
+  document.getElementById('tsp-count-num').textContent = panelItems.length;
+  if (panelItems.length < MAX_VIEWS) hideMaxWarn();
+}
+
+let warnTimer;
+function showMaxWarn() {
+  const w = document.getElementById('tsp-max-warn');
+  w.classList.add('show');
+  clearTimeout(warnTimer);
+  warnTimer = setTimeout(() => w.classList.remove('show'), 2000);
+}
+function hideMaxWarn() { document.getElementById('tsp-max-warn').classList.remove('show'); }
+
+// ─── PANEL OPEN / CLOSE ───
+function openPanel() {
+  renderPanel();
+  updateFooter();
+  document.getElementById('tab-settings-panel').classList.add('open');
+  document.getElementById('panel-backdrop').classList.add('open');
+  document.getElementById('tabs-gear-btn').classList.add('active');
+}
+function closePanel() {
+  closeAvPopover();
+  document.getElementById('tab-settings-panel').classList.remove('open');
+  document.getElementById('panel-backdrop').classList.remove('open');
+  document.getElementById('tabs-gear-btn').classList.remove('active');
+}
+
+document.getElementById('tabs-gear-btn').addEventListener('click', openPanel);
+document.getElementById('tsp-close-btn').addEventListener('click', closePanel);
+document.getElementById('panel-backdrop').addEventListener('click', closePanel);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (document.getElementById('av-popover').classList.contains('open')) closeAvPopover(); else closePanel(); } });
+
+// init
+renderTabs();
+updateFooter();
+
+// ─── CHARTS ───
+const labels = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+const ratingPrev = [4.45,4.50,4.42,4.48,4.38,4.44,4.50,4.45,4.40,4.46,4.43,4.41];
+const ratingCurr = [4.32,4.28,4.35,4.30,4.40,4.36,4.29,4.33,4.38,4.31,4.37,4.25];
+const reviewsPrev = [434,434,434,434,434,434,434,434,434,434,434,434];
+const reviewsCurr = [494,234,234,234,234,234,234,234,234,234,234,234];
+
+new Chart(document.getElementById('lineChart').getContext('2d'), {
+  type:'line', data:{labels, datasets:[
+    {label:'Sep 30',data:ratingPrev,borderColor:'#94a3b8',borderWidth:1.5,borderDash:[5,4],pointBackgroundColor:'#94a3b8',pointRadius:3,tension:0.35,fill:false},
+    {label:'Dec 1',data:ratingCurr,borderColor:'#1e3a5f',borderWidth:2,pointBackgroundColor:'#1e3a5f',pointRadius:3.5,tension:0.35,fill:false}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{mode:'index'}},
+    scales:{x:{grid:{display:false},ticks:{display:false},border:{display:false}},y:{min:0,max:5,ticks:{stepSize:1,font:{size:10},color:'#9ca3af',padding:4},grid:{color:'#f3f4f6'},border:{display:false}}}}
+});
+
+new Chart(document.getElementById('barChart').getContext('2d'), {
+  type:'bar', data:{labels, datasets:[
+    {label:'Sep 30',data:reviewsPrev,backgroundColor:'#93c5fd',borderRadius:3,barPercentage:0.85,categoryPercentage:0.75},
+    {label:'Dec 1',data:reviewsCurr,backgroundColor:'rgb(15,69,124)',borderRadius:3,barPercentage:0.85,categoryPercentage:0.75}
+  ]},
+  options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{mode:'index'}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#6b7280',padding:4},border:{display:false}},y:{min:0,max:550,ticks:{stepSize:100,font:{size:10},color:'#9ca3af',padding:4},grid:{color:'#f3f4f6'},border:{display:false}}}},
+  plugins:[{id:'barLabels',afterDatasetsDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,di)=>{chart.getDatasetMeta(di).data.forEach((bar,i)=>{ctx.save();ctx.fillStyle='#374151';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(ds.data[i],bar.x,bar.y-2);ctx.restore();});});}}]
+});
+</script>
+</body>
+</html>
