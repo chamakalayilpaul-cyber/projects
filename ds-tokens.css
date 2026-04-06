@@ -1,0 +1,88 @@
+/* ============================================================
+   Aero Design System — CSS Tokens
+   Figma file: xecPAre4cKkeXEdvTig1oI
+   Import this file in any project to use DS tokens.
+   ============================================================ */
+
+:root {
+
+  /* ── TYPOGRAPHY ── */
+  --ds-font-family:        'Roboto', sans-serif;
+  --ds-font-size-xs:       11px;
+  --ds-font-size-sm:       12px;
+  --ds-font-size-base:     14px;
+  --ds-font-size-md:       16px;
+  --ds-font-size-lg:       18px;
+  --ds-font-size-xl:       20px;
+  --ds-font-weight-regular: 400;
+  --ds-font-weight-medium:  500;
+  --ds-font-weight-semibold:600;
+  --ds-font-weight-bold:    700;
+
+  /* ── COLORS — Neutrals ── */
+  --ds-color-bg-page:      rgb(242, 242, 242);  /* page background */
+  --ds-color-bg-surface:   #ffffff;             /* cards, panels */
+  --ds-color-bg-subtle:    #fafafa;             /* sidebar bg */
+  --ds-color-bg-muted:     rgb(242, 244, 247);  /* hover states */
+
+  --ds-color-text-primary:   rgb(33, 33, 33);
+  --ds-color-text-secondary: rgb(85, 85, 85);
+  --ds-color-text-muted:     rgb(143, 143, 143);
+  --ds-color-text-icon:      rgb(48, 48, 48);
+
+  --ds-color-border:         rgb(234, 234, 234);
+  --ds-color-border-strong:  #e5e7eb;
+  --ds-color-border-input:   rgb(229, 233, 240);
+
+  /* ── COLORS — Blue (Primary) ── */
+  --ds-color-blue-100:     rgb(25, 118, 210);   /* primary blue */
+  --ds-color-blue-selected:rgb(199, 214, 246);  /* selected/active bg */
+  --ds-color-blue-dark:    rgb(15, 69, 124);    /* hover on primary */
+
+  /* ── COLORS — Rail (L1) ── */
+  --ds-color-rail-bg:      rgb(229, 233, 240);
+
+  /* ── COLORS — Status ── */
+  --ds-color-success:      #16a34a;
+  --ds-color-success-bg:   #dcfce7;
+  --ds-color-danger:       #dc2626;
+  --ds-color-danger-bg:    #fee2e2;
+  --ds-color-warning:      #f59e0b;
+  --ds-color-badge:        #ef4444;
+
+  /* ── SPACING ── */
+  --ds-space-1:  4px;
+  --ds-space-2:  8px;
+  --ds-space-3:  12px;
+  --ds-space-4:  16px;
+  --ds-space-5:  20px;
+  --ds-space-6:  24px;
+
+  /* ── RADIUS ── */
+  --ds-radius-sm:  4px;
+  --ds-radius-md:  6px;
+  --ds-radius-lg:  10px;
+  --ds-radius-full:9999px;
+
+  /* ── COMPONENT HEIGHTS ── */
+  --ds-height-topnav:   52px;   /* top nav bar */
+  --ds-height-row-sm:   24px;   /* section label */
+  --ds-height-row-md:   28px;   /* sidebar item / rail btn */
+  --ds-height-row-lg:   37px;   /* tab */
+  --ds-height-page-hdr: 52px;   /* page header */
+
+  /* ── COMPONENT WIDTHS ── */
+  --ds-width-rail:    56px;     /* L1 rail */
+  --ds-width-sidebar: 222px;    /* L2 sidebar */
+  --ds-width-icon:    20px;     /* icon size */
+  --ds-width-btn:     28px;     /* icon button */
+
+  /* ── SHADOWS ── */
+  --ds-shadow-panel: -4px 0 24px rgba(0,0,0,0.08);
+  --ds-shadow-card:  0 1px 3px rgba(0,0,0,0.08);
+
+  /* ── ICONS ── */
+  /* Use Material Symbols Outlined */
+  /* <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&display=block"/> */
+  --ds-icon-size: 20px;
+}
