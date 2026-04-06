@@ -6,33 +6,25 @@
 <title>Reports – Reviews & ratings over time</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&display=block"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;flex-direction:column;height:100vh;overflow:hidden;color:rgb(33,33,33);font-size:14px}
-
-/* ── TOP NAV ── */
-.topnav{height:52px;background:#fff;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;padding:8px 24px;gap:8px;flex-shrink:0;z-index:50}
-.topnav-logo{width:28px;height:28px;flex-shrink:0}
-.topnav-logo svg{width:28px;height:28px}
-.topnav-title{font-size:18px;font-weight:400;color:rgb(33,33,33);flex:1}
-.topnav-right{display:flex;align-items:center;gap:8px}
-.topnav-right svg{width:20px;height:20px;color:rgb(48,48,48);cursor:pointer}
-.topnav-right svg:hover{color:rgb(33,33,33)}
-.topnav-avatar{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0}
-.topnav-actions{display:flex;align-items:center;gap:6px;border:1px solid #d1d5db;border-radius:4px;padding:8px 12px;font-size:14px;font-weight:400;color:rgb(33,33,33);cursor:pointer;background:#fff}
-.topnav-actions:hover{background:rgb(242,244,247)}
-.topnav-actions svg{width:16px;height:16px;color:rgb(48,48,48)}
+body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;overflow:hidden;color:rgb(33,33,33);font-size:14px}
+.material-symbols-outlined{font-size:20px;line-height:1;user-select:none}
 
 /* ── LAYOUT ── */
-.body-wrap{display:flex;flex:1;overflow:hidden}
+.body-wrap{display:flex;height:100vh;overflow:hidden}
 
 /* ── RAIL (L1) ── */
-.rail{width:56px;background:rgb(229,233,240);border-right:none;display:flex;flex-direction:column;align-items:center;padding:8px 12px;gap:4px;flex-shrink:0}
-.rail-btn{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgb(48,48,48);position:relative}
-.rail-btn:hover{background:rgb(242,244,247)}
+.rail{width:56px;background:rgb(229,233,240);border-right:none;display:flex;flex-direction:column;align-items:center;padding:0;gap:0;flex-shrink:0}
+.rail-logo-area{width:56px;height:52px;background:rgb(229,233,240);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rail-logo-area svg{width:28px;height:28px}
+.rail-nav{flex:1;width:56px;background:rgb(229,233,240);display:flex;flex-direction:column;align-items:center;padding:8px 12px;gap:8px;overflow:hidden}
+.rail-btn{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgb(48,48,48);position:relative;flex-shrink:0}
+.rail-btn:hover{background:rgba(0,0,0,0.06)}
 .rail-btn.active{background:rgb(199,214,246);color:rgb(33,33,33)}
-.rail-btn svg{width:20px;height:20px}
+.rail-btn .material-symbols-outlined{font-size:20px}
 .rail-badge{position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid rgb(229,233,240)}
 
 /* ── SIDEBAR (L2) ── */
@@ -40,7 +32,7 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;fl
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-thumb{background:rgb(199,214,246);border-radius:4px}
 /* title inside sidebar */
-.sb-title{height:52px;background:#fafafa;display:flex;align-items:center;padding:15px 24px;font-size:18px;font-weight:400;color:rgba(33,33,33,1);font-family:'Roboto',sans-serif;letter-spacing:-0.02em;flex-shrink:0}
+.sb-title{height:52px;background:#fafafa;display:flex;align-items:center;gap:8px;padding:15px 16px;font-size:18px;font-weight:400;color:rgba(33,33,33,1);font-family:'Roboto',sans-serif;letter-spacing:-0.02em;flex-shrink:0;border-bottom:1px solid rgb(234,234,234)}
 /* search */
 .sb-search-wrap{padding:0 24px;background:#fafafa}
 .sb-search{display:flex;align-items:center;gap:8px;background:#fafafa;border:1px solid rgb(229,233,240);border-radius:4px;padding:8px 0;margin-bottom:0}
@@ -64,13 +56,18 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;fl
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .main::-webkit-scrollbar{width:6px}
 .main::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
-.page-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 0}
+.page-hdr{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0}
 .page-hdr h1{font-size:18px;font-weight:400;color:rgb(33,33,33)}
-.page-hdr-right{display:flex;align-items:center;gap:10px}
-.page-hdr-right svg{width:16px;height:16px;color:#6b7280;cursor:pointer}
+.page-hdr-right{display:flex;align-items:center;gap:8px}
+.page-hdr-right svg{width:20px;height:20px;color:rgb(48,48,48);cursor:pointer}
+.page-hdr-right svg:hover{color:rgb(33,33,33)}
+.page-hdr-avatar{width:28px;height:28px;border-radius:50%;background:rgb(99,102,241);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0;cursor:pointer}
+.topnav-actions{display:flex;align-items:center;gap:6px;border:1px solid #d1d5db;border-radius:4px;padding:6px 12px;font-size:14px;font-weight:400;color:rgb(33,33,33);cursor:pointer;background:#fff;font-family:'Roboto',sans-serif}
+.topnav-actions:hover{background:rgb(242,244,247)}
+.topnav-actions svg{width:16px;height:16px;color:rgb(48,48,48)}
 
 /* ── TABS ── */
-.tabs{display:flex;align-items:center;padding:0 24px;border-bottom:1px solid #e5e7eb;margin-top:6px;gap:0;background:#fff}
+.tabs{display:flex;align-items:center;padding:0 24px;border-bottom:1px solid #e5e7eb;margin-top:6px;gap:0;background:transparent}
 .tabs-list{display:flex;align-items:center;flex:1;overflow-x:auto;gap:8px}
 .tabs-list::-webkit-scrollbar{display:none}
 .tab{display:flex;flex-direction:column;justify-content:space-between;padding:0;height:37px;font-size:14px;font-weight:400;color:rgb(85,85,85);cursor:pointer;white-space:nowrap;flex-shrink:0}
@@ -203,38 +200,36 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);display:flex;fl
 </head>
 <body>
 
-<!-- TOP NAV -->
-<div class="topnav">
-  <div class="topnav-logo">
-    <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#1847ED"/><path d="M8 20c2-4 5-7 8-7s6 3 8 7" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="11" r="3" fill="#fff"/></svg>
-  </div>
-  <span class="topnav-title">Reports</span>
-  <div class="topnav-right">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <div class="topnav-avatar" style="background:#6366f1;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;width:28px;height:28px;border-radius:50%">AC</div>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    <button class="topnav-actions">Actions <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-  </div>
-</div>
-
 <div class="body-wrap">
 
-  <!-- RAIL -->
+  <!-- RAIL (L1) — full height, logo at top -->
   <div class="rail">
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
-    <div class="rail-btn" style="position:relative"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><div class="rail-badge"></div></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-    <div class="rail-btn active"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-    <div style="flex:1"></div>
-    <div class="rail-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></div>
+    <!-- Logo -->
+    <div class="rail-logo-area">
+      <svg viewBox="0 0 28 28" fill="none" width="28" height="28">
+        <path d="M14 3C8.477 3 4 7.477 4 13c0 2.28.762 4.383 2.043 6.07C7.51 14.3 10.5 11 14 11s6.49 3.3 7.957 8.07A9.957 9.957 0 0024 13c0-5.523-4.477-10-10-10z" fill="rgb(25,118,210)"/>
+        <circle cx="14" cy="8" r="2.5" fill="rgb(25,118,210)"/>
+        <path d="M6.5 19.5C8.1 17 10.9 15.5 14 15.5s5.9 1.5 7.5 4" stroke="rgb(25,118,210)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <!-- Nav buttons -->
+    <div class="rail-nav">
+      <div class="rail-btn" title="Overview"><span class="material-symbols-outlined">home</span></div>
+      <div class="rail-btn" style="position:relative" title="Inbox"><span class="material-symbols-outlined">sms</span><div class="rail-badge"></div></div>
+      <div class="rail-btn" title="Listings"><span class="material-symbols-outlined">location_on</span></div>
+      <div class="rail-btn" title="Reviews"><span class="material-symbols-outlined">grade</span></div>
+      <div class="rail-btn" title="Referrals"><span class="material-symbols-outlined">card_giftcard</span></div>
+      <div class="rail-btn" title="Payments"><span class="material-symbols-outlined">monetization_on</span></div>
+      <div class="rail-btn" title="Appointments"><span class="material-symbols-outlined">calendar_month</span></div>
+      <div class="rail-btn" title="Social"><span class="material-symbols-outlined">workspaces</span></div>
+      <div class="rail-btn" title="Surveys"><span class="material-symbols-outlined">assignment_turned_in</span></div>
+      <div class="rail-btn" title="Ticketing"><span class="material-symbols-outlined">shapes</span></div>
+      <div class="rail-btn" title="Contacts"><span class="material-symbols-outlined">group</span></div>
+      <div class="rail-btn active" title="Reports"><span class="material-symbols-outlined">bar_chart</span></div>
+      <div class="rail-btn" title="Campaigns"><span class="material-symbols-outlined">campaign</span></div>
+      <div style="flex:1"></div>
+      <div class="rail-btn" title="Settings"><span class="material-symbols-outlined">settings</span></div>
+    </div>
   </div>
 
   <!-- SIDEBAR -->
