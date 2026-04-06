@@ -52,6 +52,13 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
 .sb-item .badge{font-size:12px;color:rgba(143,143,143,1);background:transparent;border-radius:10px;padding:0 4px;font-weight:400}
 .sb-item.active .badge{color:rgba(85,85,85,1)}
 
+/* ── TOP NAV ── */
+.top-nav{height:52px;background:#fff;border-bottom:1px solid rgb(234,234,234);display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:4px;flex-shrink:0}
+.top-nav-btn{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgb(48,48,48)}
+.top-nav-btn:hover{background:rgba(0,0,0,0.06)}
+.top-nav-btn .material-symbols-outlined{font-size:20px}
+.top-nav-btn.add .material-symbols-outlined{color:rgb(25,118,210);font-variation-settings:'FILL' 1}
+
 /* ── MAIN ── */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .main::-webkit-scrollbar{width:6px}
@@ -272,6 +279,13 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
 
   <!-- MAIN -->
   <div class="main">
+    <!-- TOP NAV -->
+    <div class="top-nav">
+      <div class="top-nav-btn add" title="Add"><span class="material-symbols-outlined">add_circle</span></div>
+      <div class="top-nav-btn" title="Help"><span class="material-symbols-outlined">help</span></div>
+      <div class="top-nav-btn" title="Account"><span class="material-symbols-outlined">account_circle</span></div>
+      <div class="top-nav-btn" title="Menu"><span class="material-symbols-outlined">menu</span></div>
+    </div>
     <div class="page-hdr">
       <h1>Reviews &amp; ratings over time</h1>
       <div class="page-hdr-right">
