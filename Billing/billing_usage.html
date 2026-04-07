@@ -350,6 +350,7 @@ td{
 .card-big-number{display:flex;align-items:baseline;gap:2px}
 .card-big-primary{font-size:32px;font-weight:400;line-height:1;color:#212121;letter-spacing:-0.5px}
 .card-big-secondary{font-size:16px;font-weight:400;color:#8f8f8f;letter-spacing:-0.28px}
+.card-bar-pct{font-size:12px;color:#555555;margin-top:4px}
 
 .summary-card-label{
   font-size:12px;
@@ -367,7 +368,6 @@ td{
 .summary-card-bar-label{font-size:14px;color:#212121;white-space:nowrap}
 .summary-card-bar-amount{font-size:14px;color:#212121;white-space:nowrap}
 .summary-bar-track{
-  flex:1;
   height:8px;
   background:#e5e9f0;
   border-radius:4px;
@@ -587,37 +587,37 @@ td{
           <div class="summary-bar-track">
             <div class="summary-bar-fill" style="width:62.8%"></div>
           </div>
-          <div class="summary-card-stats">
-            <div>
-              <div class="summary-stat-label">Purchased</div>
-              <div class="summary-stat-value">225,000</div>
-            </div>
-            <div>
-              <div class="summary-stat-label">Consumed</div>
-              <div class="summary-stat-value">141,196</div>
-            </div>
-            <div>
-              <div class="summary-stat-label">Remaining</div>
-              <div class="summary-stat-value" style="color:#16a34a">83,804</div>
-            </div>
-          </div>
+          <div class="card-bar-pct">62.8% used</div>
         </div>
 
         <!-- Card 2: Forecast -->
         <div class="forecast-card">
-          <div class="forecast-card-label">Projected credits</div>
-          <div class="card-big-number">
-            <span class="card-big-primary">~158,940</span><span class="card-big-secondary">/225,000</span>
-          </div>
-          <div style="font-size:12px;color:#8f8f8f">Based on Apr usage rate</div>
-          <div class="forecast-divider"></div>
-          <div class="forecast-footer">
-            <span class="forecast-footer-label">Overall trend vs last period</span>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div class="forecast-card-label">Projected credits</div>
             <span class="forecast-trend up">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
               +12.6%
             </span>
           </div>
+          <div class="card-big-number">
+            <span class="card-big-primary">158,940</span><span class="card-big-secondary">/225,000</span>
+          </div>
+          <div class="summary-bar-track">
+            <div class="summary-bar-fill" style="width:70.6%"></div>
+          </div>
+          <div class="card-bar-pct">70.6% used</div>
+        </div>
+
+        <!-- Card 3: Active agents -->
+        <div class="forecast-card">
+          <div class="forecast-card-label">Active agents</div>
+          <div class="card-big-number">
+            <span class="card-big-primary">11</span><span class="card-big-secondary">/24</span>
+          </div>
+          <div class="summary-bar-track">
+            <div class="summary-bar-fill" style="width:45.8%"></div>
+          </div>
+          <div class="card-bar-pct">398 instances run</div>
         </div>
 
       </div><!-- /cards-row -->
