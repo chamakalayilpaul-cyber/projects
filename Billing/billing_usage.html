@@ -174,8 +174,6 @@ body{
 /* ── BREADCRUMB BAR ── */
 .breadcrumb-bar{
   height:52px;
-  background:#ffffff;
-  border-bottom:1px solid #e9e9eb;
   display:flex;
   align-items:center;
   padding:0 24px;
@@ -247,20 +245,15 @@ body{
   border-radius:10px;
   overflow:hidden;
 }
-table{width:100%;border-collapse:collapse;table-layout:fixed}
-col.col-product{width:235px}
-col.col-purchased{width:120px}
-col.col-used{width:120px}
-col.col-usage{width:260px}
-col.col-resets{width:auto}
+table{width:100%;border-collapse:collapse;table-layout:auto}
 
 thead tr{border-bottom:1px solid #eaeaea}
 th{
   padding:10px 16px;
-  font-size:14px;
+  font-size:12px;
   font-weight:400;
-  line-height:20px;
-  letter-spacing:-0.28px;
+  line-height:16px;
+  letter-spacing:0;
   color:#555555;
   text-align:left;
   white-space:nowrap;
@@ -340,6 +333,92 @@ td{
   color:#555555;
 }
 .resets-cell.na{color:#8f8f8f}
+
+/* ── SUMMARY CARDS ── */
+.cards-row{display:flex;gap:12px;margin-bottom:20px}
+
+.summary-card{
+  flex:1;
+  background:#ffffff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.card-big-number{display:flex;align-items:baseline;gap:2px}
+.card-big-primary{font-size:32px;font-weight:400;line-height:1;color:#212121;letter-spacing:-0.5px}
+.card-big-secondary{font-size:16px;font-weight:400;color:#8f8f8f;letter-spacing:-0.28px}
+
+.summary-card-label{
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  color:#555555;
+}
+.summary-card-bar-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.summary-card-bar-label{font-size:14px;color:#212121;white-space:nowrap}
+.summary-card-bar-amount{font-size:14px;color:#212121;white-space:nowrap}
+.summary-bar-track{
+  flex:1;
+  height:8px;
+  background:#e5e9f0;
+  border-radius:4px;
+  overflow:hidden;
+}
+.summary-bar-fill{
+  height:100%;
+  border-radius:4px;
+  background:#1976d2;
+}
+.summary-card-stats{display:flex;gap:32px}
+.summary-stat-label{font-size:12px;color:#555555;margin-bottom:2px}
+.summary-stat-value{font-size:18px;font-weight:500;color:#212121;letter-spacing:-0.36px}
+
+.forecast-card{
+  flex:1;
+  background:#ffffff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.forecast-card-label{
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  color:#555555;
+}
+.forecast-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.forecast-period{font-size:14px;color:#212121}
+.forecast-amount{font-size:14px;font-weight:500;color:#212121;text-align:right}
+.forecast-note{font-size:12px;color:#8f8f8f;margin-top:2px;text-align:right}
+.forecast-divider{height:1px;background:#eaeaea}
+.forecast-footer{display:flex;align-items:center;justify-content:space-between}
+.forecast-footer-label{font-size:12px;color:#8f8f8f}
+.forecast-trend{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:12px;
+  color:#16a34a;
+}
+.forecast-trend.up{color:#dc2626}
 </style>
 </head>
 <body>
@@ -484,24 +563,68 @@ td{
 
       <div class="page-header">
         <h1 class="page-title">Usage</h1>
-        <div class="col-view-btn" title="Column view">
-          <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
-            <rect x="6.25" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
-            <rect x="12" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
-          </svg>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:12px;color:#8f8f8f">Apr 1–30, 2026</span>
+          <div class="col-view-btn" title="Column view">
+            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+              <rect x="6.25" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+              <rect x="12" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+            </svg>
+          </div>
         </div>
       </div>
 
+      <!-- CARDS ROW -->
+      <div class="cards-row">
+
+        <!-- Card 1: Current period usage -->
+        <div class="summary-card">
+          <div class="summary-card-label">Credits used</div>
+          <div class="card-big-number">
+            <span class="card-big-primary">141,196</span><span class="card-big-secondary">/225,000</span>
+          </div>
+          <div class="summary-bar-track">
+            <div class="summary-bar-fill" style="width:62.8%"></div>
+          </div>
+          <div class="summary-card-stats">
+            <div>
+              <div class="summary-stat-label">Purchased</div>
+              <div class="summary-stat-value">225,000</div>
+            </div>
+            <div>
+              <div class="summary-stat-label">Consumed</div>
+              <div class="summary-stat-value">141,196</div>
+            </div>
+            <div>
+              <div class="summary-stat-label">Remaining</div>
+              <div class="summary-stat-value" style="color:#16a34a">83,804</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Forecast -->
+        <div class="forecast-card">
+          <div class="forecast-card-label">Projected credits</div>
+          <div class="card-big-number">
+            <span class="card-big-primary">~158,940</span><span class="card-big-secondary">/225,000</span>
+          </div>
+          <div style="font-size:12px;color:#8f8f8f">Based on Apr usage rate</div>
+          <div class="forecast-divider"></div>
+          <div class="forecast-footer">
+            <span class="forecast-footer-label">Overall trend vs last period</span>
+            <span class="forecast-trend up">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+              +12.6%
+            </span>
+          </div>
+        </div>
+
+      </div><!-- /cards-row -->
+
       <div class="table-wrap">
         <table>
-          <colgroup>
-            <col class="col-product"/>
-            <col class="col-purchased"/>
-            <col class="col-used"/>
-            <col class="col-usage"/>
-            <col class="col-resets"/>
-          </colgroup>
+
           <thead>
             <tr>
               <th>
