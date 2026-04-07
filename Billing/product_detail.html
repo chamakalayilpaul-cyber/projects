@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Agent Detail – Billing and usage</title>
+<title>Product Detail – Billing and usage</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"/>
@@ -200,79 +200,21 @@ body{
 }
 .icon-btn:hover{background:rgb(242,244,247)}
 
-/* ── ALERT BANNER ── */
-.alert-banner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:#fef2f2;
-  border:1px solid #fecaca;
-  border-radius:8px;
-  padding:10px 16px;
-  margin-bottom:20px;
-  gap:12px;
-}
-.alert-banner-left{display:flex;align-items:center;gap:8px;font-size:14px;color:#212121}
-.alert-icon{color:#dc2626;display:flex;align-items:center;flex-shrink:0}
-.alert-link{color:rgb(25,118,210);font-size:14px;cursor:pointer;white-space:nowrap;text-decoration:none}
-.alert-link:hover{text-decoration:underline}
-
-/* ── SUMMARY SECTION ── */
-.summary-section{
+/* ── SUMMARY CARDS ── */
+.summary-row{display:flex;gap:16px;margin-bottom:16px}
+.summary-card{
+  flex:1;
   background:#fff;
   border:1px solid #eaeaea;
   border-radius:8px;
   padding:20px 24px;
-  margin-bottom:16px;
-  display:flex;
-  align-items:flex-start;
-  gap:48px;
 }
-.summary-section-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:16px;
-}
-.summary-section-title{font-size:14px;font-weight:400;color:#212121}
-.summary-card-wrap{
-  background:#fff;
-  border:1px solid #eaeaea;
-  border-radius:8px;
-  padding:20px 24px;
-  margin-bottom:16px;
-}
-.summary-row{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:48px;
-}
-.summary-stat{flex:none}
-.summary-stat-num{
-  font-size:28px;
-  font-weight:400;
-  color:#212121;
-  letter-spacing:-0.5px;
-  line-height:1.1;
-  margin-bottom:4px;
-}
-.summary-stat-num.red{color:#dc2626}
-.summary-stat-num .denom{font-size:16px;color:#8f8f8f;font-weight:400}
-.summary-stat-label{font-size:12px;color:#8f8f8f;line-height:16px}
-.last-month-btn{
-  font-family:'Roboto',sans-serif;
-  font-size:12px;
-  color:#555;
-  background:#fff;
-  border:1px solid #eaeaea;
-  border-radius:4px;
-  padding:4px 10px;
-  cursor:pointer;
-  white-space:nowrap;
-  align-self:flex-start;
-}
-.last-month-btn:hover{background:rgb(242,244,247)}
+.summary-card-label{font-size:12px;color:#8f8f8f;margin-bottom:8px}
+.summary-card-value{font-size:28px;font-weight:400;color:#212121;letter-spacing:-0.5px;line-height:1.1;margin-bottom:4px}
+.summary-card-value .denom{font-size:16px;color:#8f8f8f;font-weight:400}
+.usage-bar-track{height:6px;background:#f0f0f0;border-radius:3px;margin-top:10px}
+.usage-bar-fill{height:6px;border-radius:3px;background:#1976d2}
+.usage-pct{font-size:12px;color:#8f8f8f;margin-top:6px}
 
 /* ── CHART CARDS ── */
 .chart-card{
@@ -290,6 +232,18 @@ body{
 }
 .chart-card-title{font-size:14px;font-weight:400;color:#212121}
 .chart-card-right{display:flex;align-items:center;gap:8px}
+.last-month-btn{
+  font-family:'Roboto',sans-serif;
+  font-size:12px;
+  color:#555;
+  background:#fff;
+  border:1px solid #eaeaea;
+  border-radius:4px;
+  padding:4px 10px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.last-month-btn:hover{background:rgb(242,244,247)}
 .chart-legend{
   display:flex;
   align-items:center;
@@ -345,8 +299,8 @@ body{
         <span>Billing</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-      <div class="sb-item" onclick="window.location.href='billing_usage.html'">Products</div>
-      <div class="sb-item active" onclick="window.location.href='billing_usage.html'">Agents</div>
+      <div class="sb-item active" onclick="window.location.href='billing_usage.html?view=products'">Products</div>
+      <div class="sb-item" onclick="window.location.href='billing_usage.html'">Agents</div>
     </div>
   </div>
 
@@ -378,62 +332,48 @@ body{
         <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
         <a class="breadcrumb-link" href="billing_usage.html">Billing and usage</a>
         <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
-        <a class="breadcrumb-link" href="billing_usage.html">Agents</a>
+        <a class="breadcrumb-link" href="billing_usage.html?view=products">Products</a>
         <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
-        <span class="breadcrumb-current" id="bc-agent">Agent</span>
+        <span class="breadcrumb-current" id="bc-product">Product</span>
       </nav>
     </div>
 
     <!-- CONTENT -->
     <div class="content">
 
-      <!-- Alert banner -->
-      <div class="alert-banner">
-        <div class="alert-banner-left">
-          <span class="alert-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </span>
-          <span>You've reached your <strong id="alert-agent-name">agent</strong> limit. Your limits will reset on May 1, 2026. Reach out to support for assistance.</span>
-        </div>
-        <a class="alert-link" href="#">Contact support</a>
-      </div>
-
       <!-- Page header -->
       <div class="page-header">
-        <h1 class="page-title" id="page-agent-name">Agent</h1>
+        <h1 class="page-title" id="page-product-name">Product</h1>
         <div class="page-header-right">
-          <span class="date-label">Dec 11, 2025 – Jan 10, 2026</span>
+          <span class="date-label">Resets on May 1, 2026</span>
           <div class="icon-btn" title="More options">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
           </div>
-          <div class="icon-btn" title="Filter">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
-          </div>
         </div>
       </div>
 
-      <!-- Summary -->
-      <div class="chart-card" style="margin-bottom:16px">
-        <div class="chart-card-header">
-          <span class="chart-card-title">Summary</span>
-          <button class="last-month-btn">Last 1 month</button>
+      <!-- Summary cards -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <div class="summary-card-label">Purchased</div>
+          <div class="summary-card-value">50,000</div>
+          <div class="usage-bar-track"><div class="usage-bar-fill" style="width:62.8%"></div></div>
+          <div class="usage-pct">62.8% used</div>
         </div>
-        <div class="summary-row">
-          <div class="summary-stat">
-            <div class="summary-stat-num red">31,250 <span class="denom">/ 25,000</span></div>
-            <div class="summary-stat-label">Credits processed</div>
-          </div>
-          <div class="summary-stat">
-            <div class="summary-stat-num">23,246</div>
-            <div class="summary-stat-label">Average monthly credits processed</div>
-          </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Used</div>
+          <div class="summary-card-value">31,420</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Remaining</div>
+          <div class="summary-card-value">18,580</div>
         </div>
       </div>
 
-      <!-- Bar chart: credits over time -->
+      <!-- Usage over time chart -->
       <div class="chart-card">
         <div class="chart-card-header">
-          <span class="chart-card-title">Credits processed over time</span>
+          <span class="chart-card-title">Usage over time</span>
           <div class="chart-card-right">
             <button class="last-month-btn">Last 6 months</button>
             <div class="icon-btn">
@@ -442,33 +382,11 @@ body{
           </div>
         </div>
         <div style="position:relative;height:220px">
-          <canvas id="timeChart"></canvas>
+          <canvas id="usageChart"></canvas>
         </div>
         <div class="chart-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#1976d2"></div>Credits processed</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Overage</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#e5e9f0;border:1px solid #aaa"></div>Limit purchased</div>
-        </div>
-      </div>
-
-      <!-- Horizontal bar chart: credits across locations -->
-      <div class="chart-card">
-        <div class="chart-card-header">
-          <span class="chart-card-title">Credits processed across locations</span>
-          <div class="chart-card-right">
-            <button class="last-month-btn">Last 6 months</button>
-            <div class="icon-btn">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-            </div>
-          </div>
-        </div>
-        <div style="font-size:24px;font-weight:400;color:#212121;margin-bottom:4px">45</div>
-        <div style="font-size:12px;color:#8f8f8f;margin-bottom:16px">Locations</div>
-        <div style="position:relative;height:260px">
-          <canvas id="locationChart"></canvas>
-        </div>
-        <div class="chart-legend" style="margin-top:16px">
-          <div class="legend-item"><div class="legend-dot" style="background:#1976d2"></div>Credits</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#1976d2"></div>Used</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e5e9f0;border:1px solid #aaa"></div>Purchased</div>
         </div>
       </div>
 
@@ -478,32 +396,31 @@ body{
 </div><!-- /body-wrap -->
 
 <script>
-// Read agent name from URL param
+// Read product name from URL param
 const params = new URLSearchParams(window.location.search);
-const agentName = params.get('agent') || 'Agent';
-document.getElementById('bc-agent').textContent = agentName;
-document.getElementById('page-agent-name').textContent = agentName;
-document.getElementById('alert-agent-name').textContent = agentName;
-document.title = agentName + ' – Billing and usage';
+const productName = params.get('product') || 'Product';
+document.getElementById('bc-product').textContent = productName;
+document.getElementById('page-product-name').textContent = productName;
+document.title = productName + ' – Billing and usage';
 
-// ── TIME CHART (stacked bar) ──
-const timeCtx = document.getElementById('timeChart').getContext('2d');
-new Chart(timeCtx, {
+// ── USAGE CHART (stacked bar) ──
+const usageCtx = document.getElementById('usageChart').getContext('2d');
+new Chart(usageCtx, {
   type: 'bar',
   data: {
     labels: ['Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025', 'Nov 2025'],
     datasets: [
       {
-        label: 'Credits processed',
-        data: [44300, 88100, 90000, 94200, 99000, 100000],
+        label: 'Used',
+        data: [28000, 30100, 29500, 31200, 30800, 31420],
         backgroundColor: '#1976d2',
         borderRadius: 2,
         stack: 'usage',
       },
       {
-        label: 'Overage',
-        data: [0, 0, 0, 0, 0, 25000],
-        backgroundColor: '#dc2626',
+        label: 'Purchased',
+        data: [22000, 19900, 20500, 18800, 19200, 18580],
+        backgroundColor: '#e5e9f0',
         borderRadius: 2,
         stack: 'usage',
       }
@@ -534,59 +451,6 @@ new Chart(timeCtx, {
           color: '#8f8f8f',
           callback: v => (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v)
         },
-        border: { display: false }
-      }
-    }
-  }
-});
-
-// ── LOCATION CHART (horizontal bar) ──
-const locationCtx = document.getElementById('locationChart').getContext('2d');
-new Chart(locationCtx, {
-  type: 'bar',
-  data: {
-    labels: [
-      '1003 - Torrance - Rolling Hills',
-      '1016 - Cabazon',
-      '1010 - Southgate - Azalea',
-      'Pasadena - Colorado',
-      '1013 - Central styles Indianapolis',
-      '1019 - Laguna Niguel',
-      'Southgate - UCSB',
-      'Chicago'
-    ],
-    datasets: [{
-      label: 'Credits',
-      data: [25000, 24900, 15200, 8300, 6400, 5500, 4100, 1800],
-      backgroundColor: '#1976d2',
-      borderRadius: 2,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => 'Credits: ' + ctx.parsed.x.toLocaleString()
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: { color: '#f0f0f0' },
-        ticks: {
-          font: { family: 'Roboto', size: 11 },
-          color: '#8f8f8f',
-          callback: v => (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v)
-        },
-        border: { display: false }
-      },
-      y: {
-        grid: { display: false },
-        ticks: { font: { family: 'Roboto', size: 11 }, color: '#555' },
         border: { display: false }
       }
     }

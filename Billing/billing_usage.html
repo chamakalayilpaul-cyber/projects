@@ -139,8 +139,8 @@ body{
   color:#212121;
   border-radius:4px;
 }
-.sb-item:hover{background:rgba(0,0,0,0.04)}
-.sb-item.active{background:#c7d6f6}
+.sb-item:hover{background:#F3F4F7}
+.sb-item.active{background:#E5E9F1}
 
 /* ── TOP NAV ── */
 .top-nav{
@@ -444,10 +444,24 @@ tr:hover .td-product-name{color:rgb(25,118,210)}
 </style>
 <script>
 document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('.td-product-name').forEach(function(el){
+  // Restore view from URL param (?view=products)
+  const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.get('view') === 'products'){
+    const productsItem = document.querySelector('.sb-item');
+    showView('products', productsItem);
+  }
+  // Agent rows → agent_detail.html
+  document.querySelectorAll('#view-usage .td-product-name').forEach(function(el){
     el.addEventListener('click', function(){
       const name = this.textContent.trim();
       window.location.href = 'agent_detail.html?agent=' + encodeURIComponent(name);
+    });
+  });
+  // Product rows → product_detail.html
+  document.querySelectorAll('#view-products .td-product-name').forEach(function(el){
+    el.addEventListener('click', function(){
+      const name = this.textContent.trim();
+      window.location.href = 'product_detail.html?product=' + encodeURIComponent(name);
     });
   });
 });
@@ -456,6 +470,7 @@ function showView(view, item){
   item.classList.add('active');
   document.getElementById('view-usage').style.display = view === 'usage' ? '' : 'none';
   document.getElementById('view-products').style.display = view === 'products' ? '' : 'none';
+  document.getElementById('bc-current').textContent = view === 'products' ? 'Products' : 'Agents';
 }
 function setUsecase(btn){
   document.querySelectorAll('.usecase-btn').forEach(b=>b.classList.remove('active'));
@@ -606,7 +621,7 @@ function setUsecase(btn){
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="sb-item" onclick="showView('products', this)">Products</div>
-      <div class="sb-item active" onclick="showView('usage', this)">Usage</div>
+      <div class="sb-item active" onclick="showView('usage', this)">Agents</div>
     </div>
   </div>
 
@@ -647,7 +662,11 @@ function setUsecase(btn){
         <span class="breadcrumb-sep">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </span>
-        <span class="breadcrumb-current">Usage</span>
+        <span class="breadcrumb-link">Billing and usage</span>
+        <span class="breadcrumb-sep">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+        <span class="breadcrumb-current" id="bc-current">Agents</span>
       </nav>
     </div>
 
@@ -687,7 +706,7 @@ function setUsecase(btn){
       <div id="view-usage">
 
       <div class="page-header">
-        <h1 class="page-title">Usage</h1>
+        <h1 class="page-title">Agents</h1>
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:12px;color:#8f8f8f">Apr 1–30, 2026</span>
           <span style="font-size:12px;color:#8f8f8f">·</span>
