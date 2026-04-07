@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Billing and usage – Usage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"/>
+<link rel="stylesheet" href="../ds-tokens.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Roboto',sans-serif;
+  background:var(--ds-color-bg-page);
+  height:100vh;
+  overflow:hidden;
+  color:var(--ds-color-text-primary);
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+}
+
+/* ── LAYOUT ── */
+.body-wrap{display:flex;height:100vh;overflow:hidden}
+
+/* ── RAIL (L1) ── */
+.rail{
+  width:56px;
+  background:#e5e9f0;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  flex-shrink:0;
+}
+.rail-logo-area{
+  height:52px;
+  background:#e5e9f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.rail-nav{
+  flex:1;
+  background:#e5e9f0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:8px 14px;
+  gap:8px;
+  overflow:hidden;
+}
+.rail-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.rail-btn:hover{background:rgba(0,0,0,0.06)}
+.rail-btn.active{background:#c7d6f6}
+/* Icon is 16px inside a 28px button — matches Figma p-[8px] spec (6px each side) */
+.rail-btn img{width:16px;height:16px;display:block;object-fit:contain}
+.rail-divider{
+  width:20px;
+  height:1px;
+  background:#c0c8d8;
+  flex-shrink:0;
+  margin:0 auto;
+}
+
+/* ── SIDEBAR (L2) ── */
+.sidebar{
+  width:222px;
+  background:#fafafa;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.sb-title{
+  height:52px;
+  background:#fafafa;
+  display:flex;
+  align-items:center;
+  padding:15px 24px;
+  font-size:18px;
+  font-weight:400;
+  line-height:26px;
+  letter-spacing:-0.36px;
+  color:#212121;
+  flex-shrink:0;
+}
+.sb-body{
+  flex:1;
+  overflow-y:auto;
+  padding:8px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.sb-body::-webkit-scrollbar{width:4px}
+.sb-body::-webkit-scrollbar-thumb{background:var(--ds-color-blue-selected);border-radius:4px}
+
+.sb-group-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 8px;
+  height:32px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#212121;
+  border-radius:4px;
+}
+.sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
+.sb-group-hdr svg{flex-shrink:0;color:#555}
+
+.sb-item{
+  display:flex;
+  align-items:center;
+  padding:4px 8px;
+  height:32px;
+  cursor:pointer;
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#212121;
+  border-radius:4px;
+}
+.sb-item:hover{background:rgba(0,0,0,0.04)}
+.sb-item.active{background:#c7d6f6}
+
+/* ── TOP NAV ── */
+.top-nav{
+  height:52px;
+  background:#ffffff;
+  border-bottom:1px solid #e9e9eb;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:12px 24px;
+  gap:4px;
+  flex-shrink:0;
+}
+.top-nav-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  padding:4px;
+  flex-shrink:0;
+}
+.top-nav-btn:hover{background:rgba(0,0,0,0.06)}
+.top-nav-btn img{width:20px;height:20px;display:block}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── BREADCRUMB BAR ── */
+.breadcrumb-bar{
+  height:52px;
+  background:#ffffff;
+  border-bottom:1px solid #e9e9eb;
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+  flex-shrink:0;
+}
+.breadcrumb{display:flex;align-items:center;gap:2px}
+.breadcrumb-link{
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:var(--ds-color-blue-100);
+  cursor:pointer;
+  padding:4px 6px;
+  border-radius:4px;
+}
+.breadcrumb-link:hover{text-decoration:underline}
+.breadcrumb-sep{
+  display:flex;
+  align-items:center;
+  color:#bbb;
+}
+.breadcrumb-current{
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#212121;
+  padding:4px 6px;
+}
+
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;padding:24px}
+.content::-webkit-scrollbar{width:6px}
+.content::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.page-title{
+  font-size:18px;
+  font-weight:400;
+  line-height:26px;
+  letter-spacing:-0.36px;
+  color:#212121;
+}
+.col-view-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  border:1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  background:#fff;
+  color:#555;
+}
+.col-view-btn:hover{background:rgb(242,244,247)}
+
+/* ── TABLE ── */
+.table-wrap{
+  background:#ffffff;
+  border:1px solid #eaeaea;
+  border-radius:10px;
+  overflow:hidden;
+}
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+col.col-product{width:235px}
+col.col-purchased{width:120px}
+col.col-used{width:120px}
+col.col-usage{width:260px}
+col.col-resets{width:auto}
+
+thead tr{border-bottom:1px solid #eaeaea}
+th{
+  padding:10px 16px;
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#555555;
+  text-align:left;
+  white-space:nowrap;
+  background:#ffffff;
+}
+.th-inner{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+  user-select:none;
+}
+.th-inner:hover{color:#212121}
+.sort-icon{display:flex;align-items:center;color:#bbb}
+th.sorted .sort-icon{color:#212121}
+th.sorted .th-inner{color:#212121}
+
+tbody tr{border-bottom:1px solid #eaeaea}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgb(242,244,247)}
+
+td{
+  padding:12px 16px;
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#212121;
+  vertical-align:middle;
+}
+
+.td-product-name{
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#212121;
+}
+.td-product-sub{
+  font-size:12px;
+  line-height:16px;
+  color:#8f8f8f;
+  margin-top:2px;
+  letter-spacing:0;
+}
+
+/* Progress bar */
+.usage-bar-row{display:flex;align-items:center;gap:8px}
+.usage-bar-track{
+  flex:1;
+  height:6px;
+  background:#e5e9f0;
+  border-radius:3px;
+  overflow:hidden;
+}
+.usage-bar-fill{
+  height:100%;
+  border-radius:3px;
+  background:#16a34a;
+}
+.usage-bar-fill.over{background:#dc2626}
+.usage-pct{
+  font-size:12px;
+  line-height:16px;
+  color:#555555;
+  white-space:nowrap;
+  min-width:40px;
+  text-align:right;
+  letter-spacing:0;
+}
+.usage-pct.over{color:#dc2626;font-weight:500}
+
+.resets-cell{
+  font-size:14px;
+  line-height:20px;
+  letter-spacing:-0.28px;
+  color:#555555;
+}
+.resets-cell.na{color:#8f8f8f}
+</style>
+</head>
+<body>
+<div class="body-wrap">
+
+  <!-- RAIL (L1) — DS node 2575:51954 -->
+  <div class="rail">
+    <div class="rail-logo-area">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+      </svg>
+    </div>
+    <div class="rail-nav">
+      <!-- Overview / Home -->
+      <div class="rail-btn" title="Overview">
+        <img src="https://www.figma.com/api/mcp/asset/b190b937-4acd-4447-a23d-52ac33667bbf" alt="Overview"/>
+      </div>
+      <!-- Inbox -->
+      <div class="rail-btn" title="Inbox" style="position:relative">
+        <img src="https://www.figma.com/api/mcp/asset/2e2e83ee-b044-4e8e-8e19-2167d4fdf77a" alt="Inbox"/>
+        <div style="position:absolute;top:3px;right:3px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid #e5e9f0"></div>
+      </div>
+      <!-- Listings -->
+      <div class="rail-btn" title="Listings">
+        <img src="https://www.figma.com/api/mcp/asset/93bce035-24b2-4903-8005-5257e28a72fa" alt="Listings"/>
+      </div>
+      <!-- Reviews -->
+      <div class="rail-btn" title="Reviews">
+        <img src="https://www.figma.com/api/mcp/asset/ba0e252f-56dd-4ec7-ab44-0b17966eeda7" alt="Reviews"/>
+      </div>
+      <!-- Referrals -->
+      <div class="rail-btn" title="Referrals">
+        <img src="https://www.figma.com/api/mcp/asset/9a17a1c5-471f-4e6f-b946-96566e4a0d22" alt="Referrals"/>
+      </div>
+      <!-- Payments -->
+      <div class="rail-btn" title="Payments">
+        <img src="https://www.figma.com/api/mcp/asset/041e0469-9975-49b7-b7e1-2cb12fef421e" alt="Payments"/>
+      </div>
+      <!-- Appointments -->
+      <div class="rail-btn" title="Appointments">
+        <img src="https://www.figma.com/api/mcp/asset/1f0ca52c-fdab-41b1-9f3c-b8eea76bfc8d" alt="Appointments"/>
+      </div>
+      <!-- Social -->
+      <div class="rail-btn" title="Social">
+        <img src="https://www.figma.com/api/mcp/asset/b50396a1-8d40-4772-83f3-2db886f4e9bc" alt="Social"/>
+      </div>
+      <!-- Surveys -->
+      <div class="rail-btn" title="Surveys">
+        <img src="https://www.figma.com/api/mcp/asset/27661920-7606-4572-91b5-be2235552d7c" alt="Surveys"/>
+      </div>
+      <!-- Ticketing -->
+      <div class="rail-btn" title="Ticketing">
+        <img src="https://www.figma.com/api/mcp/asset/08909705-7085-4b15-8294-73314c2e877c" alt="Ticketing"/>
+      </div>
+      <!-- Contacts -->
+      <div class="rail-btn" title="Contacts">
+        <img src="https://www.figma.com/api/mcp/asset/7031eb61-447a-4cea-bb5b-4dd7079909db" alt="Contacts"/>
+      </div>
+      <!-- Campaigns -->
+      <div class="rail-btn" title="Campaigns">
+        <img src="https://www.figma.com/api/mcp/asset/ec33957f-3390-4743-98d9-02b49fa8d71d" alt="Campaigns"/>
+      </div>
+      <!-- Marketing Automation -->
+      <div class="rail-btn" title="Marketing Automation">
+        <img src="https://www.figma.com/api/mcp/asset/6877ac2e-ff9a-4458-920d-c82c3380807d" alt="Marketing Automation"/>
+      </div>
+      <!-- Reports -->
+      <div class="rail-btn" title="Reports">
+        <img src="https://www.figma.com/api/mcp/asset/a66966a7-14e2-4396-8838-b86885bf61fd" alt="Reports"/>
+      </div>
+      <!-- Insights -->
+      <div class="rail-btn" title="Insights">
+        <img src="https://www.figma.com/api/mcp/asset/74ac9c59-6da8-4a97-b9b8-0cf1252f7734" alt="Insights"/>
+      </div>
+      <!-- Competitors -->
+      <div class="rail-btn" title="Competitors">
+        <img src="https://www.figma.com/api/mcp/asset/30cf26bd-2e9c-4552-8151-daedf67f2235" alt="Competitors"/>
+      </div>
+
+      <div style="flex:1"></div>
+      <!-- Divider -->
+      <div class="rail-divider"></div>
+      <!-- Settings — active on this page -->
+      <div class="rail-btn active" title="Settings">
+        <img src="https://www.figma.com/api/mcp/asset/b9122252-443c-46ad-a5e2-672b25deaa06" alt="Settings"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR (L2) — DS node 2848:49295 -->
+  <div class="sidebar">
+    <div class="sb-title">Billing and usage</div>
+    <div class="sb-body">
+      <div class="sb-group-hdr">
+        <span>Billing</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sb-group-hdr">
+        <span>Licenses</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sb-item active">Usage</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP NAV — DS node 2575:18658 -->
+    <div class="top-nav">
+      <div class="top-nav-btn" title="Add">
+        <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+      </div>
+      <div class="top-nav-btn" title="Help">
+        <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
+      </div>
+      <div class="top-nav-btn" title="Account">
+        <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
+      </div>
+      <div class="top-nav-btn" title="Menu">
+        <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+      </div>
+    </div>
+
+    <!-- BREADCRUMB BAR -->
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb">
+        <span class="breadcrumb-link">Settings</span>
+        <span class="breadcrumb-sep">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+        <span class="breadcrumb-link">Accounts</span>
+        <span class="breadcrumb-sep">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+        <span class="breadcrumb-current">Usage</span>
+      </nav>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="content">
+
+      <div class="page-header">
+        <h1 class="page-title">Usage</h1>
+        <div class="col-view-btn" title="Column view">
+          <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+            <rect x="6.25" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+            <rect x="12" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <colgroup>
+            <col class="col-product"/>
+            <col class="col-purchased"/>
+            <col class="col-used"/>
+            <col class="col-usage"/>
+            <col class="col-resets"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>
+                <span class="th-inner">
+                  Product outcomes
+                  <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </span>
+              </th>
+              <th>
+                <span class="th-inner">
+                  Purchased
+                  <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </span>
+              </th>
+              <th>
+                <span class="th-inner">
+                  Used
+                  <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </span>
+              </th>
+              <th class="sorted">
+                <span class="th-inner">
+                  Usage %
+                  <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></span>
+                </span>
+              </th>
+              <th>
+                <span class="th-inner">
+                  Resets on
+                  <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td><div class="td-product-name">User actions</div><div class="td-product-sub">Listing</div></td>
+              <td>25,000</td>
+              <td>31,250</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill over" style="width:100%"></div></div>
+                  <span class="usage-pct over">112%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Reviews collected</div><div class="td-product-sub">Reviews</div></td>
+              <td>25,000</td>
+              <td>22,111</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:88.4%"></div></div>
+                  <span class="usage-pct">88.4%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Survey responses</div><div class="td-product-sub">Surveys</div></td>
+              <td>25,000</td>
+              <td>19,876</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:79.4%"></div></div>
+                  <span class="usage-pct">79.4%</span>
+                </div>
+              </td>
+              <td class="resets-cell na">NA</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Tickets resolved</div><div class="td-product-sub">Ticketing</div></td>
+              <td>25,000</td>
+              <td>12,345</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:66.6%"></div></div>
+                  <span class="usage-pct">66.6%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 5, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Reachable contacts added</div><div class="td-product-sub">Marketing automation</div></td>
+              <td>25,000</td>
+              <td>15,678</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:62.7%"></div></div>
+                  <span class="usage-pct">62.7%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Prompts used</div><div class="td-product-sub">Marketing automation</div></td>
+              <td>25,000</td>
+              <td>10,234</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
+                  <span class="usage-pct">59.6%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Interactions used</div><div class="td-product-sub">Competitors</div></td>
+              <td>25,000</td>
+              <td>10,234</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
+                  <span class="usage-pct">59.6%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Interactions used</div><div class="td-product-sub">Insights</div></td>
+              <td>25,000</td>
+              <td>10,234</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
+                  <span class="usage-pct">59.6%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Texts sent</div><div class="td-product-sub">Mass texting</div></td>
+              <td>25,000</td>
+              <td>10,234</td>
+              <td>
+                <div class="usage-bar-row">
+                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
+                  <span class="usage-pct">59.6%</span>
+                </div>
+              </td>
+              <td class="resets-cell">Apr 11, 2026</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+</div><!-- /body-wrap -->
+</body>
+</html>
