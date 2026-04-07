@@ -293,7 +293,9 @@ td{
   line-height:20px;
   letter-spacing:-0.28px;
   color:#212121;
+  cursor:pointer;
 }
+tr:hover .td-product-name{color:rgb(25,118,210)}
 .td-product-sub{
   font-size:12px;
   line-height:16px;
@@ -441,6 +443,14 @@ td{
 }
 </style>
 <script>
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.td-product-name').forEach(function(el){
+    el.addEventListener('click', function(){
+      const name = this.textContent.trim();
+      window.location.href = 'agent_detail.html?agent=' + encodeURIComponent(name);
+    });
+  });
+});
 function showView(view, item){
   document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
   item.classList.add('active');
