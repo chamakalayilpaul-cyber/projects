@@ -149,11 +149,13 @@ body{
   border-bottom:1px solid #e9e9eb;
   display:flex;
   align-items:center;
-  justify-content:flex-end;
+  justify-content:space-between;
   padding:12px 24px;
   gap:4px;
   flex-shrink:0;
 }
+.top-nav-left{display:flex;align-items:center;gap:4px}
+.top-nav-right{display:flex;align-items:center;gap:4px}
 .top-nav-btn{
   width:28px;
   height:28px;
@@ -419,7 +421,78 @@ td{
   color:#16a34a;
 }
 .forecast-trend.up{color:#dc2626}
+.usecase-btn{
+  font-family:'Roboto',sans-serif;
+  font-size:14px;
+  font-weight:400;
+  color:rgb(85,85,85);
+  background:transparent;
+  border:1px solid rgb(234,234,234);
+  border-radius:4px;
+  padding:5px 14px;
+  cursor:pointer;
+  line-height:1.4;
+}
+.usecase-btn:hover{background:rgb(242,244,247)}
+.usecase-btn.active{
+  background:rgb(199,214,246);
+  color:rgb(33,33,33);
+  border-color:rgb(199,214,246);
+}
 </style>
+<script>
+function setUsecase(btn){
+  document.querySelectorAll('.usecase-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const label = btn.textContent.trim();
+  const bar = document.getElementById('card1-bar');
+  const pct = document.getElementById('card1-pct');
+  const primary = document.getElementById('card1-primary');
+
+  const bar2 = document.getElementById('card2-bar');
+  const pct2 = document.getElementById('card2-pct');
+  const primary2 = document.getElementById('card2-primary');
+
+  if(label === 'Exhausted limit'){
+    primary.textContent = '225,000';
+    bar.style.width = '100%';
+    bar.style.background = '#dc2626';
+    pct.textContent = '100% used';
+    pct.style.color = '#dc2626';
+
+    primary2.textContent = '281,250';
+    bar2.style.width = '100%';
+    bar2.style.background = '#dc2626';
+    pct2.textContent = '125% usage estimated';
+    pct2.style.color = '#dc2626';
+  } else if(label === 'Potential overage'){
+    primary.textContent = '200,000';
+    bar.style.width = '88.9%';
+    bar.style.background = '#1976d2';
+    pct.textContent = '88.9% used';
+    pct.style.color = '#555555';
+
+    primary2.textContent = '281,250';
+    bar2.style.width = '100%';
+    bar2.style.background = '#dc2626';
+    pct2.textContent = '125% usage estimated';
+    pct2.style.color = '#dc2626';
+  } else {
+    primary.textContent = '141,196';
+    bar.style.width = '62.8%';
+    bar.style.background = '#1976d2';
+    pct.textContent = '62.8% used';
+    pct.style.color = '#555555';
+
+    primary2.textContent = '158,940';
+    bar2.style.width = '70.6%';
+    bar2.style.background = '#1976d2';
+    pct2.textContent = '70.6% usage estimated';
+    pct2.style.color = '#555555';
+  }
+}
+</script>
 </head>
 <body>
 <div class="body-wrap">
@@ -529,17 +602,24 @@ td{
 
     <!-- TOP NAV — DS node 2575:18658 -->
     <div class="top-nav">
-      <div class="top-nav-btn" title="Add">
-        <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+      <div class="top-nav-left">
+        <button class="usecase-btn active" onclick="setUsecase(this)">In limit</button>
+        <button class="usecase-btn" onclick="setUsecase(this)">Exhausted limit</button>
+        <button class="usecase-btn" onclick="setUsecase(this)">Potential overage</button>
       </div>
-      <div class="top-nav-btn" title="Help">
-        <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
-      </div>
-      <div class="top-nav-btn" title="Account">
-        <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
-      </div>
-      <div class="top-nav-btn" title="Menu">
-        <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+      <div class="top-nav-right">
+        <div class="top-nav-btn" title="Add">
+          <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+        </div>
+        <div class="top-nav-btn" title="Help">
+          <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
+        </div>
+        <div class="top-nav-btn" title="Account">
+          <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
+        </div>
+        <div class="top-nav-btn" title="Menu">
+          <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+        </div>
       </div>
     </div>
 
@@ -565,6 +645,8 @@ td{
         <h1 class="page-title">Usage</h1>
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:12px;color:#8f8f8f">Apr 1–30, 2026</span>
+          <span style="font-size:12px;color:#8f8f8f">·</span>
+          <span style="font-size:12px;color:#8f8f8f">Resets on May 1, 2025</span>
           <div class="col-view-btn" title="Column view">
             <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
@@ -582,29 +664,24 @@ td{
         <div class="summary-card">
           <div class="summary-card-label">Credits used</div>
           <div class="card-big-number">
-            <span class="card-big-primary">141,196</span><span class="card-big-secondary">/225,000</span>
+            <span id="card1-primary" class="card-big-primary">141,196</span><span class="card-big-secondary">/225,000</span>
           </div>
           <div class="summary-bar-track">
-            <div class="summary-bar-fill" style="width:62.8%"></div>
+            <div id="card1-bar" class="summary-bar-fill" style="width:62.8%"></div>
           </div>
-          <div class="card-bar-pct">62.8% used</div>
+          <div id="card1-pct" class="card-bar-pct">62.8% used</div>
         </div>
 
         <!-- Card 2: Forecast -->
         <div class="forecast-card">
-          <div style="display:flex;align-items:center;justify-content:space-between">
-            <div class="forecast-card-label">Projected credit usage</div>
-            <span class="forecast-trend up">
-              +12.6%
-            </span>
-          </div>
+          <div class="forecast-card-label">Projected credit usage</div>
           <div class="card-big-number">
-            <span class="card-big-primary">158,940</span><span class="card-big-secondary">/225,000</span>
+            <span id="card2-primary" class="card-big-primary">158,940</span><span class="card-big-secondary">/225,000</span>
           </div>
           <div class="summary-bar-track">
-            <div class="summary-bar-fill" style="width:70.6%"></div>
+            <div id="card2-bar" class="summary-bar-fill" style="width:70.6%"></div>
           </div>
-          <div class="card-bar-pct">70.6% used</div>
+          <div id="card2-pct" class="card-bar-pct">70.6% usage estimated</div>
         </div>
 
         <!-- Card 3: Active agents -->
@@ -650,6 +727,12 @@ td{
                   <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></span>
                 </span>
               </th>
+              <th>
+                <span class="th-inner">
+                  Usage change
+                  <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -658,61 +741,81 @@ td{
               <td><div class="td-product-name">Review Generation Agent</div><div class="td-product-sub">Reviews</div></td>
               <td>50</td>
               <td>2 Reviews</td>
-              <td>100</td>            </tr>
+              <td>100</td>
+              <td>+12.4%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Review Response Agent</div><div class="td-product-sub">Reviews</div></td>
               <td>75</td>
               <td>8 Review Response</td>
-              <td>600</td>            </tr>
+              <td>600</td>
+              <td>-2.8%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Social Publishing Agent</div><div class="td-product-sub">Social</div></td>
               <td>50</td>
               <td>8 Posts</td>
-              <td>400</td>            </tr>
+              <td>400</td>
+              <td>+7.1%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Social Engagement Agent</div><div class="td-product-sub">Social</div></td>
               <td>75</td>
               <td>20 Responses</td>
-              <td>1500</td>            </tr>
+              <td>1500</td>
+              <td>+18.3%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Listings Optimization Agent</div><div class="td-product-sub">Listing</div></td>
               <td>75</td>
               <td>1 agent run</td>
-              <td>75</td>            </tr>
+              <td>75</td>
+              <td>-5.2%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Search Optimization Agent</div><div class="td-product-sub">Search AI</div></td>
               <td>10</td>
               <td>15 Prompts, 1 LLM, 1 Scan</td>
-              <td>150</td>            </tr>
+              <td>150</td>
+              <td>+3.6%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Segmentation Agent</div><div class="td-product-sub">Marketing automation</div></td>
               <td>50</td>
               <td>10 Segments</td>
-              <td>500</td>            </tr>
+              <td>500</td>
+              <td>-9.4%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Template Agent</div><div class="td-product-sub">Marketing automation</div></td>
               <td>350</td>
               <td>3 Templates</td>
-              <td>1000</td>            </tr>
+              <td>1000</td>
+              <td>+21.7%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Reporting Agent</div><div class="td-product-sub">Reports</div></td>
               <td>50</td>
               <td>10 Insights</td>
-              <td>500</td>            </tr>
+              <td>500</td>
+              <td>+1.9%</td>
+            </tr>
 
             <tr>
               <td><div class="td-product-name">Lead Generation Agent</div><div class="td-product-sub">Marketing automation</div></td>
               <td>15</td>
               <td>50 Messages</td>
-              <td>750</td>            </tr>
+              <td>750</td>
+              <td>-6.3%</td>
+            </tr>
 
           </tbody>
         </table>
