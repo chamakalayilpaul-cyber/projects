@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Detail – Billing and usage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"/>
+<link rel="stylesheet" href="../ds-tokens.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Roboto',sans-serif;
+  background:rgb(242,242,242);
+  height:100vh;
+  overflow:hidden;
+  color:rgb(33,33,33);
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+}
+
+/* ── LAYOUT ── */
+.body-wrap{display:flex;height:100vh;overflow:hidden}
+
+/* ── RAIL (L1) ── */
+.rail{
+  width:56px;
+  background:#e5e9f0;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  flex-shrink:0;
+}
+.rail-logo-area{
+  height:52px;
+  background:#e5e9f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.rail-nav{
+  flex:1;
+  background:#e5e9f0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:8px 14px;
+  gap:8px;
+  overflow:hidden;
+}
+.rail-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.rail-btn:hover{background:rgba(0,0,0,0.06)}
+.rail-btn.active{background:#c7d6f6}
+.rail-btn img{width:16px;height:16px;display:block;object-fit:contain}
+.rail-divider{width:20px;height:1px;background:#c0c8d8;flex-shrink:0;margin:0 auto}
+
+/* ── SIDEBAR (L2) ── */
+.sidebar{
+  width:222px;
+  background:#fafafa;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.sb-title{
+  height:52px;
+  background:#fafafa;
+  display:flex;
+  align-items:center;
+  padding:15px 24px;
+  font-size:18px;
+  font-weight:400;
+  color:#212121;
+  flex-shrink:0;
+}
+.sb-body{
+  flex:1;
+  overflow-y:auto;
+  padding:8px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.sb-group-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 8px;
+  height:32px;
+  cursor:pointer;
+  font-size:14px;
+  color:#212121;
+  border-radius:4px;
+}
+.sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
+.sb-group-hdr svg{flex-shrink:0;color:#555}
+.sb-item{
+  display:flex;
+  align-items:center;
+  padding:4px 8px;
+  height:32px;
+  cursor:pointer;
+  font-size:14px;
+  color:#212121;
+  border-radius:4px;
+}
+.sb-item:hover{background:#F3F4F7}
+.sb-item.active{background:#E5E9F1}
+
+/* ── TOP NAV ── */
+.top-nav{
+  height:52px;
+  background:#ffffff;
+  border-bottom:1px solid #e9e9eb;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:12px 24px;
+  gap:4px;
+  flex-shrink:0;
+}
+.top-nav-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  padding:4px;
+  flex-shrink:0;
+}
+.top-nav-btn:hover{background:rgba(0,0,0,0.06)}
+.top-nav-btn img{width:20px;height:20px;display:block}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── BREADCRUMB ── */
+.breadcrumb-bar{
+  height:52px;
+  display:flex;
+  align-items:center;
+  padding:0 24px;
+  flex-shrink:0;
+}
+.breadcrumb{display:flex;align-items:center;gap:2px}
+.breadcrumb-link{
+  font-size:14px;
+  color:rgb(25,118,210);
+  cursor:pointer;
+  padding:4px 6px;
+  border-radius:4px;
+  text-decoration:none;
+}
+.breadcrumb-link:hover{text-decoration:underline}
+.breadcrumb-sep{display:flex;align-items:center;color:#bbb}
+.breadcrumb-current{
+  font-size:14px;
+  color:#212121;
+  padding:4px 6px;
+}
+
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;padding:0 24px 24px}
+.content::-webkit-scrollbar{width:6px}
+.content::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+
+/* ── PAGE HEADER ── */
+.page-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 0 16px;
+}
+.page-title{font-size:18px;font-weight:400;color:#212121;letter-spacing:-0.36px}
+.page-header-right{display:flex;align-items:center;gap:8px}
+.date-label{font-size:12px;color:#8f8f8f}
+.icon-btn{
+  width:28px;height:28px;border-radius:4px;border:1px solid #eaeaea;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:#fff;color:#555;
+}
+.icon-btn:hover{background:rgb(242,244,247)}
+
+/* ── SUMMARY CARDS ── */
+.summary-row{display:flex;gap:16px;margin-bottom:16px}
+.summary-card{
+  flex:1;
+  background:#fff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  padding:20px 24px;
+}
+.summary-card-label{font-size:12px;color:#8f8f8f;margin-bottom:8px}
+.summary-card-value{font-size:28px;font-weight:400;color:#212121;letter-spacing:-0.5px;line-height:1.1;margin-bottom:4px}
+.summary-card-value .denom{font-size:16px;color:#8f8f8f;font-weight:400}
+.usage-bar-track{height:6px;background:#f0f0f0;border-radius:3px;margin-top:10px}
+.usage-bar-fill{height:6px;border-radius:3px;background:#1976d2}
+.usage-pct{font-size:12px;color:#8f8f8f;margin-top:6px}
+
+/* ── CHART CARDS ── */
+.chart-card{
+  background:#fff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  padding:20px 24px;
+  margin-bottom:16px;
+}
+.chart-card-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.chart-card-title{font-size:14px;font-weight:400;color:#212121}
+.chart-card-right{display:flex;align-items:center;gap:8px}
+.last-month-btn{
+  font-family:'Roboto',sans-serif;
+  font-size:12px;
+  color:#555;
+  background:#fff;
+  border:1px solid #eaeaea;
+  border-radius:4px;
+  padding:4px 10px;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.last-month-btn:hover{background:rgb(242,244,247)}
+.chart-legend{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="body-wrap">
+
+  <!-- RAIL (L1) -->
+  <div class="rail">
+    <a href="../index.html" class="rail-logo-area" style="text-decoration:none">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+      </svg>
+    </a>
+    <div class="rail-nav">
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/b190b937-4acd-4447-a23d-52ac33667bbf" alt="Overview"/></div>
+      <div class="rail-btn" style="position:relative">
+        <img src="https://www.figma.com/api/mcp/asset/2e2e83ee-b044-4e8e-8e19-2167d4fdf77a" alt="Inbox"/>
+        <div style="position:absolute;top:3px;right:3px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid #e5e9f0"></div>
+      </div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/93bce035-24b2-4903-8005-5257e28a72fa" alt="Listings"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/ba0e252f-56dd-4ec7-ab44-0b17966eeda7" alt="Reviews"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/9a17a1c5-471f-4e6f-b946-96566e4a0d22" alt="Referrals"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/041e0469-9975-49b7-b7e1-2cb12fef421e" alt="Payments"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/1f0ca52c-fdab-41b1-9f3c-b8eea76bfc8d" alt="Appointments"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/b50396a1-8d40-4772-83f3-2db886f4e9bc" alt="Social"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/27661920-7606-4572-91b5-be2235552d7c" alt="Surveys"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/08909705-7085-4b15-8294-73314c2e877c" alt="Ticketing"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/7031eb61-447a-4cea-bb5b-4dd7079909db" alt="Contacts"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/ec33957f-3390-4743-98d9-02b49fa8d71d" alt="Campaigns"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/6877ac2e-ff9a-4458-920d-c82c3380807d" alt="Marketing Automation"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/a66966a7-14e2-4396-8838-b86885bf61fd" alt="Reports"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/74ac9c59-6da8-4a97-b9b8-0cf1252f7734" alt="Insights"/></div>
+      <div class="rail-btn"><img src="https://www.figma.com/api/mcp/asset/30cf26bd-2e9c-4552-8151-daedf67f2235" alt="Competitors"/></div>
+      <div style="flex:1"></div>
+      <div class="rail-divider"></div>
+      <div class="rail-btn active"><img src="https://www.figma.com/api/mcp/asset/b9122252-443c-46ad-a5e2-672b25deaa06" alt="Settings"/></div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR (L2) -->
+  <div class="sidebar">
+    <div class="sb-title">Billing and usage</div>
+    <div class="sb-body">
+      <div class="sb-group-hdr">
+        <span>Billing</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sb-item active" onclick="window.location.href='billing_usage.html?view=products'">Products</div>
+      <div class="sb-item" onclick="window.location.href='billing_usage.html'">Agents</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP NAV -->
+    <div class="top-nav">
+      <div class="top-nav-btn">
+        <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+      </div>
+      <div class="top-nav-btn">
+        <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
+      </div>
+      <div class="top-nav-btn">
+        <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
+      </div>
+      <div class="top-nav-btn">
+        <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+      </div>
+    </div>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb-bar">
+      <nav class="breadcrumb">
+        <a class="breadcrumb-link" href="billing_usage.html">Settings</a>
+        <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+        <a class="breadcrumb-link" href="billing_usage.html">Accounts</a>
+        <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+        <a class="breadcrumb-link" href="billing_usage.html">Billing and usage</a>
+        <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+        <a class="breadcrumb-link" href="billing_usage.html?view=products">Products</a>
+        <span class="breadcrumb-sep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+        <span class="breadcrumb-current" id="bc-product">Product</span>
+      </nav>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- Page header -->
+      <div class="page-header">
+        <h1 class="page-title" id="page-product-name">Product</h1>
+        <div class="page-header-right">
+          <span class="date-label">Resets on May 1, 2026</span>
+          <div class="icon-btn" title="More options">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary cards -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <div class="summary-card-label">Purchased</div>
+          <div class="summary-card-value">50,000</div>
+          <div class="usage-bar-track"><div class="usage-bar-fill" style="width:62.8%"></div></div>
+          <div class="usage-pct">62.8% used</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Used</div>
+          <div class="summary-card-value">31,420</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-label">Remaining</div>
+          <div class="summary-card-value">18,580</div>
+        </div>
+      </div>
+
+      <!-- Usage over time chart -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <span class="chart-card-title">Usage over time</span>
+          <div class="chart-card-right">
+            <button class="last-month-btn">Last 6 months</button>
+            <div class="icon-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+        <div style="position:relative;height:220px">
+          <canvas id="usageChart"></canvas>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#1976d2"></div>Used</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e5e9f0;border:1px solid #aaa"></div>Purchased</div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+</div><!-- /body-wrap -->
+
+<script>
+// Read product name from URL param
+const params = new URLSearchParams(window.location.search);
+const productName = params.get('product') || 'Product';
+document.getElementById('bc-product').textContent = productName;
+document.getElementById('page-product-name').textContent = productName;
+document.title = productName + ' – Billing and usage';
+
+// ── USAGE CHART (stacked bar) ──
+const usageCtx = document.getElementById('usageChart').getContext('2d');
+new Chart(usageCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025', 'Nov 2025'],
+    datasets: [
+      {
+        label: 'Used',
+        data: [28000, 30100, 29500, 31200, 30800, 31420],
+        backgroundColor: '#1976d2',
+        borderRadius: 2,
+        stack: 'usage',
+      },
+      {
+        label: 'Purchased',
+        data: [22000, 19900, 20500, 18800, 19200, 18580],
+        backgroundColor: '#e5e9f0',
+        borderRadius: 2,
+        stack: 'usage',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString()
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { font: { family: 'Roboto', size: 11 }, color: '#8f8f8f' },
+        border: { display: false }
+      },
+      y: {
+        stacked: true,
+        grid: { color: '#f0f0f0' },
+        ticks: {
+          font: { family: 'Roboto', size: 11 },
+          color: '#8f8f8f',
+          callback: v => (v >= 1000 ? (v/1000).toFixed(0) + 'K' : v)
+        },
+        border: { display: false }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
