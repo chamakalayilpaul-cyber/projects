@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Input States</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);min-height:100vh;color:rgb(33,33,33);font-size:14px;padding:48px;display:flex;justify-content:center}
+
+.states-row{display:flex;flex-direction:column;gap:40px;width:320px}
+.col{display:flex;flex-direction:column;gap:12px}
+.col-label{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:rgb(143,143,143);margin-bottom:4px}
+.divider{display:none}
+
+/* ── FLOATING LABEL FIELD ── */
+.ffield{
+  position:relative;
+  background:rgb(240,242,245);
+  border-radius:4px;
+  border:1.5px solid rgb(180,180,180);
+  height:56px;
+  transition:background .15s, border-color .15s;
+}
+
+/* Label — starts centered (acts as placeholder) */
+.ffield label{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:16px;
+  color:rgb(180,180,180);
+  pointer-events:none;
+  transition:top .15s ease, transform .15s ease, font-size .15s ease, color .15s ease;
+  white-space:nowrap;
+}
+
+/* Input */
+.ffield input,
+.ffield select{
+  position:absolute;
+  left:0; right:0; bottom:0;
+  width:100%;
+  padding:22px 12px 8px;
+  background:transparent;
+  border:none;
+  outline:none;
+  font-size:16px;
+  font-family:'Roboto',sans-serif;
+  color:rgb(33,33,33);
+  appearance:none;
+}
+.ffield input::placeholder{color:transparent}
+
+/* Chevron */
+.ffield.is-select::after{
+  content:'';
+  pointer-events:none;
+  position:absolute;
+  right:14px;
+  top:50%;
+  border:5px solid transparent;
+  border-top:6px solid rgb(120,120,120);
+  transform:translateY(2px);
+}
+.ffield.is-select select{padding-right:28px;cursor:pointer}
+
+/* Float label when filled */
+.ffield input:not(:placeholder-shown) ~ label,
+.ffield.has-value label {
+  top:10px;
+  transform:none;
+  font-size:12px;
+  color:rgb(143,143,143);
+}
+
+/* Live focus */
+.ffield:focus-within{
+  background:rgb(232,238,248);
+  border-color:rgb(25,118,210);
+}
+.ffield input:focus ~ label,
+.ffield select:focus ~ label {
+  top:10px;
+  transform:none;
+  font-size:12px;
+  color:rgb(25,118,210);
+}
+
+/* ── DEMO: Active (forced) ── */
+.ffield.demo-active{
+  background:rgb(232,238,248);
+  border:1.5px solid rgb(25,118,210);
+}
+.ffield.demo-active label{
+  top:10px;
+  transform:none;
+  font-size:12px;
+  color:rgb(25,118,210);
+}
+
+/* ── SAVED STATE ── */
+.sfield{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:8px 0;
+  border-bottom:1px solid rgb(234,234,234);
+}
+.sfield .slabel{font-size:12px;color:rgb(143,143,143)}
+.sfield .sval{font-size:16px;color:rgb(33,33,33)}
+</style>
+</head>
+<body>
+<div class="states-row">
+
+  <!-- ── 1. EMPTY ── -->
+  <div class="col">
+    <p class="col-label">Empty</p>
+
+    <div class="ffield">
+      <input type="email" placeholder=" "/>
+      <label>Email address</label>
+    </div>
+
+    <div class="ffield is-select">
+      <select>
+        <option value="" selected disabled></option>
+        <option>Carramar, NSW</option>
+        <option>Sydney, NSW</option>
+        <option>Melbourne, VIC</option>
+      </select>
+      <label>Location</label>
+    </div>
+
+    <div class="ffield is-select">
+      <select>
+        <option value="" selected disabled></option>
+        <option>Detractors</option>
+        <option>Passives</option>
+        <option>Promoters</option>
+      </select>
+      <label>Segment</label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 2. ACTIVE ── -->
+  <div class="col">
+    <p class="col-label">Active</p>
+
+    <div class="ffield demo-active">
+      <input type="email" placeholder=" "/>
+      <label>Email address</label>
+    </div>
+
+    <div class="ffield demo-active is-select">
+      <select>
+        <option value="" selected disabled></option>
+        <option>Carramar, NSW</option>
+        <option>Sydney, NSW</option>
+        <option>Melbourne, VIC</option>
+      </select>
+      <label>Location</label>
+    </div>
+
+    <div class="ffield demo-active is-select">
+      <select>
+        <option value="" selected disabled></option>
+        <option>Detractors</option>
+        <option>Passives</option>
+        <option>Promoters</option>
+      </select>
+      <label>Segment</label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 3. FILLED ── -->
+  <div class="col">
+    <p class="col-label">Filled</p>
+
+    <div class="ffield has-value">
+      <input type="email" placeholder=" " value="ayush.agrawal@birdeye.com"/>
+      <label>Email address</label>
+    </div>
+
+    <div class="ffield has-value is-select">
+      <select>
+        <option value="" disabled></option>
+        <option selected>Carramar, NSW</option>
+        <option>Sydney, NSW</option>
+        <option>Melbourne, VIC</option>
+      </select>
+      <label>Location</label>
+    </div>
+
+    <div class="ffield has-value is-select">
+      <select>
+        <option value="" disabled></option>
+        <option selected>Detractors</option>
+        <option>Passives</option>
+        <option>Promoters</option>
+      </select>
+      <label>Segment</label>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── 4. SAVED ── -->
+  <div class="col">
+    <p class="col-label">Saved</p>
+
+    <div class="sfield">
+      <span class="slabel">Email address</span>
+      <span class="sval">ayush.agrawal@birdeye.com</span>
+    </div>
+
+    <div class="sfield">
+      <span class="slabel">Location</span>
+      <span class="sval">Carramar, NSW</span>
+    </div>
+
+    <div class="sfield">
+      <span class="slabel">Segment</span>
+      <span class="sval">Detractors</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
