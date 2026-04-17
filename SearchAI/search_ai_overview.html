@@ -75,7 +75,7 @@ body{
 .sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
 .sb-group-hdr svg{color:#555;flex-shrink:0}
 .sb-sub-item{
-  display:flex;align-items:center;padding:0 12px 0 24px;height:32px;
+  display:flex;align-items:center;padding:0 12px;height:32px;
   cursor:pointer;font-size:14px;color:#555;border-radius:6px;
 }
 .sb-sub-item:hover{background:rgb(242,244,247)}
@@ -327,6 +327,7 @@ body{
     </div>
     <div id="sb-group-actions">
       <div class="sb-sub-item" id="nav-recommendations" onclick="showView('recommendations')">Recommendations</div>
+      <div class="sb-sub-item" id="nav-content" onclick="showView('content')">Content</div>
     </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('reports',this)">
       <span>Reports</span>
