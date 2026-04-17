@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Search AI – Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"/>
+<link rel="stylesheet" href="../ds-tokens.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Roboto',sans-serif;
+  background:rgb(242,242,242);
+  height:100vh;
+  overflow:hidden;
+  color:rgb(33,33,33);
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+  letter-spacing:-0.28px;
+}
+
+/* ── LAYOUT ── */
+.body-wrap{display:flex;height:100vh;overflow:hidden}
+
+/* ── RAIL (L1) ── */
+.rail{
+  width:56px;
+  background:#e5e9f0;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  flex-shrink:0;
+}
+.rail-logo-area{
+  height:52px;
+  background:#e5e9f0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  text-decoration:none;
+}
+.rail-nav{
+  flex:1;
+  background:#e5e9f0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:8px 14px;
+  gap:8px;
+  overflow:hidden;
+}
+.rail-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+  position:relative;
+}
+.rail-btn:hover{background:rgba(0,0,0,0.06)}
+.rail-btn.active{background:#c7d6f6}
+.rail-btn img{width:16px;height:16px;display:block;object-fit:contain}
+.rail-divider{width:20px;height:1px;background:#c0c8d8;flex-shrink:0;margin:0 auto}
+
+/* ── SIDEBAR (L2) ── */
+.sidebar{
+  width:222px;
+  background:#fafafa;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.sb-title{
+  height:52px;
+  background:#fafafa;
+  display:flex;
+  align-items:center;
+  padding:15px 24px;
+  font-size:18px;
+  font-weight:400;
+  color:#212121;
+  flex-shrink:0;
+  border-bottom:1px solid #eaeaea;
+}
+.sb-body{
+  flex:1;
+  overflow-y:auto;
+  padding:8px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.sb-body::-webkit-scrollbar{width:4px}
+.sb-body::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.sb-group-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 8px;
+  height:32px;
+  cursor:pointer;
+  font-size:14px;
+  color:#212121;
+  border-radius:4px;
+}
+.sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
+.sb-group-hdr svg{flex-shrink:0;color:#555}
+.sb-item{
+  display:flex;
+  align-items:center;
+  padding:4px 8px;
+  height:32px;
+  cursor:pointer;
+  font-size:14px;
+  color:#212121;
+  border-radius:4px;
+}
+.sb-item:hover{background:#F3F4F7}
+.sb-item.active{background:#E5E9F1}
+
+/* ── TOP NAV ── */
+.top-nav{
+  height:52px;
+  background:#ffffff;
+  border-bottom:1px solid #e9e9eb;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding:12px 24px;
+  gap:4px;
+  flex-shrink:0;
+}
+.top-nav-btn{
+  width:28px;
+  height:28px;
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  padding:4px;
+  flex-shrink:0;
+}
+.top-nav-btn:hover{background:rgba(0,0,0,0.06)}
+.top-nav-btn img{width:20px;height:20px;display:block}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── CONTENT ── */
+.content{flex:1;overflow-y:auto;padding:0 24px 32px}
+.content::-webkit-scrollbar{width:6px}
+.content::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+
+/* ── PAGE HEADER ── */
+.page-hdr{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 0 14px;
+}
+.page-hdr-left{display:flex;align-items:center;gap:6px}
+.page-title{font-size:18px;font-weight:400;color:#212121;letter-spacing:-0.36px}
+.page-hdr-right{display:flex;align-items:center;gap:4px}
+.icon-btn{
+  width:28px;height:28px;border-radius:4px;border:1px solid #eaeaea;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:#fff;color:#555;flex-shrink:0;
+}
+.icon-btn:hover{background:rgb(242,244,247)}
+.icon-btn.borderless{border-color:transparent;background:transparent}
+.icon-btn.borderless:hover{background:rgba(0,0,0,0.06)}
+
+/* ── CARD BASE ── */
+.card{
+  background:#fff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  margin-bottom:16px;
+}
+
+/* ── SECTION 1: SCORE CARDS ── */
+.score-row{
+  display:flex;
+  align-items:stretch;
+}
+.score-left{
+  padding:20px 24px;
+  min-width:240px;
+  border-right:1px solid #eaeaea;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.score-right{
+  padding:20px 24px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.score-label{font-size:12px;color:#8f8f8f;font-weight:400}
+.sparkline-wrap{height:48px;width:160px}
+.score-main-val{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+}
+.score-big{font-size:28px;font-weight:400;color:#1976d2;letter-spacing:-0.5px}
+.score-delta-green{font-size:13px;color:#16a34a;font-weight:500}
+.score-delta-red{font-size:13px;color:#dc2626;font-weight:500}
+.score-sub{font-size:12px;color:#8f8f8f}
+
+.metrics-row{display:flex;align-items:flex-start;gap:0;flex:1}
+.metric-col{
+  flex:1;
+  padding:0 20px 0 0;
+  border-right:1px solid #eaeaea;
+  margin-right:20px;
+}
+.metric-col:last-child{border-right:none;margin-right:0;padding-right:0}
+.metric-val{
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+  margin-bottom:4px;
+}
+.metric-big{font-size:22px;font-weight:400;color:#1976d2;letter-spacing:-0.4px}
+.metric-lbl{font-size:12px;color:#8f8f8f}
+
+/* ── SECTION 2: RECOMMENDATIONS ── */
+.widget-hdr{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  padding:16px 20px 12px;
+  border-bottom:1px solid #eaeaea;
+}
+.widget-title{font-size:14px;font-weight:500;color:#212121;line-height:1.4}
+.widget-subtitle{font-size:12px;color:#8f8f8f;margin-top:2px;line-height:1.4}
+
+.rec-table{width:100%;border-collapse:collapse}
+.rec-table th{
+  padding:8px 16px;
+  font-size:12px;
+  color:#8f8f8f;
+  font-weight:400;
+  text-align:left;
+  border-bottom:1px solid #eaeaea;
+  white-space:nowrap;
+}
+.rec-th-inner{display:inline-flex;align-items:center;gap:3px;cursor:pointer}
+.rec-table td{
+  padding:12px 16px;
+  font-size:14px;
+  color:#212121;
+  border-bottom:1px solid #eaeaea;
+  vertical-align:middle;
+}
+.rec-table tbody tr:last-child td{border-bottom:none}
+.rec-table tbody tr:hover{background:rgb(242,244,247)}
+.rec-cat{font-size:11px;color:#8f8f8f;margin-bottom:2px;text-transform:capitalize}
+.rec-action{font-size:14px;color:#212121;font-weight:400}
+.rec-impact{font-size:13px;color:#555;line-height:1.5}
+.rec-arrow-btn{
+  width:28px;height:28px;border-radius:4px;
+  border:1px solid #1976d2;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#1976d2;flex-shrink:0;
+}
+.rec-arrow-btn:hover{background:rgba(25,118,210,0.06)}
+
+/* ── SECTION 3 & 4: DATA TABLES ── */
+.data-widget-hdr{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  padding:16px 20px 4px;
+}
+.data-widget-title{font-size:14px;font-weight:400;color:#212121;line-height:1.5}
+.data-widget-title .blue-link{color:#1976d2;cursor:pointer}
+.data-widget-subtitle{font-size:12px;color:#8f8f8f;padding:0 20px 10px;line-height:1.4}
+.data-widget-hdr-right{display:flex;align-items:center;gap:4px;flex-shrink:0;margin-top:2px}
+
+/* Platform tabs */
+.platform-tabs{
+  display:flex;
+  align-items:center;
+  padding:0 20px;
+  border-bottom:1px solid #eaeaea;
+  gap:0;
+}
+.platform-tab{
+  height:36px;
+  padding:0 14px;
+  font-size:13px;
+  color:#555;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  white-space:nowrap;
+}
+.platform-tab:hover{color:#212121}
+.platform-tab.active{color:#212121;border-bottom-color:#1976d2}
+
+/* Data table */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{
+  padding:9px 12px;
+  font-size:12px;
+  color:#555;
+  font-weight:400;
+  text-align:left;
+  border-bottom:1px solid #eaeaea;
+  white-space:nowrap;
+  background:#fff;
+}
+.data-table th:first-child{padding-left:20px}
+.data-th-inner{display:inline-flex;align-items:center;gap:3px;cursor:pointer;user-select:none}
+.data-th-inner:hover{color:#212121}
+
+.data-table td{
+  padding:10px 12px;
+  font-size:13px;
+  color:#212121;
+  border-bottom:1px solid #eaeaea;
+  vertical-align:middle;
+}
+.data-table td:first-child{padding-left:20px}
+.data-table tbody tr:last-child td{border-bottom:none}
+.data-table tbody tr:hover{background:rgb(242,244,247)}
+
+/* Expandable parent rows */
+.row-parent td:first-child{cursor:pointer}
+.row-child td:first-child{padding-left:40px}
+
+/* Score badge */
+.score-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:1px 5px;
+  border-radius:3px;
+  font-size:11px;
+  font-weight:500;
+  margin-right:4px;
+  letter-spacing:0;
+}
+.score-badge.red{background:#fee2e2;color:#dc2626}
+.score-badge.green{background:#dcfce7;color:#16a34a}
+
+.delta-green{color:#16a34a;font-size:12px}
+.delta-red{color:#dc2626;font-size:12px}
+
+/* Chevron toggle */
+.row-chevron{
+  display:inline-flex;align-items:center;
+  margin-right:6px;
+  transition:transform 0.15s;
+  cursor:pointer;
+  color:#555;
+  vertical-align:middle;
+}
+.row-chevron.open{transform:rotate(90deg)}
+
+/* Mini sparkline SVG */
+.sparkline-cell{
+  width:80px;
+  height:28px;
+  display:block;
+}
+
+/* Metric cell layout */
+.metric-cell{display:flex;align-items:center;gap:4px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="body-wrap">
+
+  <!-- RAIL (L1) -->
+  <div class="rail">
+    <a href="../index.html" class="rail-logo-area">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+      </svg>
+    </a>
+    <div class="rail-nav">
+      <div class="rail-btn" title="Overview"><img src="https://www.figma.com/api/mcp/asset/b190b937-4acd-4447-a23d-52ac33667bbf" alt="Overview"/></div>
+      <div class="rail-btn" title="Inbox" style="position:relative">
+        <img src="https://www.figma.com/api/mcp/asset/2e2e83ee-b044-4e8e-8e19-2167d4fdf77a" alt="Inbox"/>
+        <div style="position:absolute;top:3px;right:3px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid #e5e9f0"></div>
+      </div>
+      <div class="rail-btn" title="Listings"><img src="https://www.figma.com/api/mcp/asset/93bce035-24b2-4903-8005-5257e28a72fa" alt="Listings"/></div>
+      <div class="rail-btn" title="Reviews"><img src="https://www.figma.com/api/mcp/asset/ba0e252f-56dd-4ec7-ab44-0b17966eeda7" alt="Reviews"/></div>
+      <div class="rail-btn" title="Referrals"><img src="https://www.figma.com/api/mcp/asset/9a17a1c5-471f-4e6f-b946-96566e4a0d22" alt="Referrals"/></div>
+      <div class="rail-btn" title="Payments"><img src="https://www.figma.com/api/mcp/asset/041e0469-9975-49b7-b7e1-2cb12fef421e" alt="Payments"/></div>
+      <div class="rail-btn" title="Appointments"><img src="https://www.figma.com/api/mcp/asset/1f0ca52c-fdab-41b1-9f3c-b8eea76bfc8d" alt="Appointments"/></div>
+      <div class="rail-btn" title="Social"><img src="https://www.figma.com/api/mcp/asset/b50396a1-8d40-4772-83f3-2db886f4e9bc" alt="Social"/></div>
+      <div class="rail-btn" title="Surveys"><img src="https://www.figma.com/api/mcp/asset/27661920-7606-4572-91b5-be2235552d7c" alt="Surveys"/></div>
+      <div class="rail-btn" title="Ticketing"><img src="https://www.figma.com/api/mcp/asset/08909705-7085-4b15-8294-73314c2e877c" alt="Ticketing"/></div>
+      <div class="rail-btn" title="Contacts"><img src="https://www.figma.com/api/mcp/asset/7031eb61-447a-4cea-bb5b-4dd7079909db" alt="Contacts"/></div>
+      <div class="rail-btn" title="Campaigns"><img src="https://www.figma.com/api/mcp/asset/ec33957f-3390-4743-98d9-02b49fa8d71d" alt="Campaigns"/></div>
+      <div class="rail-btn" title="Marketing Automation"><img src="https://www.figma.com/api/mcp/asset/6877ac2e-ff9a-4458-920d-c82c3380807d" alt="Marketing Automation"/></div>
+      <div class="rail-btn" title="Reports"><img src="https://www.figma.com/api/mcp/asset/a66966a7-14e2-4396-8838-b86885bf61fd" alt="Reports"/></div>
+      <div class="rail-btn active" title="Search AI"><img src="https://www.figma.com/api/mcp/asset/74ac9c59-6da8-4a97-b9b8-0cf1252f7734" alt="Search AI"/></div>
+      <div class="rail-btn" title="Competitors"><img src="https://www.figma.com/api/mcp/asset/30cf26bd-2e9c-4552-8151-daedf67f2235" alt="Competitors"/></div>
+      <div style="flex:1"></div>
+      <div class="rail-divider"></div>
+      <div class="rail-btn" title="Settings"><img src="https://www.figma.com/api/mcp/asset/b9122252-443c-46ad-a5e2-672b25deaa06" alt="Settings"/></div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR (L2) -->
+  <div class="sidebar">
+    <div class="sb-title">Search AI</div>
+    <div class="sb-body">
+      <div class="sb-item active">Overview</div>
+      <div class="sb-item">Actions</div>
+      <div class="sb-group-hdr">
+        <span>Reports</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="sb-group-hdr">
+        <span>Settings</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOP NAV -->
+    <div class="top-nav">
+      <div class="top-nav-btn" title="Add">
+        <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+      </div>
+      <div class="top-nav-btn" title="Help">
+        <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
+      </div>
+      <div class="top-nav-btn" title="Account">
+        <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
+      </div>
+      <div class="top-nav-btn" title="Menu">
+        <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+      </div>
+    </div>
+
+    <!-- SCROLLABLE CONTENT -->
+    <div class="content">
+
+      <!-- Page Header -->
+      <div class="page-hdr">
+        <div class="page-hdr-left">
+          <h1 class="page-title">Overview</h1>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="page-hdr-right">
+          <div class="icon-btn borderless" title="More options">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+          </div>
+          <div class="icon-btn borderless" title="Filter">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 1: SCORE CARDS ── -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="score-row">
+
+          <!-- Left: Search AI score + sparkline -->
+          <div class="score-left">
+            <div class="score-label">Search AI score</div>
+            <div class="sparkline-wrap">
+              <canvas id="scoreSparkline"></canvas>
+            </div>
+            <div class="score-main-val">
+              <span class="score-big">82.3</span>
+              <span class="score-delta-green">+1.3</span>
+            </div>
+            <div class="score-sub">Your score</div>
+          </div>
+
+          <!-- Right: 4 metrics -->
+          <div class="score-right">
+            <div class="score-label">Search AI score is average of</div>
+            <div class="metrics-row">
+              <div class="metric-col">
+                <div class="metric-val">
+                  <span class="metric-big">58%</span>
+                  <span class="score-delta-green" style="font-size:11px">+36.6%</span>
+                </div>
+                <div class="metric-lbl">Visibility score</div>
+              </div>
+              <div class="metric-col">
+                <div class="metric-val">
+                  <span class="metric-big">79%</span>
+                  <span class="score-delta-green" style="font-size:11px">+20%</span>
+                </div>
+                <div class="metric-lbl">Citation share</div>
+              </div>
+              <div class="metric-col">
+                <div class="metric-val">
+                  <span class="metric-big">2</span>
+                  <span class="score-delta-red" style="font-size:11px">-1</span>
+                </div>
+                <div class="metric-lbl">Rank</div>
+              </div>
+              <div class="metric-col">
+                <div class="metric-val">
+                  <span class="metric-big">67%</span>
+                  <span class="score-delta-red" style="font-size:11px">-10%</span>
+                </div>
+                <div class="metric-lbl">Sentiment score</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: RECOMMENDATIONS ── -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="widget-hdr">
+          <div>
+            <div class="widget-title">How can you improve your Search AI score</div>
+            <div class="widget-subtitle">Enhance your business's search ranking with AI-driven recommendations and one-click optimization</div>
+          </div>
+          <div class="icon-btn borderless" title="More options" style="flex-shrink:0;margin-top:2px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+          </div>
+        </div>
+
+        <table class="rec-table">
+          <thead>
+            <tr>
+              <th style="width:220px">
+                <span class="rec-th-inner">
+                  Recommendations
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="rec-th-inner">
+                  Impact
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                </span>
+              </th>
+              <th style="width:40px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="rec-cat">Website content</div>
+                <div class="rec-action">Create content for blogs</div>
+              </td>
+              <td><span class="rec-impact">Create blog content for themes you are tracking to increase your citation share and visibility score</span></td>
+              <td>
+                <div class="rec-arrow-btn" title="Get started">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="rec-cat">AI agent</div>
+                <div class="rec-action">Setup AI agent</div>
+              </td>
+              <td><span class="rec-impact">Automate tasks and create content to improve your Search AI score using AI agent</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="rec-cat">Reviews</div>
+                <div class="rec-action">Increase patient reviews using outreach and visit reminders</div>
+              </td>
+              <td><span class="rec-impact">Boosts trust and conversions and support higher map/local pack inclusion rates.</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="rec-cat">Prompts</div>
+                <div class="rec-action">Improvise prompts</div>
+              </td>
+              <td><span class="rec-impact">Optimize prompts you are tracking to guide AI to analyze content that's relevant to your industry</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="rec-cat">Integrations</div>
+                <div class="rec-action">Enable Google Analytics in Search AI</div>
+              </td>
+              <td><span class="rec-impact">Integrate Google Analytics to track traffic from AI sites to your website</span></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 3: THEMES & PROMPTS TABLE ── -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="data-widget-hdr">
+          <div>
+            <div class="data-widget-title">
+              How are your themes &amp; prompts performing for
+              <span class="blue-link">all locations
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" style="vertical-align:middle;margin-left:1px"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </div>
+          </div>
+          <div class="data-widget-hdr-right">
+            <!-- Search -->
+            <div class="icon-btn borderless" title="Search">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <!-- Summarize -->
+            <div class="icon-btn borderless" title="Summarize">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <!-- More -->
+            <div class="icon-btn borderless" title="More options">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="data-widget-subtitle">Discover themes and prompts are appearing in answers across AI platforms</div>
+
+        <!-- Platform tabs -->
+        <div class="platform-tabs">
+          <div class="platform-tab active" onclick="setPlatformTab(this)">ChatGPT</div>
+          <div class="platform-tab" onclick="setPlatformTab(this)">Gemini</div>
+          <div class="platform-tab" onclick="setPlatformTab(this)">Perplexity</div>
+          <div class="platform-tab" onclick="setPlatformTab(this)">All sites</div>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="min-width:180px">
+                <span class="data-th-inner">Themes
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Search AI score
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Last 3 months
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Visibility score
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Citation share
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Rank
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Sentiment score
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Best dentist (expandable parent) -->
+            <tr class="row-parent" data-group="dentist">
+              <td>
+                <svg class="row-chevron open" id="chev-dentist" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" onclick="toggleGroup('dentist')"><polyline points="9 18 15 12 9 6"/></svg>
+                Best dentist
+              </td>
+              <td><span class="score-badge red">29.3</span> <span class="delta-red">-5.4</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,8 13,10 26,12 40,20 53,22 66,24 80,26" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,8 13,10 26,12 40,20 53,22 66,24 80,26 80,28 0,28" fill="rgba(220,38,38,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+            </tr>
+            <!-- Best dentist children -->
+            <tr class="row-child" data-parent="dentist">
+              <td style="padding-left:40px">Top 5 dentist near me</td>
+              <td><span class="score-badge red">29.3</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,20 13,18 26,22 40,19 53,17 66,16 80,14" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,20 13,18 26,22 40,19 53,17 66,16 80,14 80,28 0,28" fill="rgba(220,38,38,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+            </tr>
+            <tr class="row-child" data-parent="dentist">
+              <td style="padding-left:40px">Best dentist for teeth cleaning</td>
+              <td><span class="score-badge red">29.3</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,22 13,20 26,21 40,18 53,19 66,17 80,15" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,22 13,20 26,21 40,18 53,19 66,17 80,15 80,28 0,28" fill="rgba(220,38,38,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+            </tr>
+
+            <!-- Root canal -->
+            <tr class="row-parent" data-group="rootcanal">
+              <td>
+                <svg class="row-chevron" id="chev-rootcanal" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" onclick="toggleGroup('rootcanal')"><polyline points="9 18 15 12 9 6"/></svg>
+                Root canal
+              </td>
+              <td><span class="score-badge green">82.8</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,22 13,20 26,18 40,15 53,12 66,9 80,7" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,22 13,20 26,18 40,15 53,12 66,9 80,7 80,28 0,28" fill="rgba(22,163,74,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+            </tr>
+
+            <!-- Dental crown -->
+            <tr class="row-parent" data-group="dentalcrown">
+              <td>
+                <svg class="row-chevron" id="chev-dentalcrown" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" onclick="toggleGroup('dentalcrown')"><polyline points="9 18 15 12 9 6"/></svg>
+                Dental crown
+              </td>
+              <td><span class="score-badge green">82.8</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,20 13,19 26,17 40,15 53,13 66,11 80,8" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,20 13,19 26,17 40,15 53,13 66,11 80,8 80,28 0,28" fill="rgba(22,163,74,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+            </tr>
+
+            <!-- Sensitive teeth -->
+            <tr class="row-parent" data-group="sensitiveteeth">
+              <td>
+                <svg class="row-chevron" id="chev-sensitiveteeth" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" onclick="toggleGroup('sensitiveteeth')"><polyline points="9 18 15 12 9 6"/></svg>
+                Sensitive teeth
+              </td>
+              <td><span class="score-badge green">82.8</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,18 13,17 26,16 40,14 53,12 66,10 80,6" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,18 13,17 26,16 40,14 53,12 66,10 80,6 80,28 0,28" fill="rgba(22,163,74,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── SECTION 4: LOCATIONS TABLE ── -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="data-widget-hdr">
+          <div>
+            <div class="data-widget-title">How is your Search AI score across locations</div>
+          </div>
+          <div class="data-widget-hdr-right">
+            <div class="icon-btn borderless" title="Search">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn borderless" title="Summarize">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            </div>
+            <div class="icon-btn borderless" title="More options">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="data-widget-subtitle">Discover themes and prompts are appearing in answers across AI platforms</div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="min-width:200px">
+                <span class="data-th-inner">Location
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Search AI score
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Last 3 months
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Visibility score
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Citation share
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Rank
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+              <th>
+                <span class="data-th-inner">Sentiment score
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Central style, California</td>
+              <td><span class="score-badge red">29.3</span> <span class="delta-red">-5.4</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,8 13,10 26,12 40,20 53,22 66,24 80,26" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,8 13,10 26,12 40,20 53,22 66,24 80,26 80,28 0,28" fill="rgba(220,38,38,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>6.1%</span><span class="delta-red">-2</span></div></td>
+            </tr>
+            <tr>
+              <td>Southgate - Drive through</td>
+              <td><span class="score-badge red">29.3</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,20 13,18 26,22 40,19 53,17 66,16 80,14" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,20 13,18 26,22 40,19 53,17 66,16 80,14 80,28 0,28" fill="rgba(220,38,38,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+              <td><div class="metric-cell"><span>5.3%</span><span class="delta-red">-3.2</span></div></td>
+            </tr>
+            <tr>
+              <td>147 Roaring Drive, Hedgesville</td>
+              <td><span class="score-badge red">29.3</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,22 13,20 26,21 40,18 53,19 66,17 80,15" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,22 13,20 26,21 40,18 53,19 66,17 80,15 80,28 0,28" fill="rgba(220,38,38,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+              <td><div class="metric-cell"><span>4.8%</span><span class="delta-red">-2</span></div></td>
+            </tr>
+            <tr>
+              <td>Brookfields - Brownstone</td>
+              <td><span class="score-badge green">82.8</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,22 13,20 26,18 40,15 53,12 66,9 80,7" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,22 13,20 26,18 40,15 53,12 66,9 80,7 80,28 0,28" fill="rgba(22,163,74,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+              <td><div class="metric-cell"><span>4.1%</span><span class="delta-green">+1.2</span></div></td>
+            </tr>
+            <tr>
+              <td>252 - Village East prime cafe</td>
+              <td><span class="score-badge green">82.8</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,20 13,19 26,17 40,15 53,13 66,11 80,8" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,20 13,19 26,17 40,15 53,13 66,11 80,8 80,28 0,28" fill="rgba(22,163,74,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+              <td><div class="metric-cell"><span>3.9%</span><span class="delta-green">+1.6</span></div></td>
+            </tr>
+            <tr>
+              <td>Brookfields, Brownstone</td>
+              <td><span class="score-badge green">82.8</span> <span class="delta-green">+2.8</span></td>
+              <td><svg class="sparkline-cell" viewBox="0 0 80 28"><polyline points="0,18 13,17 26,16 40,14 53,12 66,10 80,6" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linejoin="round"/><polygon points="0,18 13,17 26,16 40,14 53,12 66,10 80,6 80,28 0,28" fill="rgba(22,163,74,0.08)"/></svg></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+              <td><div class="metric-cell"><span>3.8%</span><span class="delta-green">+3.4</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+</div><!-- /body-wrap -->
+
+<script>
+// ── Score sparkline ──
+(function(){
+  const ctx = document.getElementById('scoreSparkline').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['','','','','','','','','','','',''],
+      datasets: [{
+        data: [74, 76, 73, 78, 79, 77, 80, 81, 79, 82, 83, 82.3],
+        borderColor: '#1976d2',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0.4,
+        fill: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      },
+      animation: false,
+    }
+  });
+})();
+
+// ── Platform tab switching ──
+function setPlatformTab(el) {
+  el.closest('.platform-tabs').querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── Expandable row groups ──
+function toggleGroup(group) {
+  const children = document.querySelectorAll('[data-parent="' + group + '"]');
+  const chevron = document.getElementById('chev-' + group);
+  const isOpen = chevron.classList.contains('open');
+  children.forEach(function(row) {
+    row.style.display = isOpen ? 'none' : '';
+  });
+  chevron.classList.toggle('open', !isOpen);
+}
+// Start with Best dentist expanded, others collapsed
+(function(){
+  ['rootcanal','dentalcrown','sensitiveteeth'].forEach(function(g){
+    toggleGroup(g); // collapse by default
+  });
+})();
+</script>
+</body>
+</html>
