@@ -328,6 +328,51 @@ body{
   display:flex;align-items:center;justify-content:flex-end;gap:8px;
   padding-top:16px;border-top:1px solid #eaeaea;margin-top:8px;
 }
+/* Pages multi-select panel */
+.pages-panel{padding:0;min-width:100%}
+.pages-table-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 16px;font-size:12px;color:#8f8f8f;font-weight:400;
+  border-bottom:1px solid #eaeaea;
+}
+.pages-rows{display:flex;flex-direction:column}
+.pages-row{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;
+}
+.pages-row:last-child{border-bottom:none}
+.pages-row:hover{background:rgb(242,244,247)}
+.pages-row.checked{background:#f5f5f5}
+.pages-cb{
+  width:18px;height:18px;border-radius:4px;border:1.5px solid #bbbfc8;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:#fff;transition:background 0.1s,border-color 0.1s;
+}
+.pages-row.checked .pages-cb{background:#1976d2;border-color:#1976d2}
+.pages-cb-check{display:none;color:#fff;font-size:13px;font-weight:700}
+.pages-row.checked .pages-cb-check{display:block}
+.pages-url{flex:1;font-size:14px;color:#212121;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pages-tag{
+  display:inline-flex;align-items:center;gap:4px;padding:2px 8px;
+  border-radius:20px;background:#f3f4f6;font-size:12px;color:#555;white-space:nowrap;flex-shrink:0;
+}
+.pages-tag-dot{width:14px;height:14px;border-radius:50%;background:#bbbfc8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pages-count{font-size:14px;color:#212121;font-weight:400;min-width:24px;text-align:right;flex-shrink:0}
+.pages-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;border-top:1px solid #eaeaea;
+}
+.pages-reset{font-size:14px;color:#212121;cursor:pointer;font-weight:400}
+.pages-reset:hover{text-decoration:underline}
+.pages-pagination{display:flex;align-items:center;gap:8px;font-size:14px;color:#212121}
+.pages-nav{
+  width:28px;height:28px;border:1px solid #e5e9f0;border-radius:4px;
+  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#212121;
+}
+.pages-nav:hover{background:rgb(242,244,247)}
+.pages-nav:disabled{opacity:0.4;cursor:default}
+
 .btn-cancel{
   padding:8px 12px;border-radius:4px;border:none;background:transparent;
   color:#1976d2;font-size:16px;font-family:'Roboto',sans-serif;cursor:pointer;
@@ -784,14 +829,23 @@ body{
       <div class="dropdown-field" id="dd-pages" onclick="toggleDropdown('pages')">
         <div class="df-inner">
           <div class="df-label">Top cited pages</div>
-          <div class="df-value" id="dd-pages-val">10 pages</div>
+          <div class="df-value" id="dd-pages-val">10 pages selected</div>
         </div>
         <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
-        <div class="dropdown-options" onclick="event.stopPropagation()">
-          <div class="dropdown-option" onclick="selectOption('pages','5 pages',this)">5 pages</div>
-          <div class="dropdown-option selected" onclick="selectOption('pages','10 pages',this)">10 pages</div>
-          <div class="dropdown-option" onclick="selectOption('pages','15 pages',this)">15 pages</div>
-          <div class="dropdown-option" onclick="selectOption('pages','20 pages',this)">20 pages</div>
+        <div class="dropdown-options pages-panel" onclick="event.stopPropagation()">
+          <div class="pages-table-header">
+            <span>Citations</span>
+            <span>Count</span>
+          </div>
+          <div class="pages-rows" id="pages-rows"></div>
+          <div class="pages-footer">
+            <span class="pages-reset" onclick="resetPageSelection()">Reset selection</span>
+            <div class="pages-pagination">
+              <span id="pages-page-label">Page <strong>1</strong> of 21</span>
+              <button class="pages-nav" onclick="changePage(-1)" id="pages-prev">&#8592;</button>
+              <button class="pages-nav" onclick="changePage(1)" id="pages-next">&#8594;</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -914,6 +968,86 @@ function selectOption(ddId, value, optEl) {
   optEl.closest('.dropdown-options').querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
   optEl.classList.add('selected');
   document.getElementById('dd-' + ddId).classList.remove('open');
+}
+
+// ── Top cited pages panel ──
+const ALL_PAGES = [
+  {url:'repreply.vercel.app/blog/revi...', count:2},
+  {url:'opineko.com/blog/review-ma...', count:2},
+  {url:'reviewscout.ai/blog/review-...', count:11},
+  {url:'expertreputation.com/review...', count:8},
+  {url:'birdeye.com/blog/online-reviews...', count:14},
+  {url:'trustpilot.com/reviews/guide...', count:6},
+  {url:'podium.com/article/review-res...', count:9},
+  {url:'grade.us/blog/responding-to-re...', count:3},
+  {url:'brightlocal.com/research/loca...', count:17},
+  {url:'reviewtrackers.com/guides/re...', count:5},
+  {url:'spiegel.com/blog/online-review...', count:21},
+  {url:'semrush.com/blog/reputation-m...', count:4},
+  {url:'yext.com/blog/review-generatio...', count:7},
+  {url:'hootsuite.com/blog/how-to-get-...', count:12},
+  {url:'socialmediaexaminer.com/revie...', count:3},
+  {url:'hubspot.com/marketing/online-re...', count:8},
+  {url:'forbes.com/advisor/business/on...', count:16},
+  {url:'searchengineland.com/local-seo...', count:5},
+  {url:'moz.com/blog/local-reviews-seo...', count:19},
+  {url:'neilpatel.com/blog/online-revie...', count:10},
+  {url:'smartinsights.com/reputation-m...', count:6},
+];
+const PAGES_PER_PAGE = 4;
+let pagesCurrentPage = 1;
+let pagesSelected = new Set([0,1,2,3,4,5,6,7,8,9]); // first 10 selected
+
+function renderPagesPanel() {
+  const start = (pagesCurrentPage - 1) * PAGES_PER_PAGE;
+  const slice = ALL_PAGES.slice(start, start + PAGES_PER_PAGE);
+  const totalPages = Math.ceil(ALL_PAGES.length / PAGES_PER_PAGE);
+  const container = document.getElementById('pages-rows');
+  container.innerHTML = slice.map((p, i) => {
+    const globalIdx = start + i;
+    const checked = pagesSelected.has(globalIdx);
+    return `<div class="pages-row${checked?' checked':''}" onclick="togglePageRow(${globalIdx},this)">
+      <div class="pages-cb"><span class="pages-cb-check">&#10003;</span></div>
+      <span class="pages-url" title="${p.url}">${p.url}</span>
+      <span class="pages-tag"><span class="pages-tag-dot"></span>Other</span>
+      <span class="pages-count">${p.count}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('pages-page-label').innerHTML = `Page <strong>${pagesCurrentPage}</strong> of ${totalPages}`;
+  document.getElementById('pages-prev').disabled = pagesCurrentPage === 1;
+  document.getElementById('pages-next').disabled = pagesCurrentPage === totalPages;
+  document.getElementById('dd-pages-val').textContent = pagesSelected.size + ' pages selected';
+}
+
+function togglePageRow(idx, rowEl) {
+  if (pagesSelected.has(idx)) {
+    pagesSelected.delete(idx);
+    rowEl.classList.remove('checked');
+    rowEl.querySelector('.pages-cb').style.background = '';
+    rowEl.querySelector('.pages-cb').style.borderColor = '';
+  } else {
+    pagesSelected.add(idx);
+    rowEl.classList.add('checked');
+  }
+  document.getElementById('dd-pages-val').textContent = pagesSelected.size + ' pages selected';
+}
+
+function changePage(dir) {
+  const totalPages = Math.ceil(ALL_PAGES.length / PAGES_PER_PAGE);
+  pagesCurrentPage = Math.max(1, Math.min(totalPages, pagesCurrentPage + dir));
+  renderPagesPanel();
+}
+
+function resetPageSelection() {
+  pagesSelected.clear();
+  renderPagesPanel();
+}
+
+// Override toggleDropdown to init pages panel
+const _origToggleDropdown = toggleDropdown;
+function toggleDropdown(id) {
+  _origToggleDropdown(id);
+  if (id === 'pages') renderPagesPanel();
 }
 
 // Article title suggestions
