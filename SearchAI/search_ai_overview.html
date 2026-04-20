@@ -394,6 +394,118 @@ body{
   cursor:pointer;min-width:154px;text-align:center;
 }
 .btn-generate:hover{background:#1565c0}
+
+/* ══ ARTICLE VIEW ══ */
+.content.article-mode{padding:0;overflow:hidden;display:flex}
+#view-article{height:100%;width:100%;display:flex}
+
+/* Left panel */
+.art-left{
+  width:280px;background:#fff;border-right:1px solid #eaeaea;
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+}
+.art-tabs{display:flex;border-bottom:1px solid #eaeaea;padding:0 8px;flex-shrink:0}
+.art-tab{
+  padding:0 12px;height:40px;font-size:14px;color:rgb(85,85,85);
+  cursor:pointer;border-bottom:2px solid transparent;
+  display:flex;align-items:center;white-space:nowrap;
+}
+.art-tab.active{color:rgb(33,33,33);border-bottom-color:rgb(25,118,210)}
+.art-search{padding:10px 12px;border-bottom:1px solid #eaeaea;flex-shrink:0}
+.art-search-inp{
+  width:100%;border:1px solid #e5e9f0;border-radius:4px;
+  padding:6px 10px;font-size:14px;font-family:'Roboto',sans-serif;
+  outline:none;color:rgb(33,33,33);
+}
+.art-search-inp:focus{border-color:#1976d2}
+.art-blocks{flex:1;overflow-y:auto;padding:12px}
+.art-blocks::-webkit-scrollbar{width:4px}
+.art-blocks::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.art-blocks-label{
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:rgb(143,143,143);text-transform:uppercase;margin-bottom:8px;
+}
+.art-blocks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.art-block-item{
+  border:1px solid #eaeaea;border-radius:6px;padding:10px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:grab;font-size:12px;color:rgb(33,33,33);text-align:center;background:#fff;
+}
+.art-block-item:hover{background:rgb(242,244,247)}
+.art-block-item .material-symbols-rounded{font-size:20px;color:rgb(85,85,85)}
+
+/* Main editor area */
+.art-main{
+  flex:1;overflow-y:auto;padding:24px;
+  background:rgb(242,242,242);display:flex;flex-direction:column;gap:16px;
+}
+.art-main::-webkit-scrollbar{width:6px}
+.art-main::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+
+/* Article card */
+.art-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden}
+.art-card-body{padding:28px 32px}
+.art-article-title{
+  font-size:22px;font-weight:500;color:rgb(33,33,33);
+  line-height:1.4;margin-bottom:20px;outline:none;
+}
+.art-hero-img{
+  width:100%;height:200px;
+  background:linear-gradient(135deg,#dbeafe 0%,#c7d6f6 100%);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.art-hero-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgb(143,143,143)}
+.art-hero-placeholder .material-symbols-rounded{font-size:40px;color:#a5b4fc}
+.art-article-text{font-size:14px;color:rgb(85,85,85);line-height:1.75;outline:none}
+.art-article-text p{margin-bottom:14px}
+.art-article-text p:last-child{margin-bottom:0}
+
+/* SEO card */
+.art-seo-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px}
+.art-seo-title{font-size:14px;font-weight:500;color:rgb(33,33,33);margin-bottom:16px}
+.art-seo-field{margin-bottom:14px}
+.art-seo-field:last-child{margin-bottom:0}
+.art-seo-label{
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:rgb(143,143,143);text-transform:uppercase;margin-bottom:6px;
+}
+.art-seo-value-row{
+  display:flex;align-items:flex-start;gap:8px;
+  background:#fafafa;border:1px solid #eaeaea;border-radius:4px;padding:8px 12px;
+}
+.art-seo-value{flex:1;font-size:14px;color:rgb(33,33,33);line-height:1.5;outline:none;min-width:0}
+.art-copy-btn{
+  width:24px;height:24px;border:none;background:transparent;cursor:pointer;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  color:rgb(85,85,85);flex-shrink:0;
+}
+.art-copy-btn:hover{background:rgb(242,244,247)}
+.art-copy-btn .material-symbols-rounded{font-size:16px}
+
+/* Article page header overrides */
+.page-hdr-left{display:flex;align-items:center;gap:6px}
+#hdr-back-btn{display:none}
+.art-score{font-size:14px;font-weight:500;color:#16a34a;display:flex;align-items:center;gap:4px}
+.btn-export{
+  padding:5px 14px;border-radius:4px;border:1px solid #d1d5db;
+  background:#fff;color:rgb(33,33,33);font-size:14px;
+  font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.btn-export:hover{background:rgb(242,244,247)}
+.btn-save{
+  padding:5px 14px;border-radius:4px 0 0 4px;border:none;
+  background:#1976d2;color:#fff;font-size:14px;
+  font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.btn-save:hover{background:#1565c0}
+.btn-save-caret{
+  padding:5px 8px;border-radius:0 4px 4px 0;border:none;
+  border-left:1px solid rgba(255,255,255,0.3);
+  background:#1976d2;color:#fff;cursor:pointer;
+  display:flex;align-items:center;
+}
+.btn-save-caret:hover{background:#1565c0}
 </style>
 </head>
 <body>
@@ -518,7 +630,12 @@ body{
 
   <!-- PAGE HEADER -->
   <div class="page-hdr">
-    <span class="page-title" id="page-title">Overview</span>
+    <div class="page-hdr-left">
+      <button class="icon-btn" id="hdr-back-btn" onclick="showView('content')" title="Back">
+        <span class="material-symbols-rounded">arrow_back</span>
+      </button>
+      <span class="page-title" id="page-title">Overview</span>
+    </div>
     <div class="page-hdr-right" id="hdr-overview-btns">
       <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
@@ -532,10 +649,23 @@ body{
       <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
+    <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px">
+      <div class="art-score">
+        <span class="material-symbols-rounded" style="font-size:16px;color:#16a34a">verified</span>
+        93/100
+      </div>
+      <button class="btn-export">Export</button>
+      <div style="display:flex">
+        <button class="btn-save">Save</button>
+        <button class="btn-save-caret">
+          <span class="material-symbols-rounded" style="font-size:16px">expand_more</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- CONTENT -->
-  <div class="content">
+  <div class="content" id="main-content">
 
     <!-- ══ OVERVIEW VIEW ══ -->
     <div class="view active" id="view-overview">
@@ -771,6 +901,116 @@ body{
       </div>
     </div><!-- /view-content -->
 
+    <!-- ══ ARTICLE VIEW ══ -->
+    <div class="view" id="view-article">
+      <!-- Left: content blocks panel -->
+      <div class="art-left">
+        <div class="art-tabs">
+          <div class="art-tab active" onclick="switchArtTab(this)">Create with AI</div>
+          <div class="art-tab" onclick="switchArtTab(this)">Create manually</div>
+        </div>
+        <div class="art-search">
+          <input class="art-search-inp" type="text" placeholder="Search blocks…"/>
+        </div>
+        <div class="art-blocks">
+          <div class="art-blocks-label">Content blocks</div>
+          <div class="art-blocks-grid">
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">title</span>Header
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">text_fields</span>Title
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">subject</span>Text
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">smart_button</span>Button
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">image</span>Image
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">videocam</span>Video
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">horizontal_rule</span>Divider
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">space_bar</span>Spacer
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">share</span>Social links
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">format_quote</span>Review quote
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">web</span>Footer
+            </div>
+            <div class="art-block-item" draggable="true">
+              <span class="material-symbols-rounded">contacts</span>Contact us
+            </div>
+            <div class="art-block-item" draggable="true" style="grid-column:1/-1">
+              <span class="material-symbols-rounded">code</span>Code blocks
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: article editor -->
+      <div class="art-main">
+        <div class="art-card">
+          <div class="art-card-body">
+            <div class="art-article-title" contenteditable="true">Gold Coast Marina's Secret Burger That'll Blow Your Mind!</div>
+            <div class="art-hero-img">
+              <div class="art-hero-placeholder">
+                <span class="material-symbols-rounded">image</span>
+                <span style="font-size:13px">Hero image</span>
+              </div>
+            </div>
+            <div class="art-article-text" contenteditable="true">
+              <p>Nestled in the heart of Gold Coast Marina, there's a burger spot that locals have been keeping to themselves — and for good reason. This isn't your average fast-food joint; it's a culinary experience that redefines what a burger can be.</p>
+              <p>The secret? A house-blended patty made from premium grass-fed beef, seasoned overnight and cooked to perfection on a cast-iron griddle. Topped with their signature smoked aioli, crispy pancetta, and a medley of pickled jalapeños, every bite is an explosion of flavour.</p>
+              <p>What makes this place truly special is the commitment to freshness. Every ingredient is sourced locally — the brioche buns are baked in-house each morning, and the sauces are crafted from scratch using produce from nearby Gold Coast farms.</p>
+              <p>Whether you're a marina regular or visiting for the first time, this hidden gem deserves a spot at the top of your must-try list. Come hungry — you won't leave disappointed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="art-seo-card">
+          <div class="art-seo-title">SEO metadata</div>
+          <div class="art-seo-field">
+            <div class="art-seo-label">Meta Title</div>
+            <div class="art-seo-value-row">
+              <div class="art-seo-value" contenteditable="true">Gold Coast Marina's Secret Burger — Must-Try Hidden Gem</div>
+              <button class="art-copy-btn" onclick="copyField(this)" title="Copy">
+                <span class="material-symbols-rounded">content_copy</span>
+              </button>
+            </div>
+          </div>
+          <div class="art-seo-field">
+            <div class="art-seo-label">Meta Description</div>
+            <div class="art-seo-value-row">
+              <div class="art-seo-value" contenteditable="true">Discover the best-kept burger secret at Gold Coast Marina. A premium grass-fed patty with smoked aioli, crispy pancetta and pickled jalapeños — locals' favourite since 2019.</div>
+              <button class="art-copy-btn" onclick="copyField(this)" title="Copy">
+                <span class="material-symbols-rounded">content_copy</span>
+              </button>
+            </div>
+          </div>
+          <div class="art-seo-field">
+            <div class="art-seo-label">Slug</div>
+            <div class="art-seo-value-row">
+              <div class="art-seo-value" contenteditable="true">gold-coast-marina-secret-burger</div>
+              <button class="art-copy-btn" onclick="copyField(this)" title="Copy">
+                <span class="material-symbols-rounded">content_copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-article -->
+
   </div><!-- /content -->
 </div><!-- /main -->
 </div><!-- /body-wrap -->
@@ -918,7 +1158,7 @@ body{
 
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeContentModal()">Cancel</button>
-      <button class="btn-generate">Generate article</button>
+      <button class="btn-generate" onclick="generateArticle()">Generate article</button>
     </div>
   </div>
 </div>
@@ -940,16 +1180,26 @@ function showView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
 
+  // article-mode on content wrapper (removes padding, enables full-height flex)
+  const content = document.getElementById('main-content');
+  if (view === 'article') {
+    content.classList.add('article-mode');
+  } else {
+    content.classList.remove('article-mode');
+  }
+
   // update page title + header buttons
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', article:'Create content'};
   document.getElementById('page-title').textContent = titles[view] || view;
+  document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
   document.getElementById('hdr-rec-btns').style.display = view === 'recommendations' ? 'flex' : 'none';
   document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
+  document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
 
   // update sidebar active states
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
-  const navEl = document.getElementById('nav-' + view);
+  const navEl = document.getElementById('nav-' + view) || document.getElementById('nav-content');
   if (navEl) navEl.classList.add('active');
 }
 
@@ -1095,6 +1345,42 @@ document.addEventListener('click', function(e) {
     closeAllDropdowns();
   }
 });
+
+// Generate article — close modal and navigate to article view
+function generateArticle() {
+  // pick the selected title suggestion (if any) and update article heading
+  const selectedSuggestion = document.querySelector('.rec-suggestion.selected');
+  const titleInput = document.getElementById('article-title-input');
+  const finalTitle = (selectedSuggestion ? selectedSuggestion.textContent.trim() : null)
+    || (titleInput ? titleInput.value.trim() : null)
+    || "Gold Coast Marina's Secret Burger That'll Blow Your Mind!";
+  const artTitle = document.querySelector('.art-article-title');
+  if (artTitle) artTitle.textContent = finalTitle;
+  // also sync SEO meta title
+  const metaTitle = document.querySelector('.art-seo-value');
+  if (metaTitle) metaTitle.textContent = finalTitle;
+
+  closeContentModal();
+  showView('article');
+}
+
+// Article tab switcher
+function switchArtTab(el) {
+  el.closest('.art-tabs').querySelectorAll('.art-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Copy field content to clipboard
+function copyField(btn) {
+  const valueEl = btn.closest('.art-seo-value-row').querySelector('.art-seo-value');
+  if (!valueEl) return;
+  const text = valueEl.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const icon = btn.querySelector('.material-symbols-rounded');
+    icon.textContent = 'check';
+    setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+  }).catch(() => {});
+}
 </script>
 </body>
 </html>
