@@ -396,8 +396,9 @@ body{
 .btn-generate:hover{background:#1565c0}
 
 /* ══ ARTICLE VIEW ══ */
-.content.article-mode{padding:0;overflow:hidden;display:flex}
-#view-article{height:100%;width:100%;display:flex}
+.sidebar.hidden{display:none}
+.content.article-mode{padding:0;overflow-y:auto;background:rgb(242,242,242)}
+#view-article{display:none;flex-direction:column;max-width:760px;margin:0 auto;padding:24px;gap:16px}
 #view-article.active{display:flex}
 
 /* Left panel */
@@ -487,7 +488,7 @@ body{
 /* Article page header overrides */
 .page-hdr-left{display:flex;align-items:center;gap:6px}
 #hdr-back-btn{display:none}
-.art-score{font-size:14px;font-weight:500;color:#16a34a;display:flex;align-items:center;gap:4px}
+.art-score{font-size:14px;display:flex;align-items:center;gap:5px}
 .btn-export{
   padding:5px 14px;border-radius:4px;border:1px solid #d1d5db;
   background:#fff;color:rgb(33,33,33);font-size:14px;
@@ -650,10 +651,16 @@ body{
       <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
-    <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px">
+    <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
       <div class="art-score">
-        <span class="material-symbols-rounded" style="font-size:16px;color:#16a34a">verified</span>
-        93/100
+        <!-- Thin green ring: r=9, circumference≈56.5, 93%≈52.6 -->
+        <svg width="22" height="22" viewBox="0 0 22 22">
+          <circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
+          <circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5"
+            stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round"
+            transform="rotate(-90 11 11)"/>
+        </svg>
+        <span style="color:#16a34a;font-weight:500">93</span><span style="color:#8f8f8f;font-weight:400">/100</span>
       </div>
       <button class="btn-export">Export</button>
       <div style="display:flex">
@@ -904,63 +911,9 @@ body{
 
     <!-- ══ ARTICLE VIEW ══ -->
     <div class="view" id="view-article">
-      <!-- Left: content blocks panel -->
-      <div class="art-left">
-        <div class="art-tabs">
-          <div class="art-tab active" onclick="switchArtTab(this)">Create with AI</div>
-          <div class="art-tab" onclick="switchArtTab(this)">Create manually</div>
-        </div>
-        <div class="art-search">
-          <input class="art-search-inp" type="text" placeholder="Search blocks…"/>
-        </div>
-        <div class="art-blocks">
-          <div class="art-blocks-label">Content blocks</div>
-          <div class="art-blocks-grid">
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">title</span>Header
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">text_fields</span>Title
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">subject</span>Text
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">smart_button</span>Button
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">image</span>Image
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">videocam</span>Video
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">horizontal_rule</span>Divider
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">space_bar</span>Spacer
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">share</span>Social links
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">format_quote</span>Review quote
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">web</span>Footer
-            </div>
-            <div class="art-block-item" draggable="true">
-              <span class="material-symbols-rounded">contacts</span>Contact us
-            </div>
-            <div class="art-block-item" draggable="true" style="grid-column:1/-1">
-              <span class="material-symbols-rounded">code</span>Code blocks
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Right: article editor -->
-      <div class="art-main">
+      <!-- Article editor (full width, no blocks panel) -->
+      <div class="art-main" style="padding:0;background:transparent">
         <div class="art-card">
           <div class="art-card-body">
             <div class="art-article-title" contenteditable="true">Gold Coast Marina's Secret Burger That'll Blow Your Mind!</div>
@@ -1181,12 +1134,15 @@ function showView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
 
-  // article-mode on content wrapper (removes padding, enables full-height flex)
+  // article-mode on content wrapper + hide sidebar
   const content = document.getElementById('main-content');
+  const sidebar = document.querySelector('.sidebar');
   if (view === 'article') {
     content.classList.add('article-mode');
+    sidebar.classList.add('hidden');
   } else {
     content.classList.remove('article-mode');
+    sidebar.classList.remove('hidden');
   }
 
   // update page title + header buttons
