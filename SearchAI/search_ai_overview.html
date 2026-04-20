@@ -248,36 +248,7 @@ body{
 /* ══ CONTENT VIEW — EMPTY STATE ══ */
 .content-empty{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:calc(100vh - 52px - 52px - 60px);gap:20px;text-align:center;
-}
-.content-empty-illus{
-  width:220px;height:140px;
-  background:rgba(141,157,202,0.22);
-  border-radius:24px 4px 24px 4px;
-  position:relative;display:flex;align-items:center;justify-content:center;
-  overflow:visible;
-}
-.illus-card-back{
-  position:absolute;top:16px;left:24px;right:24px;bottom:16px;
-  background:#fff;border-radius:8px;
-  box-shadow:0 1px 4px rgba(0,0,0,0.10);
-  display:flex;flex-direction:column;gap:6px;padding:12px;
-}
-.illus-card-front{
-  position:absolute;top:28px;left:36px;right:12px;bottom:8px;
-  background:#1976d2;border-radius:8px;
-  box-shadow:0 2px 8px rgba(25,118,210,0.28);
-  display:flex;flex-direction:column;gap:6px;padding:10px;
-}
-.illus-row{height:6px;border-radius:3px;background:rgba(255,255,255,0.35)}
-.illus-row.short{width:55%}
-.illus-icon-row{display:flex;align-items:center;gap:6px;margin-bottom:2px}
-.illus-icon-box{width:16px;height:16px;border-radius:3px;background:rgba(255,255,255,0.5);flex-shrink:0}
-.illus-back-row{height:5px;border-radius:3px;background:#e8eaf0}
-.illus-back-row.short{width:50%}
-.illus-back-dashed{
-  height:26px;border-radius:4px;border:1.5px dashed #c7d0e0;
-  display:flex;align-items:center;justify-content:center;margin-top:auto;
+  min-height:calc(100vh - 52px - 52px - 60px);gap:20px;text-align:center;padding:50px 20px;
 }
 .content-empty-title{font-size:18px;font-weight:400;color:#212121}
 .content-empty-sub{font-size:14px;color:#555;max-width:360px;line-height:1.6}
@@ -292,6 +263,83 @@ body{
   background:#1976d2;color:#fff;font-size:14px;font-family:'Roboto',sans-serif;cursor:pointer;
 }
 .btn-filled:hover{background:#1565c0}
+
+/* ══ MODAL ══ */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(33,33,33,0.4);
+  z-index:1000;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:#fff;border-radius:8px;width:825px;max-width:95vw;
+  max-height:90vh;overflow-y:auto;padding:24px;
+  display:flex;flex-direction:column;gap:0;
+  box-shadow:0 10px 24px rgba(33,33,33,0.2);
+}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.modal-title{font-size:16px;font-weight:400;color:#212121}
+.modal-close{width:24px;height:24px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#555;font-size:18px;}
+.modal-close:hover{background:rgb(242,244,247)}
+.modal-subtitle{font-size:14px;color:#212121;margin-bottom:24px;line-height:1.5}
+.modal-section-title{font-size:16px;font-weight:400;color:#212121;margin-bottom:4px}
+.modal-section-sub{font-size:14px;color:#212121;margin-bottom:12px;line-height:1.5}
+.modal-fields{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.dropdown-field{
+  border:1px solid #e5e9f0;border-radius:4px;padding:4px 8px 4px 12px;
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;background:#fff;position:relative;
+}
+.dropdown-field:hover{border-color:#bbc8e0}
+.dropdown-field.open{border-color:#1976d2}
+.df-inner{display:flex;flex-direction:column;flex:1;justify-content:center}
+.df-label{font-size:12px;color:#8f8f8f;line-height:1.5}
+.df-value{font-size:14px;color:#212121;line-height:20px}
+.df-chevron{color:#555;flex-shrink:0}
+.dropdown-options{
+  display:none;position:absolute;top:100%;left:0;right:0;z-index:10;
+  background:#fff;border:1px solid #e5e9f0;border-radius:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);margin-top:2px;
+}
+.dropdown-field.open .dropdown-options{display:block}
+.dropdown-option{padding:10px 12px;font-size:14px;color:#212121;cursor:pointer}
+.dropdown-option:hover{background:rgb(242,244,247)}
+.dropdown-option.selected{background:#e8f0fe;color:#1976d2}
+.article-title-input{
+  width:100%;border:1px solid #e5e9f0;border-radius:4px;
+  padding:8px 12px;font-size:14px;color:#212121;font-family:'Roboto',sans-serif;
+  outline:none;line-height:20px;margin-bottom:8px;
+}
+.article-title-input:focus{border-color:#1976d2}
+.ai-recs-header{
+  display:flex;align-items:center;gap:6px;font-size:12px;color:#212121;
+  margin-bottom:4px;
+}
+.ai-recs-header .ai-icon{
+  width:12px;height:12px;background:#7c3aed;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.rec-suggestion{
+  padding:8px;font-size:14px;color:#212121;cursor:pointer;border-radius:4px;
+  line-height:1.5;border:1px solid transparent;margin-bottom:2px;
+}
+.rec-suggestion:hover{background:rgb(242,244,247)}
+.rec-suggestion.selected{border-color:#1976d2;background:#e8f0fe}
+.modal-footer{
+  display:flex;align-items:center;justify-content:flex-end;gap:8px;
+  padding-top:16px;border-top:1px solid #eaeaea;margin-top:8px;
+}
+.btn-cancel{
+  padding:8px 12px;border-radius:4px;border:none;background:transparent;
+  color:#1976d2;font-size:16px;font-family:'Roboto',sans-serif;cursor:pointer;
+  min-width:136px;text-align:center;
+}
+.btn-cancel:hover{background:#e8f0fe}
+.btn-generate{
+  padding:8px 12px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:16px;font-family:'Roboto',sans-serif;
+  cursor:pointer;min-width:154px;text-align:center;
+}
+.btn-generate:hover{background:#1565c0}
 </style>
 </head>
 <body>
@@ -659,34 +707,12 @@ body{
     <!-- ══ CONTENT VIEW ══ -->
     <div class="view" id="view-content">
       <div class="content-empty">
-        <div class="content-empty-illus">
-          <!-- back card -->
-          <div class="illus-card-back">
-            <div class="illus-icon-row">
-              <div style="width:16px;height:16px;border-radius:3px;background:#e8eaf0;flex-shrink:0"></div>
-              <div class="illus-back-row" style="width:60%"></div>
-            </div>
-            <div class="illus-back-row"></div>
-            <div class="illus-back-row short"></div>
-            <div class="illus-back-dashed">
-              <span style="font-size:18px;color:#c7d0e0;line-height:1">+</span>
-            </div>
-          </div>
-          <!-- front card (blue) -->
-          <div class="illus-card-front">
-            <div class="illus-icon-row">
-              <div class="illus-icon-box"></div>
-              <div class="illus-row" style="width:55%"></div>
-            </div>
-            <div class="illus-row"></div>
-            <div class="illus-row short"></div>
-          </div>
-        </div>
+        <img src="./empty-state.svg" width="278" height="225" alt="Empty state illustration" style="flex-shrink:0"/>
         <div class="content-empty-title">Create your first AEO content</div>
         <div class="content-empty-sub">Streamline collaboration in one place for all stakeholders, by assigning them tasks and receiving updates</div>
         <div class="content-empty-actions">
           <button class="btn-outlined">Optimize content</button>
-          <button class="btn-filled">Create content</button>
+          <button class="btn-filled" onclick="openContentModal()">Create content</button>
         </div>
       </div>
     </div><!-- /view-content -->
@@ -694,6 +720,133 @@ body{
   </div><!-- /content -->
 </div><!-- /main -->
 </div><!-- /body-wrap -->
+
+<!-- ══ CONTENT CONFIGURATION MODAL ══ -->
+<div class="modal-overlay" id="contentModal" onclick="handleOverlayClick(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Content configuration</span>
+      <button class="modal-close" onclick="closeContentModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div class="modal-subtitle">Write long-form AEO content based on an analysis of the current top-cited pages.</div>
+
+    <div class="modal-fields">
+      <!-- Topic -->
+      <div class="dropdown-field" id="dd-topic" onclick="toggleDropdown('topic')">
+        <div class="df-inner">
+          <div class="df-label">Topic</div>
+          <div class="df-value" id="dd-topic-val">Fastfood</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('topic','Fastfood',this)">Fastfood</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Local Dining',this)">Local Dining</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Healthcare',this)">Healthcare</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Real Estate',this)">Real Estate</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Automotive',this)">Automotive</div>
+        </div>
+      </div>
+
+      <!-- Prompts -->
+      <div class="dropdown-field" id="dd-prompts" onclick="toggleDropdown('prompts')">
+        <div class="df-inner">
+          <div class="df-label">Prompts</div>
+          <div class="df-value" id="dd-prompts-val">4 prompts</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option" onclick="selectOption('prompts','2 prompts',this)">2 prompts</div>
+          <div class="dropdown-option" onclick="selectOption('prompts','3 prompts',this)">3 prompts</div>
+          <div class="dropdown-option selected" onclick="selectOption('prompts','4 prompts',this)">4 prompts</div>
+          <div class="dropdown-option" onclick="selectOption('prompts','5 prompts',this)">5 prompts</div>
+          <div class="dropdown-option" onclick="selectOption('prompts','6 prompts',this)">6 prompts</div>
+        </div>
+      </div>
+
+      <!-- Platforms -->
+      <div class="dropdown-field" id="dd-platforms" onclick="toggleDropdown('platforms')">
+        <div class="df-inner">
+          <div class="df-label">Platforms</div>
+          <div class="df-value" id="dd-platforms-val">Google, Bing, Perplexity, ChatGPT</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('platforms','Google, Bing, Perplexity, ChatGPT',this)">Google, Bing, Perplexity, ChatGPT</div>
+          <div class="dropdown-option" onclick="selectOption('platforms','Google only',this)">Google only</div>
+          <div class="dropdown-option" onclick="selectOption('platforms','Bing + Perplexity',this)">Bing + Perplexity</div>
+          <div class="dropdown-option" onclick="selectOption('platforms','ChatGPT only',this)">ChatGPT only</div>
+        </div>
+      </div>
+
+      <!-- Top cited pages -->
+      <div class="dropdown-field" id="dd-pages" onclick="toggleDropdown('pages')">
+        <div class="df-inner">
+          <div class="df-label">Top cited pages</div>
+          <div class="df-value" id="dd-pages-val">10 pages</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option" onclick="selectOption('pages','5 pages',this)">5 pages</div>
+          <div class="dropdown-option selected" onclick="selectOption('pages','10 pages',this)">10 pages</div>
+          <div class="dropdown-option" onclick="selectOption('pages','15 pages',this)">15 pages</div>
+          <div class="dropdown-option" onclick="selectOption('pages','20 pages',this)">20 pages</div>
+        </div>
+      </div>
+
+      <!-- Brandkit -->
+      <div class="dropdown-field" id="dd-brandkit" onclick="toggleDropdown('brandkit')">
+        <div class="df-inner">
+          <div class="df-label">Brandkit</div>
+          <div class="df-value" id="dd-brandkit-val">Popeyes brand kit</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('brandkit','Popeyes brand kit',this)">Popeyes brand kit</div>
+          <div class="dropdown-option" onclick="selectOption('brandkit','Default brand kit',this)">Default brand kit</div>
+          <div class="dropdown-option" onclick="selectOption('brandkit','Custom brand kit',this)">Custom brand kit</div>
+        </div>
+      </div>
+
+      <!-- Audience -->
+      <div class="dropdown-field" id="dd-audience" onclick="toggleDropdown('audience')">
+        <div class="df-inner">
+          <div class="df-label">Audience</div>
+          <div class="df-value" id="dd-audience-val">US customers</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('audience','US customers',this)">US customers</div>
+          <div class="dropdown-option" onclick="selectOption('audience','Global audience',this)">Global audience</div>
+          <div class="dropdown-option" onclick="selectOption('audience','Local community',this)">Local community</div>
+          <div class="dropdown-option" onclick="selectOption('audience','Business owners',this)">Business owners</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article title section -->
+    <div style="margin-bottom:16px">
+      <div class="modal-section-title">Article title</div>
+      <div class="modal-section-sub">Select a title recommendation, inspired by the top-cited pages for your prompts, or create your own.</div>
+      <input class="article-title-input" id="article-title-input" type="text" value="Best burgers in Goldcoast Marina" placeholder="Enter article title…"/>
+      <div class="ai-recs-header">
+        <div class="ai-icon">
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span>Article title recommendations</span>
+      </div>
+      <div class="rec-suggestion" onclick="pickSuggestion(this)">Goldcoast Marina's Secret Burger That'll Blow Your Mind! 😱🍔</div>
+      <div class="rec-suggestion" onclick="pickSuggestion(this)">You Haven't Lived Until You've Tried THIS Goldcoast Marina Burger! 🔥</div>
+      <div class="rec-suggestion" onclick="pickSuggestion(this)">The #1 Burger in Goldcoast Marina – Locals Don't Want You to Know! 🤫</div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeContentModal()">Cancel</button>
+      <button class="btn-generate">Generate article</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // Donut chart
@@ -733,6 +886,47 @@ function toggleSbGroup(id, hdr) {
   group.style.display = isOpen ? 'none' : 'block';
   chev.style.transform = isOpen ? '' : 'rotate(180deg)';
 }
+
+// Modal
+function openContentModal() {
+  document.getElementById('contentModal').classList.add('open');
+}
+function closeContentModal() {
+  document.getElementById('contentModal').classList.remove('open');
+  closeAllDropdowns();
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('contentModal')) closeContentModal();
+}
+
+// Dropdowns inside modal
+function closeAllDropdowns() {
+  document.querySelectorAll('.dropdown-field.open').forEach(el => el.classList.remove('open'));
+}
+function toggleDropdown(id) {
+  const el = document.getElementById('dd-' + id);
+  const wasOpen = el.classList.contains('open');
+  closeAllDropdowns();
+  if (!wasOpen) el.classList.add('open');
+}
+function selectOption(ddId, value, optEl) {
+  document.getElementById('dd-' + ddId + '-val').textContent = value;
+  optEl.closest('.dropdown-options').querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+  optEl.classList.add('selected');
+  document.getElementById('dd-' + ddId).classList.remove('open');
+}
+
+// Article title suggestions
+function pickSuggestion(el) {
+  document.querySelectorAll('.rec-suggestion').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('article-title-input').value = el.textContent.trim();
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown-field')) closeAllDropdowns();
+});
 </script>
 </body>
 </html>
