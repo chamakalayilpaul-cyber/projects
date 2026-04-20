@@ -379,6 +379,8 @@ body{
 }
 .platform-option:hover{background:rgb(242,244,247)}
 .platform-label{font-size:14px;color:#212121}
+.platform-option.checked .pages-cb{background:#1976d2;border-color:#1976d2}
+.platform-option.checked .pages-cb-check{display:block}
 
 .btn-cancel{
   padding:8px 12px;border-radius:4px;border:none;background:transparent;
@@ -963,6 +965,11 @@ function toggleSbGroup(id, hdr) {
 // Modal
 function openContentModal() {
   document.getElementById('contentModal').classList.add('open');
+  // sync platform label with actual checked state
+  const n = document.querySelectorAll('#dd-platforms .platform-option.checked').length;
+  document.getElementById('dd-platforms-val').textContent = n
+    ? n + ' platform' + (n > 1 ? 's' : '') + ' selected'
+    : 'None selected';
 }
 function closeContentModal() {
   document.getElementById('contentModal').classList.remove('open');
