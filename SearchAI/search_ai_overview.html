@@ -961,7 +961,10 @@ function toggleDropdown(id) {
   const el = document.getElementById('dd-' + id);
   const wasOpen = el.classList.contains('open');
   closeAllDropdowns();
-  if (!wasOpen) el.classList.add('open');
+  if (!wasOpen) {
+    el.classList.add('open');
+    if (id === 'pages') renderPagesPanel();
+  }
 }
 function selectOption(ddId, value, optEl) {
   document.getElementById('dd-' + ddId + '-val').textContent = value;
@@ -1043,13 +1046,6 @@ function resetPageSelection() {
   renderPagesPanel();
 }
 
-// Override toggleDropdown to init pages panel
-const _origToggleDropdown = toggleDropdown;
-function toggleDropdown(id) {
-  _origToggleDropdown(id);
-  if (id === 'pages') renderPagesPanel();
-}
-
 // Article title suggestions
 function pickSuggestion(el) {
   document.querySelectorAll('.rec-suggestion').forEach(s => s.classList.remove('selected'));
@@ -1057,9 +1053,11 @@ function pickSuggestion(el) {
   document.getElementById('article-title-input').value = el.textContent.trim();
 }
 
-// Close dropdowns when clicking outside
+// Close dropdowns when clicking outside any dropdown-field
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.dropdown-field')) closeAllDropdowns();
+  if (!e.target.closest('.dropdown-field') && !e.target.closest('.pages-footer')) {
+    closeAllDropdowns();
+  }
 });
 </script>
 </body>
