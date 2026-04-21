@@ -397,14 +397,14 @@ body{
 
 /* ══ ARTICLE VIEW ══ */
 .sidebar.hidden{display:none}
-.content.article-mode{padding:0;overflow:hidden;display:flex}
-#view-article{display:none;height:100%;width:100%}
+.content.article-mode{padding:0;overflow:hidden;display:flex;flex:1;min-height:0}
+#view-article{display:none;flex:1;min-height:0}
 #view-article.active{display:flex}
 
 /* Left panel */
 .art-left{
   width:280px;background:#fff;border-right:1px solid #eaeaea;
-  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;min-height:0;
 }
 .art-tabs{display:flex;border-bottom:1px solid #eaeaea;padding:0 8px;flex-shrink:0}
 .art-tab{
@@ -438,14 +438,14 @@ body{
 
 /* Main editor area */
 .art-main{
-  flex:1;overflow-y:auto;padding:24px;
+  flex:1;min-height:0;overflow-y:auto;padding:24px;
   background:rgb(242,242,242);display:flex;flex-direction:column;gap:16px;
 }
 .art-main::-webkit-scrollbar{width:6px}
 .art-main::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
 
 /* Article card */
-.art-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden}
+.art-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden;flex-shrink:0}
 .art-card-body{padding:28px 32px}
 .art-article-title{
   font-size:22px;font-weight:500;color:rgb(33,33,33);
@@ -475,7 +475,7 @@ body{
 }
 
 /* SEO card */
-.art-seo-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px}
+.art-seo-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px;flex-shrink:0}
 .art-seo-title{font-size:14px;font-weight:500;color:rgb(33,33,33);margin-bottom:16px}
 .art-seo-field{margin-bottom:14px}
 .art-seo-field:last-child{margin-bottom:0}
@@ -966,10 +966,7 @@ body{
             </div>
             <div class="art-hero-img">
               <div class="art-hero-overlay">#1 IN THE WORLD</div>
-              <div class="art-hero-placeholder">
-                <span class="material-symbols-rounded">image</span>
-                <span style="font-size:13px">Hero image</span>
-              </div>
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80" alt="Smash burger" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px"/>
             </div>
             <div class="art-section-heading" contenteditable="true">What Makes It Legendary</div>
             <div class="art-article-text" contenteditable="true">
@@ -1357,18 +1354,6 @@ document.addEventListener('click', function(e) {
 
 // Generate article — close modal and navigate to article view
 function generateArticle() {
-  // pick the selected title suggestion (if any) and update article heading
-  const selectedSuggestion = document.querySelector('.rec-suggestion.selected');
-  const titleInput = document.getElementById('article-title-input');
-  const finalTitle = (selectedSuggestion ? selectedSuggestion.textContent.trim() : null)
-    || (titleInput ? titleInput.value.trim() : null)
-    || "Gold Coast Marina's Secret Burger That'll Blow Your Mind!";
-  const artTitle = document.querySelector('.art-article-title');
-  if (artTitle) artTitle.textContent = finalTitle;
-  // also sync SEO meta title
-  const metaTitle = document.querySelector('.art-seo-value');
-  if (metaTitle) metaTitle.textContent = finalTitle;
-
   closeContentModal();
   showView('article');
 }
