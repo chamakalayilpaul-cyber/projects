@@ -410,17 +410,22 @@ body{
 .art-tab{
   padding:0 12px;height:40px;font-size:14px;color:rgb(85,85,85);
   cursor:pointer;border-bottom:2px solid transparent;
-  display:flex;align-items:center;white-space:nowrap;
+  display:flex;align-items:center;white-space:nowrap;gap:5px;
 }
 .art-tab.active{color:rgb(33,33,33);border-bottom-color:rgb(25,118,210)}
-.art-search{padding:10px 12px;border-bottom:1px solid #eaeaea;flex-shrink:0}
+.art-tab-ai-badge{
+  font-size:10px;font-weight:600;color:#7c3aed;
+  background:#ede9fe;padding:1px 5px;border-radius:10px;
+}
+.art-search{padding:10px 12px;flex-shrink:0}
 .art-search-inp{
   width:100%;border:1px solid #e5e9f0;border-radius:4px;
   padding:6px 10px;font-size:14px;font-family:'Roboto',sans-serif;
   outline:none;color:rgb(33,33,33);
 }
 .art-search-inp:focus{border-color:#1976d2}
-.art-blocks{flex:1;overflow-y:auto;padding:12px}
+.art-blocks{flex:1;overflow-y:auto;padding:12px;display:none}
+.art-blocks.active{display:block}
 .art-blocks::-webkit-scrollbar{width:4px}
 .art-blocks::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
 .art-blocks-label{
@@ -435,6 +440,70 @@ body{
 }
 .art-block-item:hover{background:rgb(242,244,247)}
 .art-block-item .material-symbols-rounded{font-size:20px;color:rgb(85,85,85)}
+
+/* Create with AI panel */
+.art-ai-panel{flex:1;min-height:0;display:none;flex-direction:column}
+.art-ai-panel.active{display:flex}
+.art-ai-chat{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:12px}
+.art-ai-chat::-webkit-scrollbar{width:4px}
+.art-ai-chat::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.art-ai-msg{display:flex;align-items:flex-start;gap:8px}
+.art-ai-avatar{
+  width:24px;height:24px;border-radius:50%;background:#ede9fe;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.art-ai-avatar .material-symbols-rounded{font-size:14px;color:#7c3aed}
+.art-ai-bubble{
+  background:#f9fafb;border:1px solid #eaeaea;border-radius:0 8px 8px 8px;
+  padding:10px 12px;font-size:13px;color:rgb(33,33,33);line-height:1.5;flex:1;
+}
+.art-ai-prompts{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.art-ai-prompt-btn{
+  border:1px solid #e5e9f0;border-radius:6px;padding:8px 12px;
+  font-size:13px;color:rgb(33,33,33);background:#fff;cursor:pointer;text-align:left;
+  font-family:'Roboto',sans-serif;
+}
+.art-ai-prompt-btn:hover{background:rgb(242,244,247)}
+.art-user-msg{display:flex;align-items:flex-start;gap:8px;flex-direction:row-reverse}
+.art-user-avatar{
+  width:24px;height:24px;border-radius:50%;background:#dbeafe;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:11px;font-weight:600;color:#1976d2;
+}
+.art-user-bubble{
+  background:#e8f0fe;border-radius:8px 0 8px 8px;
+  padding:10px 12px;font-size:13px;color:rgb(33,33,33);line-height:1.5;
+}
+.art-ai-working{
+  display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(143,143,143);
+}
+.art-ai-working .material-symbols-rounded{font-size:18px;color:#7c3aed;animation:spin 1.5s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* AI input */
+.art-ai-input-wrap{
+  border-top:1px solid #eaeaea;padding:10px 12px;flex-shrink:0;
+}
+.art-ai-textarea{
+  width:100%;border:1px solid #c7d6f6;border-radius:6px;
+  padding:10px 12px;font-size:13px;font-family:'Roboto',sans-serif;
+  color:rgb(33,33,33);outline:none;resize:none;line-height:1.5;
+  min-height:72px;
+}
+.art-ai-textarea:focus{border-color:#1976d2}
+.art-ai-toolbar{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.art-ai-tool-left{display:flex;align-items:center;gap:8px}
+.art-ai-tool-btn{
+  width:28px;height:28px;border:none;background:transparent;cursor:pointer;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;color:rgb(85,85,85);
+}
+.art-ai-tool-btn:hover{background:rgb(242,244,247)}
+.art-ai-tool-btn .material-symbols-rounded{font-size:18px}
+.art-ai-send{
+  width:28px;height:28px;border:none;background:#1976d2;cursor:pointer;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;
+}
+.art-ai-send:hover{background:#1565c0}
+.art-ai-send .material-symbols-rounded{font-size:16px}
 
 /* Main editor area */
 .art-main{
@@ -957,16 +1026,54 @@ body{
     <!-- ══ ARTICLE VIEW ══ -->
     <div class="view" id="view-article">
 
-      <!-- Left: content blocks panel -->
+      <!-- Left panel -->
       <div class="art-left">
         <div class="art-tabs">
-          <div class="art-tab active" onclick="switchArtTab(this)">Create with AI</div>
-          <div class="art-tab" onclick="switchArtTab(this)">Create manually</div>
+          <div class="art-tab active" data-tab="ai" onclick="switchArtTab(this)">Create with <span class="art-tab-ai-badge">AI</span></div>
+          <div class="art-tab" data-tab="manual" onclick="switchArtTab(this)">Create manually</div>
         </div>
-        <div class="art-search">
+
+        <!-- Create with AI panel -->
+        <div class="art-ai-panel active" id="art-ai-panel">
+          <div class="art-ai-chat" id="art-ai-chat">
+            <div class="art-ai-msg">
+              <div class="art-ai-avatar"><span class="material-symbols-rounded">auto_awesome</span></div>
+              <div>
+                <div class="art-ai-bubble">Hello! I'm your AI content assistant. I can help you refine, expand, or restructure this article about Gold Coast Marina's secret burger.</div>
+                <div class="art-ai-prompts">
+                  <button class="art-ai-prompt-btn" onclick="sendAiPrompt(this)">Add a section about the burger menu</button>
+                  <button class="art-ai-prompt-btn" onclick="sendAiPrompt(this)">Make the tone more casual and fun</button>
+                  <button class="art-ai-prompt-btn" onclick="sendAiPrompt(this)">Add a call-to-action at the end</button>
+                </div>
+              </div>
+            </div>
+            <div class="art-user-msg">
+              <div class="art-user-avatar">P</div>
+              <div class="art-user-bubble">Add a call-to-action at the end</div>
+            </div>
+            <div class="art-ai-working">
+              <span class="material-symbols-rounded">auto_awesome</span>
+              Working on it...
+            </div>
+          </div>
+          <div class="art-ai-input-wrap">
+            <textarea class="art-ai-textarea" placeholder="What do you want to build? e.g. a section about the marina views, or a punchier intro. Share your goal and we'll tailor it."></textarea>
+            <div class="art-ai-toolbar">
+              <div class="art-ai-tool-left">
+                <button class="art-ai-tool-btn"><span class="material-symbols-rounded">add</span></button>
+                <button class="art-ai-tool-btn"><span class="material-symbols-rounded">auto_fix_high</span></button>
+                <button class="art-ai-tool-btn"><span class="material-symbols-rounded">more_horiz</span></button>
+              </div>
+              <button class="art-ai-send"><span class="material-symbols-rounded">send</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create manually panel -->
+        <div class="art-search" id="art-manual-search" style="display:none">
           <input class="art-search-inp" type="text" placeholder="Search blocks…"/>
         </div>
-        <div class="art-blocks">
+        <div class="art-blocks" id="art-manual-blocks" style="display:none">
           <div class="art-blocks-label">Content blocks</div>
           <div class="art-blocks-grid">
             <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">title</span>Header</div>
@@ -1488,6 +1595,29 @@ function renderArticleStats() {
 function switchArtTab(el) {
   el.closest('.art-tabs').querySelectorAll('.art-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
+  const tab = el.dataset.tab;
+  // Toggle AI vs manual panels
+  document.getElementById('art-ai-panel').classList.toggle('active', tab === 'ai');
+  document.getElementById('art-manual-search').style.display = tab === 'manual' ? 'block' : 'none';
+  document.getElementById('art-manual-blocks').style.display = tab === 'manual' ? 'block' : 'none';
+}
+
+function sendAiPrompt(btn) {
+  const chat = document.getElementById('art-ai-chat');
+  const text = btn.textContent.trim();
+  // Remove prompt buttons row
+  btn.closest('.art-ai-prompts').remove();
+  // Add user message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'art-user-msg';
+  userMsg.innerHTML = `<div class="art-user-avatar">P</div><div class="art-user-bubble">${text}</div>`;
+  chat.appendChild(userMsg);
+  // Add working state
+  const working = document.createElement('div');
+  working.className = 'art-ai-working';
+  working.innerHTML = `<span class="material-symbols-rounded">auto_awesome</span> Working on it...`;
+  chat.appendChild(working);
+  chat.scrollTop = chat.scrollHeight;
 }
 
 // Copy field content to clipboard
