@@ -496,6 +496,40 @@ body{
 .art-copy-btn:hover{background:rgb(242,244,247)}
 .art-copy-btn .material-symbols-rounded{font-size:16px}
 
+/* ── Stats widgets ── */
+.art-stats-card{
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;
+  padding:20px 24px;flex-shrink:0;
+}
+.art-stats-card-title{font-size:14px;font-weight:600;color:rgb(33,33,33);margin-bottom:16px}
+.art-stats-total{font-size:13px;color:rgb(143,143,143);font-weight:400}
+/* Headings list */
+.art-heading-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;border:1px solid #eaeaea;border-radius:6px;margin-bottom:8px;
+}
+.art-heading-row:last-child{margin-bottom:0}
+.art-heading-tag{
+  font-size:12px;font-weight:500;color:rgb(143,143,143);
+  min-width:24px;flex-shrink:0;padding-top:1px;
+}
+.art-heading-text{font-size:14px;color:rgb(33,33,33);line-height:1.4}
+.art-heading-divider{border:none;border-top:1px solid #eaeaea;margin:12px 0}
+.art-hcount-row{display:flex;justify-content:space-around;text-align:center;padding-top:4px}
+.art-hcount-lbl{font-size:14px;font-weight:600;color:rgb(33,33,33);margin-bottom:2px}
+.art-hcount-sub{font-size:12px;color:rgb(143,143,143)}
+/* Paragraphs widget */
+.art-para-num{font-size:40px;font-weight:700;color:rgb(33,33,33);line-height:1;margin-bottom:6px}
+.art-para-sub{font-size:13px;color:rgb(143,143,143)}
+/* Content structure */
+.art-struct-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid #f3f4f6;
+}
+.art-struct-row:last-child{border-bottom:none;padding-bottom:0}
+.art-struct-lbl{font-size:14px;color:rgb(33,33,33)}
+.art-struct-val{font-size:14px;font-weight:500;color:rgb(33,33,33)}
+
 /* Article page header overrides */
 .page-hdr-left{display:flex;align-items:center;gap:6px}
 #hdr-back-btn{display:none}
@@ -1011,6 +1045,42 @@ body{
             </div>
           </div>
         </div>
+
+        <!-- Headings widget -->
+        <div class="art-stats-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <span class="art-stats-card-title" style="margin-bottom:0">Headings</span>
+            <span class="art-stats-total" id="stats-heading-total">— total</span>
+          </div>
+          <div id="stats-heading-list"></div>
+          <hr class="art-heading-divider"/>
+          <div class="art-hcount-row">
+            <div><div class="art-hcount-lbl">H1</div><div class="art-hcount-sub" id="stats-h1-count">—</div></div>
+            <div><div class="art-hcount-lbl">H2</div><div class="art-hcount-sub" id="stats-h2-count">—</div></div>
+            <div><div class="art-hcount-lbl">H3</div><div class="art-hcount-sub" id="stats-h3-count">—</div></div>
+          </div>
+        </div>
+
+        <!-- Paragraphs widget -->
+        <div class="art-stats-card">
+          <div class="art-stats-card-title">Paragraphs</div>
+          <div class="art-para-num" id="stats-para-count">—</div>
+          <div class="art-para-sub">Total paragraphs in content</div>
+        </div>
+
+        <!-- Content structure widget -->
+        <div class="art-stats-card">
+          <div class="art-stats-card-title">Content Structure</div>
+          <div class="art-struct-row">
+            <span class="art-struct-lbl">Average words per paragraph</span>
+            <span class="art-struct-val" id="stats-avg-words">—</span>
+          </div>
+          <div class="art-struct-row">
+            <span class="art-struct-lbl">Heading to paragraph ratio</span>
+            <span class="art-struct-val" id="stats-ratio">—</span>
+          </div>
+        </div>
+
       </div>
     </div><!-- /view-article -->
 
@@ -1352,10 +1422,66 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Generate article — close modal and navigate to article view
+// Generate article — close modal, navigate to article view, compute stats
 function generateArticle() {
   closeContentModal();
   showView('article');
+  setTimeout(renderArticleStats, 80);
+}
+
+function renderArticleStats() {
+  const body = document.querySelector('.art-card-body');
+  if (!body) return;
+
+  // --- Headings ---
+  const h1s = Array.from(body.querySelectorAll('h1, [data-h="h1"]'));
+  const h2s = Array.from(body.querySelectorAll('h2, [data-h="h2"]'));
+  // section headings are our h2-level; article title is h1
+  const titleEl = body.querySelector('.art-article-title');
+  const sectionEls = Array.from(body.querySelectorAll('.art-section-heading'));
+
+  const allHeadings = [];
+  if (titleEl) allHeadings.push({level:'H1', text: titleEl.textContent.trim()});
+  sectionEls.forEach(el => allHeadings.push({level:'H2', text: el.textContent.trim()}));
+
+  const h1Count = allHeadings.filter(h=>h.level==='H1').length;
+  const h2Count = allHeadings.filter(h=>h.level==='H2').length;
+  const h3Count = 0;
+  const total = allHeadings.length;
+
+  document.getElementById('stats-heading-total').textContent = total + ' total';
+  document.getElementById('stats-h1-count').textContent = h1Count;
+  document.getElementById('stats-h2-count').textContent = h2Count;
+  document.getElementById('stats-h3-count').textContent = h3Count;
+
+  // Show last 5 headings
+  const listEl = document.getElementById('stats-heading-list');
+  listEl.innerHTML = allHeadings.slice(-5).map(h =>
+    `<div class="art-heading-row">
+      <span class="art-heading-tag">${h.level}</span>
+      <span class="art-heading-text">${h.text}</span>
+    </div>`
+  ).join('');
+
+  // --- Paragraphs ---
+  const paras = Array.from(body.querySelectorAll('.art-article-text p'));
+  const paraCount = paras.length;
+  document.getElementById('stats-para-count').textContent = paraCount;
+
+  // --- Content structure ---
+  const totalWords = paras.reduce((sum, p) => {
+    return sum + p.textContent.trim().split(/\s+/).filter(Boolean).length;
+  }, 0);
+  const avgWords = paraCount > 0 ? Math.round(totalWords / paraCount) : 0;
+  document.getElementById('stats-avg-words').textContent = avgWords;
+
+  const headingCount = total;
+  let ratio = '—';
+  if (headingCount > 0 && paraCount > 0) {
+    const r = paraCount / headingCount;
+    ratio = Math.round(r) + ':1';
+  }
+  document.getElementById('stats-ratio').textContent = ratio;
 }
 
 // Article tab switcher
