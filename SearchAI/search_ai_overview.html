@@ -397,8 +397,8 @@ body{
 
 /* ══ ARTICLE VIEW ══ */
 .sidebar.hidden{display:none}
-.content.article-mode{padding:0;overflow-y:auto;background:rgb(242,242,242)}
-#view-article{display:none;flex-direction:column;max-width:760px;margin:0 auto;padding:24px;gap:16px}
+.content.article-mode{padding:0;overflow:hidden;display:flex}
+#view-article{display:none;height:100%;width:100%}
 #view-article.active{display:flex}
 
 /* Left panel */
@@ -912,8 +912,37 @@ body{
     <!-- ══ ARTICLE VIEW ══ -->
     <div class="view" id="view-article">
 
-      <!-- Article editor (full width, no blocks panel) -->
-      <div class="art-main" style="padding:0;background:transparent">
+      <!-- Left: content blocks panel -->
+      <div class="art-left">
+        <div class="art-tabs">
+          <div class="art-tab active" onclick="switchArtTab(this)">Create with AI</div>
+          <div class="art-tab" onclick="switchArtTab(this)">Create manually</div>
+        </div>
+        <div class="art-search">
+          <input class="art-search-inp" type="text" placeholder="Search blocks…"/>
+        </div>
+        <div class="art-blocks">
+          <div class="art-blocks-label">Content blocks</div>
+          <div class="art-blocks-grid">
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">title</span>Header</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">text_fields</span>Title</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">subject</span>Text</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">smart_button</span>Button</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">image</span>Image</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">videocam</span>Video</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">horizontal_rule</span>Divider</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">space_bar</span>Spacer</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">share</span>Social links</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">format_quote</span>Review quote</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">web</span>Footer</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">contacts</span>Contact us</div>
+            <div class="art-block-item" draggable="true" style="grid-column:1/-1"><span class="material-symbols-rounded">code</span>Code blocks</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: article editor -->
+      <div class="art-main">
         <div class="art-card">
           <div class="art-card-body">
             <div class="art-article-title" contenteditable="true">Gold Coast Marina's Secret Burger That'll Blow Your Mind!</div>
