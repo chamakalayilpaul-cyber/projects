@@ -2828,6 +2828,8 @@ document.addEventListener('click', function(e) {
 function generateArticle() {
   window._articleMode = 'create';
   closeContentModal();
+  // If coming from Content Hub, collapse shell and restore Search AI context
+  switchRailModule('searchai');
   showView('article');
   setTimeout(renderArticleStats, 80);
 }
@@ -2836,6 +2838,8 @@ function generateArticle() {
 function generateOptimizeResult() {
   window._articleMode = 'optimize';
   closeOptimizeModal();
+  // If coming from Content Hub, collapse shell and restore Search AI context
+  switchRailModule('searchai');
   showView('article');
   setTimeout(renderArticleStats, 80);
 }
