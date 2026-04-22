@@ -1561,7 +1561,7 @@ body{
 <!-- ══ CONTENT HUB SHELL (hidden until L1 activated) ══ -->
 <div id="ch-shell" style="display:none;position:fixed;inset:0;background:rgb(242,242,242);z-index:50;display:none">
   <!-- Top Nav -->
-  <div style="position:fixed;top:0;left:222px;right:0;height:52px;background:#fff;border-bottom:1px solid #eaeaea;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:4px;z-index:60">
+  <div style="position:fixed;top:0;left:278px;right:0;height:52px;background:#fff;border-bottom:1px solid #eaeaea;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:4px;z-index:60">
     <button class="top-nav-btn" title="Help">
       <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.61348 12.2628C7.83909 12.2628 8.03042 12.1849 8.18748 12.0291C8.34452 11.8733 8.42304 11.6826 8.42304 11.457C8.42304 11.2314 8.34515 11.04 8.18937 10.883C8.03358 10.7259 7.84288 10.6474 7.61727 10.6474C7.39165 10.6474 7.20031 10.7253 7.04327 10.8811C6.88622 11.0369 6.80769 11.2276 6.80769 11.4532C6.80769 11.6788 6.88558 11.8702 7.04138 12.0272C7.19715 12.1843 7.38785 12.2628 7.61348 12.2628ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666Z" fill="#303030"/></svg>
     </button>
@@ -1574,7 +1574,7 @@ body{
     </button>
   </div>
   <!-- Content area -->
-  <div style="position:fixed;left:222px;top:52px;right:0;bottom:0;overflow-y:auto;padding:24px" id="ch-content-area">
+  <div style="position:fixed;left:278px;top:52px;right:0;bottom:0;overflow-y:auto;padding:24px" id="ch-content-area">
     <!-- Projects view -->
     <div id="ch-view-projects">
       <div class="proj-page-hdr">
@@ -2170,7 +2170,7 @@ function switchRailModule(module) {
   if (module === 'contenthub') {
     shell.style.display = 'block';
     // position shell to sit beside the rail
-    shell.style.left = '56px';
+    shell.style.left = '278px';
     showChView('projects');
   } else {
     shell.style.display = 'none';
