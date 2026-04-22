@@ -780,7 +780,8 @@ body{
     <button class="rail-btn" title="Campaigns"><span class="material-symbols-rounded">campaign</span></button>
     <button class="rail-btn" title="Marketing Automation"><span class="material-symbols-rounded">bar_chart</span></button>
     <button class="rail-btn" title="Reports"><span class="material-symbols-rounded">monitoring</span></button>
-    <button class="rail-btn active" title="Search AI"><span class="material-symbols-rounded">travel_explore</span></button>
+    <button class="rail-btn active" id="rail-searchai" title="Search AI" onclick="switchRailModule('searchai')"><span class="material-symbols-rounded">travel_explore</span></button>
+    <button class="rail-btn" id="rail-contenthub" title="Content Hub" onclick="switchRailModule('contenthub')"><span class="material-symbols-rounded">animated_images</span></button>
     <button class="rail-btn" title="Competitors"><span class="material-symbols-rounded">leaderboard</span></button>
     <div style="flex:1"></div>
     <div class="rail-divider"></div>
@@ -788,8 +789,8 @@ body{
   </div>
 </div>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
+<!-- SIDEBAR — Search AI -->
+<div class="sidebar" id="sidebar-searchai">
   <div class="sb-title">Search AI</div>
   <div class="sb-body">
     <div class="sb-item active" id="nav-overview" onclick="showView('overview')">Overview</div>
@@ -816,6 +817,49 @@ body{
       <svg id="sb-chev-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div id="sb-group-settings" style="display:none"></div>
+  </div>
+</div>
+
+<!-- SIDEBAR — Content Hub -->
+<div class="sidebar" id="sidebar-contenthub" style="display:none">
+  <div class="sb-title">Content hub</div>
+  <div class="sb-body">
+
+    <!-- Create project -->
+    <div class="sb-group-hdr" style="justify-content:space-between">
+      <span style="font-size:14px;font-weight:400;color:#212121">Create project</span>
+      <div style="width:20px;height:20px;background:#1976d2;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer">
+        <span class="material-symbols-rounded" style="font-size:14px;color:#fff">add</span>
+      </div>
+    </div>
+
+    <!-- Content group -->
+    <div class="sb-group-hdr" onclick="toggleSbGroup('ch-content',this)">
+      <span>Content</span>
+      <svg id="sb-chev-ch-content" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg);transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-ch-content">
+      <div class="sb-sub-item active">Projects</div>
+      <div class="sb-sub-item">Calendar</div>
+    </div>
+
+    <!-- Standalone items -->
+    <div class="sb-item">Recommendations</div>
+    <div class="sb-item">Assigned to me</div>
+    <div class="sb-item">Approve content</div>
+    <div class="sb-item">Fix rejected content</div>
+
+    <!-- Settings group -->
+    <div class="sb-group-hdr" onclick="toggleSbGroup('ch-settings',this)">
+      <span>Settings</span>
+      <svg id="sb-chev-ch-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg);transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-ch-settings">
+      <div class="sb-sub-item">Uploaded files</div>
+      <div class="sb-sub-item">Approvals</div>
+      <div class="sb-sub-item">General</div>
+    </div>
+
   </div>
 </div>
 
@@ -1751,6 +1795,16 @@ function toggleSbGroup(id, hdr) {
   const isOpen = group.style.display !== 'none';
   group.style.display = isOpen ? 'none' : 'block';
   chev.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// L1 Rail module switcher
+function switchRailModule(module) {
+  // update L1 active state
+  document.getElementById('rail-searchai').classList.toggle('active', module === 'searchai');
+  document.getElementById('rail-contenthub').classList.toggle('active', module === 'contenthub');
+  // swap sidebars
+  document.getElementById('sidebar-searchai').style.display = module === 'searchai' ? '' : 'none';
+  document.getElementById('sidebar-contenthub').style.display = module === 'contenthub' ? '' : 'none';
 }
 
 // Content state switcher
