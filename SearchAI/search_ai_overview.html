@@ -111,6 +111,93 @@ body{
 .icon-btn:hover{background:rgb(242,244,247)}
 .icon-btn .material-symbols-rounded{font-size:20px}
 
+/* ══ PROJECTS PAGE ══ */
+.proj-page-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.proj-page-title{font-size:18px;font-weight:400;color:#212121}
+.proj-hdr-actions{display:flex;align-items:center;gap:6px}
+.proj-icon-btn{
+  width:32px;height:32px;border:none;background:transparent;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;
+}
+.proj-icon-btn:hover{background:rgb(242,244,247)}
+.proj-icon-btn .material-symbols-rounded{font-size:20px}
+.proj-icon-btn.active{background:rgb(229,233,240);color:#212121}
+.proj-view-sep{width:1px;height:20px;background:#eaeaea;margin:0 2px}
+
+/* Saved tab */
+.proj-tabs{display:flex;border-bottom:1px solid #eaeaea;margin-bottom:20px}
+.proj-tab{
+  padding:8px 2px;margin-right:20px;font-size:14px;color:#8f8f8f;
+  border-bottom:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+}
+.proj-tab.active{color:#212121;border-bottom-color:#1976d2}
+.proj-tab-count{
+  font-size:12px;font-weight:500;background:#e8f0fe;color:#1976d2;
+  padding:1px 6px;border-radius:100px;
+}
+
+/* Card grid */
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:16px;
+}
+.proj-card{
+  position:relative;cursor:pointer;border-radius:6px;overflow:visible;
+}
+.proj-card-thumb{
+  width:100%;aspect-ratio:4/3;border-radius:6px;overflow:hidden;
+  background:#f0f2f5;border:1px solid #eaeaea;
+  display:flex;align-items:center;justify-content:center;margin-bottom:8px;
+  position:relative;
+}
+.proj-card-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.proj-card-placeholder{
+  display:flex;align-items:center;justify-content:center;width:100%;height:100%;
+}
+.proj-card-placeholder .material-symbols-rounded{font-size:32px;color:#c8cdd6}
+/* Text-preview cards */
+.proj-card-preview{
+  width:100%;height:100%;padding:10px;background:#fff;overflow:hidden;
+  font-size:8px;line-height:1.4;color:#444;
+}
+.proj-card-preview-title{font-size:9px;font-weight:600;color:#212121;margin-bottom:4px;line-height:1.3}
+.proj-card-name{font-size:13px;color:#212121;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Hover info panel */
+.proj-card:hover .proj-hover-panel{opacity:1;pointer-events:all}
+.proj-hover-panel{
+  position:absolute;top:0;left:calc(100% + 8px);z-index:100;
+  width:200px;background:#2d2d2d;border-radius:8px;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity 0.15s;
+  box-shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+/* flip panel to left if near right edge — handled via JS class */
+.proj-card.flip-left .proj-hover-panel{left:auto;right:calc(100% + 8px)}
+.proj-hover-name{font-size:14px;font-weight:500;color:#fff;margin-bottom:14px;line-height:1.4}
+.proj-hover-btns{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.proj-hover-preview{
+  flex:1;padding:5px 10px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:13px;cursor:pointer;font-family:'Roboto',sans-serif;
+}
+.proj-hover-preview:hover{background:#1565c0}
+.proj-hover-edit{
+  flex:1;padding:5px 10px;border-radius:4px;
+  border:1px solid #1976d2;background:transparent;color:#90caf9;
+  font-size:13px;cursor:pointer;font-family:'Roboto',sans-serif;
+}
+.proj-hover-edit:hover{background:rgba(25,118,210,0.15)}
+.proj-hover-more{
+  width:28px;height:28px;border:none;background:rgba(255,255,255,0.1);
+  border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.proj-hover-more .material-symbols-rounded{font-size:18px;color:#fff}
+.proj-hover-more:hover{background:rgba(255,255,255,0.2)}
+.proj-hover-author{font-size:12px;color:#9ca3af}
+
 /* ── STATE CHIPS ── */
 .state-chips{
   display:none;align-items:center;gap:2px;
@@ -839,8 +926,8 @@ body{
       <svg id="sb-chev-ch-content" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg);transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div id="sb-group-ch-content">
-      <div class="sb-sub-item active">Projects</div>
-      <div class="sb-sub-item">Calendar</div>
+      <div class="sb-sub-item active" id="ch-nav-projects" onclick="showChView('projects')">Projects</div>
+      <div class="sb-sub-item" onclick="showChView('calendar')">Calendar</div>
     </div>
 
     <!-- Standalone items -->
@@ -1471,6 +1558,281 @@ body{
 </div><!-- /main -->
 </div><!-- /body-wrap -->
 
+<!-- ══ CONTENT HUB SHELL (hidden until L1 activated) ══ -->
+<div id="ch-shell" style="display:none;position:fixed;inset:0;background:rgb(242,242,242);z-index:50;display:none">
+  <!-- Top Nav -->
+  <div style="position:fixed;top:0;left:222px;right:0;height:52px;background:#fff;border-bottom:1px solid #eaeaea;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:4px;z-index:60">
+    <button class="top-nav-btn" title="Help">
+      <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.61348 12.2628C7.83909 12.2628 8.03042 12.1849 8.18748 12.0291C8.34452 11.8733 8.42304 11.6826 8.42304 11.457C8.42304 11.2314 8.34515 11.04 8.18937 10.883C8.03358 10.7259 7.84288 10.6474 7.61727 10.6474C7.39165 10.6474 7.20031 10.7253 7.04327 10.8811C6.88622 11.0369 6.80769 11.2276 6.80769 11.4532C6.80769 11.6788 6.88558 11.8702 7.04138 12.0272C7.19715 12.1843 7.38785 12.2628 7.61348 12.2628ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666Z" fill="#303030"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Settings"><span class="material-symbols-rounded" style="font-size:20px;color:#303030">settings</span></button>
+    <button class="top-nav-btn" title="Account">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="#D8D8D8" stroke-width="1.4" fill="#F4F6F7"/><circle cx="10" cy="8" r="2.8" fill="#D0D0D0"/><path d="M4 17c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" stroke="#D0D0D0" stroke-width="1.4" fill="none"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Menu">
+      <svg width="20" height="14" viewBox="0 0 13.1666 8.391" fill="none"><path d="M0.542 8.391a.54.54 0 0 1-.542-.538c0-.152.052-.282.156-.387a.54.54 0 0 1 .386-.156H12.625c.153 0 .283.052.386.156a.54.54 0 0 1 0 .77.54.54 0 0 1-.386.155H0.542ZM0.542 4.737a.54.54 0 0 1-.542-.537c0-.153.052-.282.156-.387a.54.54 0 0 1 .386-.156H12.625c.153 0 .283.052.386.157a.54.54 0 0 1 0 .773.54.54 0 0 1-.386.15H0.542ZM0.542 1.083A.54.54 0 0 1 0 .546C0 .393.052.264.156.159A.54.54 0 0 1 .542 0H12.625c.153 0 .283.051.386.155a.54.54 0 0 1 0 .774.54.54 0 0 1-.386.154H0.542Z" fill="#303030"/></svg>
+    </button>
+  </div>
+  <!-- Content area -->
+  <div style="position:fixed;left:222px;top:52px;right:0;bottom:0;overflow-y:auto;padding:24px" id="ch-content-area">
+    <!-- Projects view -->
+    <div id="ch-view-projects">
+      <div class="proj-page-hdr">
+        <span class="proj-page-title">Projects</span>
+        <div class="proj-hdr-actions">
+          <button class="proj-icon-btn"><span class="material-symbols-rounded">search</span></button>
+          <div class="proj-view-sep"></div>
+          <button class="proj-icon-btn active" id="proj-view-grid" onclick="setProjView('grid')" title="Grid view"><span class="material-symbols-rounded">grid_view</span></button>
+          <button class="proj-icon-btn" id="proj-view-list" onclick="setProjView('list')" title="List view"><span class="material-symbols-rounded">format_list_bulleted</span></button>
+          <div class="proj-view-sep"></div>
+          <button class="proj-icon-btn"><span class="material-symbols-rounded">tune</span></button>
+        </div>
+      </div>
+      <div class="proj-tabs">
+        <span class="proj-tab active">Saved <span class="proj-tab-count">92</span></span>
+      </div>
+      <div class="proj-grid" id="proj-grid">
+
+        <!-- Card: text preview (Preventive Care article) -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Preventive Care: How Annual Health Checkups Enable Early Disease Detection</div>
+              <div>Regular health checkups are essential preventive measures. In our ever-evolving healthcare landscape...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Test project rajul</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Test project rajul</div>
+            <div class="proj-hover-btns">
+              <button class="proj-hover-preview">Preview</button>
+              <button class="proj-hover-edit">Edit</button>
+              <button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button>
+            </div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: image -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb" style="background:#1a1a2e">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffbb69e7f7f?w=300&q=60" alt="Dental"/>
+          </div>
+          <div class="proj-card-name">Dental blogs</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Dental blogs</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: image -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=300&q=60" alt="Dental unit"/>
+          </div>
+          <div class="proj-card-name">DD Dental unit</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">DD Dental unit</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: placeholder -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">DD Dental Care</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">DD Dental Care</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: placeholder -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Content_hub -DD test</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Content_hub -DD test</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: text preview -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">iPhone 17: Features, Impact, and the Future of Smartphones</div>
+              <div>The arrival of iPhone 17 is poised to establish a new benchmark in the tech world, with sleek updates to its...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Test blog</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Test blog</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: text preview (active hover in screenshot) -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">iPhone 17: Features, Impact, and the Future of Smartphones</div>
+              <div>The article explores the state-of-the-art design and features to create devices that are both aesthetically...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Content Hub DD</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Content Hub DD</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Dental Campaign</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Dental Campaign</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=300&q=60" alt="Apple iphones"/>
+          </div>
+          <div class="proj-card-name">Apple iphones</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple iphones</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=300&q=60" alt="Conflict"/>
+          </div>
+          <div class="proj-card-name">usa iran conflict</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">usa iran conflict</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=300&q=60" alt="iPhone"/>
+          </div>
+          <div class="proj-card-name">Apple iPhones</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple iPhones</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Apple phones</div>
+              <div>Discover the latest Apple phones with cutting-edge features...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Apple phones</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple phones</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Apple</div>
+              <div>Apple Inc. designs and sells consumer electronics, software, and services worldwide...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Apple</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Common Bone Issues in India: Public Health Implications</div>
+              <div>Key Takeaways · Bone issues in India, including osteoporosis and arthritis, affect millions...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Bone issues in india</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Bone issues in india</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=300&q=60" alt="Dental health"/>
+          </div>
+          <div class="proj-card-name">Dental Health(1)</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Dental Health(1)</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=300&q=60" alt="Mumbai"/>
+          </div>
+          <div class="proj-card-name">Mumbai</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Mumbai</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb" style="background:#000">
+            <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=300&q=60" alt="Video"/>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+              <div style="width:32px;height:32px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center">
+                <span class="material-symbols-rounded" style="font-size:18px;color:#fff">play_arrow</span>
+              </div>
+            </div>
+          </div>
+          <div class="proj-card-name">TestP</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">TestP</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Skin Health India: The Overlooked Link with Dental Hygiene</div>
+              <div>Key Takeaways · In India, the problem of oral health often focuses on visible aspects of teeth...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Derma Healthcare</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Derma Healthcare</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb" style="background:#111">
+            <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=300&q=60" alt="Testing"/>
+          </div>
+          <div class="proj-card-name">Testing content</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Testing content</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Test1234</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Test1234</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Test123</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Test123</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+      </div><!-- /proj-grid -->
+    </div><!-- /ch-view-projects -->
+  </div><!-- /ch-content-area -->
+</div><!-- /ch-shell -->
+
 <!-- ══ OPTIMIZE CONTENT MODAL ══ -->
 <div class="modal-overlay" id="optimizeModal" onclick="handleOptimizeOverlayClick(event)">
   <div class="modal" style="width:560px" onclick="event.stopPropagation()">
@@ -1799,12 +2161,42 @@ function toggleSbGroup(id, hdr) {
 
 // L1 Rail module switcher
 function switchRailModule(module) {
-  // update L1 active state
   document.getElementById('rail-searchai').classList.toggle('active', module === 'searchai');
   document.getElementById('rail-contenthub').classList.toggle('active', module === 'contenthub');
-  // swap sidebars
   document.getElementById('sidebar-searchai').style.display = module === 'searchai' ? '' : 'none';
   document.getElementById('sidebar-contenthub').style.display = module === 'contenthub' ? '' : 'none';
+  // show/hide content hub full-page shell
+  const shell = document.getElementById('ch-shell');
+  if (module === 'contenthub') {
+    shell.style.display = 'block';
+    // position shell to sit beside the rail
+    shell.style.left = '56px';
+    showChView('projects');
+  } else {
+    shell.style.display = 'none';
+  }
+}
+
+// Content Hub view switcher
+function showChView(view) {
+  document.querySelectorAll('#ch-content-area > div').forEach(v => v.style.display = 'none');
+  const el = document.getElementById('ch-view-' + view);
+  if (el) el.style.display = '';
+  // update sidebar active
+  document.querySelectorAll('#sidebar-contenthub .sb-sub-item').forEach(i => i.classList.remove('active'));
+  const navEl = document.getElementById('ch-nav-' + view);
+  if (navEl) navEl.classList.add('active');
+}
+
+// Projects view helpers
+function setProjView(mode) {
+  document.getElementById('proj-view-grid').classList.toggle('active', mode === 'grid');
+  document.getElementById('proj-view-list').classList.toggle('active', mode === 'list');
+}
+function checkFlip(card) {
+  const rect = card.getBoundingClientRect();
+  const panelW = 208; // hover panel width + gap
+  card.classList.toggle('flip-left', rect.right + panelW > window.innerWidth);
 }
 
 // Content state switcher
