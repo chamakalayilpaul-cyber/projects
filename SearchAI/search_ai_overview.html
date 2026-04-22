@@ -804,6 +804,57 @@ body{
 }
 .btn-save-caret:hover{background:#1565c0}
 
+/* ── CH Recommendations table ── */
+.ch-rec-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.ch-rec-title{font-size:18px;font-weight:400;color:rgb(33,33,33)}
+.ch-rec-table-wrap{
+  background:#fff;border-radius:8px;
+  border:1px solid #eaeaea;overflow:hidden;
+}
+.ch-rec-table{width:100%;border-collapse:collapse;font-size:14px}
+.ch-rec-table thead tr{
+  background:#fafafa;border-bottom:1px solid #eaeaea;
+}
+.ch-rec-table th{
+  padding:10px 16px;text-align:left;
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:rgb(143,143,143);text-transform:uppercase;white-space:nowrap;
+}
+.ch-rec-table td{
+  padding:14px 16px;border-bottom:1px solid #f3f4f6;
+  color:rgb(33,33,33);vertical-align:middle;
+}
+.ch-rec-table tbody tr:last-child td{border-bottom:none}
+.ch-rec-table tbody tr:hover td{background:rgb(242,244,247)}
+/* Recommendation cell */
+.rec-cell-title{font-size:14px;color:rgb(33,33,33);margin-bottom:2px;font-weight:500}
+.rec-cell-sub{font-size:12px;color:rgb(143,143,143);line-height:1.4}
+/* Content type chip */
+.ct-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;
+  border:1px solid #e5e9f0;background:#fafafa;color:rgb(85,85,85);
+  white-space:nowrap;
+}
+/* AEO impact badge */
+.aeo-impact{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:13px;font-weight:600;color:#16a34a;
+}
+.aeo-impact.high{color:#16a34a}
+.aeo-impact.med{color:#d97706}
+/* Status pills */
+.status-pill{
+  display:inline-flex;align-items:center;
+  padding:3px 10px;border-radius:12px;font-size:12px;font-weight:500;
+}
+.status-pill.draft{background:#f3f4f6;color:rgb(85,85,85)}
+.status-pill.published{background:#dcfce7;color:#16a34a}
+.status-pill.in-review{background:#fef9c3;color:#a16207}
+
 /* ── AEO Score Panel (optimize mode) ── */
 #art-optimize-tabs{display:none}
 .art-aeo-panel{
@@ -1022,7 +1073,7 @@ body{
     </div>
 
     <!-- Standalone items -->
-    <div class="sb-item">Recommendations</div>
+    <div class="sb-item" onclick="showChView('ch-rec')" id="ch-nav-ch-rec" style="cursor:pointer">Recommendations</div>
     <div class="sb-item">Assigned to me</div>
     <div class="sb-item">Approve content</div>
     <div class="sb-item">Fix rejected content</div>
@@ -2045,6 +2096,143 @@ body{
 
       </div><!-- /proj-grid -->
     </div><!-- /ch-view-projects -->
+
+    <!-- ══ Recommendations view ══ -->
+    <div id="ch-view-ch-rec" style="display:none">
+      <div class="ch-rec-hdr">
+        <span class="ch-rec-title">Recommendations</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div style="display:flex;align-items:center;gap:6px;border:1px solid #e5e9f0;border-radius:4px;padding:5px 10px;font-size:13px;color:rgb(85,85,85);background:#fff;cursor:pointer">
+            <span class="material-symbols-rounded" style="font-size:16px">filter_list</span>Filter
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;border:1px solid #e5e9f0;border-radius:4px;padding:5px 10px;font-size:13px;color:rgb(85,85,85);background:#fff;cursor:pointer">
+            <span class="material-symbols-rounded" style="font-size:16px">sort</span>Sort
+          </div>
+        </div>
+      </div>
+
+      <div class="ch-rec-table-wrap">
+        <table class="ch-rec-table">
+          <thead>
+            <tr>
+              <th style="width:38%">Recommendation</th>
+              <th style="width:16%">Content type</th>
+              <th style="width:14%">AEO score impact</th>
+              <th style="width:14%">Status</th>
+              <th style="width:18%">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Create a blog on "How AI is transforming local business reviews"</div>
+                <div class="rec-cell-sub">High keyword opportunity · Matches 3 trending queries</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">edit_note</span>Blog</span></td>
+              <td><span class="aeo-impact high"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+6</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openTypeModal()" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Write a FAQ page about reputation management for dentists</div>
+                <div class="rec-cell-sub">Low competition · Answerability signal gap detected</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">language</span>Website content</span></td>
+              <td><span class="aeo-impact high"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+5</span></td>
+              <td><span class="status-pill published">Published</span></td>
+              <td>
+                <button onclick="openOptimizeModal()" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Add a location landing page for "Dental clinics in Austin, TX"</div>
+                <div class="rec-cell-sub">Local SEO gap · 1,200 monthly searches</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">location_on</span>Location landing page</span></td>
+              <td><span class="aeo-impact high"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+4</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openTypeModal()" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Create a competitor comparison page: Birdeye vs. Podium</div>
+                <div class="rec-cell-sub">High intent query · Users comparing solutions</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">compare_arrows</span>Competitor comparison</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+4</span></td>
+              <td><span class="status-pill in-review">In review</span></td>
+              <td>
+                <button onclick="openOptimizeModal()" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Publish an "About us" page highlighting AI-powered review management</div>
+                <div class="rec-cell-sub">Brand authority signal · Missing from current sitemap</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">info</span>About us</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+3</span></td>
+              <td><span class="status-pill published">Published</span></td>
+              <td>
+                <button onclick="openOptimizeModal()" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Write a blog: "5 ways to respond to negative reviews professionally"</div>
+                <div class="rec-cell-sub">Top cited topic · 3 AI models reference this content gap</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">edit_note</span>Blog</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+3</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openTypeModal()" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Create a product page for "Birdeye Messaging" with feature breakdown</div>
+                <div class="rec-cell-sub">Product discovery query · Missing structured FAQ</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">storefront</span>Product/service page</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+2</span></td>
+              <td><span class="status-pill published">Published</span></td>
+              <td>
+                <button onclick="openOptimizeModal()" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Add a general FAQ section on how online reviews affect local SEO</div>
+                <div class="rec-cell-sub">Informational intent · Broad audience reach</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">quiz</span>General</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+2</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openTypeModal()" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /ch-view-ch-rec -->
+
   </div><!-- /ch-content-area -->
 </div><!-- /ch-shell -->
 
@@ -2416,8 +2604,8 @@ function showChView(view) {
   document.querySelectorAll('#ch-content-area > div').forEach(v => v.style.display = 'none');
   const el = document.getElementById('ch-view-' + view);
   if (el) el.style.display = '';
-  // update sidebar active
-  document.querySelectorAll('#sidebar-contenthub .sb-sub-item').forEach(i => i.classList.remove('active'));
+  // update sidebar active (covers both sb-sub-item and sb-item)
+  document.querySelectorAll('#sidebar-contenthub .sb-sub-item, #sidebar-contenthub .sb-item').forEach(i => i.classList.remove('active'));
   const navEl = document.getElementById('ch-nav-' + view);
   if (navEl) navEl.classList.add('active');
 }
