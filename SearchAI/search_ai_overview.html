@@ -85,7 +85,7 @@ body{
 .top-nav{
   height:52px;background:#fff;border-bottom:1px solid #e9e9eb;
   display:flex;align-items:center;justify-content:flex-end;
-  padding:12px 24px;gap:4px;flex-shrink:0;
+  padding:0 24px;gap:4px;flex-shrink:0;
 }
 .top-nav-btn{
   width:28px;height:28px;border-radius:4px;border:none;background:transparent;
@@ -110,6 +110,55 @@ body{
 }
 .icon-btn:hover{background:rgb(242,244,247)}
 .icon-btn .material-symbols-rounded{font-size:20px}
+
+/* ── STATE CHIPS ── */
+.state-chips{
+  display:none;align-items:center;gap:2px;
+  background:rgb(229,233,240);border-radius:6px;padding:2px;
+  margin-right:auto;margin-left:16px;
+}
+.state-chips.visible{display:flex}
+.state-chip{
+  padding:4px 12px;border-radius:4px;font-size:12px;font-weight:500;
+  color:rgb(85,85,85);cursor:pointer;border:none;background:transparent;
+  white-space:nowrap;line-height:20px;transition:background 0.15s,color 0.15s;
+}
+.state-chip.active{background:#fff;color:rgb(33,33,33);box-shadow:0 1px 3px rgba(0,0,0,0.12)}
+
+/* ── CONTENT TABLE (filled state) ── */
+.content-table-wrap{background:#fff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden}
+.content-table{width:100%;border-collapse:collapse}
+.content-table th{
+  padding:10px 16px;font-size:12px;font-weight:600;color:#8f8f8f;
+  text-align:left;border-bottom:1px solid #eaeaea;background:#fafafa;
+  letter-spacing:0.4px;text-transform:uppercase;white-space:nowrap;
+}
+.content-table td{
+  padding:12px 16px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6;
+  vertical-align:middle;
+}
+.content-table tr:last-child td{border-bottom:none}
+.content-table tr:hover td{background:rgb(242,244,247)}
+.ct-title{font-weight:500;color:#212121;cursor:pointer}
+.ct-title:hover{color:#1976d2}
+.ct-type-badge{
+  display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:500;
+  background:#f0f4ff;color:#1976d2;white-space:nowrap;
+}
+.ct-status{display:inline-flex;align-items:center;gap:5px;font-size:13px}
+.ct-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ct-dot.published{background:#16a34a}
+.ct-dot.draft{background:#d97706}
+.ct-dot.review{background:#1976d2}
+.ct-date{font-size:13px;color:#8f8f8f;white-space:nowrap}
+.ct-actions{display:flex;gap:4px;opacity:0}
+.content-table tr:hover .ct-actions{opacity:1}
+.ct-act-btn{
+  width:24px;height:24px;border:none;background:transparent;border-radius:4px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;color:#555;
+}
+.ct-act-btn:hover{background:rgb(229,233,240)}
+.ct-act-btn .material-symbols-rounded{font-size:16px}
 
 /* ── CONTENT SCROLL ── */
 .content{flex:1;overflow-y:auto;padding:20px 24px 32px}
@@ -776,6 +825,11 @@ body{
 
   <!-- TOP NAV -->
   <div class="top-nav">
+    <!-- State chips — visible only on Content view -->
+    <div class="state-chips" id="state-chips">
+      <button class="state-chip active" id="chip-zero" onclick="switchContentState('zero')">Zero state</button>
+      <button class="state-chip" id="chip-filled" onclick="switchContentState('filled')">Filled state</button>
+    </div>
     <button class="top-nav-btn" title="Add">
       <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.04167 8.12496V10.8333C7.04167 10.9868 7.09318 11.1154 7.19621 11.2192C7.29924 11.323 7.4269 11.375 7.57921 11.375C7.73151 11.375 7.86055 11.323 7.96631 11.2192C8.07208 11.1154 8.12496 10.9868 8.12496 10.8333V8.12496H10.8333C10.9868 8.12496 11.1154 8.07344 11.2192 7.97042C11.323 7.86739 11.375 7.73972 11.375 7.58742C11.375 7.43511 11.323 7.30608 11.2192 7.20031C11.1154 7.09455 10.9868 7.04167 10.8333 7.04167H8.12496V4.33331C8.12496 4.17984 8.07344 4.0512 7.97042 3.9474C7.86739 3.84358 7.73972 3.79167 7.58742 3.79167C7.43511 3.79167 7.30608 3.84358 7.20031 3.9474C7.09455 4.0512 7.04167 4.17984 7.04167 4.33331V7.04167H4.33331C4.17984 7.04167 4.0512 7.09318 3.9474 7.19621C3.84358 7.29924 3.79167 7.4269 3.79167 7.57921C3.79167 7.73151 3.84358 7.86055 3.9474 7.96631C4.0512 8.07208 4.17984 8.12496 4.33331 8.12496H7.04167ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666Z" fill="#1976D2"/></svg>
     </button>
@@ -1058,15 +1112,88 @@ body{
 
     <!-- ══ CONTENT VIEW ══ -->
     <div class="view" id="view-content">
-      <div class="content-empty">
-        <img src="./empty-state.svg" width="278" height="225" alt="Empty state illustration" style="flex-shrink:0"/>
-        <div class="content-empty-title">Create your first AEO content</div>
-        <div class="content-empty-sub">Streamline collaboration in one place for all stakeholders, by assigning them tasks and receiving updates</div>
-        <div class="content-empty-actions">
-          <button class="btn-outlined" onclick="openOptimizeModal()">Optimize content</button>
-          <button class="btn-filled" onclick="openContentModal()">Create content</button>
+
+      <!-- Zero state -->
+      <div id="content-zero-state">
+        <div class="content-empty">
+          <img src="./empty-state.svg" width="278" height="225" alt="Empty state illustration" style="flex-shrink:0"/>
+          <div class="content-empty-title">Create your first AEO content</div>
+          <div class="content-empty-sub">Streamline collaboration in one place for all stakeholders, by assigning them tasks and receiving updates</div>
+          <div class="content-empty-actions">
+            <button class="btn-outlined" onclick="openOptimizeModal()">Optimize content</button>
+            <button class="btn-filled" onclick="openContentModal()">Create content</button>
+          </div>
         </div>
       </div>
+
+      <!-- Filled state -->
+      <div id="content-filled-state" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div style="font-size:13px;color:#8f8f8f">6 items</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-outlined" onclick="openOptimizeModal()">Optimize content</button>
+            <button class="btn-filled" onclick="openContentModal()">Create content</button>
+          </div>
+        </div>
+        <div class="content-table-wrap">
+          <table class="content-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="ct-title">Best Burgers in Goldcoast Marina – What Locals Actually Eat</div></td>
+                <td><span class="ct-type-badge">Blog</span></td>
+                <td><span class="ct-status"><span class="ct-dot published"></span>Published</span></td>
+                <td><span class="ct-date">Apr 18, 2026</span></td>
+                <td><div class="ct-actions"><button class="ct-act-btn"><span class="material-symbols-rounded">edit</span></button><button class="ct-act-btn"><span class="material-symbols-rounded">more_vert</span></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="ct-title">Dubbo Property Appraisal – Free Valuation for Homeowners</div></td>
+                <td><span class="ct-type-badge">Location landing page</span></td>
+                <td><span class="ct-status"><span class="ct-dot published"></span>Published</span></td>
+                <td><span class="ct-date">Apr 15, 2026</span></td>
+                <td><div class="ct-actions"><button class="ct-act-btn"><span class="material-symbols-rounded">edit</span></button><button class="ct-act-btn"><span class="material-symbols-rounded">more_vert</span></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="ct-title">Popeyes vs Competitors – Why We're #1 in Fast Food</div></td>
+                <td><span class="ct-type-badge">Competitor comparison</span></td>
+                <td><span class="ct-status"><span class="ct-dot review"></span>In review</span></td>
+                <td><span class="ct-date">Apr 12, 2026</span></td>
+                <td><div class="ct-actions"><button class="ct-act-btn"><span class="material-symbols-rounded">edit</span></button><button class="ct-act-btn"><span class="material-symbols-rounded">more_vert</span></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="ct-title">Everything You Need to Know About Online Reviews</div></td>
+                <td><span class="ct-type-badge">FAQs</span></td>
+                <td><span class="ct-status"><span class="ct-dot draft"></span>Draft</span></td>
+                <td><span class="ct-date">Apr 10, 2026</span></td>
+                <td><div class="ct-actions"><button class="ct-act-btn"><span class="material-symbols-rounded">edit</span></button><button class="ct-act-btn"><span class="material-symbols-rounded">more_vert</span></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="ct-title">Our Story – Serving the Community Since 2004</div></td>
+                <td><span class="ct-type-badge">About us</span></td>
+                <td><span class="ct-status"><span class="ct-dot draft"></span>Draft</span></td>
+                <td><span class="ct-date">Apr 8, 2026</span></td>
+                <td><div class="ct-actions"><button class="ct-act-btn"><span class="material-symbols-rounded">edit</span></button><button class="ct-act-btn"><span class="material-symbols-rounded">more_vert</span></button></div></td>
+              </tr>
+              <tr>
+                <td><div class="ct-title">Spicy Chicken Sandwich – Premium Fast Food Done Right</div></td>
+                <td><span class="ct-type-badge">Product/service page</span></td>
+                <td><span class="ct-status"><span class="ct-dot published"></span>Published</span></td>
+                <td><span class="ct-date">Apr 3, 2026</span></td>
+                <td><div class="ct-actions"><button class="ct-act-btn"><span class="material-symbols-rounded">edit</span></button><button class="ct-act-btn"><span class="material-symbols-rounded">more_vert</span></button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div><!-- /view-content -->
 
     <!-- ══ ARTICLE VIEW ══ -->
@@ -1538,6 +1665,11 @@ function showView(view) {
     sidebar.classList.remove('hidden');
   }
 
+  // show/hide state chips — only on content view
+  const chips = document.getElementById('state-chips');
+  chips.classList.toggle('visible', view === 'content');
+  if (view === 'content') switchContentState('zero'); // always reset to zero on nav
+
   // update page title + header buttons
   const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', article:'Create content'};
   document.getElementById('page-title').textContent = titles[view] || view;
@@ -1560,6 +1692,15 @@ function toggleSbGroup(id, hdr) {
   const isOpen = group.style.display !== 'none';
   group.style.display = isOpen ? 'none' : 'block';
   chev.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// Content state switcher
+function switchContentState(state) {
+  const isZero = state === 'zero';
+  document.getElementById('content-zero-state').style.display = isZero ? '' : 'none';
+  document.getElementById('content-filled-state').style.display = isZero ? 'none' : '';
+  document.getElementById('chip-zero').classList.toggle('active', isZero);
+  document.getElementById('chip-filled').classList.toggle('active', !isZero);
 }
 
 // Optimize modal
