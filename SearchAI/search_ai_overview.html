@@ -265,6 +265,43 @@ body{
 .btn-filled:hover{background:#1565c0}
 
 /* ══ MODAL ══ */
+/* ── TYPE SELECTION MODAL ── */
+.type-modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(33,33,33,0.4);
+  z-index:1000;align-items:center;justify-content:center;
+}
+.type-modal-overlay.open{display:flex}
+.type-modal{
+  background:#fff;border-radius:8px;width:560px;max-width:95vw;
+  padding:24px;display:flex;flex-direction:column;
+  box-shadow:0 10px 24px rgba(33,33,33,0.2);
+}
+.type-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.type-modal-title{font-size:16px;font-weight:400;color:#212121}
+.type-modal-subtitle{font-size:14px;color:#555;margin-bottom:20px;line-height:1.5}
+.type-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;
+}
+.type-card{
+  border:1.5px solid #e5e9f0;border-radius:6px;padding:16px 12px;
+  cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+  background:#fff;transition:border-color 0.15s,background 0.15s;
+}
+.type-card:hover{border-color:#bbc8e0;background:rgb(242,244,247)}
+.type-card.selected{border-color:#1976d2;background:#e8f0fe}
+.type-card-icon{
+  width:32px;height:32px;border-radius:6px;background:#f0f4ff;
+  display:flex;align-items:center;justify-content:center;
+}
+.type-card.selected .type-card-icon{background:#c7d6f6}
+.type-card-icon .material-symbols-rounded{font-size:18px;color:#1976d2}
+.type-card-label{font-size:13px;font-weight:500;color:#212121;line-height:1.3}
+.type-modal-footer{
+  display:flex;align-items:center;justify-content:flex-end;gap:8px;
+  padding-top:16px;border-top:1px solid #eaeaea;
+}
+
+/* ── CONFIG MODAL ── */
 .modal-overlay{
   display:none;position:fixed;inset:0;background:rgba(33,33,33,0.4);
   z-index:1000;align-items:center;justify-content:center;
@@ -310,6 +347,16 @@ body{
   outline:none;line-height:20px;margin-bottom:8px;
 }
 .article-title-input:focus{border-color:#1976d2}
+.supporting-url-field{
+  border:1px solid #e5e9f0;border-radius:4px;padding:8px 12px;
+  cursor:text;background:#fff;transition:border-color 0.15s;
+}
+.supporting-url-field:focus-within{border-color:#1976d2}
+.supporting-url-input{
+  width:100%;border:none;outline:none;font-size:14px;color:#212121;
+  font-family:'Roboto',sans-serif;line-height:20px;background:transparent;
+}
+.supporting-url-input::placeholder{color:#bbb}
 .ai-recs-header{
   display:flex;align-items:center;gap:6px;font-size:12px;color:#212121;
   margin-bottom:4px;
@@ -1016,7 +1063,7 @@ body{
         <div class="content-empty-title">Create your first AEO content</div>
         <div class="content-empty-sub">Streamline collaboration in one place for all stakeholders, by assigning them tasks and receiving updates</div>
         <div class="content-empty-actions">
-          <button class="btn-outlined">Optimize content</button>
+          <button class="btn-outlined" onclick="openOptimizeModal()">Optimize content</button>
           <button class="btn-filled" onclick="openContentModal()">Create content</button>
         </div>
       </div>
@@ -1194,6 +1241,115 @@ body{
 </div><!-- /main -->
 </div><!-- /body-wrap -->
 
+<!-- ══ OPTIMIZE CONTENT MODAL ══ -->
+<div class="modal-overlay" id="optimizeModal" onclick="handleOptimizeOverlayClick(event)">
+  <div class="modal" style="width:560px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Content configuration</span>
+      <button class="modal-close" onclick="closeOptimizeModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div class="modal-subtitle">Write long-form AEO content based on an analysis of the current top-cited pages.</div>
+
+    <div class="modal-fields">
+      <!-- Content URL -->
+      <div class="dropdown-field" id="dd-opt-url" onclick="toggleOptDropdown('url')">
+        <div class="df-inner">
+          <div class="df-label">Content URL</div>
+          <div class="df-value" id="dd-opt-url-val" style="font-size:13px;color:#212121;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">https://birdeye.com/blog/blog-birdeye-vs-soci-comparison/</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOptOption('url','https://birdeye.com/blog/blog-birdeye-vs-soci-comparison/',this)">birdeye.com/blog/blog-birdeye-vs-soci-comparison/</div>
+          <div class="dropdown-option" onclick="selectOptOption('url','https://birdeye.com/blog/online-reviews-guide/',this)">birdeye.com/blog/online-reviews-guide/</div>
+          <div class="dropdown-option" onclick="selectOptOption('url','https://birdeye.com/blog/reputation-management/',this)">birdeye.com/blog/reputation-management/</div>
+        </div>
+      </div>
+
+      <!-- Topic -->
+      <div class="dropdown-field" id="dd-opt-topic" onclick="toggleOptDropdown('topic')">
+        <div class="df-inner">
+          <div class="df-label">Topic</div>
+          <div class="df-value" id="dd-opt-topic-val">Fastfood</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOptOption('topic','Fastfood',this)">Fastfood</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Local Dining',this)">Local Dining</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Healthcare',this)">Healthcare</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Real Estate',this)">Real Estate</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Automotive',this)">Automotive</div>
+        </div>
+      </div>
+
+      <!-- Prompts -->
+      <div class="dropdown-field" id="dd-opt-prompts" onclick="toggleOptDropdown('prompts')">
+        <div class="df-inner">
+          <div class="df-label">Prompts</div>
+          <div class="df-value" id="dd-opt-prompts-val">4 prompts</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option" onclick="selectOptOption('prompts','2 prompts',this)">2 prompts</div>
+          <div class="dropdown-option" onclick="selectOptOption('prompts','3 prompts',this)">3 prompts</div>
+          <div class="dropdown-option selected" onclick="selectOptOption('prompts','4 prompts',this)">4 prompts</div>
+          <div class="dropdown-option" onclick="selectOptOption('prompts','5 prompts',this)">5 prompts</div>
+          <div class="dropdown-option" onclick="selectOptOption('prompts','6 prompts',this)">6 prompts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeOptimizeModal()">Cancel</button>
+      <button class="btn-generate" onclick="closeOptimizeModal()">Optimize content</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTENT TYPE SELECTION MODAL ══ -->
+<div class="type-modal-overlay" id="typeModal" onclick="handleTypeOverlayClick(event)">
+  <div class="type-modal" onclick="event.stopPropagation()">
+    <div class="type-modal-header">
+      <span class="type-modal-title">Select content type</span>
+      <button class="modal-close" onclick="closeTypeModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div class="type-modal-subtitle">Choose the type of page you'd like to create.</div>
+    <div class="type-grid">
+      <div class="type-card" onclick="selectContentType(this,'Blog')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">edit_note</span></div>
+        <div class="type-card-label">Blog</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'Product/service page')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">storefront</span></div>
+        <div class="type-card-label">Product / service page</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'Location landing page')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">location_on</span></div>
+        <div class="type-card-label">Location landing page</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'FAQs')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">quiz</span></div>
+        <div class="type-card-label">FAQs</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'About us')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">groups</span></div>
+        <div class="type-card-label">About us</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'Competitor comparison')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">compare_arrows</span></div>
+        <div class="type-card-label">Competitor comparison</div>
+      </div>
+    </div>
+    <div class="type-modal-footer">
+      <button class="btn-cancel" onclick="closeTypeModal()">Cancel</button>
+      <button class="btn-generate" id="typeNextBtn" onclick="proceedToConfig()" disabled style="opacity:0.45;cursor:not-allowed">Next</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ CONTENT CONFIGURATION MODAL ══ -->
 <div class="modal-overlay" id="contentModal" onclick="handleOverlayClick(event)">
   <div class="modal" onclick="event.stopPropagation()">
@@ -1317,6 +1473,18 @@ body{
           <div class="dropdown-option" onclick="selectOption('audience','Business owners',this)">Business owners</div>
         </div>
       </div>
+
+      <!-- Supporting URL -->
+      <div class="supporting-url-field" onclick="document.getElementById('supporting-url-input').focus()">
+        <div class="df-label" style="margin-bottom:4px">Supporting URL <span style="color:#bbb;font-weight:400;font-size:11px;margin-left:4px">Optional</span></div>
+        <input
+          id="supporting-url-input"
+          class="supporting-url-input"
+          type="url"
+          placeholder="https://example.com/reference-page"
+          onclick="event.stopPropagation()"
+        />
+      </div>
     </div>
 
     <!-- Article title section -->
@@ -1394,10 +1562,70 @@ function toggleSbGroup(id, hdr) {
   chev.style.transform = isOpen ? '' : 'rotate(180deg)';
 }
 
-// Modal
+// Optimize modal
+function openOptimizeModal() {
+  document.getElementById('optimizeModal').classList.add('open');
+}
+function closeOptimizeModal() {
+  document.getElementById('optimizeModal').classList.remove('open');
+  closeAllOptDropdowns();
+}
+function handleOptimizeOverlayClick(e) {
+  if (e.target === document.getElementById('optimizeModal')) closeOptimizeModal();
+}
+function closeAllOptDropdowns() {
+  ['url','topic','prompts'].forEach(id => {
+    document.getElementById('dd-opt-' + id).classList.remove('open');
+  });
+}
+function toggleOptDropdown(id) {
+  const el = document.getElementById('dd-opt-' + id);
+  const wasOpen = el.classList.contains('open');
+  closeAllOptDropdowns();
+  if (!wasOpen) el.classList.add('open');
+}
+function selectOptOption(ddId, value, optEl) {
+  document.getElementById('dd-opt-' + ddId + '-val').textContent = value;
+  optEl.closest('.dropdown-options').querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+  optEl.classList.add('selected');
+  document.getElementById('dd-opt-' + ddId).classList.remove('open');
+}
+
+// Type selection modal
+let selectedContentType = null;
 function openContentModal() {
+  selectedContentType = null;
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  const btn = document.getElementById('typeNextBtn');
+  btn.disabled = true;
+  btn.style.opacity = '0.45';
+  btn.style.cursor = 'not-allowed';
+  document.getElementById('typeModal').classList.add('open');
+}
+function closeTypeModal() {
+  document.getElementById('typeModal').classList.remove('open');
+}
+function handleTypeOverlayClick(e) {
+  if (e.target === document.getElementById('typeModal')) closeTypeModal();
+}
+function selectContentType(card, type) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedContentType = type;
+  const btn = document.getElementById('typeNextBtn');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.style.cursor = 'pointer';
+}
+function proceedToConfig() {
+  if (!selectedContentType) return;
+  closeTypeModal();
+  openConfigModal();
+}
+
+// Config modal
+function openConfigModal() {
   document.getElementById('contentModal').classList.add('open');
-  // sync platform label with actual checked state
   const n = document.querySelectorAll('#dd-platforms .platform-option.checked').length;
   document.getElementById('dd-platforms-val').textContent = n
     ? n + ' platform' + (n > 1 ? 's' : '') + ' selected'
