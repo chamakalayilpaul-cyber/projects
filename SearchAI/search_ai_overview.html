@@ -803,6 +803,82 @@ body{
   display:flex;align-items:center;
 }
 .btn-save-caret:hover{background:#1565c0}
+
+/* ── AEO Score Panel (optimize mode) ── */
+#art-optimize-tabs{display:none}
+.art-aeo-panel{
+  display:none;flex:1;overflow-y:auto;
+  padding:16px 12px 24px;flex-direction:column;gap:0;
+}
+.art-aeo-panel::-webkit-scrollbar{width:4px}
+.art-aeo-panel::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.art-aeo-panel.active{display:flex}
+.art-rec-panel{
+  display:none;flex:1;overflow-y:auto;
+  padding:16px 12px 24px;flex-direction:column;gap:10px;
+}
+.art-rec-panel.active{display:flex}
+/* Score section */
+.aeo-score-hdr{
+  display:flex;align-items:center;gap:4px;
+  font-size:13px;color:rgb(85,85,85);margin-bottom:6px;
+}
+.aeo-score-hdr .material-symbols-rounded{font-size:16px;color:rgb(143,143,143)}
+.aeo-zone-chip{
+  display:inline-flex;align-items:center;
+  background:#eaf7e8;border-radius:4px;
+  padding:2px 8px;font-size:12px;color:rgb(85,85,85);
+  margin-bottom:6px;
+}
+.aeo-big-num{font-size:32px;color:#4cae3d;font-weight:400;line-height:1.1}
+.aeo-big-denom{font-size:14px;color:rgb(143,143,143)}
+.aeo-progress-wrap{
+  position:relative;height:28px;
+  display:flex;align-items:center;margin:12px 0 4px;
+}
+.aeo-track{
+  position:relative;height:6px;background:#e5e5e5;
+  border-radius:8px;width:100%;
+}
+.aeo-zone{
+  position:absolute;height:13px;
+  background:rgba(126,211,33,0.45);border-radius:4px;
+  top:50%;transform:translateY(-50%);
+}
+.aeo-you-group{position:absolute;display:flex;flex-direction:column;align-items:center;top:-18px}
+.aeo-you-pill{
+  background:linear-gradient(180deg,#0f7195 0%,#094459 60%);
+  color:#fff;font-size:11px;padding:1px 7px;border-radius:9999px;
+  border:1.5px solid #fff;white-space:nowrap;line-height:1.6;
+}
+.aeo-you-tick{width:1px;height:10px;background:#094459;margin-top:1px}
+/* Metrics list */
+.aeo-metrics{display:flex;flex-direction:column;margin-top:8px}
+.aeo-metric-row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  padding:9px 0;border-bottom:1px solid #f3f4f6;
+}
+.aeo-metric-row:last-child{border-bottom:none;padding-bottom:0}
+.aeo-metric-left{display:flex;flex-direction:column;gap:1px}
+.aeo-metric-name{font-size:14px;color:rgb(33,33,33);line-height:1.4}
+.aeo-metric-wt{font-size:12px;color:rgb(143,143,143)}
+.aeo-metric-score{font-size:14px;color:rgb(33,33,33);padding-top:2px;white-space:nowrap}
+.aeo-metric-score span{font-size:12px;color:rgb(143,143,143)}
+/* Recommendation items */
+.rec-item{
+  background:#f9fafb;border:1px solid #e5e9f0;
+  border-radius:6px;padding:10px 12px;
+  font-size:13px;color:rgb(33,33,33);line-height:1.5;
+}
+.rec-item-tag{
+  font-size:11px;font-weight:600;color:#7c3aed;
+  letter-spacing:0.3px;margin-bottom:4px;
+}
+/* Badge on recommendation tab */
+.art-tab-num-badge{
+  font-size:10px;font-weight:600;color:#fff;
+  background:#1976d2;padding:1px 5px;border-radius:10px;
+}
 </style>
 </head>
 <body>
@@ -1391,9 +1467,19 @@ body{
 
       <!-- Left panel -->
       <div class="art-left">
-        <div class="art-tabs">
+        <!-- Create mode tabs -->
+        <div class="art-tabs" id="art-create-tabs">
           <div class="art-tab active" data-tab="ai" onclick="switchArtTab(this)">Create with <span class="art-tab-ai-badge">AI</span></div>
           <div class="art-tab" data-tab="manual" onclick="switchArtTab(this)">Create manually</div>
+        </div>
+        <!-- Optimize mode tabs -->
+        <div class="art-tabs" id="art-optimize-tabs">
+          <div class="art-tab active" data-tab="aeo" onclick="switchOptArtTab(this)">AEO score</div>
+          <div class="art-tab" data-tab="rec" onclick="switchOptArtTab(this)">
+            <span class="material-symbols-rounded" style="font-size:16px;color:#7c3aed">auto_awesome</span>
+            Recommendation
+            <span class="art-tab-num-badge">1</span>
+          </div>
         </div>
 
         <!-- Create with AI panel -->
@@ -1454,6 +1540,99 @@ body{
             <div class="art-block-item" draggable="true" style="grid-column:1/-1"><span class="material-symbols-rounded">code</span>Code blocks</div>
           </div>
         </div>
+
+        <!-- ── AEO Score panel (optimize mode) ── -->
+        <div class="art-aeo-panel" id="art-aeo-panel">
+          <!-- Score header -->
+          <div class="aeo-score-hdr">
+            AEO Content score
+            <span class="material-symbols-rounded">help_outline</span>
+          </div>
+          <!-- Zone chip -->
+          <div class="aeo-zone-chip">Target zone : 82 – 87</div>
+          <!-- Big number -->
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px">
+            <span class="aeo-big-num">85</span>
+            <span class="aeo-big-denom">/ 100</span>
+          </div>
+          <!-- Progress bar -->
+          <div class="aeo-progress-wrap">
+            <div class="aeo-track">
+              <!-- green target zone: 82–87% of bar width -->
+              <div class="aeo-zone" style="left:82%;width:5%"></div>
+              <!-- You marker at 85% -->
+              <div class="aeo-you-group" style="left:85%">
+                <div class="aeo-you-pill">You</div>
+                <div class="aeo-you-tick"></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:rgb(143,143,143);margin-bottom:4px">
+            <span>0</span><span>100</span>
+          </div>
+          <!-- Metrics -->
+          <div class="aeo-metrics">
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Readability</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Content freshness</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Content structure</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Answerability signals</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Information density</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Machine readability</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Recommendation panel (optimize mode) ── -->
+        <div class="art-rec-panel" id="art-rec-panel">
+          <div class="rec-item">
+            <div class="rec-item-tag">RECOMMENDATION</div>
+            Add a direct FAQ section answering "What makes Gold Coast Marina's burger unique?" to improve answerability signals and AI citation likelihood.
+          </div>
+          <div class="rec-item">
+            <div class="rec-item-tag">SUGGESTION</div>
+            Include a publish date or "last updated" note near the top to boost content freshness score for AI crawlers.
+          </div>
+          <div class="rec-item">
+            <div class="rec-item-tag">SUGGESTION</div>
+            Add structured data (Recipe or LocalBusiness schema) to improve machine readability and AEO performance.
+          </div>
+        </div>
+
       </div>
 
       <!-- Right: article editor -->
@@ -1894,7 +2073,7 @@ body{
 
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closeOptimizeModal()">Cancel</button>
-      <button class="btn-generate" onclick="closeOptimizeModal()">Optimize content</button>
+      <button class="btn-generate" onclick="generateOptimizeResult()">Optimize content</button>
     </div>
   </div>
 </div>
@@ -2136,13 +2315,32 @@ function showView(view) {
   if (view === 'content') switchContentState('zero'); // always reset to zero on nav
 
   // update page title + header buttons
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', article:'Create content'};
-  document.getElementById('page-title').textContent = titles[view] || view;
+  const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content'};
+  document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
   document.getElementById('hdr-rec-btns').style.display = view === 'recommendations' ? 'flex' : 'none';
   document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
+
+  // Switch left-panel mode: create tabs vs optimize (AEO) tabs
+  if (view === 'article') {
+    const isOpt = window._articleMode === 'optimize';
+    document.getElementById('art-create-tabs').style.display = isOpt ? 'none' : 'flex';
+    document.getElementById('art-optimize-tabs').style.display = isOpt ? 'flex' : 'none';
+    // hide all opt panels, show correct one
+    document.getElementById('art-aeo-panel').classList.toggle('active', isOpt);
+    document.getElementById('art-rec-panel').classList.remove('active');
+    // hide all create panels when in opt mode
+    document.getElementById('art-ai-panel').classList.toggle('active', !isOpt);
+    document.getElementById('art-manual-search').style.display = 'none';
+    document.getElementById('art-manual-blocks').style.display = 'none';
+    // reset optimize tabs highlight
+    if (isOpt) {
+      document.querySelectorAll('#art-optimize-tabs .art-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+    }
+  }
 
   // update sidebar active states
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
@@ -2402,11 +2600,29 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// Generate article — close modal, navigate to article view, compute stats
+// Generate article (create mode) — close modal, navigate to article view, compute stats
 function generateArticle() {
+  window._articleMode = 'create';
   closeContentModal();
   showView('article');
   setTimeout(renderArticleStats, 80);
+}
+
+// Generate optimize result — close optimize modal, navigate to article view in optimize mode
+function generateOptimizeResult() {
+  window._articleMode = 'optimize';
+  closeOptimizeModal();
+  showView('article');
+  setTimeout(renderArticleStats, 80);
+}
+
+// Optimize mode tab switcher
+function switchOptArtTab(el) {
+  el.closest('.art-tabs').querySelectorAll('.art-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const tab = el.dataset.tab;
+  document.getElementById('art-aeo-panel').classList.toggle('active', tab === 'aeo');
+  document.getElementById('art-rec-panel').classList.toggle('active', tab === 'rec');
 }
 
 function renderArticleStats() {
