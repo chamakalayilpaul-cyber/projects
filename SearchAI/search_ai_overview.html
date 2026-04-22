@@ -832,26 +832,33 @@ body{
 }
 .aeo-big-num{font-size:32px;color:#4cae3d;font-weight:400;line-height:1.1}
 .aeo-big-denom{font-size:14px;color:rgb(143,143,143)}
+/* Progress bar — green band from 82% to 87% via gradient */
 .aeo-progress-wrap{
-  position:relative;height:28px;
-  display:flex;align-items:center;margin:12px 0 4px;
+  position:relative;
+  padding-top:32px; /* room for the You pill above */
+  margin:4px 0 4px;
 }
 .aeo-track{
-  position:relative;height:6px;background:#e5e5e5;
-  border-radius:8px;width:100%;
+  position:relative;height:6px;border-radius:8px;
+  background:linear-gradient(to right,
+    #e5e5e5 0%,#e5e5e5 82%,
+    #7ed321 82%,#7ed321 87%,
+    #e5e5e5 87%,#e5e5e5 100%);
 }
-.aeo-zone{
-  position:absolute;height:13px;
-  background:rgba(126,211,33,0.45);border-radius:4px;
-  top:50%;transform:translateY(-50%);
+/* "You" pill+tick, absolutely positioned relative to .aeo-progress-wrap */
+.aeo-you-anchor{
+  position:absolute;
+  top:0;           /* sits at the top of the padding area */
+  left:85%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;
 }
-.aeo-you-group{position:absolute;display:flex;flex-direction:column;align-items:center;top:-18px}
 .aeo-you-pill{
   background:linear-gradient(180deg,#0f7195 0%,#094459 60%);
-  color:#fff;font-size:11px;padding:1px 7px;border-radius:9999px;
+  color:#fff;font-size:11px;padding:2px 8px;border-radius:9999px;
   border:1.5px solid #fff;white-space:nowrap;line-height:1.6;
 }
-.aeo-you-tick{width:1px;height:10px;background:#094459;margin-top:1px}
+.aeo-you-tick{width:1px;flex:1;background:#094459}
 /* Metrics list */
 .aeo-metrics{display:flex;flex-direction:column;margin-top:8px}
 .aeo-metric-row{
@@ -864,20 +871,28 @@ body{
 .aeo-metric-wt{font-size:12px;color:rgb(143,143,143)}
 .aeo-metric-score{font-size:14px;color:rgb(33,33,33);padding-top:2px;white-space:nowrap}
 .aeo-metric-score span{font-size:12px;color:rgb(143,143,143)}
-/* Recommendation items */
-.rec-item{
-  background:#f9fafb;border:1px solid #e5e9f0;
-  border-radius:6px;padding:10px 12px;
-  font-size:13px;color:rgb(33,33,33);line-height:1.5;
+/* Recommendation cards */
+.rec-card{
+  background:#fff;border:1px solid #eaeaea;
+  border-radius:8px;padding:16px;margin-bottom:12px;
 }
-.rec-item-tag{
-  font-size:11px;font-weight:600;color:#7c3aed;
-  letter-spacing:0.3px;margin-bottom:4px;
+.rec-card:last-child{margin-bottom:0}
+.rec-card-title{font-size:16px;color:#252525;line-height:1.4;margin-bottom:4px}
+.rec-card-impact{font-size:14px;color:rgb(143,143,143);margin-bottom:10px}
+.rec-card-body{font-size:14px;color:#252525;line-height:1.5;margin-bottom:10px}
+.rec-card-ai{display:flex;gap:4px;align-items:flex-start;margin-bottom:14px}
+.rec-card-ai .material-symbols-rounded{font-size:14px;color:#7c3aed;flex-shrink:0;margin-top:2px}
+.rec-card-ai-text{font-size:14px;color:#252525;line-height:1.5}
+.rec-accept-btn{
+  padding:4px 14px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:13px;
+  font-family:'Roboto',sans-serif;cursor:pointer;
 }
+.rec-accept-btn:hover{background:#1565c0}
 /* Badge on recommendation tab */
 .art-tab-num-badge{
-  font-size:10px;font-weight:600;color:#fff;
-  background:#1976d2;padding:1px 5px;border-radius:10px;
+  font-size:10px;font-weight:600;color:#7c3aed;
+  background:#f0ebfc;padding:1px 5px;border-radius:10px;
 }
 </style>
 </head>
@@ -1477,8 +1492,8 @@ body{
           <div class="art-tab active" data-tab="aeo" onclick="switchOptArtTab(this)">AEO score</div>
           <div class="art-tab" data-tab="rec" onclick="switchOptArtTab(this)">
             <span class="material-symbols-rounded" style="font-size:16px;color:#7c3aed">auto_awesome</span>
-            Recommendation
-            <span class="art-tab-num-badge">1</span>
+            Recommendations
+            <span class="art-tab-num-badge">2</span>
           </div>
         </div>
 
@@ -1555,17 +1570,14 @@ body{
             <span class="aeo-big-num">85</span>
             <span class="aeo-big-denom">/ 100</span>
           </div>
-          <!-- Progress bar -->
+          <!-- Progress bar: green band from 82–87%, You pill at 85% -->
           <div class="aeo-progress-wrap">
-            <div class="aeo-track">
-              <!-- green target zone: 82–87% of bar width -->
-              <div class="aeo-zone" style="left:82%;width:5%"></div>
-              <!-- You marker at 85% -->
-              <div class="aeo-you-group" style="left:85%">
-                <div class="aeo-you-pill">You</div>
-                <div class="aeo-you-tick"></div>
-              </div>
+            <!-- You pill anchored at 85% -->
+            <div class="aeo-you-anchor" style="height:100%">
+              <div class="aeo-you-pill">You</div>
+              <div class="aeo-you-tick"></div>
             </div>
+            <div class="aeo-track"></div>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:11px;color:rgb(143,143,143);margin-bottom:4px">
             <span>0</span><span>100</span>
@@ -1619,17 +1631,41 @@ body{
 
         <!-- ── Recommendation panel (optimize mode) ── -->
         <div class="art-rec-panel" id="art-rec-panel">
-          <div class="rec-item">
-            <div class="rec-item-tag">RECOMMENDATION</div>
-            Add a direct FAQ section answering "What makes Gold Coast Marina's burger unique?" to improve answerability signals and AI citation likelihood.
+          <!-- Score upgrade intro -->
+          <p style="font-size:14px;color:rgb(33,33,33);line-height:1.5;margin-bottom:16px">
+            Your AEO score can improve to <strong>91</strong> following the below recommendations.
+          </p>
+          <!-- 85 → 91 display -->
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:20px">
+            <span style="font-size:32px;color:#4cae3d;font-weight:400;line-height:1">85</span>
+            <span style="font-size:14px;color:rgb(143,143,143);margin-bottom:2px">/100</span>
+            <span class="material-symbols-rounded" style="font-size:22px;color:rgb(143,143,143);margin:0 2px">arrow_right_alt</span>
+            <span style="font-size:32px;color:#4cae3d;font-weight:400;line-height:1">91</span>
+            <span style="font-size:14px;color:rgb(143,143,143);margin-bottom:2px">/100</span>
           </div>
-          <div class="rec-item">
-            <div class="rec-item-tag">SUGGESTION</div>
-            Include a publish date or "last updated" note near the top to boost content freshness score for AI crawlers.
+          <!-- Section label -->
+          <div style="font-size:16px;color:rgb(33,33,33);margin-bottom:12px">Recommendations</div>
+          <!-- Card 1 -->
+          <div class="rec-card">
+            <div class="rec-card-title">Refine the Title for Better Alignment</div>
+            <div class="rec-card-impact">Answerability Signals (+3)</div>
+            <div class="rec-card-body">Modify the title to better reflect user intent. Change 'Best reputation management platforms for multi-location brands in 2026' to 'Top Agentic Marketing Platforms for Franchises with 100+ Locations in 2026'. This change will directly address the user prompt and enhance search relevance.</div>
+            <div class="rec-card-ai">
+              <span class="material-symbols-rounded">auto_awesome</span>
+              <span class="rec-card-ai-text">A title that closely matches user queries increases the likelihood of being selected by AI systems as a relevant answer, thereby improving visibility and engagement.</span>
+            </div>
+            <button class="rec-accept-btn">Accept</button>
           </div>
-          <div class="rec-item">
-            <div class="rec-item-tag">SUGGESTION</div>
-            Add structured data (Recipe or LocalBusiness schema) to improve machine readability and AEO performance.
+          <!-- Card 2 -->
+          <div class="rec-card">
+            <div class="rec-card-title">Enhance Heading Relevance</div>
+            <div class="rec-card-impact">Answerability Signals (+1.1)</div>
+            <div class="rec-card-body">Consider refining the subheadings to better align with user queries. For example, change 'What to look for in a reputation management platform in 2026' to 'Key Features to Consider in 2026 for Multi-Location Reputation Management'. This adjustment will enhance the relevance of your headings.</div>
+            <div class="rec-card-ai">
+              <span class="material-symbols-rounded">auto_awesome</span>
+              <span class="rec-card-ai-text">Improving the semantic similarity of headings helps AI models better understand the content structure, leading to improved retrieval and ranking for relevant queries.</span>
+            </div>
+            <button class="rec-accept-btn">Accept</button>
           </div>
         </div>
 
