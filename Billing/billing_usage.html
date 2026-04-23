@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,400,0,0&display=block"/>
 <link rel="stylesheet" href="../ds-tokens.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -54,26 +55,14 @@ body{
   overflow:hidden;
 }
 .rail-btn{
-  width:28px;
-  height:28px;
-  border-radius:4px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  flex-shrink:0;
+  width:28px;height:28px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;position:relative;border:none;background:transparent;
 }
 .rail-btn:hover{background:rgba(0,0,0,0.06)}
 .rail-btn.active{background:#c7d6f6}
-/* Icon is 16px inside a 28px button — matches Figma p-[8px] spec (6px each side) */
-.rail-btn img{width:16px;height:16px;display:block;object-fit:contain}
-.rail-divider{
-  width:20px;
-  height:1px;
-  background:#c0c8d8;
-  flex-shrink:0;
-  margin:0 auto;
-}
+.rail-btn .material-symbols-rounded{font-size:20px;color:rgb(48,48,48);user-select:none}
+.rail-divider{width:20px;height:1px;background:#c0c8d8;flex-shrink:0;margin:0 auto}
 
 /* ── SIDEBAR (L2) ── */
 .sidebar{
@@ -450,20 +439,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const productsItem = document.querySelector('.sb-item');
     showView('products', productsItem);
   }
-  // Agent rows → agent_detail.html
-  document.querySelectorAll('#view-usage .td-product-name').forEach(function(el){
-    el.addEventListener('click', function(){
-      const name = this.textContent.trim();
-      window.location.href = 'agent_detail.html?agent=' + encodeURIComponent(name);
-    });
-  });
-  // Product rows → product_detail.html
-  document.querySelectorAll('#view-products .td-product-name').forEach(function(el){
-    el.addEventListener('click', function(){
-      const name = this.textContent.trim();
-      window.location.href = 'product_detail.html?product=' + encodeURIComponent(name);
-    });
-  });
 });
 function showView(view, item){
   document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
@@ -536,79 +511,29 @@ function setUsecase(btn){
       </svg>
     </a>
     <div class="rail-nav">
-      <!-- Overview / Home -->
-      <div class="rail-btn" title="Overview">
-        <img src="https://www.figma.com/api/mcp/asset/b190b937-4acd-4447-a23d-52ac33667bbf" alt="Overview"/>
-      </div>
-      <!-- Inbox -->
-      <div class="rail-btn" title="Inbox" style="position:relative">
-        <img src="https://www.figma.com/api/mcp/asset/2e2e83ee-b044-4e8e-8e19-2167d4fdf77a" alt="Inbox"/>
+      <button class="rail-btn" title="Overview"><span class="material-symbols-rounded">home</span></button>
+      <button class="rail-btn" title="Inbox" style="position:relative">
+        <span class="material-symbols-rounded">sms</span>
         <div style="position:absolute;top:3px;right:3px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid #e5e9f0"></div>
-      </div>
-      <!-- Listings -->
-      <div class="rail-btn" title="Listings">
-        <img src="https://www.figma.com/api/mcp/asset/93bce035-24b2-4903-8005-5257e28a72fa" alt="Listings"/>
-      </div>
-      <!-- Reviews -->
-      <div class="rail-btn" title="Reviews">
-        <img src="https://www.figma.com/api/mcp/asset/ba0e252f-56dd-4ec7-ab44-0b17966eeda7" alt="Reviews"/>
-      </div>
-      <!-- Referrals -->
-      <div class="rail-btn" title="Referrals">
-        <img src="https://www.figma.com/api/mcp/asset/9a17a1c5-471f-4e6f-b946-96566e4a0d22" alt="Referrals"/>
-      </div>
-      <!-- Payments -->
-      <div class="rail-btn" title="Payments">
-        <img src="https://www.figma.com/api/mcp/asset/041e0469-9975-49b7-b7e1-2cb12fef421e" alt="Payments"/>
-      </div>
-      <!-- Appointments -->
-      <div class="rail-btn" title="Appointments">
-        <img src="https://www.figma.com/api/mcp/asset/1f0ca52c-fdab-41b1-9f3c-b8eea76bfc8d" alt="Appointments"/>
-      </div>
-      <!-- Social -->
-      <div class="rail-btn" title="Social">
-        <img src="https://www.figma.com/api/mcp/asset/b50396a1-8d40-4772-83f3-2db886f4e9bc" alt="Social"/>
-      </div>
-      <!-- Surveys -->
-      <div class="rail-btn" title="Surveys">
-        <img src="https://www.figma.com/api/mcp/asset/27661920-7606-4572-91b5-be2235552d7c" alt="Surveys"/>
-      </div>
-      <!-- Ticketing -->
-      <div class="rail-btn" title="Ticketing">
-        <img src="https://www.figma.com/api/mcp/asset/08909705-7085-4b15-8294-73314c2e877c" alt="Ticketing"/>
-      </div>
-      <!-- Contacts -->
-      <div class="rail-btn" title="Contacts">
-        <img src="https://www.figma.com/api/mcp/asset/7031eb61-447a-4cea-bb5b-4dd7079909db" alt="Contacts"/>
-      </div>
-      <!-- Campaigns -->
-      <div class="rail-btn" title="Campaigns">
-        <img src="https://www.figma.com/api/mcp/asset/ec33957f-3390-4743-98d9-02b49fa8d71d" alt="Campaigns"/>
-      </div>
-      <!-- Marketing Automation -->
-      <div class="rail-btn" title="Marketing Automation">
-        <img src="https://www.figma.com/api/mcp/asset/6877ac2e-ff9a-4458-920d-c82c3380807d" alt="Marketing Automation"/>
-      </div>
-      <!-- Reports -->
-      <div class="rail-btn" title="Reports">
-        <img src="https://www.figma.com/api/mcp/asset/a66966a7-14e2-4396-8838-b86885bf61fd" alt="Reports"/>
-      </div>
-      <!-- Insights -->
-      <div class="rail-btn" title="Insights">
-        <img src="https://www.figma.com/api/mcp/asset/74ac9c59-6da8-4a97-b9b8-0cf1252f7734" alt="Insights"/>
-      </div>
-      <!-- Competitors -->
-      <div class="rail-btn" title="Competitors">
-        <img src="https://www.figma.com/api/mcp/asset/30cf26bd-2e9c-4552-8151-daedf67f2235" alt="Competitors"/>
-      </div>
-
+      </button>
+      <button class="rail-btn" title="Listings"><span class="material-symbols-rounded">location_on</span></button>
+      <button class="rail-btn" title="Reviews"><span class="material-symbols-rounded">grade</span></button>
+      <button class="rail-btn" title="Referrals"><span class="material-symbols-rounded">card_giftcard</span></button>
+      <button class="rail-btn" title="Payments"><span class="material-symbols-rounded">monetization_on</span></button>
+      <button class="rail-btn" title="Appointments"><span class="material-symbols-rounded">calendar_month</span></button>
+      <button class="rail-btn" title="Social"><span class="material-symbols-rounded">workspaces</span></button>
+      <button class="rail-btn" title="Surveys"><span class="material-symbols-rounded">assignment_turned_in</span></button>
+      <button class="rail-btn" title="Ticketing"><span class="material-symbols-rounded">shapes</span></button>
+      <button class="rail-btn" title="Contacts"><span class="material-symbols-rounded">group</span></button>
+      <button class="rail-btn" title="Campaigns"><span class="material-symbols-rounded">campaign</span></button>
+      <button class="rail-btn" title="Marketing Automation"><span class="material-symbols-rounded">bar_chart</span></button>
+      <button class="rail-btn" title="Reports"><span class="material-symbols-rounded">monitoring</span></button>
+      <button class="rail-btn" title="Search AI"><span class="material-symbols-rounded">travel_explore</span></button>
+      <button class="rail-btn" title="Content Hub"><span class="material-symbols-rounded">animated_images</span></button>
+      <button class="rail-btn" title="Competitors"><span class="material-symbols-rounded">leaderboard</span></button>
       <div style="flex:1"></div>
-      <!-- Divider -->
       <div class="rail-divider"></div>
-      <!-- Settings — active on this page -->
-      <div class="rail-btn active" title="Settings">
-        <img src="https://www.figma.com/api/mcp/asset/b9122252-443c-46ad-a5e2-672b25deaa06" alt="Settings"/>
-      </div>
+      <button class="rail-btn active" title="Settings"><span class="material-symbols-rounded">settings</span></button>
     </div>
   </div>
 
@@ -637,16 +562,16 @@ function setUsecase(btn){
       </div>
       <div class="top-nav-right">
         <div class="top-nav-btn" title="Add">
-          <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+          <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.04167 8.12496V10.8333C7.04167 10.9868 7.09318 11.1154 7.19621 11.2192C7.29924 11.323 7.4269 11.375 7.57921 11.375C7.73151 11.375 7.86055 11.323 7.96631 11.2192C8.07208 11.1154 8.12496 10.9868 8.12496 10.8333V8.12496H10.8333C10.9868 8.12496 11.1154 8.07344 11.2192 7.97042C11.323 7.86739 11.375 7.73972 11.375 7.58742C11.375 7.43511 11.323 7.30608 11.2192 7.20031C11.1154 7.09455 10.9868 7.04167 10.8333 7.04167H8.12496V4.33331C8.12496 4.17984 8.07344 4.0512 7.97042 3.9474C7.86739 3.84358 7.73972 3.79167 7.58742 3.79167C7.43511 3.79167 7.30608 3.84358 7.20031 3.9474C7.09455 4.0512 7.04167 4.17984 7.04167 4.33331V7.04167H4.33331C4.17984 7.04167 4.0512 7.09318 3.9474 7.19621C3.84358 7.29924 3.79167 7.4269 3.79167 7.57921C3.79167 7.73151 3.84358 7.86055 3.9474 7.96631C4.0512 8.07208 4.17984 8.12496 4.33331 8.12496H7.04167ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666Z" fill="#1976D2"/></svg>
         </div>
         <div class="top-nav-btn" title="Help">
-          <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
+          <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.61348 12.2628C7.83909 12.2628 8.03042 12.1849 8.18748 12.0291C8.34452 11.8733 8.42304 11.6826 8.42304 11.457C8.42304 11.2314 8.34515 11.04 8.18937 10.883C8.03358 10.7259 7.84288 10.6474 7.61727 10.6474C7.39165 10.6474 7.20031 10.7253 7.04327 10.8811C6.88622 11.0369 6.80769 11.2276 6.80769 11.4532C6.80769 11.6788 6.88558 11.8702 7.04138 12.0272C7.19715 12.1843 7.38785 12.2628 7.61348 12.2628ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666ZM7.58331 14.0833C9.38887 14.0833 10.9236 13.4514 12.1875 12.1875C13.4514 10.9236 14.0833 9.38887 14.0833 7.58331C14.0833 5.77776 13.4514 4.24304 12.1875 2.97915C10.9236 1.71526 9.38887 1.08331 7.58331 1.08331C5.77776 1.08331 4.24303 1.71526 2.97915 2.97915C1.71526 4.24304 1.08331 5.77776 1.08331 7.58331C1.08331 9.38887 1.71526 10.9236 2.97915 12.1875C4.24303 13.4514 5.77776 14.0833 7.58331 14.0833ZM7.63467 4.016C8.0235 4.016 8.36001 4.13846 8.64421 4.38338C8.9284 4.62829 9.0705 4.93444 9.0705 5.30181C9.0705 5.61128 8.98423 5.88674 8.81169 6.12819C8.63915 6.36965 8.43749 6.5876 8.20673 6.78204C7.90423 7.05039 7.63442 7.35252 7.39731 7.68844C7.16021 8.02434 7.0406 8.39689 7.03846 8.80608C7.03311 8.95778 7.08361 9.07797 7.18996 9.16665C7.29631 9.25531 7.42037 9.29965 7.56217 9.29965C7.71408 9.29965 7.84213 9.25665 7.94629 9.17065C8.05044 9.08465 8.11801 8.97113 8.149 8.8301C8.21844 8.5299 8.34372 8.26549 8.52481 8.0369C8.7059 7.8083 8.90207 7.59091 9.11333 7.38473C9.41703 7.0887 9.66823 6.75898 9.86694 6.39556C10.0657 6.03213 10.165 5.64226 10.165 5.22596C10.165 4.56571 9.91876 4.0163 9.42625 3.57773C8.93374 3.13916 8.34436 2.91988 7.65812 2.91988C7.16808 2.91988 6.71046 3.03313 6.28525 3.25963C5.86004 3.48611 5.5101 3.80474 5.23544 4.2155C5.14792 4.34106 5.12469 4.47874 5.16573 4.62854C5.20677 4.77833 5.30092 4.88333 5.44817 4.94352C5.60024 5.01428 5.74945 5.02456 5.89581 4.97433C6.04217 4.92413 6.1645 4.84668 6.26279 4.74198C6.4316 4.53684 6.63245 4.36456 6.86535 4.22515C7.09826 4.08572 7.35469 4.016 7.63467 4.016Z" fill="#303030"/></svg>
         </div>
         <div class="top-nav-btn" title="Account">
-          <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9.5" fill="white" stroke="#F4F6F7"/><circle cx="10" cy="10" r="8.75" fill="#D8D8D8"/><circle cx="10" cy="8.5" r="3" fill="#888"/><ellipse cx="10" cy="15.5" rx="4.5" ry="3" fill="#888"/></svg>
         </div>
         <div class="top-nav-btn" title="Menu">
-          <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+          <svg width="20" height="14" viewBox="0 0 13.1666 8.391" fill="none"><path d="M0.541667 8.391C0.388194 8.391 0.259548 8.33948 0.155729 8.23644C0.0519095 8.13341 0 8.00574 0 7.85344C0 7.70113 0.0519095 7.5721 0.155729 7.46633C0.259548 7.36057 0.388194 7.30769 0.541667 7.30769H12.625C12.7784 7.30769 12.9071 7.3592 13.0109 7.46223C13.1147 7.56526 13.1666 7.69292 13.1666 7.84523C13.1666 7.99753 13.1147 8.12657 13.0109 8.23233C12.9071 8.33811 12.7784 8.391 12.625 8.391H0.541667ZM0.541667 4.73715C0.388194 4.73715 0.259548 4.68563 0.155729 4.5826C0.0519095 4.47958 0 4.35191 0 4.1996C0 4.0473 0.0519095 3.91826 0.155729 3.8125C0.259548 3.70674 0.388194 3.65385 0.541667 3.65385H12.625C12.7784 3.65385 12.9071 3.70537 13.0109 3.8084C13.1147 3.91142 13.1666 4.03909 13.1666 4.1914C13.1666 4.3437 13.1147 4.47274 13.0109 4.5785C12.9071 4.68426 12.7784 4.73715 12.625 4.73715H0.541667ZM0.541667 1.08331C0.388194 1.08331 0.259548 1.0318 0.155729 0.928771C0.0519095 0.825743 0 0.698076 0 0.54577C0 0.393464 0.0519095 0.26443 0.155729 0.158666C0.259548 0.0528882 0.388194 0 0.541667 0H12.625C12.7784 0 12.9071 0.0515197 13.0109 0.154561C13.1147 0.257589 13.1666 0.385257 13.1666 0.537562C13.1666 0.689868 13.1147 0.818902 13.0109 0.924666C12.9071 1.03043 12.7784 1.08331 12.625 1.08331H0.541667Z" fill="#303030"/></svg>
         </div>
       </div>
     </div>
@@ -800,87 +725,46 @@ function setUsecase(btn){
             </tr>
           </thead>
           <tbody>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Review%20Generation%20Agent'">
               <td><div class="td-product-name">Review Generation Agent</div><div class="td-product-sub">Reviews</div></td>
-              <td>50</td>
-              <td>2 Reviews</td>
-              <td>100</td>
-              <td>+12.4%</td>
+              <td>50</td><td>2 Reviews</td><td>100</td><td>+12.4%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Review%20Response%20Agent'">
               <td><div class="td-product-name">Review Response Agent</div><div class="td-product-sub">Reviews</div></td>
-              <td>75</td>
-              <td>8 Review Response</td>
-              <td>600</td>
-              <td>-2.8%</td>
+              <td>75</td><td>8 Review Response</td><td>600</td><td>-2.8%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Social%20Publishing%20Agent'">
               <td><div class="td-product-name">Social Publishing Agent</div><div class="td-product-sub">Social</div></td>
-              <td>50</td>
-              <td>8 Posts</td>
-              <td>400</td>
-              <td>+7.1%</td>
+              <td>50</td><td>8 Posts</td><td>400</td><td>+7.1%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Social%20Engagement%20Agent'">
               <td><div class="td-product-name">Social Engagement Agent</div><div class="td-product-sub">Social</div></td>
-              <td>75</td>
-              <td>20 Responses</td>
-              <td>1500</td>
-              <td>+18.3%</td>
+              <td>75</td><td>20 Responses</td><td>1500</td><td>+18.3%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Listings%20Optimization%20Agent'">
               <td><div class="td-product-name">Listings Optimization Agent</div><div class="td-product-sub">Listing</div></td>
-              <td>75</td>
-              <td>1 agent run</td>
-              <td>75</td>
-              <td>-5.2%</td>
+              <td>75</td><td>1 agent run</td><td>75</td><td>-5.2%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Search%20Optimization%20Agent'">
               <td><div class="td-product-name">Search Optimization Agent</div><div class="td-product-sub">Search AI</div></td>
-              <td>10</td>
-              <td>15 Prompts, 1 LLM, 1 Scan</td>
-              <td>150</td>
-              <td>+3.6%</td>
+              <td>10</td><td>15 Prompts, 1 LLM, 1 Scan</td><td>150</td><td>+3.6%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Segmentation%20Agent'">
               <td><div class="td-product-name">Segmentation Agent</div><div class="td-product-sub">Marketing automation</div></td>
-              <td>50</td>
-              <td>10 Segments</td>
-              <td>500</td>
-              <td>-9.4%</td>
+              <td>50</td><td>10 Segments</td><td>500</td><td>-9.4%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Template%20Agent'">
               <td><div class="td-product-name">Template Agent</div><div class="td-product-sub">Marketing automation</div></td>
-              <td>350</td>
-              <td>3 Templates</td>
-              <td>1000</td>
-              <td>+21.7%</td>
+              <td>350</td><td>3 Templates</td><td>1000</td><td>+21.7%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Reporting%20Agent'">
               <td><div class="td-product-name">Reporting Agent</div><div class="td-product-sub">Reports</div></td>
-              <td>50</td>
-              <td>10 Insights</td>
-              <td>500</td>
-              <td>+1.9%</td>
+              <td>50</td><td>10 Insights</td><td>500</td><td>+1.9%</td>
             </tr>
-
-            <tr>
+            <tr style="cursor:pointer" onclick="location.href='agent_detail.html?agent=Lead%20Generation%20Agent'">
               <td><div class="td-product-name">Lead Generation Agent</div><div class="td-product-sub">Marketing automation</div></td>
-              <td>15</td>
-              <td>50 Messages</td>
-              <td>750</td>
-              <td>-6.3%</td>
+              <td>15</td><td>50 Messages</td><td>750</td><td>-6.3%</td>
             </tr>
-
           </tbody>
         </table>
       </div>
