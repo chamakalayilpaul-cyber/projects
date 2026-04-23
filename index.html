@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Aero DS — Prototypes</title>
+<title>Akhil's Projects</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
@@ -14,64 +14,233 @@ body{
   font-family:'Roboto',sans-serif;
   background:var(--ds-color-bg-page);
   min-height:100vh;
+  color:var(--ds-color-text-primary);
+}
+
+/* ── HEADER ── */
+.header{
+  padding:40px 48px 0;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.header-logo svg{display:block}
+.header-title{
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:-0.44px;
+  color:var(--ds-color-text-primary);
+}
+
+/* ── GRID ── */
+.grid{
+  padding:40px 48px 48px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+}
+
+/* ── CARD ── */
+.card{
+  background:var(--ds-color-bg-surface);
+  border:1px solid var(--ds-color-border);
+  border-radius:var(--ds-radius-lg);
+  width:280px;
+  overflow:hidden;
+  box-shadow:var(--ds-shadow-card);
   display:flex;
   flex-direction:column;
+  transition:box-shadow 0.15s, border-color 0.15s;
+}
+.card:hover{
+  box-shadow:0 4px 16px rgba(0,0,0,0.10);
+  border-color:var(--ds-color-border-input);
+}
+
+.card-thumb{
+  height:148px;
+  background:var(--ds-color-rail-bg);
+  display:flex;
   align-items:center;
   justify-content:center;
-  color:var(--ds-color-text-primary);
+  border-bottom:1px solid var(--ds-color-border);
+  overflow:hidden;
 }
-.container{
+.card-thumb-l4{background:linear-gradient(135deg,#e5e9f0 0%,#c7d6f6 100%)}
+.card-thumb-billing{background:linear-gradient(135deg,#e5e9f0 0%,#dbeafe 100%)}
+.card-thumb svg{opacity:0.5}
+
+.card-body{
+  padding:16px 18px 18px;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  gap:32px;
+  gap:10px;
+  flex:1;
 }
-.logo{margin-bottom:8px}
-.title{
-  font-size:18px;
-  font-weight:400;
-  letter-spacing:-0.36px;
-  color:var(--ds-color-text-secondary);
+.card-name{
+  font-size:15px;
+  font-weight:500;
+  letter-spacing:-0.3px;
+  color:var(--ds-color-text-primary);
 }
-.chips{
+.card-meta{
+  font-size:12px;
+  color:var(--ds-color-text-muted);
+  letter-spacing:0;
   display:flex;
-  gap:12px;
+  align-items:center;
+  gap:5px;
 }
-.chip{
+.card-meta svg{flex-shrink:0}
+
+.card-footer{
+  padding:0 18px 18px;
+}
+.view-btn{
   display:inline-flex;
   align-items:center;
-  padding:6px 16px;
-  border-radius:var(--ds-radius-full);
-  border:1px solid var(--ds-color-border-input);
-  background:var(--ds-color-bg-surface);
-  font-size:14px;
+  gap:6px;
+  padding:6px 14px;
+  border-radius:var(--ds-radius-sm);
+  border:1px solid var(--ds-color-blue-100);
+  background:transparent;
+  font-size:13px;
   font-weight:500;
-  letter-spacing:-0.28px;
-  color:var(--ds-color-text-primary);
+  letter-spacing:-0.26px;
+  color:var(--ds-color-blue-100);
   cursor:pointer;
   text-decoration:none;
-  transition:background 0.15s, border-color 0.15s, color 0.15s;
-  box-shadow:var(--ds-shadow-card);
+  font-family:'Roboto',sans-serif;
+  transition:background 0.15s, color 0.15s;
 }
-.chip:hover{
-  background:var(--ds-color-blue-selected);
-  border-color:var(--ds-color-blue-100);
-  color:var(--ds-color-blue-100);
+.view-btn:hover{
+  background:var(--ds-color-blue-100);
+  color:#fff;
 }
+.view-btn svg{transition:stroke 0.15s}
+.view-btn:hover svg{stroke:#fff}
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="logo">
-    <svg width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
-    </svg>
-  </div>
-  <p class="title">Select a prototype</p>
-  <div class="chips">
-    <a class="chip" href="./L4/reviews_dashboard_v2.html">L4</a>
-    <a class="chip" href="./Billing/billing_usage.html">Billing</a>
-  </div>
-</div>
+
+  <header class="header">
+    <div class="header-logo">
+      <svg width="32" height="32" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+      </svg>
+    </div>
+    <h1 class="header-title">Akhil's Projects</h1>
+  </header>
+
+  <main class="grid">
+
+    <!-- L4 Card -->
+    <div class="card">
+      <div class="card-thumb card-thumb-l4">
+        <svg width="48" height="48" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-name">L4 — Reviews Dashboard</div>
+        <div class="card-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated Apr 06, 2026
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="view-btn" href="./L4/reviews_dashboard_v2.html">
+          View
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Input Fields Card -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#e5e9f0 0%,#c7d6f6 100%)">
+        <svg width="56" height="48" viewBox="0 0 56 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="48" height="16" rx="4" fill="white" fill-opacity="0.7" stroke="#1976D2" stroke-width="1.5"/>
+          <rect x="4" y="28" width="48" height="16" rx="4" fill="white" fill-opacity="0.7" stroke="#c7d6f6" stroke-width="1.5"/>
+          <text x="12" y="16" font-family="Roboto,sans-serif" font-size="7" fill="#8f8f8f">Email address</text>
+          <text x="12" y="40" font-family="Roboto,sans-serif" font-size="7" fill="#c7d6f6">Location</text>
+          <polygon points="48,36 51,40 45,40" fill="#8f8f8f"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Input Fields</div>
+        <div class="card-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated Apr 13, 2026
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="view-btn" href="./input-fields.html">
+          View
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Search AI 2.0 Card -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#f5f3ff 0%,#ede9fe 100%)">
+        <svg width="120" height="80" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Donut -->
+          <circle cx="36" cy="40" r="22" fill="none" stroke="#e5e7eb" stroke-width="6"/>
+          <circle cx="36" cy="40" r="22" fill="none" stroke="#f97316" stroke-width="6"
+            stroke-dasharray="75 125" stroke-dashoffset="31" stroke-linecap="round"/>
+          <text x="36" y="44" text-anchor="middle" font-family="Roboto,sans-serif" font-size="11" font-weight="500" fill="#f97316">54</text>
+          <!-- Bars -->
+          <rect x="68" y="22" width="44" height="5" rx="2.5" fill="#e5e7eb"/>
+          <rect x="68" y="22" width="21" height="5" rx="2.5" fill="#1976d2"/>
+          <rect x="68" y="34" width="44" height="5" rx="2.5" fill="#e5e7eb"/>
+          <rect x="68" y="34" width="27" height="5" rx="2.5" fill="#7c3aed"/>
+          <rect x="68" y="46" width="44" height="5" rx="2.5" fill="#e5e7eb"/>
+          <rect x="68" y="46" width="31" height="5" rx="2.5" fill="#16a34a"/>
+          <!-- AI Coach tag -->
+          <rect x="68" y="57" width="44" height="14" rx="4" fill="#ede9fe"/>
+          <text x="90" y="68" text-anchor="middle" font-family="Roboto,sans-serif" font-size="7" fill="#7c3aed">AI Coach</text>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Search AI 2.0</div>
+        <div class="card-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated Apr 17, 2026
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="view-btn" href="./SearchAI/search_ai_overview.html">
+          View
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Billing Card -->
+    <div class="card">
+      <div class="card-thumb card-thumb-billing">
+        <svg width="48" height="48" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+        </svg>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Billing and usage</div>
+        <div class="card-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated Apr 07, 2026
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="view-btn" href="./Billing/billing_usage.html">
+          View
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
 </body>
 </html>

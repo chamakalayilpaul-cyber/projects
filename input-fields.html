@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Input Fields</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
+<link rel="stylesheet" href="./ds-tokens.css"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: rgb(242, 242, 242);
+  min-height: 100vh;
+  color: rgb(33, 33, 33);
+  padding: 0;
+}
+
+/* ── TABS ── */
+.tabs-bar {
+  background: #fff;
+  border-bottom: 1px solid rgb(234, 234, 234);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 24px;
+  height: 37px;
+}
+
+.tab {
+  height: 37px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(85, 85, 85);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.tab.tab--active {
+  color: rgb(33, 33, 33);
+  border-bottom-color: rgb(25, 118, 210);
+}
+
+/* ── TAB PANELS ── */
+.tab-panel {
+  display: none;
+  padding: 40px;
+}
+
+.tab-panel.tab-panel--active {
+  display: block;
+}
+
+.showcase {
+  max-width: 480px;
+}
+
+/* Section label */
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: rgb(143, 143, 143);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+/* ── BASE FIELD ── */
+.field {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  background: #fff;
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  cursor: text;
+}
+
+/* Empty state placeholder */
+.field--empty .field__placeholder {
+  font-size: 16px;
+  color: rgb(143, 143, 143);
+  font-weight: 400;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Active (filled) state */
+.field--active {
+  border: 2px solid rgb(25, 118, 210);
+  background: rgb(240, 246, 255);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 16px;
+}
+
+.field--active .field__label {
+  font-size: 12px;
+  color: rgb(143, 143, 143);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.field--active.field--select .field__label {
+  color: rgb(25, 118, 210);
+}
+
+.field--active .field__value {
+  font-size: 16px;
+  color: rgb(33, 33, 33);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Dropdown chevron */
+.field__chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgb(85, 85, 85);
+  font-size: 12px;
+}
+
+/* Filled state — floating label + value, gray border, no blue tint */
+.field--filled {
+  border: 1px solid rgb(180, 180, 180);
+  background: #fff;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 16px;
+}
+
+.field--filled .field__label {
+  font-size: 12px;
+  color: rgb(143, 143, 143);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.field--filled .field__value {
+  font-size: 16px;
+  color: rgb(33, 33, 33);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Saved state — borderless, label + value with bottom divider */
+.saved-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.saved-field {
+  padding: 12px 0;
+}
+
+.saved-field__label {
+  font-size: 14px;
+  color: rgb(143, 143, 143);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.saved-field__value {
+  font-size: 18px;
+  color: rgb(33, 33, 33);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* Native select/input reset */
+.field__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+/* ── INTERACTIVE FIELD ── */
+.ifield {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  background: #fff;
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 8px;
+  cursor: text;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+/* Floating label — starts as placeholder, animates up */
+.ifield__label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(143, 143, 143);
+  pointer-events: none;
+  transition: top 0.15s ease, font-size 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+/* Real text input */
+.ifield__real-input {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 10px;
+  width: calc(100% - 32px);
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(33, 33, 33);
+  outline: none;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+/* Hidden native select — covers whole field for click capture */
+.ifield__select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Displayed selected value */
+.ifield__display {
+  position: absolute;
+  left: 16px;
+  bottom: 10px;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(33, 33, 33);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+/* Chevron */
+.ifield__chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgb(85, 85, 85);
+  font-size: 12px;
+}
+
+/* ACTIVE state */
+.ifield--active {
+  border: 2px solid rgb(25, 118, 210);
+  background: rgb(240, 246, 255);
+}
+
+.ifield--active .ifield__label {
+  top: 14px;
+  transform: translateY(0);
+  font-size: 12px;
+  color: rgb(143, 143, 143);
+}
+
+.ifield--active.ifield--select .ifield__label {
+  color: rgb(25, 118, 210);
+}
+
+.ifield--active .ifield__real-input,
+.ifield--active .ifield__display {
+  opacity: 1;
+}
+
+/* FILLED state */
+.ifield--filled {
+  border: 1px solid rgb(180, 180, 180);
+  background: #fff;
+}
+
+.ifield--filled .ifield__label {
+  top: 14px;
+  transform: translateY(0);
+  font-size: 12px;
+  color: rgb(143, 143, 143);
+}
+
+.ifield--filled .ifield__real-input,
+.ifield--filled .ifield__display {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<!-- TABS BAR -->
+<div class="tabs-bar">
+  <div class="tab tab--active" onclick="switchTab('all-states')">All states</div>
+  <div class="tab" onclick="switchTab('interaction')">Interaction</div>
+</div>
+
+<!-- ALL STATES PANEL -->
+<div class="tab-panel tab-panel--active" id="panel-all-states">
+<div class="showcase">
+
+  <!-- EMPTY -->
+  <div class="section-label">Empty</div>
+  <div class="field-group">
+
+    <!-- Text input — empty -->
+    <div class="field field--empty">
+      <span class="field__placeholder">Email address</span>
+    </div>
+
+    <!-- Select — empty -->
+    <div class="field field--empty field--select">
+      <span class="field__placeholder">Location</span>
+      <span class="field__chevron">▾</span>
+    </div>
+
+    <!-- Select — empty -->
+    <div class="field field--empty field--select">
+      <span class="field__placeholder">Segment</span>
+      <span class="field__chevron">▾</span>
+    </div>
+
+  </div>
+
+  <!-- ACTIVE -->
+  <div class="section-label">Active</div>
+  <div class="field-group">
+
+    <!-- Text input — active/filled -->
+    <div class="field field--active">
+      <span class="field__label">Email address</span>
+      <span class="field__value">akhilpaul21@gmail.com</span>
+    </div>
+
+    <!-- Select — active/filled -->
+    <div class="field field--active field--select">
+      <span class="field__label">Location</span>
+      <span class="field__value">Melbourne, VIC</span>
+      <span class="field__chevron">▾</span>
+    </div>
+
+    <!-- Select — active/filled -->
+    <div class="field field--active field--select">
+      <span class="field__label">Segment</span>
+      <span class="field__value">Passives</span>
+      <span class="field__chevron">▾</span>
+    </div>
+
+  </div>
+
+
+  <!-- FILLED -->
+  <div class="section-label">Filled</div>
+  <div class="field-group">
+
+    <!-- Text input — filled -->
+    <div class="field field--filled">
+      <span class="field__label">Email address</span>
+      <span class="field__value">ayush.agrawal@birdeye.com</span>
+    </div>
+
+    <!-- Select — filled -->
+    <div class="field field--filled field--select">
+      <span class="field__label">Location</span>
+      <span class="field__value">Carramar, NSW</span>
+      <span class="field__chevron">▾</span>
+    </div>
+
+    <!-- Select — filled -->
+    <div class="field field--filled field--select">
+      <span class="field__label">Segment</span>
+      <span class="field__value">Detractors</span>
+      <span class="field__chevron">▾</span>
+    </div>
+
+  </div>
+
+  <!-- SAVED -->
+  <div class="section-label">Saved</div>
+  <div class="saved-group">
+
+    <div class="saved-field">
+      <div class="saved-field__label">Email address</div>
+      <div class="saved-field__value">ayush.agrawal@birdeye.com</div>
+    </div>
+
+    <div class="saved-field">
+      <div class="saved-field__label">Location</div>
+      <div class="saved-field__value">Carramar, NSW</div>
+    </div>
+
+    <div class="saved-field">
+      <div class="saved-field__label">Segment</div>
+      <div class="saved-field__value">Detractors</div>
+    </div>
+
+  </div>
+
+</div>
+</div><!-- /panel-all-states -->
+
+<!-- INTERACTION PANEL -->
+<div class="tab-panel" id="panel-interaction">
+  <div class="showcase">
+    <div class="field-group">
+
+      <!-- Email address — interactive text input -->
+      <div class="ifield" id="ifield-email">
+        <label class="ifield__label" for="input-email">Email address</label>
+        <input
+          class="ifield__real-input"
+          id="input-email"
+          type="email"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Location — interactive dropdown -->
+      <div class="ifield ifield--select" id="ifield-location">
+        <label class="ifield__label" for="input-location">Location</label>
+        <span class="ifield__display" id="display-location"></span>
+        <select class="ifield__select" id="input-location">
+          <option value="" disabled selected></option>
+          <option>Melbourne, VIC</option>
+          <option>Carramar, NSW</option>
+          <option>Sydney, NSW</option>
+          <option>Brisbane, QLD</option>
+          <option>Perth, WA</option>
+        </select>
+        <span class="ifield__chevron">▾</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab--active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('tab-panel--active'));
+  document.querySelector('[onclick="switchTab(\'' + name + '\')"]').classList.add('tab--active');
+  document.getElementById('panel-' + name).classList.add('tab-panel--active');
+}
+
+// ── Interactive text input ──
+const emailField = document.getElementById('ifield-email');
+const emailInput = document.getElementById('input-email');
+
+emailField.addEventListener('click', () => emailInput.focus());
+
+emailInput.addEventListener('focus', () => {
+  emailField.classList.remove('ifield--filled');
+  emailField.classList.add('ifield--active');
+});
+
+emailInput.addEventListener('blur', () => {
+  emailField.classList.remove('ifield--active');
+  if (emailInput.value.trim()) {
+    emailField.classList.add('ifield--filled');
+  }
+});
+
+// ── Interactive dropdown ──
+const locationField = document.getElementById('ifield-location');
+const locationSelect = document.getElementById('input-location');
+const locationDisplay = document.getElementById('display-location');
+
+locationSelect.addEventListener('focus', () => {
+  locationField.classList.remove('ifield--filled');
+  locationField.classList.add('ifield--active');
+});
+
+locationSelect.addEventListener('change', () => {
+  locationDisplay.textContent = locationSelect.options[locationSelect.selectedIndex].text;
+});
+
+locationSelect.addEventListener('blur', () => {
+  locationField.classList.remove('ifield--active');
+  if (locationSelect.value) {
+    locationField.classList.add('ifield--filled');
+  }
+});
+</script>
+</body>
+</html>
