@@ -101,9 +101,9 @@ body{
 .page-hdr{
   height:52px;background:#fff;border-bottom:1px solid #eaeaea;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;flex-shrink:0;
+  padding:0 16px;flex-shrink:0;
 }
-.page-title{font-size:18px;font-weight:400;color:#212121}
+.page-title{font-size:16px;font-weight:400;color:rgba(33, 33, 33, 1)}
 .page-hdr-right{display:flex;align-items:center;gap:4px}
 .icon-btn{
   width:28px;height:28px;border-radius:4px;border:none;background:transparent;
@@ -240,7 +240,7 @@ body{
 .ct-score-denom{font-size:14px;color:#8f8f8f;font-weight:400}
 /* Status pills */
 .ct-status-pill{
-  display:inline-block;padding:2px 10px;border-radius:100px;font-size:13px;font-weight:400;
+  display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;font-weight:400;
   white-space:nowrap;
 }
 .ct-status-pill.published{background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac}
@@ -569,7 +569,7 @@ body{
 
 .btn-cancel{
   padding:8px 12px;border-radius:4px;border:none;background:transparent;
-  color:#1976d2;font-size:16px;font-family:'Roboto',sans-serif;cursor:pointer;
+  color:#1976d2;font-size:14px;font-family:'Roboto',sans-serif;cursor:pointer;
   min-width:136px;text-align:center;
 }
 .btn-cancel:hover{background:#e8f0fe}
@@ -858,11 +858,45 @@ body{
 .status-pill.published{background:#dcfce7;color:#16a34a}
 .status-pill.in-review{background:#fef9c3;color:#a16207}
 
+/* ══ PROMPTS VIEW ══ */
+.pt-scope-wrap{
+  display:flex;border:1px solid #d1d5db;border-radius:4px;overflow:hidden;flex-shrink:0;
+}
+.pt-scope-tab{
+  padding:0 16px;height:28px;font-size:13px;cursor:pointer;
+  font-family:'Roboto',sans-serif;background:#fff;color:rgb(33,33,33);
+  border:none;border-right:1px solid #d1d5db;white-space:nowrap;
+}
+.pt-scope-tab:last-child{border-right:none}
+.pt-scope-tab.active{background:rgba(229,233,240,1);color:rgba(33,33,33,1);border-right-color:rgb(33,33,33)}
+.pt-scope-tab:not(.active):hover{background:rgb(242,244,247)}
+.pt-table-wrap{
+  background:#fff;border-radius:8px;border:1px solid #eaeaea;overflow:hidden;
+}
+.pt-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+.pt-table thead tr{background:#fff;border-bottom:1px solid #eaeaea;}
+.pt-table th{
+  padding:10px 20px;text-align:left;font-size:13px;font-weight:400;
+  color:rgb(143,143,143);white-space:nowrap;
+}
+.pt-th-inner{display:inline-flex;align-items:center;gap:2px;cursor:pointer;font-size:12px}
+.pt-th-inner:hover{color:rgb(33,33,33)}
+.pt-sort-icon{font-size:16px;color:rgb(143,143,143)}
+.pt-table td{
+  padding:14px 20px;border-bottom:1px solid #f3f4f6;
+  color:rgb(33,33,33);vertical-align:middle;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.pt-table tbody tr:last-child td{border-bottom:none}
+.pt-table tbody tr:hover td{background:rgb(242,244,247)}
+.pt-ai-cell{display:flex;align-items:center;gap:6px;padding-top:12px;padding-bottom:12px}
+.pt-date{color:rgb(33,33,33);font-size:14px}
+
 /* ── AEO Score Panel (optimize mode) ── */
-#art-optimize-tabs{display:none}
+#art-optimize-tabs{display:none;margin-left:0px;margin-right:0px}
 .art-aeo-panel{
   display:none;flex:1;overflow-y:auto;
-  padding:16px 12px 24px;flex-direction:column;gap:0;
+  padding:16px 16px 24px;flex-direction:column;gap:0;
 }
 .art-aeo-panel::-webkit-scrollbar{width:4px}
 .art-aeo-panel::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
@@ -984,6 +1018,31 @@ body{
       <circle cx="8" cy="8" r="5.5" stroke="#ef4444" stroke-width="1.3" fill="none"/>
       <path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" stroke="#ef4444" stroke-width="1.3" stroke-linecap="round"/>
     </symbol>
+    <!-- AI site icons -->
+    <symbol id="s-chatgpt" viewBox="0 0 41 41" fill="none">
+      <path d="M37.532 16.87a9.963 9.963 0 00-.856-8.184 10.078 10.078 0 00-10.855-4.835 9.964 9.964 0 00-7.504-3.35 10.079 10.079 0 00-9.612 6.977 9.967 9.967 0 00-6.664 4.834 10.08 10.08 0 001.24 11.817 9.965 9.965 0 00.856 8.185 10.079 10.079 0 0010.855 4.835 9.965 9.965 0 007.504 3.35 10.078 10.078 0 009.617-6.981 9.967 9.967 0 006.663-4.834 10.079 10.079 0 00-1.244-11.814zM22.498 37.886a7.474 7.474 0 01-4.799-1.735c.061-.033.168-.091.237-.134l7.964-4.6a1.294 1.294 0 00.655-1.134V19.054l3.366 1.944a.12.12 0 01.066.092v9.299a7.505 7.505 0 01-7.49 7.496zM6.392 31.006a7.471 7.471 0 01-.894-5.023c.06.036.162.099.237.141l7.964 4.6a1.297 1.297 0 001.308 0l9.724-5.614v3.888a.12.12 0 01-.048.103L16.51 33.4a7.505 7.505 0 01-10.118-2.394zm-1.32-16.64A7.47 7.47 0 019.99 10.99c0 .068-.004.19-.004.274v9.201a1.294 1.294 0 00.654 1.132l9.723 5.614-3.366 1.944a.12.12 0 01-.114.012L8.8 24.856a7.505 7.505 0 01-3.728-10.49zm27.658 6.437l-9.724-5.615 3.367-1.943a.121.121 0 01.114-.012l8.048 4.648a7.498 7.498 0 01-1.158 13.528v-9.476a1.293 1.293 0 00-.647-1.13zm3.35-5.043c-.059-.037-.162-.099-.236-.141l-7.965-4.6a1.298 1.298 0 00-1.308 0l-9.723 5.614v-3.888a.12.12 0 01.048-.103l8.078-4.665a7.497 7.497 0 0111.106 7.783zm-21.063 6.929l-3.367-1.944a.12.12 0 01-.065-.092v-9.299a7.497 7.497 0 0112.293-5.756 6.94 6.94 0 00-.236.134l-7.965 4.6a1.294 1.294 0 00-.654 1.132l-.006 11.225zm1.829-3.943l4.33-2.501 4.332 2.497v4.997l-4.331 2.5-4.331-2.5V19.746z" fill="#10a37f"/>
+    </symbol>
+    <!-- Gemini gradient defined at defs level so <use> references work -->
+    <linearGradient id="gemini-grad" x1="0" y1="1" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#4285F4"/>
+      <stop offset="50%" stop-color="#9B72CB"/>
+      <stop offset="100%" stop-color="#D96570"/>
+    </linearGradient>
+    <symbol id="s-gemini" viewBox="0 0 24 24">
+      <path fill="url(#gemini-grad)" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/>
+    </symbol>
+    <symbol id="s-perplexity" viewBox="0 0 16 16">
+      <path fill="#20808D" fill-rule="evenodd" d="M8 .188a.5.5 0 0 1 .503.5V4.03l3.022-2.92.059-.048a.51.51 0 0 1 .49-.054.5.5 0 0 1 .306.46v3.247h1.117l.1.01a.5.5 0 0 1 .403.49v5.558a.5.5 0 0 1-.503.5H12.38v3.258a.5.5 0 0 1-.312.462.51.51 0 0 1-.55-.11l-3.016-3.018v3.448c0 .275-.225.5-.503.5a.5.5 0 0 1-.503-.5v-3.448l-3.018 3.019a.51.51 0 0 1-.548.11.5.5 0 0 1-.312-.463v-3.258H2.503a.5.5 0 0 1-.503-.5V5.215l.01-.1c.047-.229.25-.4.493-.4H3.62V1.469l.006-.074a.5.5 0 0 1 .302-.387.51.51 0 0 1 .547.102l3.023 2.92V.687c0-.276.225-.5.503-.5M4.626 9.333v3.984l2.87-2.872v-4.01zm3.877 1.113 2.871 2.871V9.333l-2.87-2.897zm3.733-1.668a.5.5 0 0 1 .145.35v1.145h.612V5.715H9.201zm-9.23 1.495h.613V9.13c0-.131.052-.257.145-.35l3.033-3.064h-3.79zm1.62-5.558H6.76L4.626 2.652zm4.613 0h2.134V2.652z"/>
+    </symbol>
+    <symbol id="s-copilot" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="8.5" height="8.5" rx="2" fill="#F25022"/>
+      <rect x="12.5" y="3" width="8.5" height="8.5" rx="2" fill="#7FBA00"/>
+      <rect x="3" y="12.5" width="8.5" height="8.5" rx="2" fill="#00A4EF"/>
+      <rect x="12.5" y="12.5" width="8.5" height="8.5" rx="2" fill="#FFB900"/>
+    </symbol>
+    <symbol id="s-claude" viewBox="0 0 100 100">
+      <path fill="#D97757" d="m19.6 66.5 19.7-11 .3-1-.3-.5h-1l-3.3-.2-11.2-.3L14 53l-9.5-.5-2.4-.5L0 49l.2-1.5 2-1.3 2.9.2 6.3.5 9.5.6 6.9.4L38 49.1h1.6l.2-.7-.5-.4-.4-.4L29 41l-10.6-7-5.6-4.1-3-2-1.5-2-.6-4.2 2.7-3 3.7.3.9.2 3.7 2.9 8 6.1L37 36l1.5 1.2.6-.4.1-.3-.7-1.1L33 25l-6-10.4-2.7-4.3-.7-2.6c-.3-1-.4-2-.4-3l3-4.2L28 0l4.2.6L33.8 2l2.6 6 4.1 9.3L47 29.9l2 3.8 1 3.4.3 1h.7v-.5l.5-7.2 1-8.7 1-11.2.3-3.2 1.6-3.8 3-2L61 2.6l2 2.9-.3 1.8-1.1 7.7L59 27.1l-1.5 8.2h.9l1-1.1 4.1-5.4 6.9-8.6 3-3.5L77 13l2.3-1.8h4.3l3.1 4.7-1.4 4.9-4.4 5.6-3.7 4.7-5.3 7.1-3.2 5.7.3.4h.7l12-2.6 6.4-1.1 7.6-1.3 3.5 1.6.4 1.6-1.4 3.4-8.2 2-9.6 2-14.3 3.3-.2.1.2.3 6.4.6 2.8.2h6.8l12.6 1 3.3 2 1.9 2.7-.3 2-5.1 2.6-6.8-1.6-16-3.8-5.4-1.3h-.8v.4l4.6 4.5 8.3 7.5L89 80.1l.5 2.4-1.3 2-1.4-.2-9.2-7-3.6-3-8-6.8h-.5v.7l1.8 2.7 9.8 14.7.5 4.5-.7 1.4-2.6 1-2.7-.6-5.8-8-6-9-4.7-8.2-.5.4-2.9 30.2-1.3 1.5-3 1.2-2.5-2-1.4-3 1.4-6.2 1.6-8 1.3-6.4 1.2-7.9.7-2.6v-.2H49L43 72l-9 12.3-7.2 7.6-1.7.7-3-1.5.3-2.8L24 86l10-12.8 6-7.9 4-4.6-.1-.5h-.3L17.2 77.4l-4.7.6-2-2 .2-3 1-1 8-5.5Z"/>
+    </symbol>
   </defs>
 </svg>
 
@@ -1048,7 +1107,9 @@ body{
       <span>Settings</span>
       <svg id="sb-chev-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
-    <div id="sb-group-settings" style="display:none"></div>
+    <div id="sb-group-settings" style="display:none">
+      <div class="sb-sub-item" id="nav-prompts" onclick="showView('prompts')">Prompts</div>
+    </div>
   </div>
 </div>
 
@@ -1141,6 +1202,16 @@ body{
       <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
+    <div class="page-hdr-right" id="hdr-prompts-btns" style="display:none;gap:6px">
+      <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
+      <div class="pt-scope-wrap">
+        <button class="pt-scope-tab" id="pt-scope-brand" onclick="switchPromptsScope('brand')">Brand</button>
+        <button class="pt-scope-tab active" id="pt-scope-locations" onclick="switchPromptsScope('locations')">Locations</button>
+      </div>
+      <button class="icon-btn"><span class="material-symbols-rounded">add</span></button>
+      <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
+    </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
       <div class="art-score">
         <!-- Thin green ring: r=9, circumference≈56.5, 93%≈52.6 -->
@@ -1154,7 +1225,7 @@ body{
       </div>
       <button class="btn-export">Export</button>
       <div style="display:flex">
-        <button class="btn-save">Save</button>
+        <button class="btn-save" onclick="showView('content');switchContentState('filled')">Save</button>
         <button class="btn-save-caret">
           <span class="material-symbols-rounded" style="font-size:16px">expand_more</span>
         </button>
@@ -1559,6 +1630,122 @@ body{
       </div>
 
     </div><!-- /view-content -->
+
+    <!-- ══ PROMPTS VIEW ══ -->
+    <div class="view" id="view-prompts">
+      <div class="pt-table-wrap">
+        <table class="pt-table">
+          <thead>
+            <tr>
+              <th><span class="pt-th-inner">Prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Themes<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th id="pt-th-scope"><span class="pt-th-inner">Location<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">AI sites<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">Created on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Top dentist for invisialign</td>
+              <td>Invisialign</td>
+              <td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-date">Dec 02</td>
+              <td class="pt-date">Dec 02</td>
+            </tr>
+            <tr>
+              <td>Expert in clear aligner therapy</td>
+              <td>Invisialign</td>
+              <td class="pt-scope-cell" data-locations="76" data-brand="ClearChoice">76</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-date">Jan 15</td>
+              <td class="pt-date">Jan 15</td>
+            </tr>
+            <tr>
+              <td>Specialists in invisible braces</td>
+              <td>Orthodontics</td>
+              <td class="pt-scope-cell" data-locations="22" data-brand="Aspen Dental">22</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg><svg width="20" height="20"><use href="#s-claude"/></svg></td>
+              <td class="pt-date">Jul 22</td>
+              <td class="pt-date">Jul 22</td>
+            </tr>
+            <tr>
+              <td>Advanced invisalign solutions</td>
+              <td>Invisialign</td>
+              <td class="pt-scope-cell" data-locations="67" data-brand="ClearChoice">67</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg><svg width="20" height="20"><use href="#s-claude"/></svg></td>
+              <td class="pt-date">Aug 14</td>
+              <td class="pt-date">Aug 14</td>
+            </tr>
+            <tr>
+              <td>Customized invisalign treatments</td>
+              <td>Invisialign</td>
+              <td class="pt-scope-cell" data-locations="8" data-brand="Aspen Dental">8</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-claude"/></svg></td>
+              <td class="pt-date">Apr 01</td>
+              <td class="pt-date">Apr 01</td>
+            </tr>
+            <tr>
+              <td>Leading invisalign providers</td>
+              <td>Invisialign</td>
+              <td class="pt-scope-cell" data-locations="45" data-brand="WellNow Urgent Care">45</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg></td>
+              <td class="pt-date">Nov 29</td>
+              <td class="pt-date">Nov 29</td>
+            </tr>
+            <tr>
+              <td>Innovative invisible aligners</td>
+              <td>Invisialign</td>
+              <td class="pt-scope-cell" data-locations="78" data-brand="Aspen Dental">78</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-date">Oct 18</td>
+              <td class="pt-date">Oct 18</td>
+            </tr>
+            <tr>
+              <td>Trusted invisalign care</td>
+              <td>Trusted invisalign care</td>
+              <td class="pt-scope-cell" data-locations="12" data-brand="ClearChoice">12</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg></td>
+              <td class="pt-date">Jun 03</td>
+              <td class="pt-date">Jun 03</td>
+            </tr>
+            <tr>
+              <td>Precision invisalign dentistry</td>
+              <td>Orthodontics</td>
+              <td class="pt-scope-cell" data-locations="56" data-brand="Aspen Dental">56</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-date">Sep 10</td>
+              <td class="pt-date">Sep 10</td>
+            </tr>
+            <tr>
+              <td>Top-rated invisalign specialists</td>
+              <td>Orthodontics</td>
+              <td class="pt-scope-cell" data-locations="22" data-brand="ClearChoice">22</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-date">Feb 26</td>
+              <td class="pt-date">Feb 26</td>
+            </tr>
+            <tr>
+              <td>Personalized invisalign plans</td>
+              <td>Orthodontics</td>
+              <td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-date">May 08</td>
+              <td class="pt-date">May 08</td>
+            </tr>
+            <tr>
+              <td>Pioneers in invisalign technology</td>
+              <td>Orthodontics</td>
+              <td class="pt-scope-cell" data-locations="38" data-brand="Chapter Aesthetic">38</td>
+              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg></td>
+              <td class="pt-date">Mar 11</td>
+              <td class="pt-date">Mar 11</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /view-prompts -->
 
     <!-- ══ ARTICLE VIEW ══ -->
     <div class="view" id="view-article">
@@ -2590,13 +2777,22 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', prompts:'Prompts'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
   document.getElementById('hdr-rec-btns').style.display = view === 'recommendations' ? 'flex' : 'none';
   document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
+  document.getElementById('hdr-prompts-btns').style.display = view === 'prompts' ? 'flex' : 'none';
+
+  // open Settings group when navigating to a settings sub-view
+  if (view === 'prompts') {
+    const grp = document.getElementById('sb-group-settings');
+    const chev = document.getElementById('sb-chev-settings');
+    grp.style.display = 'block';
+    if (chev) chev.style.transform = 'rotate(180deg)';
+  }
 
   // Switch left-panel mode: create tabs vs optimize (AEO) tabs
   if (view === 'article') {
@@ -2993,6 +3189,24 @@ function sendAiPrompt(btn) {
   working.innerHTML = `<span class="material-symbols-rounded">auto_awesome</span> Working on it...`;
   chat.appendChild(working);
   chat.scrollTop = chat.scrollHeight;
+}
+
+function switchPromptsScope(scope) {
+  document.querySelectorAll('.pt-scope-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('pt-scope-' + scope).classList.add('active');
+
+  // Swap column header text
+  const th = document.getElementById('pt-th-scope');
+  if (th) th.querySelector('.pt-th-inner').firstChild.textContent = scope === 'brand' ? 'Brand' : 'Location';
+
+  // Swap cell values
+  document.querySelectorAll('.pt-scope-cell').forEach(cell => {
+    cell.textContent = cell.dataset[scope === 'brand' ? 'brand' : 'locations'];
+  });
+}
+
+function openAddPromptModal() {
+  // placeholder — wire up a modal here when ready
 }
 
 // Copy field content to clipboard
