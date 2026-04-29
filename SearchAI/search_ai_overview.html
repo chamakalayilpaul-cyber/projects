@@ -862,15 +862,17 @@ body{
 
 /* ══ PROMPTS VIEW ══ */
 .pt-scope-wrap{
-  display:flex;border:1px solid #d1d5db;border-radius:4px;overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;gap:2px;
+  border:1px solid #e5e9f0;border-radius:8px;
+  padding:3px;height:36px;flex-shrink:0;background:#fff;
 }
 .pt-scope-tab{
   padding:0 16px;height:28px;font-size:13px;cursor:pointer;
-  font-family:'Roboto',sans-serif;background:#fff;color:rgb(33,33,33);
-  border:none;border-right:1px solid #d1d5db;white-space:nowrap;
+  font-family:'Roboto',sans-serif;background:transparent;color:rgb(33,33,33);
+  border:none;border-radius:6px;white-space:nowrap;
+  display:flex;align-items:center;
 }
-.pt-scope-tab:last-child{border-right:none}
-.pt-scope-tab.active{background:rgba(229,233,240,1);color:rgba(33,33,33,1);border-right-color:rgb(33,33,33)}
+.pt-scope-tab.active{background:rgb(229,233,240);color:rgb(33,33,33)}
 .pt-scope-tab:not(.active):hover{background:rgb(242,244,247)}
 .pt-table-wrap{
   background:#fff;border-radius:8px;border:1px solid #eaeaea;overflow:hidden;
@@ -934,7 +936,7 @@ body{
 .ap-header-title{font-size:18px;font-weight:400;color:#212121}
 .ap-header-right{display:flex;align-items:center;gap:8px}
 .ap-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
-.ap-field{display:flex;flex-direction:column;gap:6px}
+.ap-field{display:flex;flex-direction:column;gap:8px}
 .ap-label{font-size:14px;font-weight:400;color:#212121}
 .ap-req{color:#e53935}
 .ap-dropdown{
