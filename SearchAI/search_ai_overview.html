@@ -87,7 +87,7 @@ body{
   display:flex;align-items:center;
   padding:0 24px;gap:4px;flex-shrink:0;
 }
-.top-nav-title{font-size:18px;font-weight:400;color:#212121;margin-right:auto;}
+.top-nav-title{font-size:18px;font-weight:400;color:rgba(255, 255, 255, 1);margin-right:auto;}
 .top-nav-btn{
   width:28px;height:28px;border-radius:4px;border:none;background:transparent;
   display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -889,7 +889,8 @@ body{
 }
 .pt-table tbody tr:last-child td{border-bottom:none}
 .pt-table tbody tr:hover td{background:rgb(242,244,247)}
-.pt-ai-cell{display:flex;align-items:center;gap:6px;padding-top:12px;padding-bottom:12px}
+.pt-ai-cell{display:flex;align-items:center;gap:6px;padding-top:12px;padding-bottom:12px;overflow:visible}
+.pt-ai-cell svg{width:16px;height:16px;flex-shrink:0}
 .pt-date{color:rgb(33,33,33);font-size:14px}
 
 /* ── AEO Score Panel (optimize mode) ── */
@@ -1650,7 +1651,7 @@ body{
               <td>Top dentist for invisialign</td>
               <td>Invisialign</td>
               <td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></td>
               <td class="pt-date">Dec 02</td>
               <td class="pt-date">Dec 02</td>
             </tr>
@@ -1658,7 +1659,7 @@ body{
               <td>Expert in clear aligner therapy</td>
               <td>Invisialign</td>
               <td class="pt-scope-cell" data-locations="76" data-brand="ClearChoice">76</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></td>
               <td class="pt-date">Jan 15</td>
               <td class="pt-date">Jan 15</td>
             </tr>
@@ -1666,7 +1667,7 @@ body{
               <td>Specialists in invisible braces</td>
               <td>Orthodontics</td>
               <td class="pt-scope-cell" data-locations="22" data-brand="Aspen Dental">22</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg><svg width="20" height="20"><use href="#s-claude"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></td>
               <td class="pt-date">Jul 22</td>
               <td class="pt-date">Jul 22</td>
             </tr>
@@ -1674,7 +1675,7 @@ body{
               <td>Advanced invisalign solutions</td>
               <td>Invisialign</td>
               <td class="pt-scope-cell" data-locations="67" data-brand="ClearChoice">67</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg><svg width="20" height="20"><use href="#s-claude"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></td>
               <td class="pt-date">Aug 14</td>
               <td class="pt-date">Aug 14</td>
             </tr>
@@ -1682,7 +1683,7 @@ body{
               <td>Customized invisalign treatments</td>
               <td>Invisialign</td>
               <td class="pt-scope-cell" data-locations="8" data-brand="Aspen Dental">8</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-claude"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></td>
               <td class="pt-date">Apr 01</td>
               <td class="pt-date">Apr 01</td>
             </tr>
@@ -1690,7 +1691,7 @@ body{
               <td>Leading invisalign providers</td>
               <td>Invisialign</td>
               <td class="pt-scope-cell" data-locations="45" data-brand="WellNow Urgent Care">45</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></td>
               <td class="pt-date">Nov 29</td>
               <td class="pt-date">Nov 29</td>
             </tr>
@@ -1698,7 +1699,7 @@ body{
               <td>Innovative invisible aligners</td>
               <td>Invisialign</td>
               <td class="pt-scope-cell" data-locations="78" data-brand="Aspen Dental">78</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></td>
               <td class="pt-date">Oct 18</td>
               <td class="pt-date">Oct 18</td>
             </tr>
@@ -1706,7 +1707,7 @@ body{
               <td>Trusted invisalign care</td>
               <td>Trusted invisalign care</td>
               <td class="pt-scope-cell" data-locations="12" data-brand="ClearChoice">12</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></td>
               <td class="pt-date">Jun 03</td>
               <td class="pt-date">Jun 03</td>
             </tr>
@@ -1714,7 +1715,7 @@ body{
               <td>Precision invisalign dentistry</td>
               <td>Orthodontics</td>
               <td class="pt-scope-cell" data-locations="56" data-brand="Aspen Dental">56</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></td>
               <td class="pt-date">Sep 10</td>
               <td class="pt-date">Sep 10</td>
             </tr>
@@ -1722,7 +1723,7 @@ body{
               <td>Top-rated invisalign specialists</td>
               <td>Orthodontics</td>
               <td class="pt-scope-cell" data-locations="22" data-brand="ClearChoice">22</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></td>
               <td class="pt-date">Feb 26</td>
               <td class="pt-date">Feb 26</td>
             </tr>
@@ -1730,7 +1731,7 @@ body{
               <td>Personalized invisalign plans</td>
               <td>Orthodontics</td>
               <td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-perplexity"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></td>
               <td class="pt-date">May 08</td>
               <td class="pt-date">May 08</td>
             </tr>
@@ -1738,7 +1739,7 @@ body{
               <td>Pioneers in invisalign technology</td>
               <td>Orthodontics</td>
               <td class="pt-scope-cell" data-locations="38" data-brand="Chapter Aesthetic">38</td>
-              <td class="pt-ai-cell"><svg width="20" height="20"><use href="#s-chatgpt"/></svg><svg width="20" height="20"><use href="#s-gemini"/></svg><svg width="20" height="20"><use href="#s-copilot"/></svg></td>
+              <td class="pt-ai-cell"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></td>
               <td class="pt-date">Mar 11</td>
               <td class="pt-date">Mar 11</td>
             </tr>
