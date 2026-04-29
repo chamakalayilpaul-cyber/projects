@@ -99,7 +99,7 @@ body{
 
 /* ── PAGE HEADER ── */
 .page-hdr{
-  height:52px;background:#fff;border-bottom:1px solid #eaeaea;
+  height:64px;background:#fff;border-bottom:1px solid #eaeaea;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 16px;flex-shrink:0;
 }
@@ -392,6 +392,7 @@ body{
 .btn-outlined{
   padding:7px 18px;border-radius:4px;border:1px solid #1976d2;
   background:#fff;color:#1976d2;font-size:14px;font-family:'Roboto',sans-serif;cursor:pointer;
+  height:36px;
 }
 .btn-outlined:hover{background:#e3f2fd}
 .btn-filled{
@@ -963,6 +964,40 @@ body{
   background:#f5f5f5;color:#bbb;font-size:14px;
   font-family:'Roboto',sans-serif;cursor:default;
 }
+.ap-btn-add.enabled{background:#1976d2;color:#fff;border-color:#1976d2;cursor:pointer}
+.ap-btn-add.enabled:hover{background:#1565c0}
+/* Multiselect */
+.ap-multiselect{position:relative}
+.ap-ms-trigger{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:44px;border:1px solid #e5e9f0;border-radius:4px;
+  padding:6px 12px;cursor:pointer;background:#fff;gap:8px;
+}
+.ap-ms-trigger:hover{border-color:#bbc8e0}
+.ap-multiselect.open .ap-ms-trigger{border-color:#1976d2}
+.ap-ms-label{flex:1;font-size:14px;color:#bbb;min-width:0}
+.ap-ms-label.has-val{color:#212121}
+.ap-ms-chips{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+.ap-ms-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  background:#e8f0fe;color:#1976d2;border-radius:4px;
+  padding:2px 6px;font-size:12px;line-height:16px;
+}
+.ap-ms-chip svg{flex-shrink:0}
+.ap-ms-trigger .material-symbols-rounded{font-size:18px;color:#555;flex-shrink:0}
+.ap-ms-menu{
+  display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:700;
+  background:#fff;border:1px solid #e5e9f0;border-radius:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);max-height:200px;overflow-y:auto;
+}
+.ap-multiselect.open .ap-ms-menu{display:block}
+.ap-ms-opt{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;cursor:pointer;font-size:14px;color:#212121;
+}
+.ap-ms-opt:hover{background:rgb(242,244,247)}
+.ap-ms-opt input[type="checkbox"]{width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0}
+.ap-ms-opt-icon{display:flex;align-items:center;flex-shrink:0}
 
 /* ── AEO Score Panel (optimize mode) ── */
 #art-optimize-tabs{display:none;margin-left:0px;margin-right:0px}
@@ -1302,7 +1337,7 @@ body{
         <button class="pt-scope-tab" id="pt-scope-brand" onclick="switchPromptsScope('brand')">Brand</button>
         <button class="pt-scope-tab active" id="pt-scope-locations" onclick="switchPromptsScope('locations')">Locations</button>
       </div>
-      <button class="btn-outlined" style="display:flex;align-items:center;gap:4px;padding:5px 12px;font-size:13px;white-space:nowrap">
+      <button class="btn-outlined" style="display:flex;align-items:center;gap:4px;padding:5px 12px;font-size:13px;white-space:nowrap;height:36px">
         <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
       </button>
       <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
@@ -2589,7 +2624,7 @@ body{
     </div>
     <div class="ap-header-right">
       <button class="btn-cancel" onclick="closeAddPromptPanel()">Cancel</button>
-      <button class="ap-btn-add">Add</button>
+      <button class="ap-btn-add" id="ap-btn-add" onclick="addPromptToTable()">Add</button>
     </div>
   </div>
   <div class="ap-body">
@@ -2604,7 +2639,7 @@ body{
 
     <div class="ap-field">
       <label class="ap-label">Name <span class="ap-req">*</span></label>
-      <input class="ap-input" type="text" id="ap-name" placeholder="Enter prompt name"/>
+      <input class="ap-input" type="text" id="ap-name" placeholder="Enter prompt name" oninput="checkApAdd()"/>
     </div>
 
     <div class="ap-field">
@@ -2618,26 +2653,46 @@ body{
 
     <div class="ap-field">
       <label class="ap-label">Locations <span class="ap-req">*</span></label>
-      <div class="ap-dropdown">
-        <span class="ap-dropdown-ph">Select locations</span>
-        <span class="material-symbols-rounded">expand_more</span>
+      <div class="ap-multiselect" id="ap-loc-ms">
+        <div class="ap-ms-trigger" onclick="toggleApMs('ap-loc-ms')">
+          <span class="ap-ms-label" id="ap-loc-label">Select locations</span>
+          <span class="material-symbols-rounded">expand_more</span>
+        </div>
+        <div class="ap-ms-menu">
+          <label class="ap-ms-opt"><input type="checkbox" value="Austin, TX" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Austin, TX</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Denver, CO" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Denver, CO</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Chicago, IL" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Chicago, IL</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="New York, NY" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>New York, NY</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Los Angeles, CA" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Los Angeles, CA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Seattle, WA" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Seattle, WA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Miami, FL" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Miami, FL</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Dallas, TX" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Dallas, TX</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Boston, MA" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Boston, MA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Phoenix, AZ" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Phoenix, AZ</span></label>
+        </div>
       </div>
     </div>
 
     <div class="ap-field">
       <label class="ap-label">AI sites <span class="ap-req">*</span></label>
-      <div class="ap-dropdown">
-        <span class="ap-dropdown-ph">Select AI sites</span>
-        <span class="material-symbols-rounded">expand_more</span>
+      <div class="ap-multiselect" id="ap-ai-ms">
+        <div class="ap-ms-trigger" onclick="toggleApMs('ap-ai-ms')">
+          <span class="ap-ms-label" id="ap-ai-label">Select AI sites</span>
+          <span class="material-symbols-rounded">expand_more</span>
+        </div>
+        <div class="ap-ms-menu">
+          <label class="ap-ms-opt"><input type="checkbox" value="chatgpt" onchange="refreshApAiMs();checkApAdd()"><span class="ap-ms-opt-icon"><svg width="16" height="16"><use href="#s-chatgpt"/></svg></span><span>ChatGPT</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="gemini" onchange="refreshApAiMs();checkApAdd()"><span class="ap-ms-opt-icon"><svg width="16" height="16"><use href="#s-gemini"/></svg></span><span>Gemini</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="perplexity" onchange="refreshApAiMs();checkApAdd()"><span class="ap-ms-opt-icon"><svg width="16" height="16"><use href="#s-perplexity"/></svg></span><span>Perplexity</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="copilot" onchange="refreshApAiMs();checkApAdd()"><span class="ap-ms-opt-icon"><svg width="16" height="16"><use href="#s-copilot"/></svg></span><span>Copilot</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="claude" onchange="refreshApAiMs();checkApAdd()"><span class="ap-ms-opt-icon"><svg width="16" height="16"><use href="#s-claude"/></svg></span><span>Claude</span></label>
+        </div>
       </div>
     </div>
 
     <div class="ap-field">
       <label class="ap-label">Tag</label>
-      <div class="ap-dropdown">
-        <span class="ap-dropdown-ph">Select tag</span>
-        <span class="material-symbols-rounded">expand_more</span>
-      </div>
+      <input class="ap-input" type="text" id="ap-tag" placeholder="Enter tag"/>
     </div>
 
   </div>
@@ -3402,17 +3457,119 @@ function togglePtGroup(group) {
 
 function openAddPromptPanel(event, theme) {
   event.stopPropagation();
+  // Set theme
   document.getElementById('ap-theme-val').textContent = theme || 'Select theme';
+  // Reset fields
   document.getElementById('ap-name').value = '';
+  document.getElementById('ap-tag').value = '';
   document.querySelector('input[name="ap-track"][value="location"]').checked = true;
+  // Clear multiselects
+  document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.getElementById('ap-loc-label').textContent = 'Select locations';
+  document.getElementById('ap-loc-label').classList.remove('has-val');
+  document.getElementById('ap-ai-label').textContent = 'Select AI sites';
+  document.getElementById('ap-ai-label').classList.remove('has-val');
+  // Close any open menus
+  document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
+  // Disable Add
+  document.getElementById('ap-btn-add').classList.remove('enabled');
+  // Open panel
   document.getElementById('ap-overlay').classList.add('open');
   document.getElementById('ap-panel').classList.add('open');
 }
 
 function closeAddPromptPanel() {
+  document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
   document.getElementById('ap-overlay').classList.remove('open');
   document.getElementById('ap-panel').classList.remove('open');
 }
+
+function toggleApMs(id) {
+  const ms = document.getElementById(id);
+  const isOpen = ms.classList.contains('open');
+  document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
+  if (!isOpen) ms.classList.add('open');
+}
+
+function refreshApMs(msId, labelId, placeholder) {
+  const checked = [...document.querySelectorAll('#' + msId + ' input:checked')];
+  const label = document.getElementById(labelId);
+  if (checked.length === 0) {
+    label.textContent = placeholder;
+    label.classList.remove('has-val');
+  } else {
+    label.textContent = checked.map(c => c.value).join(', ');
+    label.classList.add('has-val');
+  }
+}
+
+function refreshApAiMs() {
+  const checked = [...document.querySelectorAll('#ap-ai-ms input:checked')];
+  const label = document.getElementById('ap-ai-label');
+  if (checked.length === 0) {
+    label.textContent = 'Select AI sites';
+    label.classList.remove('has-val');
+  } else {
+    label.textContent = checked.map(c => ({chatgpt:'ChatGPT',gemini:'Gemini',perplexity:'Perplexity',copilot:'Copilot',claude:'Claude'})[c.value]).join(', ');
+    label.classList.add('has-val');
+  }
+}
+
+function checkApAdd() {
+  const name = document.getElementById('ap-name').value.trim();
+  const locs = document.querySelectorAll('#ap-loc-ms input:checked').length;
+  const ais = document.querySelectorAll('#ap-ai-ms input:checked').length;
+  const btn = document.getElementById('ap-btn-add');
+  btn.classList.toggle('enabled', name.length > 0 && locs > 0 && ais > 0);
+}
+
+function addPromptToTable() {
+  const btn = document.getElementById('ap-btn-add');
+  if (!btn.classList.contains('enabled')) return;
+
+  const theme = document.getElementById('ap-theme-val').textContent;
+  const name = document.getElementById('ap-name').value.trim();
+  const locs = [...document.querySelectorAll('#ap-loc-ms input:checked')];
+  const sites = [...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value);
+
+  const groupMap = {'Invisialign':'invisalign','Orthodontics':'orthodontics','Trusted invisalign care':'trusted'};
+  const group = groupMap[theme];
+
+  const iconHtml = sites.map(s => `<svg width="16" height="16"><use href="#s-${s}"/></svg>`).join('');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d = new Date();
+  const dateStr = months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0');
+
+  const tr = document.createElement('tr');
+  tr.className = 'pt-data-row';
+  tr.dataset.group = group;
+  tr.innerHTML =
+    `<td></td>` +
+    `<td>${name}</td>` +
+    `<td class="pt-scope-cell" data-locations="${locs.length}" data-brand="">${locs.length}</td>` +
+    `<td class="pt-ai-cell"><span class="pt-ai-wrap">${iconHtml}</span></td>` +
+    `<td class="pt-date">${dateStr}</td>` +
+    `<td><button class="pt-action-btn">Start tracking</button></td>`;
+
+  // Insert after last row of this group
+  const rows = [...document.querySelectorAll(`.pt-data-row[data-group="${group}"]`)];
+  rows[rows.length - 1].insertAdjacentElement('afterend', tr);
+
+  // Increment group header prompt count
+  const grpRow = document.querySelector(`.pt-group-row[data-group="${group}"]`);
+  const countCell = grpRow.querySelectorAll('td')[1];
+  countCell.textContent = parseInt(countCell.textContent || 0) + 1;
+
+  closeAddPromptPanel();
+}
+
+// Close multiselect menus on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.ap-multiselect')) {
+    document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
+  }
+});
 
 function openAddPromptModal() {}
 
