@@ -910,10 +910,10 @@ body{
 .pt-data-row td:first-child{width:20px;padding-right:0}
 .pt-data-row.pt-hidden{display:none}
 /* Row hover actions */
-.pt-action-cell{overflow:visible}
-.pt-row-hover-actions{display:none;align-items:center;gap:6px}
-.pt-data-row:hover .pt-action-btn{display:none}
-.pt-data-row:hover .pt-row-hover-actions{display:inline-flex}
+.pt-action-cell{overflow:visible;position:relative}
+.pt-row-hover-actions{display:none;align-items:center;gap:6px;position:absolute;right:16px;top:50%;transform:translateY(-50%)}
+.pt-data-row:hover .pt-action-btn{visibility:hidden}
+.pt-data-row:hover .pt-row-hover-actions{display:flex}
 .pt-row-icon-btn{
   width:32px;height:32px;border:none;cursor:pointer;
   background:#fff;border-radius:8px;
