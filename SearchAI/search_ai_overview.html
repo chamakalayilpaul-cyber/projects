@@ -927,6 +927,41 @@ body{
   padding:0;border:none;background:transparent;cursor:pointer;
   font-family:'Roboto',sans-serif;font-size:14px;color:#1976d2;white-space:nowrap;
 }
+/* ── Add theme panel ── */
+.at-gen-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+}
+.at-gen-label{font-size:13px;font-weight:500;color:rgb(33,33,33)}
+.at-gen-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:12px;color:#7c3aed;background:#ede9fe;
+  padding:2px 8px;border-radius:100px;
+}
+.at-gen-badge .material-symbols-rounded{font-size:14px}
+.at-loading{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:rgb(143,143,143);padding:8px 0;
+}
+.at-loading .material-symbols-rounded{font-size:16px;color:#7c3aed;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.at-prompt-item{
+  display:flex;align-items:center;gap:10px;
+  border:1px solid #e5e9f0;border-radius:6px;
+  padding:10px 12px;margin-bottom:8px;background:#fff;
+}
+.at-prompt-item:last-child{margin-bottom:0}
+.at-prompt-num{
+  width:20px;height:20px;border-radius:50%;background:#e8f0fe;
+  color:#1976d2;font-size:11px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.at-prompt-input{
+  flex:1;border:none;outline:none;font-size:14px;
+  color:rgb(33,33,33);font-family:'Roboto',sans-serif;
+  background:transparent;
+}
+
 /* ── Toast ── */
 .toast{
   position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-8px);
@@ -1370,7 +1405,7 @@ body{
         <button class="pt-scope-tab" id="pt-scope-brand" onclick="switchPromptsScope('brand')">Brand</button>
         <button class="pt-scope-tab active" id="pt-scope-locations" onclick="switchPromptsScope('locations')">Locations</button>
       </div>
-      <button class="btn-outlined" style="display:flex;align-items:center;gap:4px;padding:5px 12px;font-size:13px;white-space:nowrap;height:36px">
+      <button class="btn-outlined" onclick="openAddThemePanel()" style="display:flex;align-items:center;gap:4px;padding:5px 12px;font-size:13px;white-space:nowrap;height:36px">
         <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
       </button>
       <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
@@ -2647,6 +2682,40 @@ body{
   </div><!-- /ch-content-area -->
 </div><!-- /ch-shell -->
 
+<!-- ══ ADD THEME SIDE PANEL ══ -->
+<div class="ap-overlay" id="at-overlay" onclick="closeAddThemePanel()"></div>
+<div class="ap-panel" id="at-panel">
+  <div class="ap-header">
+    <div class="ap-header-left">
+      <button class="icon-btn" onclick="closeAddThemePanel()"><span class="material-symbols-rounded">arrow_back</span></button>
+      <span class="ap-header-title">Add theme</span>
+    </div>
+    <div class="ap-header-right">
+      <button class="btn-cancel" onclick="closeAddThemePanel()">Cancel</button>
+      <button class="ap-btn-add" id="at-btn-add" onclick="addThemeToTable()">Add</button>
+    </div>
+  </div>
+  <div class="ap-body">
+
+    <div class="ap-field">
+      <label class="ap-label">Theme name <span class="ap-req">*</span></label>
+      <input class="ap-input" type="text" id="at-name" placeholder="Enter theme name" oninput="onThemeNameInput()"/>
+    </div>
+
+    <div id="at-prompts-section" style="display:none">
+      <div class="at-gen-hdr">
+        <span class="at-gen-label">Generated prompts</span>
+        <span class="at-gen-badge"><span class="material-symbols-rounded">auto_awesome</span>AI generated</span>
+      </div>
+      <div id="at-loading" class="at-loading" style="display:none">
+        <span class="material-symbols-rounded">progress_activity</span>Generating prompts…
+      </div>
+      <div id="at-prompts-list"></div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ══ ADD PROMPT SIDE PANEL ══ -->
 <div class="ap-overlay" id="ap-overlay" onclick="closeAddPromptPanel()"></div>
 <div class="ap-panel" id="ap-panel">
@@ -3605,6 +3674,110 @@ document.addEventListener('click', e => {
 });
 
 function openAddPromptModal() {}
+
+/* ── Add theme panel ── */
+function openAddThemePanel() {
+  document.getElementById('at-name').value = '';
+  document.getElementById('at-prompts-section').style.display = 'none';
+  document.getElementById('at-prompts-list').innerHTML = '';
+  document.getElementById('at-loading').style.display = 'none';
+  document.getElementById('at-btn-add').classList.remove('enabled');
+  document.getElementById('at-overlay').classList.add('open');
+  document.getElementById('at-panel').classList.add('open');
+}
+
+function closeAddThemePanel() {
+  document.getElementById('at-overlay').classList.remove('open');
+  document.getElementById('at-panel').classList.remove('open');
+}
+
+let _atDebounce;
+function onThemeNameInput() {
+  clearTimeout(_atDebounce);
+  const val = document.getElementById('at-name').value.trim();
+  if (!val) {
+    document.getElementById('at-prompts-section').style.display = 'none';
+    document.getElementById('at-btn-add').classList.remove('enabled');
+    return;
+  }
+  // Show section with loading
+  document.getElementById('at-prompts-section').style.display = 'block';
+  document.getElementById('at-loading').style.display = 'flex';
+  document.getElementById('at-prompts-list').innerHTML = '';
+  document.getElementById('at-btn-add').classList.remove('enabled');
+  _atDebounce = setTimeout(() => generateThemePrompts(val), 700);
+}
+
+function generateThemePrompts(theme) {
+  const prompts = [
+    `Top ${theme} near me`,
+    `Best ${theme} specialists and experts`,
+    `Expert ${theme} services and providers`
+  ];
+  document.getElementById('at-loading').style.display = 'none';
+  const list = document.getElementById('at-prompts-list');
+  list.innerHTML = prompts.map((p, i) =>
+    `<div class="at-prompt-item">
+      <div class="at-prompt-num">${i + 1}</div>
+      <input class="at-prompt-input" type="text" value="${p}" oninput="checkAtAdd()"/>
+    </div>`
+  ).join('');
+  document.getElementById('at-btn-add').classList.add('enabled');
+}
+
+function checkAtAdd() {
+  const name = document.getElementById('at-name').value.trim();
+  const inputs = [...document.querySelectorAll('.at-prompt-input')];
+  const allFilled = inputs.length === 3 && inputs.every(i => i.value.trim());
+  document.getElementById('at-btn-add').classList.toggle('enabled', name.length > 0 && allFilled);
+}
+
+function addThemeToTable() {
+  if (!document.getElementById('at-btn-add').classList.contains('enabled')) return;
+  const theme = document.getElementById('at-name').value.trim();
+  const prompts = [...document.querySelectorAll('.at-prompt-input')].map(i => i.value.trim());
+  const groupKey = theme.toLowerCase().replace(/\s+/g, '-');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d = new Date();
+  const dateStr = months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0');
+
+  const tbody = document.querySelector('.pt-table tbody');
+
+  // Group header row
+  const grpTr = document.createElement('tr');
+  grpTr.className = 'pt-group-row';
+  grpTr.dataset.group = groupKey;
+  grpTr.setAttribute('onclick', `togglePtGroup('${groupKey}')`);
+  grpTr.innerHTML =
+    `<td><div class="pt-group-inner">
+      <span class="material-symbols-rounded pt-group-chev">expand_more</span>
+      <span class="pt-group-label">${theme}</span>
+    </div></td>
+    <td class="pt-group-meta">${prompts.length}</td>
+    <td class="pt-group-meta pt-scope-cell" data-locations="0" data-brand="">0</td>
+    <td class="pt-group-meta">0</td>
+    <td class="pt-group-meta">${dateStr}</td>
+    <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'${theme}')">Add prompt</button></td>`;
+  tbody.appendChild(grpTr);
+
+  // Data rows
+  prompts.forEach(prompt => {
+    const tr = document.createElement('tr');
+    tr.className = 'pt-data-row';
+    tr.dataset.group = groupKey;
+    tr.innerHTML =
+      `<td></td><td>${prompt}</td>` +
+      `<td class="pt-scope-cell" data-locations="0" data-brand="">0</td>` +
+      `<td class="pt-ai-cell"><span class="pt-ai-wrap"></span></td>` +
+      `<td class="pt-date">${dateStr}</td>` +
+      `<td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button>` +
+      `<span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>` +
+      `<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>`;
+    tbody.appendChild(tr);
+  });
+
+  closeAddThemePanel();
+}
 
 let _toastTimer;
 function showTrackingToast(btn) {
