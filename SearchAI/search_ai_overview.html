@@ -111,6 +111,13 @@ body{
 }
 .icon-btn:hover{background:rgb(242,244,247)}
 .icon-btn .material-symbols-rounded{font-size:20px}
+.icon-btn-stroke{
+  width:36px;height:36px;border-radius:4px;border:1px solid #e5e9f0;
+  background:transparent;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:rgb(48,48,48);flex-shrink:0;
+}
+.icon-btn-stroke:hover{background:rgb(242,244,247)}
+.icon-btn-stroke .material-symbols-rounded{font-size:20px}
 
 /* ══ PROJECTS PAGE ══ */
 .proj-page-hdr{
@@ -1400,7 +1407,7 @@ body{
       <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-prompts-btns" style="display:none;gap:6px">
-      <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
       <div class="pt-scope-wrap">
         <button class="pt-scope-tab" id="pt-scope-brand" onclick="switchPromptsScope('brand')">Brand</button>
         <button class="pt-scope-tab active" id="pt-scope-locations" onclick="switchPromptsScope('locations')">Locations</button>
@@ -1408,8 +1415,8 @@ body{
       <button class="btn-outlined" onclick="openAddThemePanel()" style="display:flex;align-items:center;gap:4px;padding:5px 12px;font-size:13px;white-space:nowrap;height:36px">
         <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
       </button>
-      <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
-      <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
       <div class="art-score">
