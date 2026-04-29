@@ -927,6 +927,23 @@ body{
   padding:0;border:none;background:transparent;cursor:pointer;
   font-family:'Roboto',sans-serif;font-size:14px;color:#1976d2;white-space:nowrap;
 }
+/* ── Toast ── */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(8px);
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);z-index:9999;
+  font-size:14px;color:rgb(33,33,33);max-width:600px;
+  opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;
+}
+.toast.visible{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:all}
+.toast-text{flex:1;line-height:1.5}
+.toast-close{
+  width:24px;height:24px;border:none;background:transparent;cursor:pointer;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  color:rgb(85,85,85);flex-shrink:0;
+}
+.toast-close:hover{background:rgb(242,244,247)}
 .pt-action-btn:hover{text-decoration:underline}
 
 /* ══ ADD PROMPT SIDE PANEL ══ */
@@ -1811,7 +1828,7 @@ body{
               <td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
               <td class="pt-date">Dec 02</td>
-              <td class="pt-action-cell"><button class="pt-action-btn">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td></td><td>Expert in clear aligner therapy</td>
@@ -1832,7 +1849,7 @@ body{
               <td class="pt-scope-cell" data-locations="8" data-brand="Aspen Dental">8</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
               <td class="pt-date">Apr 01</td>
-              <td class="pt-action-cell"><button class="pt-action-btn">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td></td><td>Leading invisalign providers</td>
@@ -1846,7 +1863,7 @@ body{
               <td class="pt-scope-cell" data-locations="78" data-brand="Aspen Dental">78</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
               <td class="pt-date">Oct 18</td>
-              <td class="pt-action-cell"><button class="pt-action-btn">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
             <!-- ── Orthodontics (5) — location sum 172, unique AI sites: 5 ── -->
@@ -1880,7 +1897,7 @@ body{
               <td class="pt-scope-cell" data-locations="22" data-brand="ClearChoice">22</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
               <td class="pt-date">Feb 26</td>
-              <td class="pt-action-cell"><button class="pt-action-btn">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td></td><td>Personalized invisalign plans</td>
@@ -1914,7 +1931,7 @@ body{
               <td class="pt-scope-cell" data-locations="12" data-brand="ClearChoice">12</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
               <td class="pt-date">Jun 03</td>
-              <td class="pt-action-cell"><button class="pt-action-btn">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
           </tbody>
@@ -3566,7 +3583,7 @@ function addPromptToTable() {
     `<td class="pt-scope-cell" data-locations="${locs.length}" data-brand="">${locs.length}</td>` +
     `<td class="pt-ai-cell"><span class="pt-ai-wrap">${iconHtml}</span></td>` +
     `<td class="pt-date">${dateStr}</td>` +
-    `<td class="pt-action-cell"><button class="pt-action-btn">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>`;
+    `<td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>`;
 
   // Insert after last row of this group
   const rows = [...document.querySelectorAll(`.pt-data-row[data-group="${group}"]`)];
@@ -3589,6 +3606,21 @@ document.addEventListener('click', e => {
 
 function openAddPromptModal() {}
 
+let _toastTimer;
+function showTrackingToast(btn) {
+  const prompt = btn.closest('tr').querySelectorAll('td')[1].textContent.trim();
+  document.getElementById('toast-text').textContent =
+    'Tracking started for ' + prompt + '. Reports for locations will be generated from next monthly update.';
+  const toast = document.getElementById('main-toast');
+  toast.classList.add('visible');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => toast.classList.remove('visible'), 5000);
+}
+function closeToast() {
+  clearTimeout(_toastTimer);
+  document.getElementById('main-toast').classList.remove('visible');
+}
+
 // Copy field content to clipboard
 function copyField(btn) {
   const valueEl = btn.closest('.art-seo-value-row').querySelector('.art-seo-value');
@@ -3601,5 +3633,18 @@ function copyField(btn) {
   }).catch(() => {});
 }
 </script>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="main-toast">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" flex-shrink="0" style="flex-shrink:0">
+    <circle cx="10" cy="10" r="9" stroke="#16a34a" stroke-width="1.5"/>
+    <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="toast-text" id="toast-text"></span>
+  <button class="toast-close" onclick="closeToast()">
+    <span class="material-symbols-rounded" style="font-size:16px">close</span>
+  </button>
+</div>
+
 </body>
 </html>
