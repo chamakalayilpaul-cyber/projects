@@ -3742,6 +3742,7 @@ function addThemeToTable() {
   const dateStr = months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0');
 
   const tbody = document.querySelector('.pt-table tbody');
+  const firstRow = tbody.firstChild; // insert before all existing rows (most recent on top)
 
   // Group header row
   const grpTr = document.createElement('tr');
@@ -3758,9 +3759,10 @@ function addThemeToTable() {
     <td class="pt-group-meta">0</td>
     <td class="pt-group-meta">${dateStr}</td>
     <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'${theme}')">Add prompt</button></td>`;
-  tbody.appendChild(grpTr);
+  tbody.insertBefore(grpTr, firstRow);
 
-  // Data rows
+  // Data rows — insert in order after the group header
+  let insertAfter = grpTr;
   prompts.forEach(prompt => {
     const tr = document.createElement('tr');
     tr.className = 'pt-data-row';
@@ -3773,7 +3775,8 @@ function addThemeToTable() {
       `<td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button>` +
       `<span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>` +
       `<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>`;
-    tbody.appendChild(tr);
+    insertAfter.insertAdjacentElement('afterend', tr);
+    insertAfter = tr;
   });
 
   closeAddThemePanel();
