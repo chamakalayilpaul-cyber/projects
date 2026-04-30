@@ -1355,7 +1355,8 @@ body{
       <svg id="sb-chev-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div id="sb-group-settings" style="display:none">
-      <div class="sb-sub-item" id="nav-prompts" onclick="showView('prompts')">Prompts</div>
+      <div class="sb-sub-item" id="nav-prompts-v1" onclick="showView('prompts-v1')">Prompts V1</div>
+      <div class="sb-sub-item" id="nav-prompts-v2" onclick="showView('prompts-v2')">Prompts V2</div>
     </div>
   </div>
 </div>
@@ -1880,8 +1881,71 @@ body{
 
     </div><!-- /view-content -->
 
-    <!-- ══ PROMPTS VIEW ══ -->
-    <div class="view" id="view-prompts">
+    <!-- ══ PROMPTS V1 VIEW ══ -->
+    <div class="view" id="view-prompts-v1">
+      <div class="pt-table-wrap">
+        <table class="pt-table">
+          <colgroup>
+            <col style="width:24%"><col style="width:24%">
+            <col style="width:12%"><col style="width:13%"><col style="width:13%"><col style="width:14%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th><span class="pt-th-inner">Themes<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Unique locations<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">AI sites<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ── Invisialign (6) ── -->
+            <tr class="pt-group-row" data-group="inv-v1" onclick="togglePtGroup('inv-v1')">
+              <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisialign</span><span class="pt-group-subcount">6 prompts</span></div></div></td>
+              <td class="pt-group-meta">6</td>
+              <td class="pt-group-meta pt-scope-cell" data-locations="308" data-brand="Aspen Dental, ClearChoice">308</td>
+              <td class="pt-group-meta">5</td>
+              <td class="pt-group-meta">Jan 15</td>
+              <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'Invisialign')">Add prompt</button></td>
+            </tr>
+            <tr class="pt-data-row" data-group="inv-v1"><td></td><td>What are the best-rated Invisalign providers near me?</td><td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td><td class="pt-date">Dec 02</td><td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="inv-v1"><td></td><td>Can you recommend clinics that specialise in clear aligner therapy for complex bite corrections in adults?</td><td class="pt-scope-cell" data-locations="76" data-brand="ClearChoice">76</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td><td class="pt-date">Jan 15</td><td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="inv-v1"><td></td><td>Which dental practices offer the most advanced Invisalign solutions with 3D scanning and virtual outcome previews?</td><td class="pt-scope-cell" data-locations="67" data-brand="ClearChoice">67</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td><td class="pt-date">Aug 14</td><td class="pt-action-cell"><button class="pt-action-btn">Stop tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="inv-v1"><td></td><td>Best Invisalign dentist with payment plans</td><td class="pt-scope-cell" data-locations="8" data-brand="Aspen Dental">8</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td><td class="pt-date">Apr 01</td><td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="inv-v1"><td></td><td>What are the leading Invisalign provider practices in my area with the highest verified patient satisfaction scores?</td><td class="pt-scope-cell" data-locations="45" data-brand="WellNow">45</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></span></td><td class="pt-date">Nov 29</td><td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="inv-v1"><td></td><td>Invisible aligner clinics offering free consultations</td><td class="pt-scope-cell" data-locations="78" data-brand="Aspen Dental">78</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td><td class="pt-date">Oct 18</td><td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <!-- ── Orthodontics (5) ── -->
+            <tr class="pt-group-row" data-group="orth-v1" onclick="togglePtGroup('orth-v1')">
+              <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Orthodontics</span><span class="pt-group-subcount">5 prompts</span></div></div></td>
+              <td class="pt-group-meta">5</td>
+              <td class="pt-group-meta pt-scope-cell" data-locations="172" data-brand="Aspen Dental, ClearChoice">172</td>
+              <td class="pt-group-meta">5</td>
+              <td class="pt-group-meta">Sep 10</td>
+              <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'Orthodontics')">Add prompt</button></td>
+            </tr>
+            <tr class="pt-data-row" data-group="orth-v1"><td></td><td>Which orthodontic specialists near me offer invisible braces for adults?</td><td class="pt-scope-cell" data-locations="22" data-brand="Aspen Dental">22</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td><td class="pt-date">Jul 22</td><td class="pt-action-cell"><button class="pt-action-btn">Stop tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="orth-v1"><td></td><td>What are the top-rated dental practices known for precision Invisalign dentistry and same-day appointment availability?</td><td class="pt-scope-cell" data-locations="56" data-brand="Aspen Dental">56</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td><td class="pt-date">Sep 10</td><td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="orth-v1"><td></td><td>Invisalign specialists who accept insurance</td><td class="pt-scope-cell" data-locations="22" data-brand="ClearChoice">22</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td><td class="pt-date">Feb 26</td><td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="orth-v1"><td></td><td>Which dental offices provide personalised Invisalign plans with remote progress monitoring and fewer required office visits?</td><td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td><td class="pt-date">May 08</td><td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <tr class="pt-data-row" data-group="orth-v1"><td></td><td>Most recommended orthodontic centres for faster Invisalign results</td><td class="pt-scope-cell" data-locations="38" data-brand="Chapter Aesthetic">38</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td><td class="pt-date">Mar 11</td><td class="pt-action-cell"><button class="pt-action-btn">Stop tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+            <!-- ── Trusted invisalign care (1) ── -->
+            <tr class="pt-group-row" data-group="trust-v1" onclick="togglePtGroup('trust-v1')">
+              <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Trusted invisalign care</span><span class="pt-group-subcount">1 prompt</span></div></div></td>
+              <td class="pt-group-meta">1</td>
+              <td class="pt-group-meta pt-scope-cell" data-locations="12" data-brand="ClearChoice">12</td>
+              <td class="pt-group-meta">4</td>
+              <td class="pt-group-meta">Jun 03</td>
+              <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')">Add prompt</button></td>
+            </tr>
+            <tr class="pt-data-row" data-group="trust-v1"><td></td><td>Which dental clinics in my area are most trusted by patients for delivering consistent and reliable Invisalign care throughout the full treatment?</td><td class="pt-scope-cell" data-locations="12" data-brand="ClearChoice">12</td><td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td><td class="pt-date">Jun 03</td><td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /view-prompts-v1 -->
+
+    <!-- ══ PROMPTS V2 VIEW ══ -->
+    <div class="view" id="view-prompts-v2">
       <div class="pt-table-wrap">
         <table class="pt-table">
           <colgroup>
@@ -2034,7 +2098,7 @@ body{
           </tbody>
         </table>
       </div>
-    </div><!-- /view-prompts -->
+    </div><!-- /view-prompts-v2 -->
 
     <!-- ══ ARTICLE VIEW ══ -->
     <div class="view" id="view-article">
@@ -3187,18 +3251,18 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', prompts:'Prompts'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Prompts V2'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
   document.getElementById('hdr-rec-btns').style.display = view === 'recommendations' ? 'flex' : 'none';
   document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
-  document.getElementById('hdr-prompts-btns').style.display = view === 'prompts' ? 'flex' : 'none';
-  document.getElementById('pt-version-switcher').classList.toggle('visible', view === 'prompts');
+  const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
+  document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
 
   // open Settings group when navigating to a settings sub-view
-  if (view === 'prompts') {
+  if (view === 'prompts-v1' || view === 'prompts-v2') {
     const grp = document.getElementById('sb-group-settings');
     const chev = document.getElementById('sb-chev-settings');
     grp.style.display = 'block';
@@ -3225,7 +3289,7 @@ function showView(view) {
 
   // update sidebar active states
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
-  const navEl = document.getElementById('nav-' + view) || document.getElementById('nav-content');
+  const navEl = document.getElementById('nav-' + view) || document.getElementById('nav-' + view.replace('-v1','').replace('-v2','')) || document.getElementById('nav-content');
   if (navEl) navEl.classList.add('active');
 }
 
@@ -3484,7 +3548,7 @@ document.addEventListener('click', function(e) {
 // On load: navigate to view specified in URL hash (e.g. #prompts)
 (function() {
   const hash = location.hash.replace('#', '');
-  const valid = ['overview','recommendations','content','prompts'];
+  const valid = ['overview','recommendations','content','prompts-v1','prompts-v2'];
   if (valid.includes(hash)) {
     showView(hash);
   }
@@ -3991,13 +4055,6 @@ function copyField(btn) {
   }).catch(() => {});
 }
 </script>
-
-<!-- ── TABLE VERSION SWITCHER ── -->
-<div class="pt-version-switcher" id="pt-version-switcher">
-  <span class="pt-version-label">Table</span>
-  <button class="pt-version-btn" data-v="1" onclick="switchPtVersion(1)">V1</button>
-  <button class="pt-version-btn active" data-v="2" onclick="switchPtVersion(2)">V2</button>
-</div>
 
 <!-- ── TOAST ── -->
 <div class="toast" id="main-toast">
