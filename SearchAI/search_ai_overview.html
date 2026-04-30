@@ -4203,7 +4203,7 @@ function addThemeToTable() {
   const d = new Date();
   const dateStr = months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0');
 
-  const tbody = document.querySelector('.pt-table tbody');
+  const tbody = document.querySelector('#view-prompts-v2 .pt-table tbody');
   const firstRow = tbody.firstChild; // insert before all existing rows (most recent on top)
 
   // Group header row
