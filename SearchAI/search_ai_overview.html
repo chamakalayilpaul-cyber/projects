@@ -1982,7 +1982,7 @@ body{
               <td class="pt-group-meta pt-scope-cell" data-locations="51" data-brand="">51</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
               <td class="pt-group-meta">Jan 15</td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">add</span></button></span></td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'invisalign','Invisialign')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
@@ -2032,7 +2032,7 @@ body{
               <td class="pt-group-meta pt-scope-cell" data-locations="34" data-brand="">34</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
               <td class="pt-group-meta">Sep 10</td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">add</span></button></span></td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'orthodontics','Orthodontics')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults?</span></td>
@@ -2075,7 +2075,7 @@ body{
               <td class="pt-group-meta pt-scope-cell" data-locations="12" data-brand="">12</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
               <td class="pt-group-meta">Jun 03</td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">add</span></button></span></td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'trusted','Trusted invisalign care')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="trusted">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental clinics in my area are most trusted by patients for delivering consistent and reliable Invisalign care throughout the full treatment?</span></td>
@@ -3875,6 +3875,68 @@ function openAddThemePanel() {
 function closeAddThemePanel() {
   document.getElementById('at-overlay').classList.remove('open');
   document.getElementById('at-panel').classList.remove('open');
+  if (_editGroupKey) {
+    document.getElementById('at-panel').querySelector('.ap-header-title').textContent = 'Add theme';
+    const btn = document.getElementById('at-btn-add');
+    btn.textContent = 'Add'; btn.onclick = addThemeToTable;
+    _editGroupKey = null;
+  }
+}
+
+let _editGroupKey = null;
+
+function openEditThemePanel(event, groupKey, themeName) {
+  event.stopPropagation();
+  _editGroupKey = groupKey;
+  document.getElementById('at-panel').querySelector('.ap-header-title').textContent = 'Edit theme';
+  const btn = document.getElementById('at-btn-add');
+  btn.textContent = 'Save'; btn.onclick = saveEditTheme;
+  document.getElementById('at-name').value = themeName;
+  document.getElementById('at-prompts-ph').style.display = 'none';
+  document.getElementById('at-loading').style.display = 'none';
+  document.getElementById('at-add-prompt-btn').classList.remove('disabled');
+  const rows = [...document.querySelectorAll('.pt-data-row[data-group="' + groupKey + '"]')];
+  const prompts = rows.map(r => {
+    const inner = r.querySelector('.pt-v2-row-inner');
+    return inner ? inner.textContent.trim() : '';
+  }).filter(Boolean);
+  renderAtPromptItems(prompts);
+  btn.classList.add('enabled');
+  document.getElementById('at-overlay').classList.add('open');
+  document.getElementById('at-panel').classList.add('open');
+}
+
+function saveEditTheme() {
+  if (!document.getElementById('at-btn-add').classList.contains('enabled')) return;
+  const groupKey = _editGroupKey;
+  const newName  = document.getElementById('at-name').value.trim();
+  const prompts  = [...document.querySelectorAll('#at-prompts-list .at-prompt-text')].map(s => s.textContent.trim()).filter(Boolean);
+  const grpRow   = document.querySelector('.pt-group-row[data-group="' + groupKey + '"]');
+  if (grpRow) {
+    const lbl = grpRow.querySelector('.pt-group-label');
+    if (lbl) lbl.textContent = newName;
+    const sub = grpRow.querySelector('.pt-group-subcount');
+    if (sub) sub.textContent = prompts.length + ' prompt' + (prompts.length !== 1 ? 's' : '');
+  }
+  document.querySelectorAll('.pt-data-row[data-group="' + groupKey + '"]').forEach(r => r.remove());
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d = new Date();
+  const dateStr = months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0');
+  let after = grpRow;
+  prompts.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.className = 'pt-data-row'; tr.dataset.group = groupKey;
+    tr.innerHTML =
+      '<td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>' + p + '</span></td>' +
+      '<td class="pt-scope-cell" data-locations="0" data-brand="">0</td>' +
+      '<td class="pt-ai-cell"><span class="pt-ai-wrap"></span></td>' +
+      '<td class="pt-date">' + dateStr + '</td>' +
+      '<td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span>' +
+      '<span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>' +
+      '<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>';
+    after.insertAdjacentElement('afterend', tr); after = tr;
+  });
+  closeAddThemePanel();
 }
 
 let _atDebounce;
