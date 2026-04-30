@@ -914,9 +914,9 @@ body{
 .pt-group-label{font-size:14px;font-weight:400;color:rgb(33,33,33)}
 .pt-group-badge{font-size:12px;font-weight:500;background:#e8f0fe;color:#1976d2;padding:1px 8px;border-radius:100px}
 .pt-group-meta{font-size:13px;color:rgb(143,143,143)}
-.pt-v2-prompt{padding-left:20px;color:rgb(33,33,33);font-size:14px;white-space:nowrap;overflow:visible}
-.pt-v2-row-inner{display:inline-flex;align-items:center;gap:8px}
-.pt-v2-spacer{display:inline-block;width:18px;flex-shrink:0}
+.pt-v2-prompt{padding-left:20px;color:rgb(33,33,33);font-size:14px;white-space:normal;overflow:visible;vertical-align:middle}
+.pt-v2-row-inner{display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pt-v2-spacer{display:inline-block;width:18px;flex-shrink:0;padding-top:2px}
 .pt-group-info{display:flex;flex-direction:column;gap:1px}
 .pt-group-subcount{font-size:12px;color:rgb(180,180,180);font-weight:400}
 .pt-data-row.pt-hidden{display:none}
@@ -1878,7 +1878,7 @@ body{
               <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'Invisialign')">Add prompt</button></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
-              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me and what should I expect during the treatment process?</span></td>
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
               <td class="pt-scope-cell" data-locations="34" data-brand="Aspen Dental">34</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
               <td class="pt-date">Dec 02</td>
@@ -1899,7 +1899,7 @@ body{
               <td class="pt-action-cell"><button class="pt-action-btn">Stop tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
-              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How do I find a dentist who offers fully customised Invisalign treatment plans with flexible monthly payment options?</span></td>
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best Invisalign dentist with payment plans</span></td>
               <td class="pt-scope-cell" data-locations="8" data-brand="Aspen Dental">8</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
               <td class="pt-date">Apr 01</td>
@@ -1913,7 +1913,7 @@ body{
               <td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
-              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which clinics use the latest innovative invisible aligner technology and offer free initial consultations for new patients?</span></td>
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisible aligner clinics offering free consultations</span></td>
               <td class="pt-scope-cell" data-locations="78" data-brand="Aspen Dental">78</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
               <td class="pt-date">Oct 18</td>
@@ -1935,7 +1935,7 @@ body{
               <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'Orthodontics')">Add prompt</button></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
-              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults looking for minimal-visibility correction?</span></td>
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults?</span></td>
               <td class="pt-scope-cell" data-locations="22" data-brand="Aspen Dental">22</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
               <td class="pt-date">Jul 22</td>
@@ -1949,7 +1949,7 @@ body{
               <td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
-              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you find highly rated Invisalign specialists who accept dental insurance and offer in-house financing options?</span></td>
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisalign specialists who accept insurance</span></td>
               <td class="pt-scope-cell" data-locations="22" data-brand="ClearChoice">22</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
               <td class="pt-date">Feb 26</td>
@@ -1963,7 +1963,7 @@ body{
               <td class="pt-action-cell"><button class="pt-action-btn">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
-              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the most recommended orthodontic centres pioneering new Invisalign technology for faster and more comfortable results?</span></td>
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Most recommended orthodontic centres for faster Invisalign results</span></td>
               <td class="pt-scope-cell" data-locations="38" data-brand="Chapter Aesthetic">38</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
               <td class="pt-date">Mar 11</td>
