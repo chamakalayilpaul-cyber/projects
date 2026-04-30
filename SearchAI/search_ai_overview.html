@@ -962,11 +962,22 @@ body{
 }
 .at-prompt-item:last-child{border-bottom:none}
 .at-prompt-ai-icon{font-size:16px;color:#7c3aed;flex-shrink:0}
-.at-prompt-input{
-  flex:1;border:none;outline:none;font-size:14px;
-  color:rgb(33,33,33);font-family:'Roboto',sans-serif;
-  background:transparent;min-width:0;
+.at-prompt-text{flex:1;font-size:14px;color:rgb(33,33,33);min-width:0}
+.at-prompt-item-input{padding-left:26px;gap:8px;align-items:center}
+.at-prompt-input-box{
+  flex:1;height:44px;border:1px solid #e5e9f0;border-radius:8px;
+  padding:0 12px;font-size:14px;color:rgb(33,33,33);
+  font-family:'Roboto',sans-serif;outline:none;min-width:0;
 }
+.at-prompt-input-box:focus{border-color:#1976d2}
+.at-prompt-confirm-btn{
+  width:44px;height:44px;border:1px solid #e5e9f0;border-radius:8px;
+  background:#fff;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;color:rgb(33,33,33);
+}
+.at-prompt-confirm-btn:hover{background:rgb(242,244,247)}
+.at-prompt-confirm-btn .material-symbols-rounded{font-size:18px}
+.at-add-prompt-btn.disabled{opacity:0.4;cursor:default;pointer-events:none}
 .at-prompt-remove{
   width:28px;height:28px;border:none;background:transparent;cursor:pointer;
   border-radius:4px;display:flex;align-items:center;justify-content:center;
@@ -3766,11 +3777,8 @@ function renderAtPromptItems(prompts) {
   list.innerHTML = prompts.map(p =>
     `<div class="at-prompt-item">
       <span class="material-symbols-rounded at-prompt-ai-icon">auto_awesome</span>
-      <input class="at-prompt-input" type="text" value="${p}"
-        oninput="checkAtAdd()"
-        onfocus="atIconToggle(this,'check')"
-        onblur="atIconToggle(this,'delete')"/>
-      <button class="at-prompt-remove" onclick="atPromptAction(this)">
+      <span class="at-prompt-text">${p}</span>
+      <button class="at-prompt-remove" onclick="atRemovePrompt(this)">
         <span class="material-symbols-rounded">delete</span>
       </button>
     </div>`
@@ -3778,58 +3786,55 @@ function renderAtPromptItems(prompts) {
 }
 
 function addAtPromptRow() {
+  const addBtn = document.getElementById('at-add-prompt-btn');
+  addBtn.classList.add('disabled');
   const list = document.getElementById('at-prompts-list');
   const div = document.createElement('div');
-  div.className = 'at-prompt-item';
+  div.className = 'at-prompt-item at-prompt-item-input';
   div.innerHTML =
-    `<input class="at-prompt-input" type="text" placeholder="Enter prompt"
+    `<input class="at-prompt-input-box" type="text" placeholder="Enter prompt"
       oninput="checkAtAdd()"
-      onfocus="atIconToggle(this,'check')"
-      onblur="atIconToggle(this,'delete')"
-      onkeydown="if(event.key==='Enter'){this.nextElementSibling.click()}"/>` +
-    `<button class="at-prompt-remove" onclick="atPromptAction(this)">` +
+      onkeydown="if(event.key==='Enter')atConfirmPrompt(this.closest('.at-prompt-item'))"/>` +
+    `<button class="at-prompt-confirm-btn" onclick="atConfirmPrompt(this.closest('.at-prompt-item'))">` +
     `<span class="material-symbols-rounded">check</span></button>`;
   list.appendChild(div);
-  div.querySelector('.at-prompt-input').focus();
+  div.querySelector('.at-prompt-input-box').focus();
   checkAtAdd();
 }
 
-function atIconToggle(input, icon) {
-  const btn = input.nextElementSibling;
-  if (btn) btn.querySelector('.material-symbols-rounded').textContent = icon;
+function atConfirmPrompt(item) {
+  const val = item.querySelector('.at-prompt-input-box').value.trim();
+  if (!val) return;
+  // Replace input row with confirmed row
+  const confirmed = document.createElement('div');
+  confirmed.className = 'at-prompt-item';
+  confirmed.innerHTML =
+    `<span class="material-symbols-rounded at-prompt-ai-icon">auto_awesome</span>` +
+    `<span class="at-prompt-text">${val}</span>` +
+    `<button class="at-prompt-remove" onclick="atRemovePrompt(this)">` +
+    `<span class="material-symbols-rounded">delete</span></button>`;
+  item.replaceWith(confirmed);
+  document.getElementById('at-add-prompt-btn').classList.remove('disabled');
+  checkAtAdd();
 }
 
-function atPromptAction(btn) {
-  const icon = btn.querySelector('.material-symbols-rounded').textContent.trim();
-  const item = btn.closest('.at-prompt-item');
-  if (icon === 'check') {
-    const val = item.querySelector('.at-prompt-input').value.trim();
-    if (!val) return; // don't confirm empty row
-    // Add sparkle icon if not already there (manual row)
-    if (!item.querySelector('.at-prompt-ai-icon')) {
-      const aiSpan = document.createElement('span');
-      aiSpan.className = 'material-symbols-rounded at-prompt-ai-icon';
-      aiSpan.textContent = 'auto_awesome';
-      item.insertBefore(aiSpan, item.firstChild);
-    }
-    item.querySelector('.at-prompt-input').blur();
-  } else {
-    item.remove();
-    checkAtAdd();
-  }
+function atRemovePrompt(btn) {
+  btn.closest('.at-prompt-item').remove();
+  document.getElementById('at-add-prompt-btn').classList.remove('disabled');
+  checkAtAdd();
 }
 
 function checkAtAdd() {
   const name = document.getElementById('at-name').value.trim();
-  const inputs = [...document.querySelectorAll('.at-prompt-input')];
-  const allFilled = inputs.length === 3 && inputs.every(i => i.value.trim());
-  document.getElementById('at-btn-add').classList.toggle('enabled', name.length > 0 && allFilled);
+  const confirmed = document.querySelectorAll('#at-prompts-list .at-prompt-item:not(.at-prompt-item-input)').length;
+  const pending = document.querySelectorAll('#at-prompts-list .at-prompt-item-input').length;
+  document.getElementById('at-btn-add').classList.toggle('enabled', name.length > 0 && confirmed > 0 && pending === 0);
 }
 
 function addThemeToTable() {
   if (!document.getElementById('at-btn-add').classList.contains('enabled')) return;
   const theme = document.getElementById('at-name').value.trim();
-  const prompts = [...document.querySelectorAll('.at-prompt-input')].map(i => i.value.trim());
+  const prompts = [...document.querySelectorAll('#at-prompts-list .at-prompt-text')].map(s => s.textContent.trim());
   const groupKey = theme.toLowerCase().replace(/\s+/g, '-');
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const d = new Date();
