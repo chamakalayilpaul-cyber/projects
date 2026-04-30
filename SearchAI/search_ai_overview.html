@@ -3726,10 +3726,19 @@ function openAddPromptPanel(event, theme) {
   document.getElementById('ap-panel').classList.add('open');
 }
 
+let _apEditMode = false;
+let _editPromptRow = null;
+
 function closeAddPromptPanel() {
   document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
   document.getElementById('ap-overlay').classList.remove('open');
   document.getElementById('ap-panel').classList.remove('open');
+  if (_apEditMode) {
+    _apEditMode = false;
+    _editPromptRow = null;
+    document.querySelector('#ap-panel .ap-header-title').textContent = 'Add prompt';
+    document.getElementById('ap-btn-add').textContent = 'Add';
+  }
 }
 
 function toggleApMs(id) {
@@ -3772,6 +3781,7 @@ function checkApAdd() {
 }
 
 function addPromptToTable() {
+  if (_apEditMode) { saveEditPrompt(); return; }
   const btn = document.getElementById('ap-btn-add');
   if (!btn.classList.contains('enabled')) return;
 
@@ -3823,6 +3833,89 @@ document.addEventListener('click', e => {
 
 
 /* ── More popover ── */
+
+/* ── Edit prompt panel ── */
+function openEditPromptPanel(e, btn) {
+  e.stopPropagation();
+  const row = btn.closest('.pt-data-row');
+  _editPromptRow = row;
+  _apEditMode    = true;
+
+  // Theme from group header
+  const grpRow = document.querySelector('.pt-group-row[data-group="' + row.dataset.group + '"]');
+  const theme  = grpRow ? grpRow.querySelector('.pt-group-label').textContent.trim() : '';
+
+  // Prompt text
+  const inner  = row.querySelector('.pt-v2-row-inner');
+  const prompt = inner ? inner.textContent.trim() : '';
+
+  // AI sites from icons
+  const aiKeys = [...row.querySelectorAll('.pt-ai-wrap use')].map(u => (u.getAttribute('href') || '').replace('#s-', '')).filter(Boolean);
+
+  // Switch panel to edit mode
+  document.querySelector('#ap-panel .ap-header-title').textContent = 'Edit prompt';
+  document.getElementById('ap-btn-add').textContent = 'Save';
+
+  // Pre-fill fields
+  document.getElementById('ap-theme-val').textContent = theme;
+  document.getElementById('ap-name').value = prompt;
+
+  // Reset + pre-check AI sites
+  document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => { c.checked = aiKeys.includes(c.value); });
+  refreshApMs('ap-loc-ms', 'ap-loc-label', 'Select locations');
+  refreshApAiMs();
+  checkApAdd();
+
+  document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
+  document.getElementById('ap-overlay').classList.add('open');
+  document.getElementById('ap-panel').classList.add('open');
+}
+
+function saveEditPrompt() {
+  const btn = document.getElementById('ap-btn-add');
+  if (!btn.classList.contains('enabled') || !_editPromptRow) return;
+
+  const newText = document.getElementById('ap-name').value.trim();
+  const locs    = document.querySelectorAll('#ap-loc-ms input:checked').length;
+  const sites   = [...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value);
+
+  // Update prompt text
+  const inner = _editPromptRow.querySelector('.pt-v2-row-inner');
+  if (inner) {
+    const spacer = inner.querySelector('.pt-v2-spacer').cloneNode(true);
+    inner.innerHTML = '';
+    inner.appendChild(spacer);
+    inner.appendChild(document.createTextNode(newText));
+  }
+
+  // Update location count (only if user selected)
+  if (locs > 0) {
+    const sc = _editPromptRow.querySelector('.pt-scope-cell');
+    if (sc) { sc.textContent = locs; sc.dataset.locations = locs; }
+  }
+
+  // Update AI icons
+  if (sites.length > 0) {
+    const wrap = _editPromptRow.querySelector('.pt-ai-wrap');
+    if (wrap) wrap.innerHTML = sites.map(s => '<svg width="16" height="16"><use href="#s-' + s + '"/></svg>').join('');
+  }
+
+  closeAddPromptPanel();
+}
+
+// Event delegation: edit btn on V2 data rows
+document.addEventListener('click', function(ev) {
+  const btn = ev.target.closest('.pt-row-icon-btn');
+  if (!btn) return;
+  const icon = btn.querySelector('.material-symbols-rounded')?.textContent?.trim();
+  if (icon !== 'edit') return;
+  const row = btn.closest('.pt-data-row');
+  if (row && row.querySelector('.pt-status-cell')) {
+    openEditPromptPanel(ev, btn);
+  }
+});
+
 let _popoverRow = null;
 
 function showMorePopover(e, btn) {
