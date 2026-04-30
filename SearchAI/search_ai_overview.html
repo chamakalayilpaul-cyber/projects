@@ -3785,7 +3785,8 @@ function addAtPromptRow() {
     `<input class="at-prompt-input" type="text" placeholder="Enter prompt"
       oninput="checkAtAdd()"
       onfocus="atIconToggle(this,'check')"
-      onblur="atIconToggle(this,'delete')"/>` +
+      onblur="atIconToggle(this,'delete')"
+      onkeydown="if(event.key==='Enter'){this.nextElementSibling.click()}"/>` +
     `<button class="at-prompt-remove" onclick="atPromptAction(this)">` +
     `<span class="material-symbols-rounded">check</span></button>`;
   list.appendChild(div);
@@ -3800,10 +3801,20 @@ function atIconToggle(input, icon) {
 
 function atPromptAction(btn) {
   const icon = btn.querySelector('.material-symbols-rounded').textContent.trim();
+  const item = btn.closest('.at-prompt-item');
   if (icon === 'check') {
-    btn.previousElementSibling.blur();
+    const val = item.querySelector('.at-prompt-input').value.trim();
+    if (!val) return; // don't confirm empty row
+    // Add sparkle icon if not already there (manual row)
+    if (!item.querySelector('.at-prompt-ai-icon')) {
+      const aiSpan = document.createElement('span');
+      aiSpan.className = 'material-symbols-rounded at-prompt-ai-icon';
+      aiSpan.textContent = 'auto_awesome';
+      item.insertBefore(aiSpan, item.firstChild);
+    }
+    item.querySelector('.at-prompt-input').blur();
   } else {
-    btn.closest('.at-prompt-item').remove();
+    item.remove();
     checkAtAdd();
   }
 }
