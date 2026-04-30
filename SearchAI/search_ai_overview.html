@@ -995,6 +995,22 @@ body{
 .at-add-prompt-btn:hover{text-decoration:underline}
 .at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 .at-prompts-ph{font-size:14px;color:rgb(143,143,143);padding:8px 0;margin:0}
+/* ── More popover ── */
+.pt-popover{
+  position:fixed;z-index:600;
+  background:#fff;border:1px solid #e5e9f0;border-radius:6px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  min-width:172px;padding:4px 0;display:none;
+}
+.pt-popover.open{display:block}
+.pt-popover-item{
+  display:flex;align-items:center;width:100%;
+  padding:9px 16px;border:none;background:transparent;
+  font-size:14px;color:rgb(33,33,33);cursor:pointer;
+  font-family:'Roboto',sans-serif;text-align:left;white-space:nowrap;
+}
+.pt-popover-item:hover{background:rgb(242,244,247)}
+
 /* ── Status pills ── */
 .pt-status-pill{
   display:inline-flex;align-items:center;
@@ -3805,6 +3821,63 @@ document.addEventListener('click', e => {
   }
 });
 
+
+/* ── More popover ── */
+let _popoverRow = null;
+
+function showMorePopover(e, btn) {
+  e.stopPropagation();
+  _popoverRow = btn.closest('.pt-data-row');
+  const pill = _popoverRow.querySelector('.pt-status-pill');
+  const cls  = pill ? [...pill.classList].find(c => ['tracking','not-tracking','next-cycle'].includes(c)) : 'not-tracking';
+
+  const map = {
+    'tracking':    { label: 'Stop tracking',  next: 'not-tracking' },
+    'not-tracking':{ label: 'Start tracking', next: 'tracking' },
+    'next-cycle':  { label: 'Stop tracking',  next: 'not-tracking' }
+  };
+  const opt = map[cls] || map['not-tracking'];
+  const item = document.getElementById('pt-popover-item');
+  item.textContent = opt.label;
+  item.dataset.next = opt.next;
+
+  const popover = document.getElementById('pt-popover');
+  const rect = btn.getBoundingClientRect();
+  popover.style.top  = (rect.bottom + 4) + 'px';
+  const left = rect.right - 172;
+  popover.style.left = Math.max(8, left) + 'px';
+  popover.classList.add('open');
+}
+
+function applyMoreAction() {
+  if (!_popoverRow) return;
+  const item    = document.getElementById('pt-popover-item');
+  const next    = item.dataset.next;
+  const labels  = {'tracking':'Tracking','not-tracking':'Not tracking','next-cycle':'Tracking in next cycle'};
+  const pill    = _popoverRow.querySelector('.pt-status-pill');
+  if (pill) { pill.className = 'pt-status-pill ' + next; pill.textContent = labels[next]; }
+  closeMorePopover();
+}
+
+function closeMorePopover() {
+  document.getElementById('pt-popover').classList.remove('open');
+  _popoverRow = null;
+}
+
+// Delegate more_vert clicks on V2 data rows
+document.addEventListener('click', function(e) {
+  if (e.target.closest('#pt-popover')) return;
+  const btn = e.target.closest('.pt-row-icon-btn');
+  if (btn) {
+    const icon = btn.querySelector('.material-symbols-rounded')?.textContent?.trim();
+    if (icon === 'more_vert') {
+      const row = btn.closest('.pt-data-row');
+      if (row && row.querySelector('.pt-status-pill')) { showMorePopover(e, btn); return; }
+    }
+  }
+  closeMorePopover();
+});
+
 function openAddPromptModal() {}
 
 /* ── Table version switcher ── */
@@ -4107,6 +4180,11 @@ function copyField(btn) {
   }).catch(() => {});
 }
 </script>
+
+<!-- ── MORE POPOVER ── -->
+<div class="pt-popover" id="pt-popover">
+  <button class="pt-popover-item" id="pt-popover-item" onclick="applyMoreAction()"></button>
+</div>
 
 <!-- ── TOAST ── -->
 <div class="toast" id="main-toast">
