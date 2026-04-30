@@ -1991,7 +1991,7 @@ body{
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="pt-v2-locs-tbody">
 
             <tr class="pt-group-row" data-group="invisalign" onclick="togglePtGroup('invisalign')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisialign</span><span class="pt-group-subcount">6 prompts</span></div></div></td>
@@ -2098,6 +2098,113 @@ body{
               <td class="pt-scope-cell" data-locations="12" data-brand="">12</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
               <td class="pt-date">Jun 03</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+          </tbody>
+          <tbody id="pt-v2-brand-tbody" style="display:none">
+
+            <tr class="pt-group-row" data-group="aspen-br" onclick="togglePtGroup('aspen-br')">
+              <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Aspen Dental</span><span class="pt-group-subcount">4 prompts</span></div></div></td>
+              <td class="pt-group-meta pt-scope-cell" data-locations="69" data-brand="">69</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-group-meta">Apr 15</td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'aspen-br','Aspen Dental')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Aspen Dental')"><span class="material-symbols-rounded">add</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="aspen-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Where is the nearest Aspen Dental clinic and what services do they offer?</span></td>
+              <td class="pt-scope-cell" data-locations="89" data-brand="">89</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-date">Apr 15</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="aspen-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are patient reviews saying about Aspen Dental quality of care?</span></td>
+              <td class="pt-scope-cell" data-locations="64" data-brand="">64</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
+              <td class="pt-date">Mar 28</td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="aspen-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Does Aspen Dental accept Delta Dental or Cigna insurance plans?</span></td>
+              <td class="pt-scope-cell" data-locations="45" data-brand="">45</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></span></td>
+              <td class="pt-date">Feb 14</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="aspen-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Aspen Dental flexible payment plans for uninsured patients</span></td>
+              <td class="pt-scope-cell" data-locations="78" data-brand="">78</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-date">Apr 15</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-group-row" data-group="clearchoice-br" onclick="togglePtGroup('clearchoice-br')">
+              <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">ClearChoice Dental</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
+              <td class="pt-group-meta pt-scope-cell" data-locations="43" data-brand="">43</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-group-meta">Mar 22</td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'clearchoice-br','ClearChoice Dental')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'ClearChoice Dental')"><span class="material-symbols-rounded">add</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="clearchoice-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do ClearChoice dental implants cost compared to traditional options?</span></td>
+              <td class="pt-scope-cell" data-locations="56" data-brand="">56</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-date">Mar 22</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="clearchoice-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>ClearChoice dental implant centres near me with flexible financing</span></td>
+              <td class="pt-scope-cell" data-locations="32" data-brand="">32</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
+              <td class="pt-date">Feb 05</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="clearchoice-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Are ClearChoice same-day implants worth the investment over time?</span></td>
+              <td class="pt-scope-cell" data-locations="41" data-brand="">41</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
+              <td class="pt-date">Mar 22</td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-group-row" data-group="heartland-br" onclick="togglePtGroup('heartland-br')">
+              <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Heartland Dental</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
+              <td class="pt-group-meta pt-scope-cell" data-locations="49" data-brand="">49</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-group-meta">Feb 10</td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'heartland-br','Heartland Dental')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Heartland Dental')"><span class="material-symbols-rounded">add</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="heartland-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find a Heartland Dental affiliated practice near me</span></td>
+              <td class="pt-scope-cell" data-locations="67" data-brand="">67</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></span></td>
+              <td class="pt-date">Feb 10</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="heartland-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What makes Heartland Dental different from independent dental practices?</span></td>
+              <td class="pt-scope-cell" data-locations="29" data-brand="">29</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
+              <td class="pt-date">Jan 20</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+
+            <tr class="pt-data-row" data-group="heartland-br">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Heartland Dental specialist services and orthodontic options</span></td>
+              <td class="pt-scope-cell" data-locations="53" data-brand="">53</td>
+              <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
+              <td class="pt-date">Feb 10</td>
               <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -3685,12 +3792,18 @@ function switchPromptsScope(scope) {
   document.querySelectorAll('.pt-scope-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('pt-scope-' + scope).classList.add('active');
 
-  // Swap column header text
-  const th = document.getElementById('pt-th-scope');
-  if (th) th.querySelector('.pt-th-inner').firstChild.textContent = scope === 'brand' ? 'Brand' : 'Location';
+  // V2: swap entire tbody for brand vs locations dataset
+  const locsTbody  = document.getElementById('pt-v2-locs-tbody');
+  const brandTbody = document.getElementById('pt-v2-brand-tbody');
+  if (locsTbody && brandTbody) {
+    locsTbody.style.display  = scope === 'brand' ? 'none' : '';
+    brandTbody.style.display = scope === 'brand' ? '' : 'none';
+  }
 
-  // Swap cell values
-  document.querySelectorAll('.pt-scope-cell').forEach(cell => {
+  // V1: swap column header text + cell values
+  const th = document.getElementById('pt-th-scope');
+  if (th) th.querySelector('.pt-th-inner').firstChild.textContent = scope === 'brand' ? 'Brand' : 'Locations';
+  document.querySelectorAll('#view-prompts-v1 .pt-scope-cell').forEach(cell => {
     cell.textContent = cell.dataset[scope === 'brand' ? 'brand' : 'locations'];
   });
 }
