@@ -958,20 +958,30 @@ body{
 @keyframes spin{to{transform:rotate(360deg)}}
 .at-prompt-item{
   display:flex;align-items:center;gap:10px;
-  border:1px solid #e5e9f0;border-radius:6px;
-  padding:10px 12px;margin-bottom:8px;background:#fff;
+  padding:10px 0;border-bottom:1px solid #f3f4f6;
 }
-.at-prompt-item:last-child{margin-bottom:0}
-.at-prompt-num{
-  width:20px;height:20px;border-radius:50%;background:#e8f0fe;
-  color:#1976d2;font-size:11px;font-weight:600;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.at-prompt-item:last-child{border-bottom:none}
+.at-prompt-ai-icon{font-size:16px;color:#7c3aed;flex-shrink:0}
 .at-prompt-input{
   flex:1;border:none;outline:none;font-size:14px;
   color:rgb(33,33,33);font-family:'Roboto',sans-serif;
-  background:transparent;
+  background:transparent;min-width:0;
 }
+.at-prompt-remove{
+  width:28px;height:28px;border:none;background:transparent;cursor:pointer;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  color:rgb(143,143,143);flex-shrink:0;
+}
+.at-prompt-remove:hover{background:rgb(242,244,247);color:#e53935}
+.at-prompt-remove .material-symbols-rounded{font-size:18px}
+.at-add-prompt-btn{
+  display:flex;align-items:center;gap:6px;margin-top:10px;
+  padding:0;font-size:14px;color:#1976d2;
+  background:transparent;border:none;cursor:pointer;
+  font-family:'Roboto',sans-serif;
+}
+.at-add-prompt-btn:hover{text-decoration:underline}
+.at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 
 /* ── Toast ── */
 .toast{
@@ -2727,13 +2737,16 @@ body{
 
     <div id="at-prompts-section" style="display:none">
       <div class="at-gen-hdr">
-        <span class="at-gen-label">Generated prompts</span>
+        <span class="at-gen-label">Prompts</span>
         <span class="at-gen-badge"><span class="material-symbols-rounded">auto_awesome</span>AI generated</span>
       </div>
       <div id="at-loading" class="at-loading" style="display:none">
         <span class="material-symbols-rounded">progress_activity</span>Generating prompts…
       </div>
       <div id="at-prompts-list"></div>
+      <button class="at-add-prompt-btn" id="at-add-prompt-btn" style="display:none" onclick="addAtPromptRow()">
+        <span class="material-symbols-rounded">add</span>Add prompt
+      </button>
     </div>
 
   </div>
@@ -3707,6 +3720,7 @@ function openAddThemePanel() {
   document.getElementById('at-prompts-section').style.display = 'none';
   document.getElementById('at-prompts-list').innerHTML = '';
   document.getElementById('at-loading').style.display = 'none';
+  document.getElementById('at-add-prompt-btn').style.display = 'none';
   document.getElementById('at-btn-add').classList.remove('enabled');
   document.getElementById('at-overlay').classList.add('open');
   document.getElementById('at-panel').classList.add('open');
@@ -3741,14 +3755,41 @@ function generateThemePrompts(theme) {
     `Expert ${theme} services and providers`
   ];
   document.getElementById('at-loading').style.display = 'none';
+  renderAtPromptItems(prompts);
+  document.getElementById('at-add-prompt-btn').style.display = 'flex';
+  document.getElementById('at-btn-add').classList.add('enabled');
+}
+
+function renderAtPromptItems(prompts) {
   const list = document.getElementById('at-prompts-list');
-  list.innerHTML = prompts.map((p, i) =>
+  list.innerHTML = prompts.map(p =>
     `<div class="at-prompt-item">
-      <div class="at-prompt-num">${i + 1}</div>
+      <span class="material-symbols-rounded at-prompt-ai-icon">auto_awesome</span>
       <input class="at-prompt-input" type="text" value="${p}" oninput="checkAtAdd()"/>
+      <button class="at-prompt-remove" onclick="removeAtPrompt(this)" title="Remove prompt">
+        <span class="material-symbols-rounded">delete</span>
+      </button>
     </div>`
   ).join('');
-  document.getElementById('at-btn-add').classList.add('enabled');
+}
+
+function removeAtPrompt(btn) {
+  btn.closest('.at-prompt-item').remove();
+  checkAtAdd();
+}
+
+function addAtPromptRow() {
+  const list = document.getElementById('at-prompts-list');
+  const div = document.createElement('div');
+  div.className = 'at-prompt-item';
+  div.innerHTML =
+    `<span class="material-symbols-rounded at-prompt-ai-icon">auto_awesome</span>` +
+    `<input class="at-prompt-input" type="text" placeholder="Enter prompt" oninput="checkAtAdd()"/>` +
+    `<button class="at-prompt-remove" onclick="removeAtPrompt(this)" title="Remove prompt">` +
+    `<span class="material-symbols-rounded">delete</span></button>`;
+  list.appendChild(div);
+  div.querySelector('.at-prompt-input').focus();
+  checkAtAdd();
 }
 
 function checkAtAdd() {
