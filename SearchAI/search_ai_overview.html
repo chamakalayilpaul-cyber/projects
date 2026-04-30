@@ -3481,6 +3481,15 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// On load: navigate to view specified in URL hash (e.g. #prompts)
+(function() {
+  const hash = location.hash.replace('#', '');
+  const valid = ['overview','recommendations','content','prompts'];
+  if (valid.includes(hash)) {
+    showView(hash);
+  }
+})();
+
 // Direct entry from Content Hub recommendations — skip all modals
 function openEditorFromRec(mode) {
   window._articleMode = mode;
