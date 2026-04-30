@@ -914,7 +914,7 @@ body{
 .pt-group-label{font-size:14px;font-weight:400;color:rgb(33,33,33)}
 .pt-group-badge{font-size:12px;font-weight:500;background:#e8f0fe;color:#1976d2;padding:1px 8px;border-radius:100px}
 .pt-group-meta{font-size:13px;color:rgb(143,143,143)}
-.pt-v2-prompt{padding-left:42px;color:rgb(33,33,33);font-size:14px}
+.pt-v2-prompt{padding-left:46px;color:rgb(33,33,33);font-size:14px;white-space:nowrap;overflow:visible}
 .pt-group-info{display:flex;flex-direction:column;gap:1px}
 .pt-group-subcount{font-size:12px;color:rgb(180,180,180);font-weight:400}
 .pt-data-row.pt-hidden{display:none}
@@ -1843,6 +1843,13 @@ body{
     <div class="view" id="view-prompts">
       <div class="pt-table-wrap">
         <table class="pt-table">
+          <colgroup>
+            <col style="width:48%">
+            <col style="width:11%">
+            <col style="width:12%">
+            <col style="width:13%">
+            <col style="width:16%">
+          </colgroup>
           <thead>
             <tr>
               <th><span class="pt-th-inner">Themes and prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
