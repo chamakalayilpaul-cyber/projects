@@ -918,7 +918,7 @@ body{
 .pt-v2-row-inner{display:flex;align-items:flex-start;gap:8px;line-height:1.5}
 .pt-v2-spacer{display:inline-block;width:18px;flex-shrink:0;padding-top:2px}
 .pt-group-info{display:flex;flex-direction:column;gap:1px}
-.pt-group-subcount{font-size:12px;color:rgb(180,180,180);font-weight:400}
+.pt-group-subcount{font-size:12px;color:rgb(143,143,143);font-weight:400}
 .pt-data-row.pt-hidden{display:none}
 /* Row hover actions */
 .pt-action-cell{overflow:visible;position:relative}
@@ -994,6 +994,23 @@ body{
 .at-add-prompt-btn:hover{text-decoration:underline}
 .at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 .at-prompts-ph{font-size:14px;color:rgb(143,143,143);padding:8px 0;margin:0}
+/* ── Table version switcher ── */
+.pt-version-switcher{
+  position:fixed;bottom:24px;right:24px;
+  display:none;align-items:center;gap:6px;
+  background:#fff;border:1px solid #e5e9f0;border-radius:8px;
+  padding:6px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  z-index:200;font-size:13px;
+}
+.pt-version-switcher.visible{display:flex}
+.pt-version-label{color:rgb(85,85,85);font-size:12px;font-family:'Roboto',sans-serif}
+.pt-version-btn{
+  height:28px;padding:0 12px;border-radius:4px;border:1px solid #e5e9f0;
+  background:#fff;cursor:pointer;font-size:13px;
+  font-family:'Roboto',sans-serif;color:rgb(85,85,85);
+}
+.pt-version-btn.active{background:rgb(33,33,33);color:#fff;border-color:rgb(33,33,33)}
+.pt-version-btn:not(.active):hover{background:rgb(242,244,247)}
 
 /* ── Toast ── */
 .toast{
@@ -3178,6 +3195,7 @@ function showView(view) {
   document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-prompts-btns').style.display = view === 'prompts' ? 'flex' : 'none';
+  document.getElementById('pt-version-switcher').classList.toggle('visible', view === 'prompts');
 
   // open Settings group when navigating to a settings sub-view
   if (view === 'prompts') {
@@ -3726,6 +3744,60 @@ document.addEventListener('click', e => {
 
 function openAddPromptModal() {}
 
+/* ── Table version switcher ── */
+let _ptVersion = 2;
+function switchPtVersion(v) {
+  if (_ptVersion === v) return;
+  _ptVersion = v;
+  document.querySelectorAll('.pt-version-btn').forEach(b =>
+    b.classList.toggle('active', +b.dataset.v === v));
+
+  const table  = document.querySelector('.pt-table');
+  const cg     = table.querySelector('colgroup');
+  const hdrRow = table.querySelector('thead tr');
+
+  if (v === 1) {
+    // colgroup — 6 equal-ish columns
+    cg.innerHTML =
+      '<col style="width:24%"><col style="width:24%">' +
+      '<col style="width:12%"><col style="width:13%"><col style="width:13%"><col style="width:14%">';
+    // header col 1 text
+    hdrRow.cells[0].querySelector('.pt-th-inner').firstChild.textContent = 'Themes';
+    // insert Prompts th
+    const th = document.createElement('th');
+    th.className = 'pt-th-v1';
+    th.innerHTML = '<span class="pt-th-inner">Prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span>';
+    hdrRow.cells[0].insertAdjacentElement('afterend', th);
+    // group rows: insert prompt-count td after first cell
+    document.querySelectorAll('.pt-group-row').forEach(row => {
+      const sub = row.cells[0].querySelector('.pt-group-subcount');
+      const n = sub ? sub.textContent.trim() : '–';
+      const td = document.createElement('td');
+      td.className = 'pt-group-meta pt-td-v1';
+      td.textContent = n;
+      row.cells[0].insertAdjacentElement('afterend', td);
+    });
+    // data rows: insert empty first td, remove v2 indent
+    document.querySelectorAll('.pt-data-row').forEach(row => {
+      const ptd = row.querySelector('.pt-v2-prompt');
+      if (!ptd) return;
+      const empty = document.createElement('td');
+      empty.className = 'pt-td-v1';
+      row.insertBefore(empty, ptd);
+      ptd.style.paddingLeft = '20px';
+    });
+
+  } else {
+    // restore v2
+    cg.innerHTML =
+      '<col style="width:48%"><col style="width:11%">' +
+      '<col style="width:12%"><col style="width:13%"><col style="width:16%">';
+    hdrRow.cells[0].querySelector('.pt-th-inner').firstChild.textContent = 'Themes and prompts';
+    document.querySelectorAll('.pt-th-v1, .pt-td-v1').forEach(el => el.remove());
+    document.querySelectorAll('.pt-v2-prompt').forEach(td => td.style.removeProperty('padding-left'));
+  }
+}
+
 /* ── Add theme panel ── */
 function openAddThemePanel() {
   document.getElementById('at-name').value = '';
@@ -3910,6 +3982,13 @@ function copyField(btn) {
   }).catch(() => {});
 }
 </script>
+
+<!-- ── TABLE VERSION SWITCHER ── -->
+<div class="pt-version-switcher" id="pt-version-switcher">
+  <span class="pt-version-label">Table</span>
+  <button class="pt-version-btn" data-v="1" onclick="switchPtVersion(1)">V1</button>
+  <button class="pt-version-btn active" data-v="2" onclick="switchPtVersion(2)">V2</button>
+</div>
 
 <!-- ── TOAST ── -->
 <div class="toast" id="main-toast">
