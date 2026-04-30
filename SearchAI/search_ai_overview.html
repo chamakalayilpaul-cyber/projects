@@ -4206,6 +4206,9 @@ function addThemeToTable() {
   const tbody = document.querySelector('#view-prompts-v2 .pt-table tbody');
   const firstRow = tbody.firstChild; // insert before all existing rows (most recent on top)
 
+  const ALL_AI = '<svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg>';
+  const DEF_LOC = 76;
+
   // Group header row
   const grpTr = document.createElement('tr');
   grpTr.className = 'pt-group-row';
@@ -4219,28 +4222,29 @@ function addThemeToTable() {
         <span class="pt-group-subcount">${prompts.length} prompts</span>
       </div>
     </div></td>
-    <td class="pt-group-meta pt-scope-cell" data-locations="0" data-brand="">0</td>
-    <td class="pt-group-meta">0</td>
+    <td class="pt-group-meta pt-scope-cell" data-locations="${DEF_LOC}" data-brand="">${DEF_LOC}</td>
+    <td class="pt-ai-cell"><span class="pt-ai-wrap">${ALL_AI}</span></td>
     <td class="pt-group-meta">${dateStr}</td>
-    <td><button class="pt-action-btn" onclick="openAddPromptPanel(event,'${theme}')">Add prompt</button></td>`;
+    <td class="pt-status-cell"><span class="pt-row-hover-actions">
+      <button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'${groupKey}','${theme}')"><span class="material-symbols-rounded">edit</span></button>
+      <button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'${theme}')"><span class="material-symbols-rounded">add</span></button>
+    </span></td>`;
   tbody.insertBefore(grpTr, firstRow);
 
   // Data rows — insert in order after the group header
   let insertAfter = grpTr;
   prompts.forEach(prompt => {
     const tr = document.createElement('tr');
-    tr.className = 'pt-data-row';
-    tr.dataset.group = groupKey;
+    tr.className = 'pt-data-row'; tr.dataset.group = groupKey;
     tr.innerHTML =
       `<td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>${prompt}</span></td>` +
-      `<td class="pt-scope-cell" data-locations="0" data-brand="">0</td>` +
-      `<td class="pt-ai-cell"><span class="pt-ai-wrap"></span></td>` +
+      `<td class="pt-scope-cell" data-locations="${DEF_LOC}" data-brand="">${DEF_LOC}</td>` +
+      `<td class="pt-ai-cell"><span class="pt-ai-wrap">${ALL_AI}</span></td>` +
       `<td class="pt-date">${dateStr}</td>` +
-      `<td class="pt-action-cell"><button class="pt-action-btn" onclick="showTrackingToast(this)">Start tracking</button>` +
+      `<td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span>` +
       `<span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>` +
       `<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>`;
-    insertAfter.insertAdjacentElement('afterend', tr);
-    insertAfter = tr;
+    insertAfter.insertAdjacentElement('afterend', tr); insertAfter = tr;
   });
 
   closeAddThemePanel();
