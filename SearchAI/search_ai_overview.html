@@ -1014,7 +1014,7 @@ body{
 .et-legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:rgb(85,85,85)}
 .et-legend-dot{width:8px;height:8px;border-radius:50%}
 .et-table{width:100%;border-collapse:collapse;font-size:14px}
-.et-table th{padding:9px 16px;text-align:left;font-size:12px;font-weight:500;color:rgb(143,143,143);border-bottom:1px solid #eaeaea;white-space:nowrap;background:#fafafa}
+.et-table th{padding:9px 16px;text-align:left;font-size:12px;font-weight:400;color:rgb(143,143,143);border-bottom:1px solid #eaeaea;white-space:nowrap;background:#fafafa}
 .et-th{display:inline-flex;align-items:center;gap:3px;cursor:pointer}.et-th:hover{color:rgb(33,33,33)}
 .et-table td{padding:14px 16px;border-bottom:1px solid #f3f4f6;color:rgb(33,33,33);vertical-align:middle}
 .et-table tbody tr:last-child td{border-bottom:none}
@@ -1482,6 +1482,13 @@ body{
       <svg id="sb-chev-reports" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div id="sb-group-reports" style="display:none">
+      <div class="sb-sub-item">Citations</div>
+      <div class="sb-sub-item">Visibility</div>
+      <div class="sb-sub-item">Ranking</div>
+      <div class="sb-sub-item">Accuracy</div>
+      <div class="sb-sub-item">Sentiment</div>
+      <div class="sb-sub-item">Prompts</div>
+      <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-explore-themes" onclick="showView('explore-themes')">Explore themes</div>
     </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('agents',this)">
@@ -2259,7 +2266,6 @@ body{
           <span class="et-word untracked s2">dental bridges</span>
           <span class="et-word untracked s1">tooth extraction</span>
           <span class="et-word untracked s2">dentures</span>
-          <span class="et-word untracked s1">teeth bonding</span>
           <span class="et-word tracked s3">emergency dentist</span>
           <span class="et-word untracked s2">dental x-rays</span>
         </div>
@@ -2269,12 +2275,12 @@ body{
         </div>
       </div>
 
-      <!-- Themes table card -->
-      <div class="et-card">
-        <div class="et-card-hdr">
+      <!-- Accordion themes table -->
+      <div class="et-card" style="padding:20px 0">
+        <div style="padding:0 24px 12px;display:flex;align-items:flex-start;justify-content:space-between">
           <div>
             <div class="et-card-title">What are the most searched themes for <span>all locations ▾</span></div>
-            <div class="et-card-sub">Start tracking the right themes for each location</div>
+            <div class="et-card-sub" style="margin-bottom:0">Start tracking the right themes for each location</div>
           </div>
           <div class="et-card-hdr-right">
             <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
@@ -2282,53 +2288,142 @@ body{
             <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
           </div>
         </div>
-        <table class="et-table">
-          <thead><tr>
-            <th><span class="et-th">Theme<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
-            <th><span class="et-th">Monthly searches<span class="material-symbols-rounded" style="font-size:14px">expand_less</span></span></th>
-            <th>Top 10 keywords</th>
-            <th><span class="et-th">Location tracking<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
-            <th><span class="et-th">Action<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
-          </tr></thead>
-          <tbody>
-            <tr><td>Invisalign</td><td>245.3K</td><td class="et-kw">invisalign, invisalign near me, invisalign cost <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td>—</td><td><button class="et-action-link">Start tracking</button></td></tr>
-            <tr><td>Teeth whitening</td><td>201.8K</td><td class="et-kw">teeth whitening, teeth whitening near me, best teeth whitening <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">490</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
-            <tr><td>Dental implants</td><td>189.4K</td><td class="et-kw">dental implants, dental implant cost, implant dentist <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">388</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
-            <tr><td>Clear aligners</td><td>134.2K</td><td class="et-kw">clear aligners, clear aligner therapy, best clear aligners <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">386</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
-            <tr><td>Orthodontics</td><td>98.7K</td><td class="et-kw">orthodontics, orthodontist near me, orthodontic treatment <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">388</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Search volume table card -->
-      <div class="et-card">
-        <div class="et-card-hdr">
-          <div>
-            <div class="et-card-title">What is the search volume for <span>Teeth whitening ▾</span></div>
-            <div class="et-card-sub">See how often this keyword appears in AI searches to understand its relevance and impact on your visibility</div>
-          </div>
-          <div class="et-card-hdr-right">
-            <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">tune</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
-          </div>
+        <div class="pt-table-wrap" style="border:none;border-radius:0;border-top:1px solid #eaeaea">
+          <table class="pt-table">
+            <colgroup>
+              <col style="width:52%"><col style="width:20%"><col style="width:28%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th><span class="pt-th-inner" style="font-weight:400">Themes and prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+                <th><span class="pt-th-inner" style="font-weight:400">Monthly searches<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+                <th style="font-weight:400">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr class="pt-group-row" data-group="et-invis" onclick="togglePtGroup('et-invis')">
+              <td><div class="pt-group-inner">
+                <span class="material-symbols-rounded pt-group-chev">expand_more</span>
+                <div class="pt-group-info">
+                  <span class="pt-group-label">Invisalign</span>
+                  <span class="pt-group-subcount">3 prompts</span>
+                </div>
+              </div></td>
+              <td class="pt-group-meta">245.3K</td>
+              <td></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-invis">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">89.4K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-invis">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend Invisalign specialists for complex bite corrections?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">76.2K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-invis">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does Invisalign cost with insurance coverage?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">79.7K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-group-row" data-group="et-twh" onclick="togglePtGroup('et-twh')">
+              <td><div class="pt-group-inner">
+                <span class="material-symbols-rounded pt-group-chev">expand_more</span>
+                <div class="pt-group-info">
+                  <span class="pt-group-label">Teeth whitening</span>
+                  <span class="pt-group-subcount">3 prompts</span>
+                </div>
+              </div></td>
+              <td class="pt-group-meta">201.8K</td>
+              <td></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-twh">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best teeth whitening dentist near me with same-day appointments</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">98.3K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-twh">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Professional teeth whitening vs at-home kits which is better</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">67.4K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-twh">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How long does professional teeth whitening last?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">36.1K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-group-row" data-group="et-dimpl" onclick="togglePtGroup('et-dimpl')">
+              <td><div class="pt-group-inner">
+                <span class="material-symbols-rounded pt-group-chev">expand_more</span>
+                <div class="pt-group-info">
+                  <span class="pt-group-label">Dental implants</span>
+                  <span class="pt-group-subcount">3 prompts</span>
+                </div>
+              </div></td>
+              <td class="pt-group-meta">189.4K</td>
+              <td></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-dimpl">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do dental implants cost and what affects pricing?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">87.2K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-dimpl">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best dental implant specialists near me</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">65.1K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-dimpl">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Are dental implants covered by insurance?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">37.1K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-group-row" data-group="et-calig" onclick="togglePtGroup('et-calig')">
+              <td><div class="pt-group-inner">
+                <span class="material-symbols-rounded pt-group-chev">expand_more</span>
+                <div class="pt-group-info">
+                  <span class="pt-group-label">Clear aligners</span>
+                  <span class="pt-group-subcount">2 prompts</span>
+                </div>
+              </div></td>
+              <td class="pt-group-meta">134.2K</td>
+              <td></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-calig">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Clear aligners vs braces which is better for adults?</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">78.9K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Edit tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-calig">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find clear aligner providers accepting new patients near me</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">55.3K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-group-row" data-group="et-orth" onclick="togglePtGroup('et-orth')">
+              <td><div class="pt-group-inner">
+                <span class="material-symbols-rounded pt-group-chev">expand_more</span>
+                <div class="pt-group-info">
+                  <span class="pt-group-label">Orthodontics</span>
+                  <span class="pt-group-subcount">2 prompts</span>
+                </div>
+              </div></td>
+              <td class="pt-group-meta">98.7K</td>
+              <td></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-orth">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best orthodontist near me for adults seeking discreet treatment</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">54.2K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            <tr class="pt-data-row" data-group="et-orth">
+              <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Orthodontic treatment options and costs for teenagers</span></td>
+              <td style="font-size:14px;color:rgb(33,33,33)">44.5K</td>
+              <td class="pt-action-cell"><button class="et-action-link">Start tracking</button><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="et-table">
-          <thead><tr>
-            <th><span class="et-th">Locations<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
-            <th><span class="et-th">Average monthly searches<span class="material-symbols-rounded" style="font-size:14px">expand_less</span></span></th>
-            <th><span class="et-th">Action<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
-          </tr></thead>
-          <tbody>
-            <tr><td>Austin, TX</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-            <tr><td>Dallas, TX</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-            <tr><td>Chicago, IL</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-            <tr><td>Denver, CO</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-            <tr><td>New York, NY</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-            <tr><td>Los Angeles, CA</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-            <tr><td>Seattle, WA</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
-          </tbody>
-        </table>
       </div>
 
     </div><!-- /view-explore-themes -->
