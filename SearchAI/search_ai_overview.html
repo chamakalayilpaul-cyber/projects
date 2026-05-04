@@ -3786,6 +3786,7 @@ function showView(view) {
   document.getElementById('hdr-explore-btns').style.display = view === 'explore-themes' ? 'flex' : 'none';
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
+  document.getElementById('main-content').style.background = ['prompts-v2','explore-themes'].includes(view) ? '#f5f5f5' : '';
 
   // open Settings/Reports group when navigating to their sub-views
   if (view === 'prompts-v1' || view === 'prompts-v2') {
