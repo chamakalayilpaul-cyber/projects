@@ -1182,7 +1182,8 @@ body{
 .ap-header-title{font-size:18px;font-weight:400;color:#212121}
 .ap-header-right{display:flex;align-items:center;gap:8px}
 .ap-body{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
-.ap-field{display:flex;flex-direction:column;gap:8px}
+.ap-field{display:flex;flex-direction:column;gap:4px}
+.ap-field-radio{gap:8px}
 .ap-label{font-size:12px;font-weight:400;color:#212121}
 .ap-req{color:#e53935}
 .ap-dropdown{
@@ -3273,7 +3274,7 @@ body{
       <input class="ap-input" type="text" id="ap-name" placeholder="Enter prompt" oninput="checkApAdd()"/>
     </div>
 
-    <div class="ap-field">
+    <div class="ap-field ap-field-radio">
       <label class="ap-label">Track prompt <span class="ap-req">*</span></label>
       <div class="ap-radio-group">
         <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="location" checked onchange="toggleApLocField(this)"/><span>By location</span></label>
