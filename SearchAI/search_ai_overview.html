@@ -1383,7 +1383,7 @@ body{
     </div>
     <div id="sb-group-settings" style="display:none">
       <div class="sb-sub-item" id="nav-prompts-v1" onclick="showView('prompts-v1')">Prompts V1</div>
-      <div class="sb-sub-item" id="nav-prompts-v2" onclick="showView('prompts-v2')">Prompts V2</div>
+      <div class="sb-sub-item" id="nav-prompts-v2" onclick="showView('prompts-v2')">Themes and prompts</div>
     </div>
   </div>
 </div>
@@ -3257,7 +3257,7 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Prompts V2'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
