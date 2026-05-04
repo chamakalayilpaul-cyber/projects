@@ -4361,6 +4361,20 @@ function closeMorePopover() {
   _popoverRow = null;
 }
 
+function deletePromptRow() {
+  if (!_popoverRow) return;
+  const groupKey = _popoverRow.dataset.group;
+  _popoverRow.remove();
+  // Update group header prompt count
+  const grpRow = document.querySelector('.pt-group-row[data-group="' + groupKey + '"]');
+  if (grpRow) {
+    const remaining = document.querySelectorAll('.pt-data-row[data-group="' + groupKey + '"]').length;
+    const sub = grpRow.querySelector('.pt-group-subcount');
+    if (sub) sub.textContent = remaining + ' prompt' + (remaining !== 1 ? 's' : '');
+  }
+  closeMorePopover();
+}
+
 // Delegate more_vert clicks on V2 data rows
 document.addEventListener('click', function(e) {
   if (e.target.closest('#pt-popover')) return;
@@ -4712,7 +4726,8 @@ function copyField(btn) {
 <!-- ── MORE POPOVER ── -->
 <div class="pt-popover" id="pt-popover">
   <button class="pt-popover-item" id="pt-popover-item" onclick="applyMoreAction()"></button>
-</div>
+  <div style="height:1px;background:#f3f4f6;margin:2px 0"></div>
+  <button class="pt-popover-item" style="color:#e53935" onclick="deletePromptRow()">Delete</button></div>
 
 <!-- ── TOAST ── -->
 <div class="toast" id="main-toast">
