@@ -1105,12 +1105,19 @@ body{
 }
 .ap-radio-lbl input[type="radio"]{width:18px;height:18px;accent-color:#1976d2;cursor:pointer;flex-shrink:0}
 .ap-btn-add{
-  height:36px;padding:0 20px;border-radius:4px;border:1px solid #d1d5db;
-  background:#f5f5f5;color:#bbb;font-size:14px;
+  height:36px;padding:0 20px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:14px;
   font-family:'Roboto',sans-serif;cursor:default;display:inline-flex;align-items:center;
+  opacity:0.4;
 }
-.ap-btn-add.enabled{background:#1976d2;color:#fff;border-color:#1976d2;cursor:pointer}
+.ap-btn-add.enabled{opacity:1;cursor:pointer}
 .ap-btn-add.enabled:hover{background:#1565c0}
+
+
+
+
+
+
 /* Multiselect */
 .ap-multiselect{position:relative}
 .ap-ms-trigger{
