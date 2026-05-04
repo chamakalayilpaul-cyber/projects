@@ -995,6 +995,33 @@ body{
 .at-add-prompt-btn:hover{text-decoration:underline}
 .at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 .at-prompts-ph{font-size:14px;color:rgb(143,143,143);padding:8px 0;margin:0}
+/* ── Themes banner ── */
+.tp-banner{display:flex;align-items:center;gap:10px;background:#e8f0fe;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:14px;color:rgb(33,33,33);line-height:1.5}
+.tp-banner .material-symbols-rounded{font-size:18px;color:#1976d2;flex-shrink:0}
+.tp-banner-link{color:#1976d2;background:none;border:none;cursor:pointer;font-size:14px;font-family:'Roboto',sans-serif;text-decoration:underline;padding:0}
+/* ══ EXPLORE THEMES VIEW ══ */
+.et-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px;margin-bottom:16px}
+.et-card-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
+.et-card-title{font-size:14px;font-weight:500;color:rgb(33,33,33)}
+.et-card-title span{color:#1976d2;cursor:pointer}
+.et-card-sub{font-size:13px;color:rgb(143,143,143);margin-bottom:16px}
+.et-card-hdr-right{display:flex;align-items:center;gap:6px}
+.et-wc-wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px;padding:16px 0}
+.et-word{cursor:pointer;font-weight:400}.et-word:hover{opacity:0.75}
+.et-word.tracked{color:#1976d2}.et-word.untracked{color:rgb(143,143,143)}
+.et-word.s1{font-size:12px}.et-word.s2{font-size:15px}.et-word.s3{font-size:20px}.et-word.s4{font-size:28px}.et-word.s5{font-size:40px}.et-word.s6{font-size:54px}
+.et-legend{display:flex;align-items:center;gap:16px;padding-top:12px;border-top:1px solid #f3f4f6;margin-top:8px}
+.et-legend-item{display:flex;align-items:center;gap:6px;font-size:13px;color:rgb(85,85,85)}
+.et-legend-dot{width:8px;height:8px;border-radius:50%}
+.et-table{width:100%;border-collapse:collapse;font-size:14px}
+.et-table th{padding:9px 16px;text-align:left;font-size:12px;font-weight:500;color:rgb(143,143,143);border-bottom:1px solid #eaeaea;white-space:nowrap;background:#fafafa}
+.et-th{display:inline-flex;align-items:center;gap:3px;cursor:pointer}.et-th:hover{color:rgb(33,33,33)}
+.et-table td{padding:14px 16px;border-bottom:1px solid #f3f4f6;color:rgb(33,33,33);vertical-align:middle}
+.et-table tbody tr:last-child td{border-bottom:none}
+.et-table tbody tr:hover td{background:rgb(242,244,247)}
+.et-kw{font-size:13px;color:rgb(85,85,85)}
+.et-action-link{color:#1976d2;cursor:pointer;background:none;border:none;font-size:14px;font-family:'Roboto',sans-serif;padding:0}
+.et-action-link:hover{text-decoration:underline}
 /* ══ IMPORT PROMPTS VIEW ══ */
 #view-import-prompts{display:none;flex:1;min-height:0}
 #view-import-prompts.active{display:flex}
@@ -1454,7 +1481,9 @@ body{
       <span>Reports</span>
       <svg id="sb-chev-reports" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
-    <div id="sb-group-reports" style="display:none"></div>
+    <div id="sb-group-reports" style="display:none">
+      <div class="sb-sub-item" id="nav-explore-themes" onclick="showView('explore-themes')">Explore themes</div>
+    </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('agents',this)">
       <span>Agents</span>
       <svg id="sb-chev-agents" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
@@ -2060,6 +2089,10 @@ body{
 
     <!-- ══ PROMPTS V2 VIEW ══ -->
     <div class="view" id="view-prompts-v2">
+      <div class="tp-banner">
+        <span class="material-symbols-rounded">lightbulb</span>
+        <span>Looking for trending themes and prompts for your locations?&nbsp;<button class="tp-banner-link" onclick="goToExploreThemes()">Explore trending themes</button></span>
+      </div>
       <div class="pt-table-wrap">
         <table class="pt-table">
           <colgroup>
@@ -2192,6 +2225,113 @@ body{
         </table>
       </div>
     </div><!-- /view-prompts-v2 -->
+
+    <!-- ══ EXPLORE THEMES VIEW ══ -->
+    <div class="view" id="view-explore-themes">
+
+      <!-- Word cloud card -->
+      <div class="et-card">
+        <div class="et-card-hdr">
+          <div>
+            <div class="et-card-title">What are the most searched themes</div>
+            <div class="et-card-sub">These are the top themes people use to search for businesses like yours</div>
+          </div>
+          <div class="et-card-hdr-right">
+            <button class="icon-btn"><span class="material-symbols-rounded">tune</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          </div>
+        </div>
+        <div class="et-wc-wrap">
+          <span class="et-word untracked s1">dental checkup</span>
+          <span class="et-word untracked s2">gum disease treatment</span>
+          <span class="et-word tracked s3">teeth cleaning</span>
+          <span class="et-word untracked s2">dental veneers</span>
+          <span class="et-word tracked s4">teeth whitening</span>
+          <span class="et-word untracked s2">dental crowns</span>
+          <span class="et-word tracked s6">Invisalign</span>
+          <span class="et-word untracked s3">cosmetic dentistry</span>
+          <span class="et-word tracked s5">dental implants</span>
+          <span class="et-word untracked s1">wisdom teeth removal</span>
+          <span class="et-word tracked s5">clear aligners</span>
+          <span class="et-word untracked s2">root canal</span>
+          <span class="et-word tracked s4">orthodontics</span>
+          <span class="et-word untracked s3">pediatric dentist</span>
+          <span class="et-word untracked s2">dental bridges</span>
+          <span class="et-word untracked s1">tooth extraction</span>
+          <span class="et-word untracked s2">dentures</span>
+          <span class="et-word untracked s1">teeth bonding</span>
+          <span class="et-word tracked s3">emergency dentist</span>
+          <span class="et-word untracked s2">dental x-rays</span>
+        </div>
+        <div class="et-legend">
+          <div class="et-legend-item"><div class="et-legend-dot" style="background:#1976d2"></div>Tracking</div>
+          <div class="et-legend-item"><div class="et-legend-dot" style="background:rgb(200,200,200)"></div>Not tracking</div>
+        </div>
+      </div>
+
+      <!-- Themes table card -->
+      <div class="et-card">
+        <div class="et-card-hdr">
+          <div>
+            <div class="et-card-title">What are the most searched themes for <span>all locations ▾</span></div>
+            <div class="et-card-sub">Start tracking the right themes for each location</div>
+          </div>
+          <div class="et-card-hdr-right">
+            <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">tune</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          </div>
+        </div>
+        <table class="et-table">
+          <thead><tr>
+            <th><span class="et-th">Theme<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+            <th><span class="et-th">Monthly searches<span class="material-symbols-rounded" style="font-size:14px">expand_less</span></span></th>
+            <th>Top 10 keywords</th>
+            <th><span class="et-th">Location tracking<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+            <th><span class="et-th">Action<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Invisalign</td><td>245.3K</td><td class="et-kw">invisalign, invisalign near me, invisalign cost <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td>—</td><td><button class="et-action-link">Start tracking</button></td></tr>
+            <tr><td>Teeth whitening</td><td>201.8K</td><td class="et-kw">teeth whitening, teeth whitening near me, best teeth whitening <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">490</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
+            <tr><td>Dental implants</td><td>189.4K</td><td class="et-kw">dental implants, dental implant cost, implant dentist <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">388</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
+            <tr><td>Clear aligners</td><td>134.2K</td><td class="et-kw">clear aligners, clear aligner therapy, best clear aligners <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">386</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
+            <tr><td>Orthodontics</td><td>98.7K</td><td class="et-kw">orthodontics, orthodontist near me, orthodontic treatment <span style="color:#1976d2;cursor:pointer">+7 more</span></td><td><span class="et-loc-num">388</span></td><td><button class="et-action-link">Edit tracking</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Search volume table card -->
+      <div class="et-card">
+        <div class="et-card-hdr">
+          <div>
+            <div class="et-card-title">What is the search volume for <span>Teeth whitening ▾</span></div>
+            <div class="et-card-sub">See how often this keyword appears in AI searches to understand its relevance and impact on your visibility</div>
+          </div>
+          <div class="et-card-hdr-right">
+            <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">tune</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          </div>
+        </div>
+        <table class="et-table">
+          <thead><tr>
+            <th><span class="et-th">Locations<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+            <th><span class="et-th">Average monthly searches<span class="material-symbols-rounded" style="font-size:14px">expand_less</span></span></th>
+            <th><span class="et-th">Action<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Austin, TX</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+            <tr><td>Dallas, TX</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+            <tr><td>Chicago, IL</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+            <tr><td>Denver, CO</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+            <tr><td>New York, NY</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+            <tr><td>Los Angeles, CA</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+            <tr><td>Seattle, WA</td><td>201.8K</td><td><button class="et-action-link" style="color:#e53935">Stop tracking</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /view-explore-themes -->
 
     <!-- ══ IMPORT PROMPTS VIEW ══ -->
     <div id="view-import-prompts">
@@ -3418,7 +3558,7 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts', 'import-prompts':'Import prompts'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
@@ -3429,10 +3569,16 @@ function showView(view) {
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
 
-  // open Settings group when navigating to a settings sub-view
+  // open Settings/Reports group when navigating to their sub-views
   if (view === 'prompts-v1' || view === 'prompts-v2') {
     const grp = document.getElementById('sb-group-settings');
     const chev = document.getElementById('sb-chev-settings');
+    grp.style.display = 'block';
+    if (chev) chev.style.transform = 'rotate(180deg)';
+  }
+  if (view === 'explore-themes') {
+    const grp = document.getElementById('sb-group-reports');
+    const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
@@ -4134,6 +4280,10 @@ document.addEventListener('click', function(e) {
 });
 
 function openAddPromptModal() {}
+
+function goToExploreThemes() {
+  showView('explore-themes');
+}
 
 function toggleHdrPopover(e) {
   e.stopPropagation();
