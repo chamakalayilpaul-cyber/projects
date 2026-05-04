@@ -884,7 +884,7 @@ body{
 .pt-table-wrap{
   background:#fff;border-radius:8px;border:1px solid #eaeaea;overflow:hidden;
 }
-.pt-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+.pt-table{width:100%;border-collapse:collapse;font-size:14px}
 .pt-table thead tr{background:#fff;border-bottom:1px solid #eaeaea;}
 .pt-table th{
   padding:10px 20px;text-align:left;font-size:12px;font-weight:400;
@@ -2110,7 +2110,7 @@ body{
       <div class="pt-table-wrap">
         <table class="pt-table" id="pt-v2-table">
           <colgroup>
-            <col style="width:44%"><col class="pt-loc-col-header" style="width:9%"><col style="width:9%"><col style="width:12%"><col style="width:13%"><col style="width:13%">
+            <col><col class="pt-loc-col-header"><col><col><col><col>
           </colgroup>
           <thead>
             <tr>
@@ -4234,13 +4234,7 @@ function switchPromptsScope(scope) {
   document.querySelectorAll('#pt-v2-table .pt-loc-col').forEach(el => {
     el.style.display = isBrand ? 'none' : '';
   });
-  // Redistribute Location col width (9%) to Themes so table fills 100%
-  const locColEl = document.querySelector('#pt-v2-table .pt-loc-col-header');
-  if (locColEl) {
-    locColEl.style.width = isBrand ? '0' : '';
-    const themesCol = locColEl.previousElementSibling;
-    if (themesCol) themesCol.style.width = isBrand ? '53%' : '';
-  }
+  // No width tweak needed — table-layout:auto sizes from content
 }
 
 function togglePtGroup(group) {
