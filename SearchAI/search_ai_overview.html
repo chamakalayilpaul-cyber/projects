@@ -3543,13 +3543,17 @@ function showView(view) {
   // article-mode / import-mode: hide sidebar
   const content = document.getElementById('main-content');
   const sidebar = document.querySelector('.sidebar');
-  if (view === 'article' || view === 'import-prompts') {
+  const sidebarHidden = view === 'article' || view === 'import-prompts';
+  if (sidebarHidden) {
     content.classList.add('article-mode');
     sidebar.classList.add('hidden');
   } else {
     content.classList.remove('article-mode');
     sidebar.classList.remove('hidden');
   }
+  // Hide top-nav product title when sidebar is visible (it already shows the product name)
+  const topNavTitle = document.querySelector('.top-nav-title');
+  if (topNavTitle) topNavTitle.style.display = sidebarHidden ? '' : 'none';
 
   // show/hide state chips — only on content view
   const chips = document.getElementById('state-chips');
@@ -3859,10 +3863,12 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// On load: navigate to view specified in URL hash (e.g. #prompts)
+// On load: navigate to view specified in URL hash; hide top-nav title by default
 (function() {
+  const t = document.querySelector('.top-nav-title');
+  if (t) t.style.display = 'none'; // sidebar visible on load
   const hash = location.hash.replace('#', '');
-  const valid = ['overview','recommendations','content','prompts-v1','prompts-v2'];
+  const valid = ['overview','recommendations','content','prompts-v1','prompts-v2','explore-themes'];
   if (valid.includes(hash)) {
     showView(hash);
   }
