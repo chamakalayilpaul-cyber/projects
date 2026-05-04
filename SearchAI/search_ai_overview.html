@@ -4211,13 +4211,9 @@ function switchPromptsScope(scope) {
   document.querySelectorAll('#pt-v2-table .pt-loc-col').forEach(el => {
     el.style.display = isBrand ? 'none' : '';
   });
-  // Redistribute Locations col width to Themes col so table fills 100%
-  const locColEl = document.querySelector('#pt-v2-table .pt-loc-col-header');
-  if (locColEl) {
-    locColEl.style.width = isBrand ? '0' : '10%';
-    const themesCol = locColEl.previousElementSibling;
-    if (themesCol) themesCol.style.width = isBrand ? '63%' : '53%';
-  }
+  // In brand mode switch to auto layout so hidden Location col leaves no gap
+  const tbl = document.getElementById('pt-v2-table');
+  if (tbl) tbl.style.tableLayout = isBrand ? 'auto' : '';
 }
 
 function togglePtGroup(group) {
