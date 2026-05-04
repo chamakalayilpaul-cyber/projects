@@ -1621,7 +1621,7 @@ body{
     <div class="page-hdr-right" id="hdr-explore-btns" style="display:none;gap:6px;padding-right:8px">
       <span style="font-size:13px;color:rgb(143,143,143);margin-right:4px">Updated on May 04, 2026</span>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
-      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn-stroke" id="hdr-explore-more-btn" onclick="toggleHdrPopover(event)"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
@@ -4546,7 +4546,8 @@ function goToExploreThemes() {
 function toggleHdrPopover(e) {
   e.stopPropagation();
   const pop  = document.getElementById('hdr-popover');
-  const rect = document.getElementById('hdr-more-btn').getBoundingClientRect();
+  const moreBtn = document.getElementById('hdr-more-btn') || document.getElementById('hdr-explore-more-btn');
+  const rect = moreBtn.getBoundingClientRect();
   if (pop.classList.contains('open')) { pop.classList.remove('open'); return; }
   pop.style.top   = (rect.bottom + 6) + 'px';
   pop.style.right = (window.innerWidth - rect.right) + 'px';
