@@ -995,6 +995,60 @@ body{
 .at-add-prompt-btn:hover{text-decoration:underline}
 .at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 .at-prompts-ph{font-size:14px;color:rgb(143,143,143);padding:8px 0;margin:0}
+/* ══ IMPORT PROMPTS VIEW ══ */
+#view-import-prompts{display:none;flex:1;min-height:0}
+#view-import-prompts.active{display:flex}
+.import-left{
+  width:220px;background:#fff;border-right:1px solid #eaeaea;
+  padding:20px 12px;flex-shrink:0;
+}
+.import-step{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;border-radius:6px;font-size:14px;
+  color:rgb(85,85,85);cursor:pointer;margin-bottom:4px;
+}
+.import-step.active{background:rgb(232,240,254);color:rgb(33,33,33)}
+.import-step-num{
+  width:22px;height:22px;border-radius:50%;background:#e5e9f0;
+  color:rgb(85,85,85);display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:600;flex-shrink:0;
+}
+.import-step.active .import-step-num{background:#1976d2;color:#fff}
+.import-main{flex:1;overflow-y:auto;padding:24px;background:rgb(242,242,242);display:flex;flex-direction:column;gap:20px}
+.import-section-title{font-size:16px;font-weight:400;color:rgb(33,33,33);margin-bottom:14px}
+.import-dropzone{
+  background:#fff;border:2px dashed #d1d5db;border-radius:8px;
+  padding:60px 24px;display:flex;flex-direction:column;
+  align-items:center;text-align:center;gap:14px;
+}
+.import-dropzone-icon .material-symbols-rounded{font-size:36px;color:rgb(85,85,85)}
+.import-dropzone-text{font-size:14px;color:rgb(85,85,85);line-height:1.6}
+.import-template-text{font-size:13px;color:rgb(143,143,143)}
+.import-template-link{color:#1976d2;cursor:pointer}
+.import-history-hdr{
+  display:flex;align-items:center;gap:6px;
+  font-size:15px;color:rgb(33,33,33);cursor:pointer;
+}
+.import-history-hdr .material-symbols-rounded{font-size:18px;color:rgb(85,85,85)}
+.import-history-wrap{background:#fff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden}
+.import-history-wrap table{width:100%;border-collapse:collapse}
+.import-history-wrap th{
+  padding:10px 20px;text-align:left;font-size:12px;color:rgb(143,143,143);
+  font-weight:400;border-bottom:1px solid #eaeaea;white-space:nowrap;
+  background:#fafafa;
+}
+.imp-th{display:inline-flex;align-items:center;gap:3px;cursor:pointer}
+.imp-th:hover{color:rgb(33,33,33)}
+.import-history-wrap td{
+  padding:14px 20px;font-size:14px;color:rgb(33,33,33);
+  border-bottom:1px solid #f3f4f6;vertical-align:top;
+}
+.import-history-wrap tbody tr:last-child td{border-bottom:none}
+.import-history-wrap tbody tr:hover td{background:rgb(242,244,247)}
+.imp-file-name{color:#1976d2;cursor:pointer;font-size:14px}
+.imp-file-sub{font-size:12px;color:rgb(143,143,143);margin-top:2px}
+.imp-error-link{color:#1976d2;font-size:12px;cursor:pointer;margin-top:3px;display:block}
+
 /* ── Header bulk-actions popover ── */
 .hdr-popover{
   position:fixed;z-index:600;
@@ -1517,6 +1571,10 @@ body{
       </button>
       <button class="icon-btn-stroke" id="hdr-more-btn" onclick="toggleHdrPopover(event)"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-import-btns" style="display:none;gap:8px;align-items:center">
+      <button class="btn-cancel" onclick="showView('prompts-v2')">Cancel</button>
+      <button class="btn-export" style="background:#f5f5f5;color:#bbb;border-color:#e5e9f0;cursor:default">Start import</button>
     </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
       <div class="art-score">
@@ -2134,6 +2192,80 @@ body{
         </table>
       </div>
     </div><!-- /view-prompts-v2 -->
+
+    <!-- ══ IMPORT PROMPTS VIEW ══ -->
+    <div id="view-import-prompts">
+      <div class="import-left">
+        <div class="import-step active" id="import-step-1">
+          <div class="import-step-num">1</div>Upload
+        </div>
+        <div class="import-step" id="import-step-2">
+          <div class="import-step-num">2</div>Import
+        </div>
+      </div>
+      <div class="import-main">
+
+        <div>
+          <div class="import-section-title">Upload</div>
+          <div class="import-dropzone">
+            <div class="import-dropzone-icon"><span class="material-symbols-rounded">upload</span></div>
+            <div class="import-dropzone-text">
+              Drag and drop a file to upload.<br>
+              All .csv, .xlsx and .xls file types are supported.
+            </div>
+            <button class="btn-filled" style="padding:0 20px">Upload spreadsheet</button>
+            <div class="import-template-text">
+              Download the <span class="import-template-link">template</span>, fill in all data fields, and upload it here
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="import-history-hdr">
+            Import history <span class="material-symbols-rounded">expand_less</span>
+          </div>
+          <div class="import-history-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><span class="imp-th">File<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+                  <th><span class="imp-th">Uploaded on<span class="material-symbols-rounded" style="font-size:14px">expand_less</span></span></th>
+                  <th><span class="imp-th">Uploaded by<span class="material-symbols-rounded" style="font-size:14px">expand_more</span></span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="imp-file-name">Apr_month_posts.xls</div>
+                    <div class="imp-file-sub">12 row imported</div>
+                  </td>
+                  <td>Oct 16, 2023</td>
+                  <td>Hussain</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="imp-file-name">September_month_posts.xls</div>
+                    <div class="imp-file-sub">10 row imported • 2 Failed</div>
+                    <span class="imp-error-link">Download error file</span>
+                  </td>
+                  <td>Oct 17, 2023</td>
+                  <td>Vignesh S</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="imp-file-name">Mar_month_posts.xls</div>
+                    <div class="imp-file-sub">8 row imported</div>
+                  </td>
+                  <td>Oct 15, 2023</td>
+                  <td>Hussain</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /view-import-prompts -->
 
     <!-- ══ ARTICLE VIEW ══ -->
     <div class="view" id="view-article">
@@ -3268,10 +3400,10 @@ function showView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
 
-  // article-mode on content wrapper + hide sidebar
+  // article-mode / import-mode: hide sidebar
   const content = document.getElementById('main-content');
   const sidebar = document.querySelector('.sidebar');
-  if (view === 'article') {
+  if (view === 'article' || view === 'import-prompts') {
     content.classList.add('article-mode');
     sidebar.classList.add('hidden');
   } else {
@@ -3286,13 +3418,14 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts', 'import-prompts':'Import prompts'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
   document.getElementById('hdr-rec-btns').style.display = view === 'recommendations' ? 'flex' : 'none';
   document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
+  document.getElementById('hdr-import-btns').style.display = view === 'import-prompts' ? 'flex' : 'none';
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
 
@@ -4326,7 +4459,7 @@ function copyField(btn) {
   <div class="hdr-popover-label">Bulk actions</div>
   <button class="hdr-popover-item">Email</button>
   <button class="hdr-popover-item">Update via xls</button>
-  <button class="hdr-popover-item">Import prompts</button>
+  <button class="hdr-popover-item" onclick="showView('import-prompts');document.getElementById('hdr-popover').classList.remove('open')">Import prompts</button>
   <div class="hdr-popover-sep"></div>
   <button class="hdr-popover-item" style="color:#e53935">Delete</button>
 </div>
