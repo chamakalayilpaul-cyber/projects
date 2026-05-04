@@ -2119,7 +2119,7 @@ body{
             <tr class="pt-group-row" data-group="invisalign" onclick="togglePtGroup('invisalign')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisialign</span><span class="pt-group-subcount">6 prompts</span></div></div></td>
               <td></td><td></td><td></td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'invisalign','Invisialign')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button></span></td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'invisalign','Invisialign')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
@@ -2167,7 +2167,7 @@ body{
             <tr class="pt-group-row" data-group="orthodontics" onclick="togglePtGroup('orthodontics')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Orthodontics</span><span class="pt-group-subcount">5 prompts</span></div></div></td>
               <td></td><td></td><td></td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'orthodontics','Orthodontics')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button></span></td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'orthodontics','Orthodontics')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults?</span></td>
@@ -2208,7 +2208,7 @@ body{
             <tr class="pt-group-row" data-group="trusted" onclick="togglePtGroup('trusted')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Trusted invisalign care</span><span class="pt-group-subcount">1 prompt</span></div></div></td>
               <td></td><td></td><td></td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'trusted','Trusted invisalign care')"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button></span></td>
+              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'trusted','Trusted invisalign care')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="trusted">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental clinics in my area are most trusted by patients for delivering consistent and reliable Invisalign care throughout the full treatment?</span></td>
@@ -2225,6 +2225,9 @@ body{
 
     <!-- ══ EXPLORE THEMES VIEW ══ -->
     <div class="view" id="view-explore-themes">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+        <span style="font-size:13px;color:rgb(143,143,143)">Updated on May 04, 2026</span>
+      </div>
 
       <!-- Word cloud card -->
       <div class="et-card">
@@ -4637,8 +4640,8 @@ function addThemeToTable() {
     </div></td>
 
     <td class="pt-status-cell"><span class="pt-row-hover-actions">
-      <button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'${groupKey}','${theme}')"><span class="material-symbols-rounded">edit</span></button>
       <button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'${theme}')"><span class="material-symbols-rounded">add</span></button>
+      <button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'${groupKey}','${theme}')"><span class="material-symbols-rounded">delete</span></button>
     </span></td>`;
   tbody.insertBefore(grpTr, firstRow);
 
