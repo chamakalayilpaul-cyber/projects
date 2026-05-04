@@ -920,6 +920,7 @@ body{
 .pt-group-info{display:flex;flex-direction:column;gap:1px}
 .pt-group-subcount{font-size:12px;color:rgb(143,143,143);font-weight:400}
 .pt-data-row.pt-hidden{display:none}
+.pt-data-row:hover .pt-date-text{visibility:hidden}
 /* Row hover actions */
 .pt-action-cell{overflow:visible;position:relative}
 .pt-row-hover-actions{display:none;align-items:center;gap:6px;position:absolute;right:16px;top:50%;transform:translateY(-50%)}
@@ -2123,106 +2124,106 @@ body{
             <tr class="pt-group-row" data-group="invisalign" onclick="togglePtGroup('invisalign')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisialign</span><span class="pt-group-subcount">6 prompts</span></div></div></td>
               <td></td><td></td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'invisalign','Invisialign')"><span class="material-symbols-rounded">delete</span></button></span></td>
-              <td></td>
+              <td class="pt-status-cell"></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'invisalign','Invisialign')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
               <td class="pt-scope-cell" data-locations="34" data-brand="4">34</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Dec 02, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Dec 02, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend clinics that specialise in clear aligner therapy for complex bite corrections in adults?</span></td>
               <td class="pt-scope-cell" data-locations="76" data-brand="4">76</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Jan 15, 2026</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Jan 15, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental practices offer the most advanced Invisalign solutions with 3D scanning and virtual outcome previews?</span></td>
               <td class="pt-scope-cell" data-locations="67" data-brand="4">67</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Aug 14, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Aug 14, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best Invisalign dentist with payment plans</span></td>
               <td class="pt-scope-cell" data-locations="8" data-brand="4">8</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Apr 01, 2026</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 01, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the leading Invisalign provider practices in my area with the highest verified patient satisfaction scores?</span></td>
               <td class="pt-scope-cell" data-locations="45" data-brand="4">45</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Nov 29, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Nov 29, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisible aligner clinics offering free consultations</span></td>
               <td class="pt-scope-cell" data-locations="78" data-brand="4">78</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Oct 18, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Oct 18, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
             <tr class="pt-group-row" data-group="orthodontics" onclick="togglePtGroup('orthodontics')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Orthodontics</span><span class="pt-group-subcount">5 prompts</span></div></div></td>
               <td></td><td></td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'orthodontics','Orthodontics')"><span class="material-symbols-rounded">delete</span></button></span></td>
-              <td></td>
+              <td class="pt-status-cell"></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'orthodontics','Orthodontics')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults?</span></td>
               <td class="pt-scope-cell" data-locations="22" data-brand="3">22</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Jul 22, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Jul 22, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the top-rated dental practices known for precision Invisalign dentistry and same-day appointment availability?</span></td>
               <td class="pt-scope-cell" data-locations="56" data-brand="3">56</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Sep 10, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Sep 10, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisalign specialists who accept insurance</span></td>
               <td class="pt-scope-cell" data-locations="22" data-brand="3">22</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Feb 26, 2026</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Feb 26, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental offices provide personalised Invisalign plans with remote progress monitoring and fewer required office visits?</span></td>
               <td class="pt-scope-cell" data-locations="34" data-brand="3">34</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">May 08, 2026</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">May 08, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Most recommended orthodontic centres for faster Invisalign results</span></td>
               <td class="pt-scope-cell" data-locations="38" data-brand="3">38</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Mar 11, 2026</td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Mar 11, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
             <tr class="pt-group-row" data-group="trusted" onclick="togglePtGroup('trusted')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Trusted invisalign care</span><span class="pt-group-subcount">1 prompt</span></div></div></td>
               <td></td><td></td>
-              <td class="pt-status-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'trusted','Trusted invisalign care')"><span class="material-symbols-rounded">delete</span></button></span></td>
-              <td></td>
+              <td class="pt-status-cell"></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'trusted','Trusted invisalign care')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="trusted">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental clinics in my area are most trusted by patients for delivering consistent and reliable Invisalign care throughout the full treatment?</span></td>
               <td class="pt-scope-cell" data-locations="12" data-brand="2">12</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
-              <td class="pt-date pt-action-cell">Jun 03, 2025</td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-date pt-action-cell"><span class="pt-date-text">Jun 03, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
           </tbody>
