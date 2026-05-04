@@ -995,6 +995,28 @@ body{
 .at-add-prompt-btn:hover{text-decoration:underline}
 .at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 .at-prompts-ph{font-size:14px;color:rgb(143,143,143);padding:8px 0;margin:0}
+/* ── Header bulk-actions popover ── */
+.hdr-popover{
+  position:fixed;z-index:600;
+  background:#fff;border:1px solid #e5e9f0;border-radius:10px;
+  box-shadow:0 8px 28px rgba(0,0,0,0.13);
+  min-width:220px;padding:8px;display:none;
+}
+.hdr-popover.open{display:block}
+.hdr-popover-label{
+  padding:6px 8px 8px;font-size:13px;font-weight:500;
+  color:rgb(143,143,143);letter-spacing:0.1px;
+}
+.hdr-popover-item{
+  display:flex;align-items:center;width:100%;
+  padding:10px 12px;border:none;background:transparent;
+  font-size:15px;color:rgb(33,33,33);cursor:pointer;
+  font-family:'Roboto',sans-serif;text-align:left;
+  border-radius:6px;
+}
+.hdr-popover-item:hover{background:rgb(242,244,247)}
+.hdr-popover-sep{height:1px;background:#f0f0f0;margin:4px 8px}
+
 /* ── More popover ── */
 .pt-popover{
   position:fixed;z-index:600;
@@ -1493,7 +1515,7 @@ body{
       <button class="btn-filled" onclick="openAddThemePanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
         <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
       </button>
-      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn-stroke" id="hdr-more-btn" onclick="toggleHdrPopover(event)"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
@@ -3980,6 +4002,20 @@ document.addEventListener('click', function(e) {
 
 function openAddPromptModal() {}
 
+function toggleHdrPopover(e) {
+  e.stopPropagation();
+  const pop  = document.getElementById('hdr-popover');
+  const rect = document.getElementById('hdr-more-btn').getBoundingClientRect();
+  if (pop.classList.contains('open')) { pop.classList.remove('open'); return; }
+  pop.style.top   = (rect.bottom + 6) + 'px';
+  pop.style.right = (window.innerWidth - rect.right) + 'px';
+  pop.classList.add('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#hdr-popover') && !e.target.closest('#hdr-more-btn'))
+    document.getElementById('hdr-popover')?.classList.remove('open');
+});
+
 /* ── Table version switcher ── */
 let _ptVersion = 2;
 function switchPtVersion(v) {
@@ -4284,6 +4320,16 @@ function copyField(btn) {
   }).catch(() => {});
 }
 </script>
+
+<!-- ── HEADER BULK ACTIONS POPOVER ── -->
+<div class="hdr-popover" id="hdr-popover">
+  <div class="hdr-popover-label">Bulk actions</div>
+  <button class="hdr-popover-item">Email</button>
+  <button class="hdr-popover-item">Update via xls</button>
+  <button class="hdr-popover-item">Import prompts</button>
+  <div class="hdr-popover-sep"></div>
+  <button class="hdr-popover-item" style="color:#e53935">Delete</button>
+</div>
 
 <!-- ── MORE POPOVER ── -->
 <div class="pt-popover" id="pt-popover">
