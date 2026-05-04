@@ -1201,6 +1201,7 @@ body{
   outline:none;width:100%;
 }
 .ap-input:focus{border-color:#1976d2}
+.ap-input::placeholder{color:#bbb}
 .ap-radio-group{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
 .ap-radio-lbl{
   display:flex;align-items:center;gap:8px;cursor:pointer;
@@ -3264,20 +3265,20 @@ body{
     </div>
 
     <div class="ap-field">
-      <label class="ap-label">Name <span class="ap-req">*</span></label>
-      <input class="ap-input" type="text" id="ap-name" placeholder="Enter prompt name" oninput="checkApAdd()"/>
+      <label class="ap-label">Prompt <span class="ap-req">*</span></label>
+      <input class="ap-input" type="text" id="ap-name" placeholder="Enter prompt" oninput="checkApAdd()"/>
     </div>
 
     <div class="ap-field">
       <label class="ap-label">Track prompt <span class="ap-req">*</span></label>
       <div class="ap-radio-group">
-        <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="location" checked/><span>By location</span></label>
-        <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="brand"/><span>By brand</span></label>
-        <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="both"/><span>By location &amp; brand</span></label>
+        <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="location" checked onchange="toggleApLocField(this)"/><span>By location</span></label>
+        <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="brand" onchange="toggleApLocField(this)"/><span>By brand</span></label>
+        <label class="ap-radio-lbl"><input type="radio" name="ap-track" value="both" onchange="toggleApLocField(this)"/><span>By location &amp; brand</span></label>
       </div>
     </div>
 
-    <div class="ap-field">
+    <div class="ap-field" id="ap-loc-field">
       <label class="ap-label">Locations <span class="ap-req">*</span></label>
       <div class="ap-multiselect" id="ap-loc-ms">
         <div class="ap-ms-trigger" onclick="toggleApMs('ap-loc-ms')">
@@ -4113,7 +4114,9 @@ function openAddPromptPanel(event, theme) {
   document.getElementById('ap-name').value = '';
   document.getElementById('ap-tag').value = '';
   document.querySelector('input[name="ap-track"][value="location"]').checked = true;
-  // Clear multiselects
+  // Reset location field visibility
+  const locFld = document.getElementById("ap-loc-field");
+  if (locFld) locFld.style.display = "";  // Clear multiselects
   document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.getElementById('ap-loc-label').textContent = 'Select locations';
@@ -4373,6 +4376,11 @@ document.addEventListener('click', function(e) {
 });
 
 function openAddPromptModal() {}
+
+function toggleApLocField(radio) {
+  const field = document.getElementById("ap-loc-field");
+  if (field) field.style.display = radio.value === "brand" ? "none" : "";
+}
 
 function goToExploreThemes() {
   showView('explore-themes');
