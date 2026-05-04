@@ -920,8 +920,7 @@ body{
 .pt-group-info{display:flex;flex-direction:column;gap:1px}
 .pt-group-subcount{font-size:12px;color:rgb(143,143,143);font-weight:400}
 .pt-data-row.pt-hidden{display:none}
-#pt-v2-table.brand-mode .pt-loc-col{display:none}
-#pt-v2-table.brand-mode .pt-loc-col-header{visibility:collapse}
+
 
 /* Row hover actions */
 .pt-action-cell{overflow:visible;position:relative}
@@ -4201,19 +4200,17 @@ function switchPromptsScope(scope) {
   document.querySelectorAll('.pt-scope-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('pt-scope-' + scope).classList.add('active');
 
-  const table     = document.getElementById('pt-v2-table');
-  const locsTbody = document.getElementById('pt-v2-locs-tbody');
-  const brandTbody= document.getElementById('pt-v2-brand-tbody');
+  const locsTbody  = document.getElementById('pt-v2-locs-tbody');
+  const brandTbody = document.getElementById('pt-v2-brand-tbody');
+  const isBrand    = scope === 'brand';
 
-  if (scope === 'brand') {
-    if (locsTbody)  locsTbody.style.display  = 'none';
-    if (brandTbody) brandTbody.style.display = '';
-    if (table) table.classList.add('brand-mode');
-  } else {
-    if (locsTbody)  locsTbody.style.display  = '';
-    if (brandTbody) brandTbody.style.display = 'none';
-    if (table) table.classList.remove('brand-mode');
-  }
+  if (locsTbody)  locsTbody.style.display  = isBrand ? 'none' : '';
+  if (brandTbody) brandTbody.style.display = isBrand ? '' : 'none';
+
+  // Show/hide Locations column only (not AI sites or any other col)
+  document.querySelectorAll('#pt-v2-table .pt-loc-col').forEach(el => {
+    el.style.display = isBrand ? 'none' : '';
+  });
 }
 
 function togglePtGroup(group) {
