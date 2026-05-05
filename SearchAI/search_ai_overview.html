@@ -925,7 +925,15 @@ body{
 .pt-ai-cell{overflow:visible;min-width:110px;white-space:nowrap;position:relative}
 .pt-modified-icon{
   display:inline-block;vertical-align:middle;margin-left:4px;flex-shrink:0;
-  width:12px;height:12px;min-width:12px;min-height:12px;
+  width:16px;height:18px;min-width:12px;min-height:12px;cursor:default;
+}
+#pt-mod-tooltip{
+  position:fixed;z-index:900;pointer-events:none;
+  background:rgb(33,33,33);color:#fff;font-size:12px;line-height:1.5;
+  font-family:'Roboto',sans-serif;border-radius:6px;
+  padding:8px 12px;max-width:260px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.18);
+  display:none;
 }
 .pt-monthly-cell{font-size:14px;color:rgb(33,33,33);min-width:90px;white-space:nowrap}
 .pt-ai-wrap{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
@@ -945,6 +953,7 @@ body{
 .pt-table td.pt-v2-prompt{padding-left:20px;color:rgb(33,33,33);font-size:14px;white-space:normal;overflow:visible;vertical-align:middle}
 .pt-v2-row-inner{display:flex;align-items:flex-start;gap:8px;line-height:1.5}
 .pt-v2-spacer{display:inline-block;width:18px;flex-shrink:0;padding-top:2px}
+.pt-deleted-icon{flex-shrink:0;margin-top:2px}
 .pt-group-info{display:flex;flex-direction:column;gap:1px}
 .pt-group-subcount{font-size:12px;color:rgb(143,143,143);font-weight:400}
 .pt-data-row.pt-hidden{display:none}
@@ -1192,7 +1201,6 @@ body{
 }
 .toast-close:hover{background:rgb(242,244,247)}
 .pt-action-btn:hover{text-decoration:underline}
-.pt-modified-icon{width:16px;height:16px;flex-shrink:0;align-self:center}
 
 /* ══ ADD PROMPT SIDE PANEL ══ */
 .ap-overlay{
@@ -4479,7 +4487,7 @@ function refreshApMs(msId, labelId, placeholder) {
     label.textContent = placeholder;
     label.classList.remove('has-val');
   } else {
-    label.textContent = checked.map(c => c.value).join(', ');
+    label.textContent = checked.length + ' selected';
     label.classList.add('has-val');
   }
 }
@@ -4491,10 +4499,32 @@ function refreshApAiMs() {
     label.textContent = 'Select AI sites';
     label.classList.remove('has-val');
   } else {
-    label.textContent = checked.map(c => ({chatgpt:'ChatGPT',gemini:'Gemini',perplexity:'Perplexity',copilot:'Copilot',claude:'Claude'})[c.value]).join(', ');
+    label.textContent = checked.length + ' selected';
     label.classList.add('has-val');
   }
 }
+
+/* ── Modified / deleted icon tooltips ── */
+document.addEventListener('mouseover', function(e) {
+  const tip = document.getElementById('pt-mod-tooltip');
+  const modIcon = e.target.closest('.pt-modified-icon');
+  const delIcon = e.target.closest('.pt-deleted-icon');
+  if (modIcon) {
+    const field = modIcon.dataset.modTooltip || 'field';
+    tip.textContent = field.charAt(0).toUpperCase() + field.slice(1) + ' was modified. Reports for updated ' + field + ' will be available in the next monthly update.';
+  } else if (delIcon) {
+    tip.textContent = 'Prompt will be deleted. Tracking will stop in next monthly update.';
+  } else return;
+  tip.style.display = 'block';
+  const r = (modIcon || delIcon).getBoundingClientRect();
+  tip.style.top  = (r.top - tip.offsetHeight - 8) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+});
+document.addEventListener('mouseout', function(e) {
+  if (e.target.closest('.pt-modified-icon') || e.target.closest('.pt-deleted-icon')) {
+    document.getElementById('pt-mod-tooltip').style.display = 'none';
+  }
+});
 
 function autoResizeAp(ta) {
   ta.style.height = 'auto';
@@ -4712,7 +4742,10 @@ function saveEditPrompt() {
     const spacer = inner.querySelector('.pt-v2-spacer').cloneNode(true);
     inner.innerHTML = '';
     inner.appendChild(spacer);
-    inner.appendChild(document.createTextNode(newText));
+    const textSpan = document.createElement('span');
+    textSpan.className = 'pt-v2-text';
+    textSpan.textContent = newText;
+    inner.appendChild(textSpan);
   }
 
   // Update location count
@@ -4732,19 +4765,20 @@ function saveEditPrompt() {
   const locsChanged   = locs !== _editOrigLocs;
   const aiChanged     = sites.slice().sort().join() !== _editOrigAiKeys.slice().sort().join();
 
-  const _modSvg = '<svg class="pt-modified-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="Modified"><path d="M7.25 5.59134C6.20517 6.36318 5.40225 7.30426 4.84125 8.41459C4.28042 9.52476 4 10.7196 4 11.9991C4 13.8773 4.56733 15.5304 5.702 16.9586C6.8365 18.3869 8.30508 19.3223 10.1077 19.7646C10.3001 19.8184 10.4552 19.9306 10.573 20.1011C10.691 20.2716 10.75 20.4581 10.75 20.6606C10.75 20.8631 10.6776 21.032 10.5328 21.1673C10.3878 21.3025 10.2275 21.3483 10.052 21.3048C7.85317 20.8458 6.04483 19.7568 4.627 18.0376C3.209 16.3183 2.5 14.3054 2.5 11.9991C2.5 10.5209 2.80742 9.15134 3.42225 7.89034C4.03692 6.62951 4.91733 5.53759 6.0635 4.61459H4.125C3.91217 4.61459 3.734 4.54276 3.5905 4.39909C3.44683 4.25559 3.375 4.07743 3.375 3.86459C3.375 3.65176 3.44683 3.47351 3.5905 3.32984C3.734 3.18634 3.91217 3.11459 4.125 3.11459H7.84625C8.10392 3.11459 8.31892 3.20076 8.49125 3.37309C8.66375 3.54559 8.75 3.76068 8.75 4.01834V7.73959C8.75 7.95243 8.67817 8.13059 8.5345 8.27409C8.391 8.41776 8.21283 8.48959 8 8.48959C7.78717 8.48959 7.609 8.41776 7.4655 8.27409C7.32183 8.13059 7.25 7.95243 7.25 7.73959V5.59134ZM10.575 14.1298L15.723 8.98184C15.8718 8.83318 16.0459 8.75976 16.2452 8.76159C16.4446 8.76359 16.6218 8.84209 16.777 8.99709C16.9218 9.15226 16.9968 9.32793 17.002 9.52409C17.007 9.72026 16.932 9.89593 16.777 10.0511L11.2078 15.6203C11.0269 15.801 10.816 15.8913 10.575 15.8913C10.334 15.8913 10.1231 15.801 9.94225 15.6203L7.223 12.8856C7.08467 12.7471 7.01133 12.5756 7.003 12.3711C6.99467 12.1668 7.068 11.987 7.223 11.8318C7.368 11.687 7.54367 11.6146 7.75 11.6146C7.95633 11.6146 8.132 11.687 8.277 11.8318L10.575 14.1298ZM17.9365 19.3933H19.875C20.0878 19.3933 20.266 19.4651 20.4095 19.6086C20.5532 19.7523 20.625 19.9305 20.625 20.1433C20.625 20.3562 20.5532 20.5343 20.4095 20.6778C20.266 20.8215 20.0878 20.8933 19.875 20.8933H16.1538C15.8961 20.8933 15.6811 20.8071 15.5087 20.6346C15.3362 20.4623 15.25 20.2472 15.25 19.9893V16.2683C15.25 16.0555 15.3218 15.8773 15.4655 15.7336C15.609 15.5901 15.7872 15.5183 16 15.5183C16.2128 15.5183 16.391 15.5901 16.5345 15.7336C16.6782 15.8773 16.75 16.0555 16.75 16.2683V18.4163C17.7885 17.628 18.5898 16.6813 19.1538 15.5761C19.7179 14.4709 20 13.2786 20 11.9991C20 10.1209 19.4327 8.46776 18.298 7.03959C17.1635 5.61126 15.6949 4.67593 13.8923 4.23359C13.6999 4.17976 13.5448 4.06926 13.427 3.90209C13.309 3.73476 13.25 3.54976 13.25 3.34709C13.25 3.14459 13.3224 2.97409 13.4672 2.83559C13.6122 2.69726 13.7725 2.64984 13.948 2.69334C16.1468 3.14584 17.9552 4.23334 19.373 5.95584C20.791 7.67834 21.5 9.69276 21.5 11.9991C21.5 13.4773 21.1926 14.8484 20.5777 16.1126C19.9631 17.3766 19.0827 18.4702 17.9365 19.3933Z" fill="#C4C4C4"/></svg>';
+  const _modSvgPath = 'M7.25 5.59134C6.20517 6.36318 5.40225 7.30426 4.84125 8.41459C4.28042 9.52476 4 10.7196 4 11.9991C4 13.8773 4.56733 15.5304 5.702 16.9586C6.8365 18.3869 8.30508 19.3223 10.1077 19.7646C10.3001 19.8184 10.4552 19.9306 10.573 20.1011C10.691 20.2716 10.75 20.4581 10.75 20.6606C10.75 20.8631 10.6776 21.032 10.5328 21.1673C10.3878 21.3025 10.2275 21.3483 10.052 21.3048C7.85317 20.8458 6.04483 19.7568 4.627 18.0376C3.209 16.3183 2.5 14.3054 2.5 11.9991C2.5 10.5209 2.80742 9.15134 3.42225 7.89034C4.03692 6.62951 4.91733 5.53759 6.0635 4.61459H4.125C3.91217 4.61459 3.734 4.54276 3.5905 4.39909C3.44683 4.25559 3.375 4.07743 3.375 3.86459C3.375 3.65176 3.44683 3.47351 3.5905 3.32984C3.734 3.18634 3.91217 3.11459 4.125 3.11459H7.84625C8.10392 3.11459 8.31892 3.20076 8.49125 3.37309C8.66375 3.54559 8.75 3.76068 8.75 4.01834V7.73959C8.75 7.95243 8.67817 8.13059 8.5345 8.27409C8.391 8.41776 8.21283 8.48959 8 8.48959C7.78717 8.48959 7.609 8.41776 7.4655 8.27409C7.32183 8.13059 7.25 7.95243 7.25 7.73959V5.59134ZM10.575 14.1298L15.723 8.98184C15.8718 8.83318 16.0459 8.75976 16.2452 8.76159C16.4446 8.76359 16.6218 8.84209 16.777 8.99709C16.9218 9.15226 16.9968 9.32793 17.002 9.52409C17.007 9.72026 16.932 9.89593 16.777 10.0511L11.2078 15.6203C11.0269 15.801 10.816 15.8913 10.575 15.8913C10.334 15.8913 10.1231 15.801 9.94225 15.6203L7.223 12.8856C7.08467 12.7471 7.01133 12.5756 7.003 12.3711C6.99467 12.1668 7.068 11.987 7.223 11.8318C7.368 11.687 7.54367 11.6146 7.75 11.6146C7.95633 11.6146 8.132 11.687 8.277 11.8318L10.575 14.1298ZM17.9365 19.3933H19.875C20.0878 19.3933 20.266 19.4651 20.4095 19.6086C20.5532 19.7523 20.625 19.9305 20.625 20.1433C20.625 20.3562 20.5532 20.5343 20.4095 20.6778C20.266 20.8215 20.0878 20.8933 19.875 20.8933H16.1538C15.8961 20.8933 15.6811 20.8071 15.5087 20.6346C15.3362 20.4623 15.25 20.2472 15.25 19.9893V16.2683C15.25 16.0555 15.3218 15.8773 15.4655 15.7336C15.609 15.5901 15.7872 15.5183 16 15.5183C16.2128 15.5183 16.391 15.5901 16.5345 15.7336C16.6782 15.8773 16.75 16.0555 16.75 16.2683V18.4163C17.7885 17.628 18.5898 16.6813 19.1538 15.5761C19.7179 14.4709 20 13.2786 20 11.9991C20 10.1209 19.4327 8.46776 18.298 7.03959C17.1635 5.61126 15.6949 4.67593 13.8923 4.23359C13.6999 4.17976 13.5448 4.06926 13.427 3.90209C13.309 3.73476 13.25 3.54976 13.25 3.34709C13.25 3.14459 13.3224 2.97409 13.4672 2.83559C13.6122 2.69726 13.7725 2.64984 13.948 2.69334C16.1468 3.14584 17.9552 4.23334 19.373 5.95584C20.791 7.67834 21.5 9.69276 21.5 11.9991C21.5 13.4773 21.1926 14.8484 20.5777 16.1126C19.9631 17.3766 19.0827 18.4702 17.9365 19.3933Z';
+  const _modSvg = (field) => '<svg class="pt-modified-icon" width="18" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-mod-tooltip="' + field + '"><path d="' + _modSvgPath + '" fill="#8F8F8F"/></svg>';
 
   if (promptChanged) {
-    const pc = _editPromptRow.querySelector('.pt-v2-prompt');
-    if (pc && !pc.querySelector('.pt-modified-icon')) pc.insertAdjacentHTML('beforeend', _modSvg);
+    const ts = _editPromptRow.querySelector('.pt-v2-text') || _editPromptRow.querySelector('.pt-v2-row-inner');
+    if (ts && !ts.querySelector('.pt-modified-icon')) ts.insertAdjacentHTML('beforeend', _modSvg('prompt'));
   }
   if (locsChanged) {
     const sc = _editPromptRow.querySelector('.pt-scope-cell');
-    if (sc && !sc.querySelector('.pt-modified-icon')) sc.insertAdjacentHTML('beforeend', _modSvg);
+    if (sc && !sc.querySelector('.pt-modified-icon')) sc.insertAdjacentHTML('beforeend', _modSvg('location'));
   }
   if (aiChanged) {
     const ac = _editPromptRow.querySelector('.pt-ai-cell');
-    if (ac && !ac.querySelector('.pt-modified-icon')) ac.insertAdjacentHTML('beforeend', _modSvg);
+    if (ac && !ac.querySelector('.pt-modified-icon')) ac.insertAdjacentHTML('beforeend', _modSvg('AI site'));
   }
 
   // Persist added/removed sets per row for the next panel open
@@ -4815,15 +4849,21 @@ function closeMorePopover() {
 
 function deletePromptRow() {
   if (!_popoverRow) return;
-  const groupKey = _popoverRow.dataset.group;
-  _popoverRow.remove();
-  // Update group header prompt count
-  const grpRow = document.querySelector('.pt-group-row[data-group="' + groupKey + '"]');
-  if (grpRow) {
-    const remaining = document.querySelectorAll('.pt-data-row[data-group="' + groupKey + '"]').length;
-    const sub = grpRow.querySelector('.pt-group-subcount');
-    if (sub) sub.textContent = remaining + ' prompt' + (remaining !== 1 ? 's' : '');
+  const row = _popoverRow;
+
+  // Change status to "Stop tracking next cycle"
+  const pill = row.querySelector('.pt-status-pill');
+  if (pill) {
+    pill.className = 'pt-status-pill stop-tracking';
+    pill.textContent = 'Stop tracking next cycle';
   }
+
+  // Replace spacer with deleted icon (same 18px width, aligned with chevron)
+  const spacer = row.querySelector('.pt-v2-spacer');
+  if (spacer) {
+    spacer.outerHTML = '<svg class="pt-deleted-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="Deleted"><path d="M9.38149 22C9.11195 22 8.85293 21.9477 8.60444 21.843C8.35576 21.7385 8.13978 21.5945 7.95649 21.411L3.589 17.0435C3.40552 16.8602 3.26153 16.6442 3.15703 16.3956C3.05234 16.1471 3 15.8881 3 15.6185V9.38149C3 9.11195 3.05234 8.85293 3.15703 8.60444C3.26153 8.35577 3.40552 8.13978 3.589 7.95649L7.95649 3.589C8.13978 3.40552 8.35576 3.26153 8.60444 3.15703C8.85293 3.05234 9.11195 3 9.38149 3H15.6185C15.8881 3 16.1471 3.05234 16.3956 3.15703C16.6442 3.26153 16.8602 3.40552 17.0435 3.589L21.411 7.95649C21.5945 8.13978 21.7385 8.35577 21.843 8.60444C21.9477 8.85293 22 9.11195 22 9.38149V15.6185C22 15.8881 21.9477 16.1471 21.843 16.3956C21.7385 16.6442 21.5945 16.8602 21.411 17.0435L17.0435 21.411C16.8602 21.5945 16.6442 21.7385 16.3956 21.843C16.1471 21.9477 15.8881 22 15.6185 22H9.38149ZM9.25882 20.3235H15.7412L20.3235 15.7412V9.25882L15.7412 4.67647H9.25882L4.67647 9.25882V15.7412L9.25882 20.3235ZM12.5 13.6777L15.0963 16.2743C15.2511 16.4289 15.4457 16.5081 15.68 16.5118C15.9141 16.5153 16.1122 16.4362 16.2743 16.2743C16.4362 16.1122 16.5171 15.9159 16.5171 15.6853C16.5171 15.4547 16.4362 15.2584 16.2743 15.0963L13.6777 12.5L16.2743 9.90371C16.4289 9.74891 16.5081 9.55435 16.5118 9.32001C16.5153 9.08587 16.4362 8.88776 16.2743 8.72571C16.1122 8.56383 15.9159 8.4829 15.6853 8.4829C15.4547 8.4829 15.2584 8.56383 15.0963 8.72571L12.5 11.3223L9.90371 8.72571C9.74891 8.5711 9.55435 8.49193 9.32001 8.48821C9.08587 8.48467 8.88777 8.56383 8.72571 8.72571C8.56383 8.88776 8.4829 9.0841 8.4829 9.31471C8.4829 9.54531 8.56383 9.74165 8.72571 9.90371L11.3223 12.5L8.72571 15.0963C8.5711 15.2511 8.49193 15.4457 8.48821 15.68C8.48467 15.9141 8.56383 16.1122 8.72571 16.2743C8.88777 16.4362 9.0841 16.5171 9.31471 16.5171C9.54531 16.5171 9.74165 16.4362 9.90371 16.2743L12.5 13.6777Z" fill="#DE1B0C"/></svg>';
+  }
+
   closeMorePopover();
 }
 
@@ -5194,6 +5234,8 @@ function copyField(btn) {
   <button class="pt-popover-item" style="color:#e53935" onclick="deletePromptRow()">Delete</button></div>
 
 <!-- ── TOAST ── -->
+
+<div id="pt-mod-tooltip"></div>
 
 <div class="toast" id="main-toast">
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" flex-shrink="0" style="flex-shrink:0">
