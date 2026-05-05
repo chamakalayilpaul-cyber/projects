@@ -881,6 +881,28 @@ body{
 }
 .pt-scope-tab.active{background:rgb(229,233,240);color:rgb(33,33,33)}
 .pt-scope-tab:not(.active):hover{background:rgb(242,244,247)}
+/* Theme Aggregate toggle */
+.ta-toggle-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:transparent;border:1px solid #e5e9f0;border-radius:6px;
+  padding:0 10px;height:28px;cursor:pointer;
+  font-family:'Roboto',sans-serif;
+}
+.ta-toggle-btn:hover{background:rgb(242,244,247)}
+.ta-toggle-btn.active{border-color:#1976d2;background:#ECF5FD}
+.ta-toggle-track{
+  width:28px;height:16px;background:#ccc;border-radius:8px;
+  position:relative;flex-shrink:0;transition:background .2s;
+}
+.ta-toggle-btn.active .ta-toggle-track{background:#1976d2}
+.ta-toggle-thumb{
+  position:absolute;top:2px;left:2px;
+  width:12px;height:12px;border-radius:50%;background:#fff;
+  transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);
+}
+.ta-toggle-btn.active .ta-toggle-thumb{left:14px}
+.ta-toggle-label{font-size:13px;color:rgb(85,85,85);white-space:nowrap}
+.ta-toggle-btn.active .ta-toggle-label{color:#1976d2}
 .pt-table-wrap{
   background:#fff;border-radius:8px;border:1px solid #eaeaea;overflow:hidden;
 }
@@ -900,7 +922,11 @@ body{
 }
 .pt-table tbody tr:last-child td{border-bottom:none}
 .pt-table tbody tr:hover td{background:rgb(242,244,247)}
-.pt-ai-cell{overflow:visible;min-width:110px;white-space:nowrap}
+.pt-ai-cell{overflow:visible;min-width:110px;white-space:nowrap;position:relative}
+.pt-modified-icon{
+  display:inline-block;vertical-align:middle;margin-left:4px;flex-shrink:0;
+  width:12px;height:12px;min-width:12px;min-height:12px;
+}
 .pt-monthly-cell{font-size:14px;color:rgb(33,33,33);min-width:90px;white-space:nowrap}
 .pt-ai-wrap{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
 .pt-ai-wrap svg{width:16px;height:16px;flex-shrink:0}
@@ -968,11 +994,12 @@ body{
 .at-prompt-item:last-child{border-bottom:none}
 .at-prompt-ai-icon{font-size:16px;color:#7c3aed;flex-shrink:0}
 .at-prompt-text{flex:1;font-size:14px;color:rgb(33,33,33);min-width:0}
-.at-prompt-item-input{padding-left:26px;gap:8px;align-items:center}
+.at-prompt-item-input{padding-left:26px;gap:8px;align-items:flex-start}
 .at-prompt-input-box{
-  flex:1;height:44px;border:1px solid #e5e9f0;border-radius:8px;
-  padding:0 12px;font-size:14px;color:rgb(33,33,33);
+  flex:1;border:1px solid #e5e9f0;border-radius:8px;
+  padding:10px 12px;font-size:14px;color:rgb(33,33,33);
   font-family:'Roboto',sans-serif;outline:none;min-width:0;
+  resize:none;overflow:hidden;line-height:1.5;
 }
 .at-prompt-input-box:focus{border-color:#1976d2}
 .at-prompt-confirm-btn{
@@ -1126,7 +1153,8 @@ body{
 }
 .pt-status-pill.tracking{background:#e8f5e9;color:#2e7d32}
 .pt-status-pill.not-tracking{background:#f5f5f5;color:#555}
-.pt-status-pill.next-cycle{background:#e8eef7;color:#5c6bc0}
+.pt-status-pill.next-cycle{background:#ECF5FD;color:#1976D2}
+.pt-status-pill.stop-tracking{background:#fdecea;color:#c62828}
 .pt-status-cell{overflow:visible;position:relative}
 /* ── Table version switcher ── */
 .pt-version-switcher{
@@ -1164,6 +1192,7 @@ body{
 }
 .toast-close:hover{background:rgb(242,244,247)}
 .pt-action-btn:hover{text-decoration:underline}
+.pt-modified-icon{width:16px;height:16px;flex-shrink:0;align-self:center}
 
 /* ══ ADD PROMPT SIDE PANEL ══ */
 .ap-overlay{
@@ -1207,6 +1236,10 @@ body{
 }
 .ap-input:focus{border-color:#1976d2}
 .ap-input::placeholder{color:#bbb}
+textarea.ap-input{
+  height:auto;min-height:calc(1.5em * 2 + 20px);padding:10px 12px;
+  resize:none;overflow:hidden;line-height:1.5;box-sizing:border-box;
+}
 .ap-radio-group{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
 .ap-radio-lbl{
   display:flex;align-items:center;gap:8px;cursor:pointer;
@@ -1221,6 +1254,59 @@ body{
 }
 .ap-btn-add.enabled{opacity:1;cursor:pointer}
 .ap-btn-add.enabled:hover{background:#1565c0}
+/* Prompt field with toolbar */
+.ap-prompt-wrap{display:flex;flex-direction:column;gap:0;position:relative}
+.ap-prompt-wrap textarea.ap-input{border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none}
+.ap-prompt-toolbar{
+  display:flex;align-items:center;justify-content:flex-start;
+  border:1px solid #e5e9f0;border-top:none;
+  border-bottom-left-radius:4px;border-bottom-right-radius:4px;
+  padding:6px 10px;background:#fff;
+}
+.ap-prompt-wrap:focus-within textarea.ap-input{border-color:#1976d2}
+.ap-prompt-wrap:focus-within .ap-prompt-toolbar{border-color:#1976d2}
+/* Personalize button */
+.ap-personalize-wrap{position:relative}
+.ap-personalize-btn{
+  display:inline-flex;align-items:center;gap:2px;
+  background:transparent;border:none;cursor:pointer;
+  font-size:14px;color:#1976d2;font-family:'Roboto',sans-serif;
+  padding:2px 4px;border-radius:4px;
+}
+.ap-personalize-btn:hover{background:rgba(25,118,210,0.06)}
+.ap-personalize-btn .material-symbols-rounded{font-size:18px}
+/* Token dropdown */
+.ap-token-dropdown{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;
+  width:320px;background:#fff;border-radius:10px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.15);
+  z-index:600;overflow:hidden;
+}
+.ap-token-dropdown.open{display:flex;flex-direction:column}
+.ap-token-search-wrap{
+  display:flex;align-items:center;gap:8px;
+  margin:12px 12px 8px;border:1px solid #e5e9f0;border-radius:8px;
+  padding:8px 12px;flex-shrink:0;
+}
+.ap-token-search-icon{font-size:18px;color:#888}
+.ap-token-search{
+  flex:1;border:none;outline:none;font-size:14px;color:#212121;
+  font-family:'Roboto',sans-serif;background:transparent;font-weight:400;
+}
+.ap-token-search::placeholder{color:#aaa}
+.ap-token-list{
+  overflow-y:auto;max-height:280px;padding:0 4px 8px;
+}
+.ap-token-group-label{
+  font-size:13px;font-weight:400;color:#212121;
+  padding:10px 12px 4px;
+}
+.ap-token-item{
+  padding:8px 12px;border-radius:6px;cursor:pointer;
+}
+.ap-token-item:hover{background:rgb(242,244,247)}
+.ap-token-item-name{font-size:14px;font-weight:400;color:#212121}
+.ap-token-item-eg{font-size:13px;font-weight:400;color:#aaa;margin-top:1px}
 
 
 
@@ -1259,6 +1345,7 @@ body{
 .ap-ms-opt:hover{background:rgb(242,244,247)}
 .ap-ms-opt input[type="checkbox"]{width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0}
 .ap-ms-opt-icon{display:flex;align-items:center;flex-shrink:0}
+.ap-ms-track-icon{width:16px;height:16px;margin-left:auto;flex-shrink:0}
 
 /* ── AEO Score Panel (optimize mode) ── */
 #art-optimize-tabs{display:none;margin-left:0px;margin-right:0px}
@@ -1608,6 +1695,10 @@ body{
         <button class="pt-scope-tab" id="pt-scope-brand" onclick="switchPromptsScope('brand')">Brand</button>
         <button class="pt-scope-tab active" id="pt-scope-locations" onclick="switchPromptsScope('locations')">Locations</button>
       </div>
+      <button class="ta-toggle-btn" id="ta-toggle-btn" onclick="toggleThemeAggregate()" title="Theme Aggregate">
+        <span class="ta-toggle-track"><span class="ta-toggle-thumb"></span></span>
+        <span class="ta-toggle-label">Theme Aggregate</span>
+      </button>
       <button class="btn-filled" onclick="openAddThemePanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
         <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
       </button>
@@ -2156,7 +2247,7 @@ body{
               <td class="pt-scope-cell pt-loc-col" data-locations="67" data-brand="4">67</td>
               <td class="pt-monthly-cell">67.3K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Aug 14, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
@@ -2203,7 +2294,7 @@ body{
               <td class="pt-scope-cell pt-loc-col" data-locations="56" data-brand="3">56</td>
               <td class="pt-monthly-cell">48.7K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Sep 10, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
@@ -2276,7 +2367,7 @@ body{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">55.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 20, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
@@ -2315,7 +2406,7 @@ body{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">51.6K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking in next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Mar 22, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -3394,7 +3485,19 @@ body{
 
     <div class="ap-field">
       <label class="ap-label">Prompt <span class="ap-req">*</span></label>
-      <input class="ap-input" type="text" id="ap-name" placeholder="Enter prompt" oninput="checkApAdd()"/>
+      <div class="ap-prompt-wrap">
+        <textarea class="ap-input" id="ap-name" placeholder="Enter prompt" oninput="checkApAdd();autoResizeAp(this)"></textarea>
+        <div class="ap-prompt-toolbar">
+          <div class="ap-personalize-wrap" id="ap-personalize-wrap">
+            <button class="ap-personalize-btn" onclick="togglePersonalizeDropdown(event)" type="button">
+              Personalize<span class="material-symbols-rounded">arrow_drop_down</span>
+            </button>
+            <div class="ap-token-dropdown" id="ap-token-dropdown">
+              <div class="ap-token-list" id="ap-token-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="ap-field ap-field-radio">
@@ -4242,6 +4345,70 @@ function switchPromptsScope(scope) {
   // No width tweak needed — table-layout:auto sizes from content
 }
 
+/* ── Theme Aggregate toggle ── */
+let _taActive = false;
+
+function parseMonthly(str) {
+  if (!str) return 0;
+  const s = str.trim();
+  if (s.endsWith('M')) return parseFloat(s) * 1000000;
+  if (s.endsWith('K')) return parseFloat(s) * 1000;
+  return parseFloat(s) || 0;
+}
+
+function formatMonthly(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  return String(Math.round(n));
+}
+
+function toggleThemeAggregate() {
+  _taActive = !_taActive;
+  const btn = document.getElementById('ta-toggle-btn');
+  const table = document.getElementById('pt-v2-table');
+  btn.classList.toggle('active', _taActive);
+  table.classList.toggle('pt-agg-mode', _taActive);
+
+  const groupRows = table.querySelectorAll('.pt-group-row');
+  groupRows.forEach(groupRow => {
+    const group = groupRow.dataset.group;
+    const dataRows = [...table.querySelectorAll('.pt-data-row[data-group="' + group + '"]')];
+    const tds = groupRow.querySelectorAll('td');
+
+    if (_taActive) {
+      // Max locations
+      let maxLoc = 0, maxLocStr = '';
+      dataRows.forEach(r => {
+        const cell = r.querySelector('.pt-scope-cell');
+        const v = parseInt(cell?.dataset.locations || cell?.textContent || 0);
+        if (v > maxLoc) { maxLoc = v; maxLocStr = cell?.textContent.trim() || String(v); }
+      });
+
+      // Sum monthly
+      let totalMonthly = 0;
+      dataRows.forEach(r => {
+        totalMonthly += parseMonthly(r.querySelector('.pt-monthly-cell')?.textContent);
+      });
+
+      // AI sites: row with most icons
+      let maxIcons = -1, bestAiHtml = '';
+      dataRows.forEach(r => {
+        const wrap = r.querySelector('.pt-ai-wrap');
+        const count = wrap ? wrap.querySelectorAll('svg').length : 0;
+        if (count > maxIcons) { maxIcons = count; bestAiHtml = wrap ? wrap.outerHTML : ''; }
+      });
+
+      tds[1].textContent = maxLocStr;
+      tds[2].textContent = formatMonthly(totalMonthly);
+      tds[3].innerHTML = bestAiHtml;
+    } else {
+      tds[1].textContent = '';
+      tds[2].textContent = '';
+      tds[3].innerHTML = '';
+    }
+  });
+}
+
 function togglePtGroup(group) {
   const hdr = document.querySelector('.pt-group-row[data-group="' + group + '"]');
   const rows = document.querySelectorAll('.pt-data-row[data-group="' + group + '"]');
@@ -4254,7 +4421,9 @@ function openAddPromptPanel(event, theme) {
   // Set theme
   document.getElementById('ap-theme-val').textContent = theme || 'Select theme';
   // Reset fields
-  document.getElementById('ap-name').value = '';
+  const apName = document.getElementById('ap-name');
+  apName.value = '';
+  apName.style.height = '';
   document.getElementById('ap-tag').value = '';
   document.querySelector('input[name="ap-track"][value="location"]').checked = true;
   // Reset location field visibility
@@ -4277,6 +4446,12 @@ function openAddPromptPanel(event, theme) {
 
 let _apEditMode = false;
 let _editPromptRow = null;
+let _editOrigLocs = 0;
+let _editOrigAiKeys = [];
+let _editOrigPrompt = '';
+const _rowTracking = new WeakMap();
+let _origLocSet = new Set();
+let _origAiSet  = new Set();
 
 function closeAddPromptPanel() {
   document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
@@ -4320,6 +4495,74 @@ function refreshApAiMs() {
     label.classList.add('has-val');
   }
 }
+
+function autoResizeAp(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+
+/* ── Personalize / token dropdown ── */
+const AP_TOKENS = [
+  { group: 'Business', items: [
+    { name: 'Business name', eg: 'E.g. BirdEye Dental',             token: '{{business_name}}' },
+    { name: 'Location name', eg: 'E.g. Grand Junction - Northeast', token: '{{location_name}}' },
+    { name: 'Address',       eg: 'E.g. 150, Main Street',           token: '{{address}}' },
+    { name: 'City',          eg: 'E.g. Denver',                     token: '{{city}}' },
+    { name: 'State',         eg: 'E.g. Colorado',                   token: '{{state}}' },
+    { name: 'Zipcode',       eg: 'E.g. 80203',                      token: '{{zipcode}}' },
+  ]},
+];
+
+function renderTokenList(filter) {
+  const list = document.getElementById('ap-token-list');
+  const q = (filter || '').toLowerCase();
+  let html = '';
+  AP_TOKENS.forEach(group => {
+    const items = group.items.filter(i => !q || i.name.toLowerCase().includes(q));
+    if (!items.length) return;
+    items.forEach(item => {
+      html += `<div class="ap-token-item" onclick="insertToken('${item.token}')">` +
+        `<div class="ap-token-item-name">${item.name}</div>` +
+        (item.eg ? `<div class="ap-token-item-eg">${item.eg}</div>` : '') +
+        `</div>`;
+    });
+  });
+  list.innerHTML = html || '<div style="padding:12px;font-size:14px;color:#aaa">No results</div>';
+}
+
+function togglePersonalizeDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('ap-token-dropdown');
+  const isOpen = dd.classList.contains('open');
+  closePersonalizeDropdown();
+  if (!isOpen) {
+    dd.classList.add('open');
+    renderTokenList('');
+  }
+}
+
+function closePersonalizeDropdown() {
+  document.getElementById('ap-token-dropdown').classList.remove('open');
+}
+
+function filterTokens(q) { renderTokenList(q); }
+
+function insertToken(token) {
+  const ta = document.getElementById('ap-name');
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  ta.value = ta.value.slice(0, start) + token + ta.value.slice(end);
+  ta.selectionStart = ta.selectionEnd = start + token.length;
+  ta.focus();
+  autoResizeAp(ta);
+  checkApAdd();
+  closePersonalizeDropdown();
+}
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('ap-personalize-wrap');
+  if (wrap && !wrap.contains(e.target)) closePersonalizeDropdown();
+});
 
 function checkApAdd() {
   const name = document.getElementById('ap-name').value.trim();
@@ -4388,6 +4631,11 @@ function openEditPromptPanel(e, btn) {
   _editPromptRow = row;
   _apEditMode    = true;
 
+  // Snapshot originals for modified detection
+  const origSc = row.querySelector('.pt-scope-cell');
+  _editOrigLocs = parseInt(origSc?.dataset.locations || origSc?.textContent || 0);
+  _editOrigAiKeys = [...row.querySelectorAll('.pt-ai-wrap use')].map(u => (u.getAttribute('href') || '').replace('#s-', '')).filter(Boolean);
+
   // Theme from group header
   const grpRow = document.querySelector('.pt-group-row[data-group="' + row.dataset.group + '"]');
   const theme  = grpRow ? grpRow.querySelector('.pt-group-label').textContent.trim() : '';
@@ -4395,6 +4643,7 @@ function openEditPromptPanel(e, btn) {
   // Prompt text
   const inner  = row.querySelector('.pt-v2-row-inner');
   const prompt = inner ? inner.textContent.trim() : '';
+  _editOrigPrompt = prompt;
 
   // AI sites from icons
   const aiKeys = [...row.querySelectorAll('.pt-ai-wrap use')].map(u => (u.getAttribute('href') || '').replace('#s-', '')).filter(Boolean);
@@ -4405,14 +4654,44 @@ function openEditPromptPanel(e, btn) {
 
   // Pre-fill fields
   document.getElementById('ap-theme-val').textContent = theme;
-  document.getElementById('ap-name').value = prompt;
+  const apNameEl = document.getElementById('ap-name');
+  apNameEl.value = prompt;
+  apNameEl.style.height = 'auto';
+  apNameEl.style.height = apNameEl.scrollHeight + 'px';
 
-  // Reset + pre-check AI sites
-  document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  // Reset + pre-check locations (select first N to match stored count)
+  const locCheckboxes = [...document.querySelectorAll('#ap-loc-ms input[type="checkbox"]')];
+  const preCheckCount = Math.min(_editOrigLocs, locCheckboxes.length);
+  locCheckboxes.forEach((c, i) => { c.checked = i < preCheckCount; });
+  _editOrigLocs = preCheckCount;
+  // Pre-check AI sites
   document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => { c.checked = aiKeys.includes(c.value); });
   refreshApMs('ap-loc-ms', 'ap-loc-label', 'Select locations');
   refreshApAiMs();
   checkApAdd();
+
+  // Snapshot checked sets so save can diff them
+  _origLocSet = new Set([...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value));
+  _origAiSet  = new Set([...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value));
+
+  // Clear stale tracking icons then re-apply stored ones for this row
+  document.querySelectorAll('#ap-loc-ms .ap-ms-track-icon, #ap-ai-ms .ap-ms-track-icon').forEach(el => el.remove());
+  const tracking = _rowTracking.get(row);
+  if (tracking) {
+    const applyTrackIcons = (msId, addedSet, removedSet) => {
+      document.querySelectorAll('#' + msId + ' input[type="checkbox"]').forEach(cb => {
+        const label = cb.closest('label');
+        if (!label) return;
+        if (addedSet.has(cb.value)) {
+          label.appendChild(Object.assign(document.createElement('img'), {src:'Start tracking.svg',className:'ap-ms-track-icon',width:16,height:16,title:'Start tracking'}));
+        } else if (removedSet.has(cb.value)) {
+          label.appendChild(Object.assign(document.createElement('img'), {src:'Stop tracking.svg',className:'ap-ms-track-icon',width:16,height:16,title:'Stop tracking'}));
+        }
+      });
+    };
+    applyTrackIcons('ap-loc-ms', tracking.addedLocs, tracking.removedLocs);
+    applyTrackIcons('ap-ai-ms', tracking.addedAi, tracking.removedAi);
+  }
 
   document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
   document.getElementById('ap-overlay').classList.add('open');
@@ -4436,7 +4715,7 @@ function saveEditPrompt() {
     inner.appendChild(document.createTextNode(newText));
   }
 
-  // Update location count (only if user selected)
+  // Update location count
   if (locs > 0) {
     const sc = _editPromptRow.querySelector('.pt-scope-cell');
     if (sc) { sc.textContent = locs; sc.dataset.locations = locs; }
@@ -4447,6 +4726,35 @@ function saveEditPrompt() {
     const wrap = _editPromptRow.querySelector('.pt-ai-wrap');
     if (wrap) wrap.innerHTML = sites.map(s => '<svg width="16" height="16"><use href="#s-' + s + '"/></svg>').join('');
   }
+
+  // Modified indicators — strictly per changed field only
+  const promptChanged = newText !== _editOrigPrompt;
+  const locsChanged   = locs !== _editOrigLocs;
+  const aiChanged     = sites.slice().sort().join() !== _editOrigAiKeys.slice().sort().join();
+
+  const _modSvg = '<svg class="pt-modified-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="Modified"><path d="M7.25 5.59134C6.20517 6.36318 5.40225 7.30426 4.84125 8.41459C4.28042 9.52476 4 10.7196 4 11.9991C4 13.8773 4.56733 15.5304 5.702 16.9586C6.8365 18.3869 8.30508 19.3223 10.1077 19.7646C10.3001 19.8184 10.4552 19.9306 10.573 20.1011C10.691 20.2716 10.75 20.4581 10.75 20.6606C10.75 20.8631 10.6776 21.032 10.5328 21.1673C10.3878 21.3025 10.2275 21.3483 10.052 21.3048C7.85317 20.8458 6.04483 19.7568 4.627 18.0376C3.209 16.3183 2.5 14.3054 2.5 11.9991C2.5 10.5209 2.80742 9.15134 3.42225 7.89034C4.03692 6.62951 4.91733 5.53759 6.0635 4.61459H4.125C3.91217 4.61459 3.734 4.54276 3.5905 4.39909C3.44683 4.25559 3.375 4.07743 3.375 3.86459C3.375 3.65176 3.44683 3.47351 3.5905 3.32984C3.734 3.18634 3.91217 3.11459 4.125 3.11459H7.84625C8.10392 3.11459 8.31892 3.20076 8.49125 3.37309C8.66375 3.54559 8.75 3.76068 8.75 4.01834V7.73959C8.75 7.95243 8.67817 8.13059 8.5345 8.27409C8.391 8.41776 8.21283 8.48959 8 8.48959C7.78717 8.48959 7.609 8.41776 7.4655 8.27409C7.32183 8.13059 7.25 7.95243 7.25 7.73959V5.59134ZM10.575 14.1298L15.723 8.98184C15.8718 8.83318 16.0459 8.75976 16.2452 8.76159C16.4446 8.76359 16.6218 8.84209 16.777 8.99709C16.9218 9.15226 16.9968 9.32793 17.002 9.52409C17.007 9.72026 16.932 9.89593 16.777 10.0511L11.2078 15.6203C11.0269 15.801 10.816 15.8913 10.575 15.8913C10.334 15.8913 10.1231 15.801 9.94225 15.6203L7.223 12.8856C7.08467 12.7471 7.01133 12.5756 7.003 12.3711C6.99467 12.1668 7.068 11.987 7.223 11.8318C7.368 11.687 7.54367 11.6146 7.75 11.6146C7.95633 11.6146 8.132 11.687 8.277 11.8318L10.575 14.1298ZM17.9365 19.3933H19.875C20.0878 19.3933 20.266 19.4651 20.4095 19.6086C20.5532 19.7523 20.625 19.9305 20.625 20.1433C20.625 20.3562 20.5532 20.5343 20.4095 20.6778C20.266 20.8215 20.0878 20.8933 19.875 20.8933H16.1538C15.8961 20.8933 15.6811 20.8071 15.5087 20.6346C15.3362 20.4623 15.25 20.2472 15.25 19.9893V16.2683C15.25 16.0555 15.3218 15.8773 15.4655 15.7336C15.609 15.5901 15.7872 15.5183 16 15.5183C16.2128 15.5183 16.391 15.5901 16.5345 15.7336C16.6782 15.8773 16.75 16.0555 16.75 16.2683V18.4163C17.7885 17.628 18.5898 16.6813 19.1538 15.5761C19.7179 14.4709 20 13.2786 20 11.9991C20 10.1209 19.4327 8.46776 18.298 7.03959C17.1635 5.61126 15.6949 4.67593 13.8923 4.23359C13.6999 4.17976 13.5448 4.06926 13.427 3.90209C13.309 3.73476 13.25 3.54976 13.25 3.34709C13.25 3.14459 13.3224 2.97409 13.4672 2.83559C13.6122 2.69726 13.7725 2.64984 13.948 2.69334C16.1468 3.14584 17.9552 4.23334 19.373 5.95584C20.791 7.67834 21.5 9.69276 21.5 11.9991C21.5 13.4773 21.1926 14.8484 20.5777 16.1126C19.9631 17.3766 19.0827 18.4702 17.9365 19.3933Z" fill="#C4C4C4"/></svg>';
+
+  if (promptChanged) {
+    const pc = _editPromptRow.querySelector('.pt-v2-prompt');
+    if (pc && !pc.querySelector('.pt-modified-icon')) pc.insertAdjacentHTML('beforeend', _modSvg);
+  }
+  if (locsChanged) {
+    const sc = _editPromptRow.querySelector('.pt-scope-cell');
+    if (sc && !sc.querySelector('.pt-modified-icon')) sc.insertAdjacentHTML('beforeend', _modSvg);
+  }
+  if (aiChanged) {
+    const ac = _editPromptRow.querySelector('.pt-ai-cell');
+    if (ac && !ac.querySelector('.pt-modified-icon')) ac.insertAdjacentHTML('beforeend', _modSvg);
+  }
+
+  // Persist added/removed sets per row for the next panel open
+  const newLocSet   = new Set([...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value));
+  const newAiSet    = new Set([...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value));
+  const addedLocs   = new Set([...newLocSet].filter(v => !_origLocSet.has(v)));
+  const removedLocs = new Set([..._origLocSet].filter(v => !newLocSet.has(v)));
+  const addedAi     = new Set([...newAiSet].filter(v => !_origAiSet.has(v)));
+  const removedAi   = new Set([..._origAiSet].filter(v => !newAiSet.has(v)));
+  _rowTracking.set(_editPromptRow, { addedLocs, removedLocs, addedAi, removedAi });
 
   closeAddPromptPanel();
 }
@@ -4469,12 +4777,13 @@ function showMorePopover(e, btn) {
   e.stopPropagation();
   _popoverRow = btn.closest('.pt-data-row');
   const pill = _popoverRow.querySelector('.pt-status-pill');
-  const cls  = pill ? [...pill.classList].find(c => ['tracking','not-tracking','next-cycle'].includes(c)) : 'not-tracking';
+  const cls  = pill ? [...pill.classList].find(c => ['tracking','not-tracking','next-cycle','stop-tracking'].includes(c)) : 'not-tracking';
 
   const map = {
-    'tracking':    { label: 'Stop tracking',  next: 'not-tracking' },
-    'not-tracking':{ label: 'Start tracking', next: 'tracking' },
-    'next-cycle':  { label: 'Stop tracking',  next: 'not-tracking' }
+    'tracking':    { label: 'Stop tracking',  next: 'stop-tracking' },
+    'not-tracking':{ label: 'Start tracking', next: 'next-cycle' },
+    'next-cycle':  { label: 'Stop tracking',  next: 'stop-tracking' },
+    'stop-tracking':{ label: 'Start tracking', next: 'next-cycle' }
   };
   const opt = map[cls] || map['not-tracking'];
   const item = document.getElementById('pt-popover-item');
@@ -4493,7 +4802,7 @@ function applyMoreAction() {
   if (!_popoverRow) return;
   const item    = document.getElementById('pt-popover-item');
   const next    = item.dataset.next;
-  const labels  = {'tracking':'Tracking','not-tracking':'Not tracking','next-cycle':'Tracking in next cycle'};
+  const labels  = {'tracking':'Tracking','not-tracking':'Not tracking','next-cycle':'Tracking next cycle','stop-tracking':'Stop tracking next cycle'};
   const pill    = _popoverRow.querySelector('.pt-status-pill');
   if (pill) { pill.className = 'pt-status-pill ' + next; pill.textContent = labels[next]; }
   closeMorePopover();
@@ -4738,14 +5047,23 @@ function addAtPromptRow() {
   const div = document.createElement('div');
   div.className = 'at-prompt-item at-prompt-item-input';
   div.innerHTML =
-    `<input class="at-prompt-input-box" type="text" placeholder="Enter prompt"
-      oninput="checkAtAdd()"
-      onkeydown="if(event.key==='Enter')atConfirmPrompt(this.closest('.at-prompt-item'))"/>` +
+    `<textarea class="at-prompt-input-box" placeholder="Enter prompt"
+      oninput="checkAtAdd();autoResizePrompt(this)"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();atConfirmPrompt(this.closest('.at-prompt-item'))}"></textarea>` +
     `<button class="at-prompt-confirm-btn" onclick="atConfirmPrompt(this.closest('.at-prompt-item'))">` +
     `<span class="material-symbols-rounded">check</span></button>`;
   list.appendChild(div);
-  div.querySelector('.at-prompt-input-box').focus();
+  const ta = div.querySelector('.at-prompt-input-box');
+  // Set initial height to 2 lines (lineHeight 1.5 × 14px × 2 + vertical padding)
+  const lineHeight = 14 * 1.5;
+  ta.style.height = (lineHeight * 2 + 20) + 'px';
+  ta.focus();
   checkAtAdd();
+}
+
+function autoResizePrompt(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
 }
 
 function atConfirmPrompt(item) {
@@ -4829,6 +5147,8 @@ function addThemeToTable() {
   closeAddThemePanel();
 }
 
+/* ── Prompt row context menu ── */
+
 let _toastTimer;
 function showTrackingToast(btn) {
   const prompt = btn.closest('tr').querySelectorAll('td')[0].textContent.trim();
@@ -4874,6 +5194,7 @@ function copyField(btn) {
   <button class="pt-popover-item" style="color:#e53935" onclick="deletePromptRow()">Delete</button></div>
 
 <!-- ── TOAST ── -->
+
 <div class="toast" id="main-toast">
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" flex-shrink="0" style="flex-shrink:0">
     <circle cx="10" cy="10" r="9" stroke="#16a34a" stroke-width="1.5"/>
