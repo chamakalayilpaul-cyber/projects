@@ -4243,6 +4243,7 @@ function buildPromptsHeader() {
     <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
   `;
 }
+let _taActive = false;
 document.getElementById('hdr-prompts-btns').innerHTML = buildPromptsHeader();
 // Theme Aggregate is ON by default
 _taActive = true;
@@ -4769,7 +4770,6 @@ function switchPromptsScope(scope) {
 }
 
 /* ── Theme Aggregate toggle ── */
-let _taActive = false;
 
 function parseMonthly(str) {
   if (!str) return 0;
