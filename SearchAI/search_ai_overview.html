@@ -1051,7 +1051,7 @@ body{
 .nm-modal-item-info{display:flex;flex-direction:column;gap:2px}
 .nm-modal-item-name{font-size:14px;color:rgb(33,33,33)}
 .nm-modal-item-meta{font-size:13px;color:rgb(85,85,85)}
-.nm-pct-span{cursor:default;text-decoration:underline dotted rgb(143,143,143)}
+.nm-pct-span{cursor:default}
 .nm-modal-remove{
   width:24px;height:24px;border:none;background:transparent;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -1131,7 +1131,7 @@ body{
   width:16px;height:18px;min-width:12px;min-height:12px;cursor:default;
 }
 #pt-mod-tooltip{
-  position:fixed;z-index:900;pointer-events:none;
+  position:fixed;z-index:1100;pointer-events:none;
   background:rgb(33,33,33);color:#fff;font-size:12px;line-height:1.5;
   font-family:'Roboto',sans-serif;border-radius:6px;
   padding:8px 12px;max-width:260px;
@@ -1150,7 +1150,7 @@ body{
 .pt-group-inner{display:flex;align-items:flex-start;gap:8px}
 .pt-group-chev{font-size:18px;color:rgb(85,85,85);transition:transform 0.2s;flex-shrink:0;margin-top:1px}
 .pt-group-row.collapsed .pt-group-chev{transform:rotate(180deg)}
-.pt-group-label{font-size:14px;font-weight:400;color:rgb(33,33,33)}
+.pt-group-label{font-size:14px;font-weight:400;color:rgb(33,33,33);display:inline-flex;align-items:center;gap:5px}
 .pt-group-badge{font-size:12px;font-weight:500;background:#e8f0fe;color:#1976d2;padding:1px 8px;border-radius:100px}
 .pt-group-meta{font-size:13px;color:rgb(143,143,143)}
 .pt-table td.pt-v2-prompt{padding-left:20px;color:rgb(33,33,33);font-size:14px;white-space:normal;overflow:visible;vertical-align:middle}
@@ -2117,7 +2117,7 @@ textarea.ap-input{
         <div class="rec-body">
           <div class="rec-title">Win More Dubbo Searches with Local Market Content</div>
           <div class="rec-desc">Your perfect 5.0 rating from 457 reviews shows buyers and sellers trust you, but you're missing opportunities to capture local search traffic. Publishing regular Dubbo market updates and suburb guides will help more people researching property in your area. This positions your 40+ years of local expertise front and center, turning searches into enquiries.</div>
-          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Publish monthly market updates and guides could move your Citation share for Residential Property Sales</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Publish monthly market updates and guides could move your Share of voice for Residential Property Sales</div>
         </div>
       </div>
 
@@ -2141,7 +2141,7 @@ textarea.ap-input{
         <div class="rec-body">
           <div class="rec-title">Create Dubbo Property Appraisal Hub Page</div>
           <div class="rec-desc">Your competitors are capturing valuable appraisal leads with dedicated local pages while your site lacks this critical conversion tool. Creating a comprehensive Dubbo property appraisal hub with online forms and clear value propositions will help you rank for high-intent searches.</div>
-          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Add appraisal hub page could move your Citation share for Property Appraisals</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Add appraisal hub page could move your Share of voice for Property Appraisals</div>
         </div>
       </div>
 
@@ -2153,7 +2153,7 @@ textarea.ap-input{
         <div class="rec-body">
           <div class="rec-title">Create Dubbo Suburb Service Pages for Sales &amp; Rentals</div>
           <div class="rec-desc">Your Dubbo office lacks dedicated suburb-specific service pages, limiting your visibility in local property searches. Creating targeted pages for each suburb will capture more local searches and convert your established market presence into digital leads.</div>
-          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Build suburb pages could move your Citation share for Residential Property Sales</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Build suburb pages could move your Share of voice for Residential Property Sales</div>
         </div>
       </div>
 
@@ -2165,7 +2165,7 @@ textarea.ap-input{
         <div class="rec-body">
           <div class="rec-title">Showcase Dubbo Success Stories to Drive More Enquiries</div>
           <div class="rec-desc">Your agency has earned perfect 5.0 ratings and high client satisfaction, but this powerful proof isn't visible online. By publishing local case studies and testimonials, you'll convert more website visitors into enquiries by showing real results from real Dubbo clients.</div>
-          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Publish case studies with outcomes could move your Citation share for Residential Property Sales</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Publish case studies with outcomes could move your Share of voice for Residential Property Sales</div>
         </div>
       </div>
 
@@ -5127,11 +5127,61 @@ function closeDeleteThemeModal(e) {
 function executeDeleteTheme() {
   if (_deleteThemeRow) {
     const groupKey = _deleteThemeRow.dataset.group;
-    document.querySelectorAll(`.pt-data-row[data-group="${groupKey}"]`).forEach(r => r.remove());
-    _deleteThemeRow.remove();
+
+    // Add deleted icon beside the theme label (if not already there)
+    const label = _deleteThemeRow.querySelector('.pt-group-label');
+    if (label && !label.querySelector('.pt-deleted-icon')) {
+      label.insertAdjacentHTML('beforeend', '<svg class="pt-deleted-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.38149 22C9.11195 22 8.85293 21.9477 8.60444 21.843C8.35576 21.7385 8.13978 21.5945 7.95649 21.411L3.589 17.0435C3.40552 16.8602 3.26153 16.6442 3.15703 16.3956C3.05234 16.1471 3 15.8881 3 15.6185V9.38149C3 9.11195 3.05234 8.85293 3.15703 8.60444C3.26153 8.35577 3.40552 8.13978 3.589 7.95649L7.95649 3.589C8.13978 3.40552 8.35576 3.26153 8.60444 3.15703C8.85293 3.05234 9.11195 3 9.38149 3H15.6185C15.8881 3 16.1471 3.05234 16.3956 3.15703C16.6442 3.26153 16.8602 3.40552 17.0435 3.589L21.411 7.95649C21.5945 8.13978 21.7385 8.35577 21.843 8.60444C21.9477 8.85293 22 9.11195 22 9.38149V15.6185C22 15.8881 21.9477 16.1471 21.843 16.3956C21.7385 16.6442 21.5945 16.8602 21.411 17.0435L17.0435 21.411C16.8602 21.5945 16.6442 21.7385 16.3956 21.843C16.1471 21.9477 15.8881 22 15.6185 22H9.38149ZM9.25882 20.3235H15.7412L20.3235 15.7412V9.25882L15.7412 4.67647H9.25882L4.67647 9.25882V15.7412L9.25882 20.3235ZM12.5 13.6777L15.0963 16.2743C15.2511 16.4289 15.4457 16.5081 15.68 16.5118C15.9141 16.5153 16.1122 16.4362 16.2743 16.2743C16.4362 16.1122 16.5171 15.9159 16.5171 15.6853C16.5171 15.4547 16.4362 15.2584 16.2743 15.0963L13.6777 12.5L16.2743 9.90371C16.4289 9.74891 16.5081 9.55435 16.5118 9.32001C16.5153 9.08587 16.4362 8.88776 16.2743 8.72571C16.1122 8.56383 15.9159 8.4829 15.6853 8.4829C15.4547 8.4829 15.2584 8.56383 15.0963 8.72571L12.5 11.3223L9.90371 8.72571C9.74891 8.5711 9.55435 8.49193 9.32001 8.48821C9.08587 8.48467 8.88777 8.56383 8.72571 8.72571C8.56383 8.88776 8.4829 9.0841 8.4829 9.31471C8.4829 9.54531 8.56383 9.74165 8.72571 9.90371L11.3223 12.5L8.72571 15.0963C8.5711 15.2511 8.49193 15.4457 8.48821 15.68C8.48467 15.9141 8.56383 16.1122 8.72571 16.2743C8.88777 16.4362 9.0841 16.5171 9.31471 16.5171C9.54531 16.5171 9.74165 16.4362 9.90371 16.2743L12.5 13.6777Z" fill="#8F8F8F"/></svg>');
+    }
+
+    // Set all prompt rows under this theme to "Remove next cycle"
+    document.querySelectorAll(`.pt-data-row[data-group="${groupKey}"]`).forEach(r => {
+      const pill = r.querySelector('.pt-status-pill');
+      if (pill) {
+        pill.className = 'pt-status-pill stop-tracking pt-removed-pill';
+        pill.textContent = 'Remove next cycle';
+      }
+    });
+
+    // Replace group row hover actions with a single "Start tracking" button
+    const hoverActions = _deleteThemeRow.querySelector('.pt-row-hover-actions');
+    if (hoverActions) {
+      hoverActions.innerHTML =
+        `<button class="pt-row-icon-btn" title="Start tracking" onclick="startTrackingTheme(this)">` +
+        `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button>`;
+    }
   }
   document.getElementById('deleteThemeModal').classList.remove('open');
   _deleteThemeRow = null;
+}
+
+function startTrackingTheme(btn) {
+  const groupRow = btn.closest('.pt-group-row');
+  if (!groupRow) return;
+  const groupKey = groupRow.dataset.group;
+
+  // Remove deleted icon from theme label
+  const icon = groupRow.querySelector('.pt-group-label .pt-deleted-icon');
+  if (icon) icon.remove();
+
+  // Set all prompt rows to "Active" if currently Stops/Remove next cycle, else Starts next cycle
+  document.querySelectorAll(`.pt-data-row[data-group="${groupKey}"]`).forEach(r => {
+    const pill = r.querySelector('.pt-status-pill');
+    if (pill) {
+      const isStopped = pill.classList.contains('stop-tracking');
+      pill.className = isStopped ? 'pt-status-pill tracking' : 'pt-status-pill next-cycle';
+      pill.textContent = isStopped ? 'Active' : 'Starts next cycle';
+    }
+  });
+
+  // Restore original hover actions (add + delete)
+  const hoverActions = groupRow.querySelector('.pt-row-hover-actions');
+  if (hoverActions) {
+    const theme = groupRow.querySelector('.pt-group-label')?.textContent.trim() || '';
+    hoverActions.innerHTML =
+      `<button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'${theme}')"><span class="material-symbols-rounded">add</span></button>` +
+      `<button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'${theme}')"><span class="material-symbols-rounded">delete</span></button>`;
+  }
 }
 
 function openAddTagPanel() {
@@ -5336,7 +5386,7 @@ function closeNmModal(e) {
   document.getElementById('nmEditModal').classList.remove('open');
 }
 
-/* ── Removed next cycle chip tooltip ── */
+/* ── Remove next cycle chip tooltip ── */
 document.addEventListener('mouseover', function(e) {
   const pill = e.target.closest('.pt-removed-pill');
   if (!pill) return;
@@ -5352,12 +5402,12 @@ document.addEventListener('mouseout', function(e) {
     document.getElementById('pt-mod-tooltip').style.display = 'none';
 });
 
-/* ── Citation share tooltip ── */
+/* ── Share of voice tooltip ── */
 document.addEventListener('mouseover', function(e) {
   const pct = e.target.closest('.nm-pct-span');
   if (!pct) return;
   const tip = document.getElementById('pt-mod-tooltip');
-  tip.textContent = 'Citation share';
+  tip.textContent = 'Share of voice';
   tip.style.display = 'block';
   const r = pct.getBoundingClientRect();
   tip.style.top = (r.bottom + 6) + 'px';
@@ -5698,7 +5748,7 @@ function showMorePopover(e, btn) {
     'tracking':    { label: 'Stop tracking',  next: 'stop-tracking' },
     'not-tracking':{ label: 'Start tracking', next: 'next-cycle' },
     'next-cycle':  { label: 'Stop tracking',  next: 'stop-tracking' },
-    'stop-tracking':{ label: 'Start tracking', next: 'next-cycle' }
+    'stop-tracking':{ label: 'Start tracking', next: 'tracking' }
   };
   const opt = map[cls] || map['not-tracking'];
   const item = document.getElementById('pt-popover-item');
@@ -5761,11 +5811,11 @@ function deletePromptRow() {
   if (!_popoverRow) return;
   const row = _popoverRow;
 
-  // Change status to "Removed next cycle" with tooltip
+  // Change status to "Remove next cycle" with tooltip
   const pill = row.querySelector('.pt-status-pill');
   if (pill) {
     pill.className = 'pt-status-pill stop-tracking pt-removed-pill';
-    pill.textContent = 'Removed next cycle';
+    pill.textContent = 'Remove next cycle';
   }
 
   closeMorePopover();
