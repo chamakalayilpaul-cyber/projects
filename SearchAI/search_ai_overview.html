@@ -1241,7 +1241,8 @@ body{
 /* ── Themes banner ── */
 .tp-banner{display:flex;align-items:center;gap:10px;background:#e8f0fe;border-radius:8px;padding:8px 16px;margin-bottom:8px;font-size:14px;color:rgb(33,33,33);line-height:1.5}
 .tp-banner .material-symbols-rounded{font-size:18px;color:#1976d2;flex-shrink:0}
-.tp-banner-link{color:#1976d2;background:none;border:none;cursor:pointer;font-size:14px;font-family:'Roboto',sans-serif;text-decoration:underline;padding:0}
+.tp-banner-link{color:#1976d2;background:none;border:none;cursor:pointer;font-size:14px;font-family:'Roboto',sans-serif;text-decoration:none;padding:0}
+.tp-banner-link:hover{text-decoration:underline}
 /* ══ EXPLORE THEMES VIEW ══ */
 .et-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px;margin-bottom:16px}
 .et-card-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
@@ -2359,7 +2360,7 @@ textarea.ap-input{
               <th><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">AI sites</span></th>
               <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
-              <th>Status</th>
+              <th>Tracking status</th>
             </tr>
           </thead>
                     <tbody>
@@ -2411,7 +2412,8 @@ textarea.ap-input{
     <div class="view" id="view-prompts-v2">
       <div class="tp-banner">
         <span class="material-symbols-rounded">lightbulb</span>
-        <span>Looking for trending themes and prompts for your locations?&nbsp;<button class="tp-banner-link" onclick="goToExploreThemes()">Explore trending themes</button></span>
+        <span style="flex:1">Discover trending themes and prompts across AI platforms</span>
+        <button class="tp-banner-link" onclick="goToExploreThemes()">Explore trends</button>
       </div>
       <div class="pt-table-wrap">
         <table class="pt-table" id="pt-v2-table">
@@ -2424,7 +2426,7 @@ textarea.ap-input{
               <th class="pt-loc-col"><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">Monthly searches<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">AI sites</span></th>
-              <th>Status</th>
+              <th>Tracking status</th>
               <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
             </tr>
           </thead>
@@ -2441,7 +2443,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="34" data-brand="4">34</td>
               <td class="pt-monthly-cell">89.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Dec 02, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
@@ -2449,7 +2451,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="76" data-brand="4">76</td>
               <td class="pt-monthly-cell">76.2K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Jan 15, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
@@ -2457,7 +2459,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="67" data-brand="4">67</td>
               <td class="pt-monthly-cell">67.3K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Starts next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Aug 14, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
@@ -2465,7 +2467,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="8" data-brand="4">8</td>
               <td class="pt-monthly-cell">45.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 01, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
@@ -2473,7 +2475,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="45" data-brand="4">45</td>
               <td class="pt-monthly-cell">54.8K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Nov 29, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
@@ -2481,7 +2483,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="78" data-brand="4">78</td>
               <td class="pt-monthly-cell">31.5K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Oct 18, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -2496,7 +2498,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="22" data-brand="3">22</td>
               <td class="pt-monthly-cell">54.2K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Jul 22, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
@@ -2504,7 +2506,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="56" data-brand="3">56</td>
               <td class="pt-monthly-cell">48.7K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Starts next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Sep 10, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
@@ -2512,7 +2514,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="22" data-brand="3">22</td>
               <td class="pt-monthly-cell">38.9K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Feb 26, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
@@ -2520,7 +2522,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="34" data-brand="3">34</td>
               <td class="pt-monthly-cell">42.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">May 08, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
@@ -2528,7 +2530,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="38" data-brand="3">38</td>
               <td class="pt-monthly-cell">35.6K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Mar 11, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -2543,7 +2545,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="12" data-brand="2">12</td>
               <td class="pt-monthly-cell">28.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Jun 03, 2025</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -2561,7 +2563,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">78.3K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 20, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
@@ -2569,7 +2571,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">62.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 20, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
@@ -2577,7 +2579,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">55.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Starts next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 20, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
@@ -2585,7 +2587,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">48.9K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Apr 20, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -2600,7 +2602,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">67.2K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Mar 22, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="pediatric-br">
@@ -2608,7 +2610,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">43.8K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Mar 22, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="pediatric-br">
@@ -2616,7 +2618,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">51.6K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Tracking next cycle</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill next-cycle">Starts next cycle</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Mar 22, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -2631,7 +2633,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">72.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Feb 10, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="emergency-br">
@@ -2639,7 +2641,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">58.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Feb 10, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="emergency-br">
@@ -2647,7 +2649,7 @@ textarea.ap-input{
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">63.7K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
-              <td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span></td>
+              <td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span></td>
               <td class="pt-date pt-action-cell"><span class="pt-date-text">Feb 10, 2026</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
 
@@ -2836,7 +2838,7 @@ textarea.ap-input{
         </div>
         <div class="et-legend">
           <div class="et-legend-item"><div class="et-legend-dot" style="background:#1976d2"></div>Tracking</div>
-          <div class="et-legend-item"><div class="et-legend-dot" style="background:rgb(200,200,200)"></div>Not tracking</div>
+          <div class="et-legend-item"><div class="et-legend-dot" style="background:rgb(200,200,200)"></div>Inactive</div>
         </div>
       </div>
 
@@ -2862,7 +2864,7 @@ textarea.ap-input{
               <tr>
                 <th><span class="pt-th-inner" style="font-weight:400">Themes and prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
                 <th><span class="pt-th-inner" style="font-weight:400">Monthly searches<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
-                <th>Status</th>
+                <th>Tracking status</th>
               </tr>
             </thead>
             <tbody>
@@ -2880,17 +2882,17 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-invis">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
               <td class="pt-monthly-cell">89.4K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-invis">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend Invisalign specialists for complex bite corrections?</span></td>
               <td class="pt-monthly-cell">76.2K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Active</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-invis">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does Invisalign cost with insurance coverage?</span></td>
               <td class="pt-monthly-cell">79.7K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Active</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-twh" onclick="togglePtGroup('et-twh')">
               <td><div class="pt-group-inner">
@@ -2906,17 +2908,17 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-twh">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best teeth whitening dentist near me with same-day appointments</span></td>
               <td class="pt-monthly-cell">98.3K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Active</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-twh">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Professional teeth whitening vs at-home kits which is better</span></td>
               <td class="pt-monthly-cell">67.4K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-twh">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How long does professional teeth whitening last?</span></td>
               <td class="pt-monthly-cell">36.1K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-dimpl" onclick="togglePtGroup('et-dimpl')">
               <td><div class="pt-group-inner">
@@ -2932,17 +2934,17 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-dimpl">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do dental implants cost and what affects pricing?</span></td>
               <td class="pt-monthly-cell">87.2K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Active</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-dimpl">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best dental implant specialists near me</span></td>
               <td class="pt-monthly-cell">65.1K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-dimpl">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Are dental implants covered by insurance?</span></td>
               <td class="pt-monthly-cell">37.1K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-calig" onclick="togglePtGroup('et-calig')">
               <td><div class="pt-group-inner">
@@ -2958,12 +2960,12 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-calig">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Clear aligners vs braces which is better for adults?</span></td>
               <td class="pt-monthly-cell">78.9K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Active</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-calig">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find clear aligner providers accepting new patients near me</span></td>
               <td class="pt-monthly-cell">55.3K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-orth" onclick="togglePtGroup('et-orth')">
               <td><div class="pt-group-inner">
@@ -2979,12 +2981,12 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-orth">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best orthodontist near me for adults seeking discreet treatment</span></td>
               <td class="pt-monthly-cell">54.2K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-orth">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Orthodontic treatment options and costs for teenagers</span></td>
               <td class="pt-monthly-cell">44.5K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
             </tr>
             </tbody>
           </table>
@@ -3657,7 +3659,7 @@ textarea.ap-input{
               <th style="width:38%">Recommendation</th>
               <th style="width:16%">Content type</th>
               <th style="width:14%">AEO score impact</th>
-              <th style="width:14%">Status</th>
+              <th style="width:14%">Tracking status</th>
               <th style="width:18%">Actions</th>
             </tr>
           </thead>
@@ -4217,6 +4219,22 @@ textarea.ap-input{
 </div>
 
 <!-- ── Edit Mentions modal ── -->
+<div class="modal-overlay" id="deletePromptModal" onclick="closeDeletePromptModal(event)">
+  <div class="modal" style="max-width:480px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Delete prompt</span>
+      <button class="modal-close" onclick="closeDeletePromptModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <p id="delete-prompt-body" style="font-size:14px;color:#212121;line-height:1.6;margin:16px 0 28px"></p>
+    <div class="modal-footer" style="border-top:none;margin-top:0;padding-top:0">
+      <button class="btn-cancel" onclick="closeDeletePromptModal()">Cancel</button>
+      <button class="btn-delete-confirm" onclick="executeDeletePrompt()">Delete</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="deleteThemeModal" onclick="closeDeleteThemeModal(event)">
   <div class="modal" style="max-width:480px" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -4225,8 +4243,8 @@ textarea.ap-input{
         <span class="material-symbols-rounded" style="font-size:20px">close</span>
       </button>
     </div>
-    <p id="delete-theme-body" style="font-size:14px;color:#212121;line-height:1.6;margin:0 0 28px"></p>
-    <div class="modal-footer">
+    <p id="delete-theme-body" style="font-size:14px;color:#212121;line-height:1.6;margin:16px 0 28px"></p>
+    <div class="modal-footer" style="border-top:none;margin-top:0;padding-top:0">
       <button class="btn-cancel" onclick="closeDeleteThemeModal()">Cancel</button>
       <button class="btn-delete-confirm" onclick="executeDeleteTheme()">Delete</button>
     </div>
@@ -5096,7 +5114,7 @@ function confirmDeleteTheme(event, themeName) {
 
   const countPart = count ? `your ${count} ${scopeLabel}` : `your ${scopeLabel}`;
   document.getElementById('delete-theme-body').textContent =
-    `The "${themeName}" theme will be permanently deleted and tracking will stop across ${countPart} reports. This action can't be undone.`;
+    `The "${themeName}" theme will be permanently deleted and tracking will stop across ${countPart} reports. Are you sure?`;
   document.getElementById('deleteThemeModal').classList.add('open');
 }
 
@@ -5318,6 +5336,22 @@ function closeNmModal(e) {
   document.getElementById('nmEditModal').classList.remove('open');
 }
 
+/* ── Removed next cycle chip tooltip ── */
+document.addEventListener('mouseover', function(e) {
+  const pill = e.target.closest('.pt-removed-pill');
+  if (!pill) return;
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = 'Prompt will be deleted. Tracking will stop in next monthly update.';
+  tip.style.display = 'block';
+  const r = pill.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+});
+document.addEventListener('mouseout', function(e) {
+  if (e.target.closest('.pt-removed-pill'))
+    document.getElementById('pt-mod-tooltip').style.display = 'none';
+});
+
 /* ── Citation share tooltip ── */
 document.addEventListener('mouseover', function(e) {
   const pct = e.target.closest('.nm-pct-span');
@@ -5443,7 +5477,7 @@ function addPromptToTable() {
     const pill = _etTrackingRow.querySelector('.pt-status-pill');
     if (pill) {
       pill.className = 'pt-status-pill next-cycle';
-      pill.textContent = 'Tracking next cycle';
+      pill.textContent = 'Starts next cycle';
     }
     _etTrackingRow = null;
     closeAddPromptPanel();
@@ -5683,7 +5717,7 @@ function applyMoreAction() {
   if (!_popoverRow) return;
   const item    = document.getElementById('pt-popover-item');
   const next    = item.dataset.next;
-  const labels  = {'tracking':'Tracking','not-tracking':'Not tracking','next-cycle':'Tracking next cycle','stop-tracking':'Stop tracking next cycle'};
+  const labels  = {'tracking':'Active','not-tracking':'Inactive','next-cycle':'Starts next cycle','stop-tracking':'Stops next cycle'};
   const pill    = _popoverRow.querySelector('.pt-status-pill');
   if (pill) { pill.className = 'pt-status-pill ' + next; pill.textContent = labels[next]; }
   closeMorePopover();
@@ -5694,33 +5728,44 @@ function closeMorePopover() {
   _popoverRow = null;
 }
 
+let _pendingDeleteRow = null;
+
+function confirmDeletePrompt() {
+  if (!_popoverRow) return;
+  _pendingDeleteRow = _popoverRow; // save before popover closes and nulls _popoverRow
+  const inner = _pendingDeleteRow.querySelector('.pt-v2-text, .pt-v2-row-inner');
+  const promptText = inner ? inner.textContent.trim() : 'this prompt';
+  const isBrand = document.getElementById('pt-scope-brand')?.classList.contains('active');
+  const scopeLabel = isBrand ? 'brand' : 'locations';
+  document.getElementById('delete-prompt-body').textContent =
+    `The "${promptText}" prompt will be permanently deleted and tracking will stop across your ${scopeLabel} reports. Are you sure?`;
+  closeMorePopover();
+  document.getElementById('deletePromptModal').classList.add('open');
+}
+
+function closeDeletePromptModal(e) {
+  if (e && e.target !== document.getElementById('deletePromptModal')) return;
+  document.getElementById('deletePromptModal').classList.remove('open');
+  _pendingDeleteRow = null;
+}
+
+function executeDeletePrompt() {
+  document.getElementById('deletePromptModal').classList.remove('open');
+  if (!_pendingDeleteRow) return;
+  _popoverRow = _pendingDeleteRow; // restore so deletePromptRow can use it
+  _pendingDeleteRow = null;
+  deletePromptRow();
+}
+
 function deletePromptRow() {
   if (!_popoverRow) return;
   const row = _popoverRow;
 
-  // Change status to "Stop tracking next cycle"
+  // Change status to "Removed next cycle" with tooltip
   const pill = row.querySelector('.pt-status-pill');
   if (pill) {
-    pill.className = 'pt-status-pill stop-tracking';
-    pill.textContent = 'Stop tracking next cycle';
-  }
-
-  // Append deleted icon right after prompt text, inline. Ensure text is in a span first.
-  const rowInner = row.querySelector('.pt-v2-row-inner');
-  if (rowInner && !rowInner.querySelector('.pt-deleted-icon')) {
-    let textSpan = rowInner.querySelector('.pt-v2-text');
-    if (!textSpan) {
-      // Wrap bare text node in a span so icon stays inline with text
-      const textNode = [...rowInner.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
-      if (textNode) {
-        textSpan = document.createElement('span');
-        textSpan.className = 'pt-v2-text';
-        textSpan.textContent = textNode.textContent;
-        textNode.replaceWith(textSpan);
-      }
-    }
-    const target = textSpan || rowInner;
-    target.insertAdjacentHTML('beforeend', '<svg class="pt-deleted-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="Deleted"><path d="M9.38149 22C9.11195 22 8.85293 21.9477 8.60444 21.843C8.35576 21.7385 8.13978 21.5945 7.95649 21.411L3.589 17.0435C3.40552 16.8602 3.26153 16.6442 3.15703 16.3956C3.05234 16.1471 3 15.8881 3 15.6185V9.38149C3 9.11195 3.05234 8.85293 3.15703 8.60444C3.26153 8.35577 3.40552 8.13978 3.589 7.95649L7.95649 3.589C8.13978 3.40552 8.35576 3.26153 8.60444 3.15703C8.85293 3.05234 9.11195 3 9.38149 3H15.6185C15.8881 3 16.1471 3.05234 16.3956 3.15703C16.6442 3.26153 16.8602 3.40552 17.0435 3.589L21.411 7.95649C21.5945 8.13978 21.7385 8.35577 21.843 8.60444C21.9477 8.85293 22 9.11195 22 9.38149V15.6185C22 15.8881 21.9477 16.1471 21.843 16.3956C21.7385 16.6442 21.5945 16.8602 21.411 17.0435L17.0435 21.411C16.8602 21.5945 16.6442 21.7385 16.3956 21.843C16.1471 21.9477 15.8881 22 15.6185 22H9.38149ZM9.25882 20.3235H15.7412L20.3235 15.7412V9.25882L15.7412 4.67647H9.25882L4.67647 9.25882V15.7412L9.25882 20.3235ZM12.5 13.6777L15.0963 16.2743C15.2511 16.4289 15.4457 16.5081 15.68 16.5118C15.9141 16.5153 16.1122 16.4362 16.2743 16.2743C16.4362 16.1122 16.5171 15.9159 16.5171 15.6853C16.5171 15.4547 16.4362 15.2584 16.2743 15.0963L13.6777 12.5L16.2743 9.90371C16.4289 9.74891 16.5081 9.55435 16.5118 9.32001C16.5153 9.08587 16.4362 8.88776 16.2743 8.72571C16.1122 8.56383 15.9159 8.4829 15.6853 8.4829C15.4547 8.4829 15.2584 8.56383 15.0963 8.72571L12.5 11.3223L9.90371 8.72571C9.74891 8.5711 9.55435 8.49193 9.32001 8.48821C9.08587 8.48467 8.88777 8.56383 8.72571 8.72571C8.56383 8.88776 8.4829 9.0841 8.4829 9.31471C8.4829 9.54531 8.56383 9.74165 8.72571 9.90371L11.3223 12.5L8.72571 15.0963C8.5711 15.2511 8.49193 15.4457 8.48821 15.68C8.48467 15.9141 8.56383 16.1122 8.72571 16.2743C8.88777 16.4362 9.0841 16.5171 9.31471 16.5171C9.54531 16.5171 9.74165 16.4362 9.90371 16.2743L12.5 13.6777Z" fill="#8F8F8F"/></svg>');
+    pill.className = 'pt-status-pill stop-tracking pt-removed-pill';
+    pill.textContent = 'Removed next cycle';
   }
 
   closeMorePopover();
@@ -5888,7 +5933,7 @@ function saveEditTheme() {
     tr.innerHTML =
       '<td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>' + p + '</span></td>' +
       
-      '<td class="pt-status-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>' +
+      '<td class="pt-status-cell"><span class="pt-status-pill not-tracking">Inactive</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>' +
       '<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>' +
       '<td class="pt-date">' + dateStr + '</td>';
     after.insertAdjacentElement('afterend', tr); after = tr;
@@ -6037,7 +6082,7 @@ function addThemeToTable() {
     tr.innerHTML =
       `<td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>${prompt}</span></td>` +
       
-      `<td class="pt-status-cell"><span class="pt-status-pill tracking">Tracking</span>` +
+      `<td class="pt-status-cell"><span class="pt-status-pill tracking">Active</span>` +
       `<span class="pt-row-hover-actions"><button class="pt-row-icon-btn"><span class="material-symbols-rounded">edit</span></button>` +
       `<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>`;
     insertAfter.insertAdjacentElement('afterend', tr); insertAfter = tr;
@@ -6062,7 +6107,7 @@ function etStopTracking(btn) {
   const pill = row.querySelector('.pt-status-pill');
   if (pill) {
     pill.className = 'pt-status-pill stop-tracking';
-    pill.textContent = 'Stop tracking next cycle';
+    pill.textContent = 'Stops next cycle';
   }
   showToast('Prompt tracking stopped. Reports for updated prompts will be available in next monthly update.');
 }
@@ -6108,7 +6153,7 @@ function copyField(btn) {
 <div class="pt-popover" id="pt-popover">
   <button class="pt-popover-item" id="pt-popover-item" onclick="applyMoreAction()"></button>
   
-  <button class="pt-popover-item" style="color:#e53935" onclick="deletePromptRow()">Delete</button></div>
+  <button class="pt-popover-item" style="color:#e53935" onclick="confirmDeletePrompt()">Delete</button></div>
 
 <!-- ── TOAST ── -->
 
