@@ -582,6 +582,12 @@ body{
   color:#1976d2;font-size:14px;font-family:'Roboto',sans-serif;cursor:pointer;
   display:inline-flex;align-items:center;
 }
+.btn-delete-confirm{
+  height:36px;padding:0 20px;border-radius:4px;border:none;
+  background:#d32f2f;color:#fff;font-size:14px;font-family:'Roboto',sans-serif;
+  cursor:pointer;display:inline-flex;align-items:center;
+}
+.btn-delete-confirm:hover{background:#b71c1c}
 .btn-cancel:hover{background:#e8f0fe}
 .btn-generate{
   height:36px;padding:0 16px;border-radius:4px;border:none;
@@ -2428,7 +2434,7 @@ textarea.ap-input{
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisialign</span><span class="pt-group-subcount">6 prompts</span></div></div></td>
               <td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
-              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'invisalign','Invisialign')"><span class="material-symbols-rounded">delete</span></button></span></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Invisialign')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
@@ -2483,7 +2489,7 @@ textarea.ap-input{
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Orthodontics</span><span class="pt-group-subcount">5 prompts</span></div></div></td>
               <td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
-              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'orthodontics','Orthodontics')"><span class="material-symbols-rounded">delete</span></button></span></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Orthodontics')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults?</span></td>
@@ -2530,7 +2536,7 @@ textarea.ap-input{
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Trusted invisalign care</span><span class="pt-group-subcount">1 prompt</span></div></div></td>
               <td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
-              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'trusted','Trusted invisalign care')"><span class="material-symbols-rounded">delete</span></button></span></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Trusted invisalign care')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="trusted">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental clinics in my area are most trusted by patients for delivering consistent and reliable Invisalign care throughout the full treatment?</span></td>
@@ -2548,7 +2554,7 @@ textarea.ap-input{
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Cosmetic dentistry</span><span class="pt-group-subcount">4 prompts</span></div></div></td>
               <td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
-              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Cosmetic dentistry')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'cosmetic-br','Cosmetic dentistry')"><span class="material-symbols-rounded">delete</span></button></span></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Cosmetic dentistry')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Cosmetic dentistry')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best cosmetic dentistry options for improving my smile?</span></td>
@@ -2587,7 +2593,7 @@ textarea.ap-input{
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Pediatric dentistry</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
               <td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
-              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Pediatric dentistry')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'pediatric-br','Pediatric dentistry')"><span class="material-symbols-rounded">delete</span></button></span></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Pediatric dentistry')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Pediatric dentistry')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="pediatric-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-reviewed pediatric dentists near me for young children?</span></td>
@@ -2618,7 +2624,7 @@ textarea.ap-input{
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Dental emergency care</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
               <td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
-              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Dental emergency care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'emergency-br','Dental emergency care')"><span class="material-symbols-rounded">delete</span></button></span></td>
+              <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Dental emergency care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Dental emergency care')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="emergency-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which emergency dental clinics are open on weekends near me?</span></td>
@@ -4211,6 +4217,22 @@ textarea.ap-input{
 </div>
 
 <!-- ── Edit Mentions modal ── -->
+<div class="modal-overlay" id="deleteThemeModal" onclick="closeDeleteThemeModal(event)">
+  <div class="modal" style="max-width:480px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Delete theme</span>
+      <button class="modal-close" onclick="closeDeleteThemeModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <p id="delete-theme-body" style="font-size:14px;color:#212121;line-height:1.6;margin:0 0 28px"></p>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeDeleteThemeModal()">Cancel</button>
+      <button class="btn-delete-confirm" onclick="executeDeleteTheme()">Delete</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="nmEditModal" onclick="closeNmModal(event)">
   <div class="modal nm-modal" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -5053,6 +5075,46 @@ function switchNmTab(btn, tab) {
 
 /* ── Tags ── */
 let _tagEditRow = null;
+
+/* ── Delete theme confirmation modal ── */
+let _deleteThemeRow = null;
+
+function confirmDeleteTheme(event, themeName) {
+  event.stopPropagation();
+  _deleteThemeRow = event.target.closest('.pt-group-row');
+
+  // Determine scope label
+  const isBrand = document.getElementById('pt-scope-brand')?.classList.contains('active');
+  const scopeLabel = isBrand ? 'brand' : 'locations';
+
+  // Get count from group row scope cell
+  let count = '';
+  if (_deleteThemeRow) {
+    const scopeCell = _deleteThemeRow.querySelector('.pt-group-meta, .pt-loc-col, .pt-scope-cell');
+    if (scopeCell) count = scopeCell.textContent.trim();
+  }
+
+  const countPart = count ? `your ${count} ${scopeLabel}` : `your ${scopeLabel}`;
+  document.getElementById('delete-theme-body').textContent =
+    `The "${themeName}" theme will be permanently deleted and tracking will stop across ${countPart} reports. This action can't be undone.`;
+  document.getElementById('deleteThemeModal').classList.add('open');
+}
+
+function closeDeleteThemeModal(e) {
+  if (e && e.target !== document.getElementById('deleteThemeModal')) return;
+  document.getElementById('deleteThemeModal').classList.remove('open');
+  _deleteThemeRow = null;
+}
+
+function executeDeleteTheme() {
+  if (_deleteThemeRow) {
+    const groupKey = _deleteThemeRow.dataset.group;
+    document.querySelectorAll(`.pt-data-row[data-group="${groupKey}"]`).forEach(r => r.remove());
+    _deleteThemeRow.remove();
+  }
+  document.getElementById('deleteThemeModal').classList.remove('open');
+  _deleteThemeRow = null;
+}
 
 function openAddTagPanel() {
   _tagEditRow = null;
@@ -5963,7 +6025,7 @@ function addThemeToTable() {
 
     <td class="pt-status-cell"><span class="pt-row-hover-actions">
       <button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'${theme}')"><span class="material-symbols-rounded">add</span></button>
-      <button class="pt-row-icon-btn" onclick="openEditThemePanel(event,'${groupKey}','${theme}')"><span class="material-symbols-rounded">delete</span></button>
+      <button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'${theme}')"><span class="material-symbols-rounded">delete</span></button>
     </span></td>`;
   tbody.insertBefore(grpTr, firstRow);
 
