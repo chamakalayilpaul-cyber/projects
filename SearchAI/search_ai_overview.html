@@ -1214,13 +1214,33 @@ body{
 .at-prompt-item:last-child{border-bottom:none}
 .at-prompt-ai-icon{font-size:16px;color:#7c3aed;flex-shrink:0}
 .at-prompt-text{flex:1;font-size:14px;color:rgb(33,33,33);min-width:0}
-.at-prompt-item-input{padding-left:26px;gap:8px;align-items:flex-start}
+.at-prompt-item-input{gap:8px;align-items:flex-start}
+.at-prompt-input-wrap{flex:1;display:flex;flex-direction:column;gap:0;min-width:0}
+.at-prompt-input-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:4px 8px;border:1px solid #e5e9f0;border-top:none;
+  border-bottom-left-radius:8px;border-bottom-right-radius:8px;background:#fff;
+}
+.at-word-count{font-size:12px;color:rgb(143,143,143)}
+.at-regen-btn{
+  background:transparent;border:none;cursor:pointer;
+  font-size:14px;color:#1976d2;font-family:'Roboto',sans-serif;
+  display:flex;align-items:center;gap:4px;padding:0;margin-left:auto;
+}
+.at-regen-btn:hover{text-decoration:underline}
+.at-personalize-wrap{position:relative}
 .at-prompt-input-box{
   flex:1;border:1px solid #e5e9f0;border-radius:8px;
   padding:10px 12px;font-size:14px;color:rgb(33,33,33);
   font-family:'Roboto',sans-serif;outline:none;min-width:0;
-  resize:none;overflow:hidden;line-height:1.5;
+  resize:none;overflow:hidden;line-height:1.5;width:100%;box-sizing:border-box;
 }
+.at-prompt-item-input .at-prompt-input-box{
+  border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;
+}
+.at-prompt-input-wrap:focus-within .at-prompt-input-box{border-color:#1976d2}
+.at-prompt-input-wrap:focus-within .at-prompt-input-footer{border-color:#1976d2}
+.at-footer-ai-icon{width:16px;height:16px;flex-shrink:0}
 .at-prompt-input-box:focus{border-color:#1976d2}
 .at-prompt-confirm-btn{
   width:36px;height:36px;border:1px solid #e5e9f0;border-radius:4px;
@@ -3891,6 +3911,9 @@ textarea.ap-input{
     <div id="at-prompts-section">
       <div class="at-gen-hdr" style="margin-bottom:8px">
         <span class="at-gen-label">Prompts</span>
+        <button class="at-regen-btn" id="at-regen-btn" onclick="regenerateThemePrompts()" style="display:none">
+          <span class="material-symbols-rounded" style="font-size:16px">refresh</span>Regenerate
+        </button>
       </div>
       <div id="at-loading" class="at-loading" style="display:none">
         <span class="material-symbols-rounded">progress_activity</span>Generating prompts…
@@ -6133,6 +6156,7 @@ function openAddThemePanel() {
   document.getElementById('at-loading').style.display = 'none';
   document.getElementById('at-prompts-ph').style.display = 'block';
   document.getElementById('at-btn-add').classList.remove('enabled');
+  document.getElementById('at-regen-btn').style.display = 'none';
   // Reset track by fields
   document.querySelectorAll('input[name="at-track"]').forEach(r => r.checked = false);
   document.getElementById('at-loc-field').style.display = 'none';
@@ -6237,6 +6261,7 @@ function generateThemePrompts(theme) {
   document.getElementById('at-prompts-ph').style.display = 'none';
   renderAtPromptItems(prompts);
   document.getElementById('at-btn-add').classList.add('enabled');
+  document.getElementById('at-regen-btn').style.display = 'flex';
 }
 
 function renderAtPromptItems(prompts) {
@@ -6259,9 +6284,22 @@ function addAtPromptRow() {
   const div = document.createElement('div');
   div.className = 'at-prompt-item at-prompt-item-input';
   div.innerHTML =
-    `<textarea class="at-prompt-input-box" placeholder="Enter prompt"
-      oninput="checkAtAdd();autoResizePrompt(this)"
-      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();atConfirmPrompt(this.closest('.at-prompt-item'))}"></textarea>` +
+    `<div class="at-prompt-input-wrap">` +
+      `<textarea class="at-prompt-input-box" placeholder="Enter prompt"
+        oninput="checkAtAdd();autoResizePrompt(this)"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();atConfirmPrompt(this.closest('.at-prompt-item'))}"></textarea>` +
+      `<div class="at-prompt-input-footer">` +
+        `<svg class="at-footer-ai-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.81506 9.67057H5.25656L4.99867 10.4162H4.17457L5.58171 6.4975H6.49551L7.90265 10.4162H7.07294L6.81506 9.67057ZM6.60203 9.04269L6.03581 7.40569L5.46959 9.04269H6.60203Z" fill="#6834B7"/><path d="M9.21348 6.50311V10.4162H8.42862V6.50311H9.21348Z" fill="#6834B7"/><path d="M9.05872 4.09628H3.08985C2.26681 4.09628 1.59961 4.76348 1.59961 5.58652V11.5475C1.59961 12.3705 2.26682 13.0377 3.08985 13.0377H10.5411C11.3641 13.0377 12.0313 12.3705 12.0313 11.5475V7.08392C11.8859 7.1556 11.738 7.17791 11.618 7.17791C11.5048 7.17791 11.3924 7.15774 11.2862 7.1171V11.5475C11.2862 11.959 10.9526 12.2926 10.5411 12.2926H3.08985C2.67833 12.2926 2.34473 11.959 2.34473 11.5475V5.58652C2.34473 5.175 2.67833 4.8414 3.08985 4.8414H9.01277C8.97214 4.73007 8.95657 4.61882 8.95657 4.51896C8.95657 4.37789 8.98826 4.23158 9.05872 4.09628Z" fill="#6834B7"/><path d="M13.0504 3.10986C13.0323 3.09567 13.0215 3.0777 13.0177 3.05593C13.0143 3.03646 13.0185 3.01782 13.0305 3C13.1142 2.85653 13.1755 2.7415 13.2144 2.65491C13.2547 2.56934 13.2697 2.49325 13.2595 2.42665C13.2517 2.35977 13.2179 2.2861 13.1582 2.20562C13.0985 2.12515 13.012 2.02045 12.8987 1.89151C12.8648 1.85234 12.8622 1.81465 12.8907 1.77845C12.9049 1.76035 12.9224 1.75005 12.9431 1.74753C12.9639 1.74501 12.9837 1.74905 13.0024 1.75964C13.1493 1.84591 13.2679 1.90989 13.3581 1.95158C13.4494 1.99197 13.5284 2.00811 13.5953 2.00001C13.6644 1.99162 13.737 1.95767 13.813 1.89817C13.89 1.83737 13.9888 1.74762 14.1093 1.62892C14.146 1.59289 14.1837 1.59008 14.2223 1.62048C14.2609 1.65088 14.2659 1.68828 14.2372 1.7327C14.1522 1.87516 14.0896 1.98917 14.0494 2.07475C14.0105 2.16133 13.9961 2.23793 14.0062 2.30453C14.0177 2.37214 14.0532 2.44618 14.1129 2.52666C14.1737 2.60583 14.26 2.70939 14.3721 2.83731C14.4059 2.87648 14.4086 2.91416 14.3801 2.95037C14.3516 2.98657 14.3118 2.99081 14.2606 2.9631C14.1129 2.88043 13.9941 2.8194 13.9042 2.78002C13.8142 2.74064 13.7352 2.7245 13.6671 2.73159C13.6002 2.7397 13.5288 2.77351 13.4528 2.83301C13.378 2.89353 13.2814 2.98185 13.163 3.09796C13.1265 3.13629 13.089 3.14026 13.0504 3.10986Z" fill="#6834B7"/><path d="M11.6568 6.43276C11.6104 6.43276 11.5707 6.41781 11.5376 6.38791C11.5078 6.36133 11.4913 6.32644 11.488 6.28324C11.4416 5.95098 11.3953 5.69182 11.3489 5.50575C11.3059 5.31969 11.2348 5.18014 11.1355 5.0871C11.0395 4.99075 10.8939 4.91599 10.6986 4.86283C10.5033 4.80967 10.2352 4.75152 9.89431 4.68839C9.79171 4.66846 9.74041 4.61197 9.74041 4.51894C9.74041 4.47242 9.7553 4.43421 9.78509 4.40431C9.81487 4.37441 9.85128 4.35613 9.89431 4.34949C10.2352 4.30297 10.5033 4.25645 10.6986 4.20994C10.8939 4.1601 11.0395 4.087 11.1355 3.99064C11.2348 3.89097 11.3076 3.74643 11.3539 3.55704C11.4002 3.36433 11.4449 3.09852 11.488 2.75962C11.5012 2.65662 11.5575 2.60512 11.6568 2.60512C11.756 2.60512 11.8107 2.65828 11.8206 2.7646C11.8636 3.09686 11.9066 3.35603 11.9497 3.54209C11.996 3.72816 12.0688 3.86771 12.1681 3.96074C12.2707 4.05377 12.4196 4.12687 12.6149 4.18003C12.8102 4.22987 13.0766 4.28636 13.4142 4.34949C13.5168 4.36942 13.5681 4.42591 13.5681 4.51894C13.5681 4.61197 13.5102 4.66846 13.3944 4.68839C13.0568 4.74155 12.792 4.79305 12.6 4.84289C12.4081 4.89273 12.2624 4.96583 12.1631 5.06219C12.0672 5.15854 11.996 5.30141 11.9497 5.4908C11.9066 5.68019 11.8636 5.94101 11.8206 6.27328C11.8107 6.3796 11.756 6.43276 11.6568 6.43276Z" fill="#6834B7"/></svg>` +
+        `<div class="ap-personalize-wrap at-personalize-wrap">` +
+          `<button class="ap-personalize-btn" onclick="toggleAtPersonalize(event)" type="button">` +
+            `Personalize<span class="material-symbols-rounded">arrow_drop_down</span>` +
+          `</button>` +
+          `<div class="ap-token-dropdown" id="at-token-dropdown">` +
+            `<div class="ap-token-list" id="at-token-list"></div>` +
+          `</div>` +
+        `</div>` +
+      `</div>` +
+    `</div>` +
     `<button class="at-prompt-confirm-btn" onclick="atConfirmPrompt(this.closest('.at-prompt-item'))">` +
     `<span class="material-symbols-rounded">check</span></button>`;
   list.appendChild(div);
@@ -6276,6 +6314,32 @@ function addAtPromptRow() {
 function autoResizePrompt(ta) {
   ta.style.height = 'auto';
   ta.style.height = ta.scrollHeight + 'px';
+}
+
+function toggleAtPersonalize(e) {
+  e.stopPropagation();
+  const btn = e.currentTarget;
+  const wrap = btn.closest('.at-personalize-wrap');
+  const dd = wrap.querySelector('.ap-token-dropdown');
+  const isOpen = dd.classList.contains('open');
+  document.querySelectorAll('.ap-token-dropdown.open').forEach(d => d.classList.remove('open'));
+  if (!isOpen) {
+    renderTokenList('');
+    // Re-render into at-token-list
+    const atList = dd.querySelector('#at-token-list');
+    const apList = document.getElementById('ap-token-list');
+    if (atList && apList) atList.innerHTML = apList.innerHTML;
+    dd.classList.add('open');
+  }
+}
+
+function regenerateThemePrompts() {
+  const val = document.getElementById('at-name').value.trim();
+  if (!val) return;
+  document.getElementById('at-prompts-list').innerHTML = '';
+  document.getElementById('at-loading').style.display = 'flex';
+  document.getElementById('at-btn-add').classList.remove('enabled');
+  setTimeout(() => generateThemePrompts(val), 500);
 }
 
 function atConfirmPrompt(item) {
