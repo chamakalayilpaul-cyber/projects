@@ -875,6 +875,37 @@ body{
 .status-pill.in-review{background:#fef9c3;color:#a16207}
 
 /* ══ PROMPTS VIEW ══ */
+/* Search empty state */
+.pt-search-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 24px;text-align:center;background:#fff;border-radius:8px;border:1px solid #eaeaea;
+}
+.pt-search-empty-icon{margin-bottom:16px}
+.pt-search-empty-title{font-size:16px;font-weight:500;color:rgb(33,33,33);margin:0 0 8px;font-family:'Roboto',sans-serif}
+.pt-search-empty-sub{font-size:14px;color:rgb(85,85,85);margin:0;font-family:'Roboto',sans-serif}
+/* Prompts header search */
+.pt-hdr-search-wrap{display:flex;align-items:center}
+.pt-hdr-search-box{
+  display:flex;align-items:center;gap:4px;
+  height:36px;border:1px solid #e5e9f0;border-radius:6px;
+  padding:0 8px;background:#fff;width:0;overflow:hidden;
+  transition:width 0.2s,border-color 0.2s;
+}
+.pt-hdr-search-box.open{width:240px}
+.pt-hdr-search-box:focus-within{border-color:#1976d2}
+.pt-hdr-search-icon-inner{font-size:18px;color:rgb(143,143,143);flex-shrink:0}
+.pt-hdr-search-input{
+  flex:1;border:none;outline:none;font-size:14px;
+  color:rgb(33,33,33);font-family:'Roboto',sans-serif;background:transparent;
+  min-width:0;
+}
+.pt-hdr-search-input::placeholder{color:rgb(143,143,143)}
+.pt-hdr-search-clear-inner{
+  background:transparent;border:none;cursor:pointer;
+  padding:0;display:flex;align-items:center;color:rgb(143,143,143);flex-shrink:0;
+}
+.pt-hdr-search-clear-inner:hover{color:rgb(33,33,33)}
+.pt-hdr-search-clear-inner .material-symbols-rounded{font-size:18px}
 .pt-scope-wrap{
   display:flex;align-items:center;gap:2px;
   border:1px solid #e5e9f0;border-radius:8px;
@@ -888,28 +919,6 @@ body{
 }
 .pt-scope-tab.active{background:rgb(229,233,240);color:rgb(33,33,33)}
 .pt-scope-tab:not(.active):hover{background:rgb(242,244,247)}
-/* Theme Aggregate toggle */
-.ta-toggle-btn{
-  display:inline-flex;align-items:center;gap:7px;
-  background:transparent;border:1px solid #e5e9f0;border-radius:6px;
-  padding:0 10px;height:28px;cursor:pointer;
-  font-family:'Roboto',sans-serif;
-}
-.ta-toggle-btn:hover{background:rgb(242,244,247)}
-.ta-toggle-btn.active{border-color:#1976d2;background:#ECF5FD}
-.ta-toggle-track{
-  width:28px;height:16px;background:#ccc;border-radius:8px;
-  position:relative;flex-shrink:0;transition:background .2s;
-}
-.ta-toggle-btn.active .ta-toggle-track{background:#1976d2}
-.ta-toggle-thumb{
-  position:absolute;top:2px;left:2px;
-  width:12px;height:12px;border-radius:50%;background:#fff;
-  transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);
-}
-.ta-toggle-btn.active .ta-toggle-thumb{left:14px}
-.ta-toggle-label{font-size:13px;color:rgb(85,85,85);white-space:nowrap}
-.ta-toggle-btn.active .ta-toggle-label{color:#1976d2}
 /* ── Prompt Brandkit view ── */
 .pbk-wrap{display:flex;flex-direction:column;gap:0;box-sizing:border-box;width:100%}
 .pbk-card-hdr{
@@ -1116,7 +1125,6 @@ body{
   color:rgb(143,143,143);white-space:nowrap;
 }
 .pt-th-inner{display:inline-flex;align-items:center;gap:2px;cursor:pointer;font-size:12px}
-.pt-th-inner:hover{color:rgb(33,33,33)}
 .pt-sort-icon{font-size:16px;color:rgb(143,143,143)}
 .pt-table td{
   height:56px;padding:0 20px;border-bottom:1px solid #f3f4f6;
@@ -1140,6 +1148,7 @@ body{
 }
 .pt-monthly-cell{font-size:14px;color:rgb(33,33,33);min-width:90px;white-space:nowrap}
 .pt-ai-wrap{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
+.pt-col-info{font-size:14px!important;color:rgb(143,143,143);cursor:default;vertical-align:middle;margin-left:3px}
 .pt-ai-wrap svg{width:16px;height:16px;flex-shrink:0}
 .pt-date{color:rgb(33,33,33);font-size:14px}
 /* ── Prompts accordion ── */
@@ -1259,7 +1268,7 @@ body{
 .et-legend-dot{width:8px;height:8px;border-radius:50%}
 .et-table{width:100%;border-collapse:collapse;font-size:14px}
 .et-table th{padding:9px 16px;text-align:left;font-size:12px;font-weight:400;color:rgb(143,143,143);border-bottom:1px solid #eaeaea;white-space:nowrap;background:#fafafa}
-.et-th{display:inline-flex;align-items:center;gap:3px;cursor:pointer}.et-th:hover{color:rgb(33,33,33)}
+.et-th{display:inline-flex;align-items:center;gap:3px;cursor:pointer}
 .et-table td{padding:14px 16px;border-bottom:1px solid #f3f4f6;color:rgb(33,33,33);vertical-align:middle}
 .et-table tbody tr:last-child td{border-bottom:none}
 .et-table tbody tr:hover td{background:rgb(242,244,247)}
@@ -1309,7 +1318,6 @@ body{
   background:#fafafa;
 }
 .imp-th{display:inline-flex;align-items:center;gap:3px;cursor:pointer}
-.imp-th:hover{color:rgb(33,33,33)}
 .import-history-wrap td{
   padding:14px 20px;font-size:14px;color:rgb(33,33,33);
   border-bottom:1px solid #f3f4f6;vertical-align:top;
@@ -1808,7 +1816,6 @@ textarea.ap-input{
       <svg id="sb-chev-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div id="sb-group-settings" style="display:none">
-      <div class="sb-sub-item" id="nav-prompts-v1" onclick="showView('prompts-v1')">Prompts V1</div>
       <div class="sb-sub-item" id="nav-prompts-v2" onclick="showView('prompts-v2')">Themes and prompts</div>
       <div class="sb-sub-item" id="nav-prompt-brandkit" onclick="showView('prompt-brandkit')">Brand context</div>
       <div class="sb-sub-item" id="nav-tags" onclick="showView('tags')">Tags</div>
@@ -2415,7 +2422,21 @@ textarea.ap-input{
         <span style="flex:1">Discover trending themes and prompts across AI platforms</span>
         <button class="tp-banner-link" onclick="goToExploreThemes()">Explore trends</button>
       </div>
-      <div class="pt-table-wrap">
+      <div class="pt-search-empty" id="pt-search-empty" style="display:none">
+        <div class="pt-search-empty-icon">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="9" stroke="#d0d0d0" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+            <circle cx="44" cy="20" r="9" stroke="#d0d0d0" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+            <circle cx="20" cy="44" r="9" stroke="#d0d0d0" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+            <circle cx="44" cy="44" r="9" stroke="#9e9e9e" stroke-width="2" fill="none"/>
+            <circle cx="42" cy="42" r="6" stroke="#9e9e9e" stroke-width="2" fill="none"/>
+            <line x1="47" y1="47" x2="52" y2="52" stroke="#9e9e9e" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="pt-search-empty-title">No results found</p>
+        <p class="pt-search-empty-sub">Try different keywords or remove selected filters</p>
+      </div>
+      <div class="pt-table-wrap" id="pt-v2-table-wrap">
         <table class="pt-table" id="pt-v2-table">
           <colgroup>
             <col><col class="pt-loc-col-header"><col><col><col><col>
@@ -2424,7 +2445,7 @@ textarea.ap-input{
             <tr>
               <th><span class="pt-th-inner">Themes and prompts</span></th>
               <th class="pt-loc-col"><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
-              <th><span class="pt-th-inner">Monthly searches<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">Monthly searches<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Average number of monthly AI searches for this prompt across platforms')" onmouseleave="hideColInfoTooltip()">info</span><span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">AI sites</span></th>
               <th>Tracking status</th>
               <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
@@ -2655,7 +2676,7 @@ textarea.ap-input{
 
           </tbody>
         </table>
-      </div>
+      </div><!-- /pt-v2-table-wrap -->
     </div><!-- /view-prompts-v2 -->
 
     <!-- ══ PROMPT BRANDKIT VIEW ══ -->
@@ -2863,7 +2884,7 @@ textarea.ap-input{
             <thead>
               <tr>
                 <th><span class="pt-th-inner" style="font-weight:400">Themes and prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
-                <th><span class="pt-th-inner" style="font-weight:400">Monthly searches<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+                <th><span class="pt-th-inner" style="font-weight:400">Monthly searches<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Average number of monthly AI searches for this prompt across platforms')" onmouseleave="hideColInfoTooltip()">info</span><span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
                 <th>Tracking status</th>
               </tr>
             </thead>
@@ -4356,15 +4377,18 @@ textarea.ap-input{
    ──────────────────────────────────────────────────────────────────── */
 function buildPromptsHeader() {
   return `
-    <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
+    <div class="pt-hdr-search-wrap" id="pt-hdr-search-wrap">
+      <button class="icon-btn-stroke" id="pt-hdr-search-btn" onclick="togglePtSearch()" title="Search" style="display:flex"><span class="material-symbols-rounded">search</span></button>
+      <div class="pt-hdr-search-box" id="pt-hdr-search-box" style="display:none">
+        <span class="material-symbols-rounded pt-hdr-search-icon-inner">search</span>
+        <input class="pt-hdr-search-input" id="pt-hdr-search-input" placeholder="Search for themes or prompts" oninput="onPtSearchInput(this)"/>
+        <button class="pt-hdr-search-clear-inner" id="pt-hdr-search-clear" onclick="clearPtSearch()" style="display:none" title="Clear"><span class="material-symbols-rounded">close</span></button>
+      </div>
+    </div>
     <div class="pt-scope-wrap">
       <button class="pt-scope-tab" id="pt-scope-brand" onclick="switchPromptsScope('brand')">Brand</button>
       <button class="pt-scope-tab active" id="pt-scope-locations" onclick="switchPromptsScope('locations')">Locations</button>
     </div>
-    <button class="ta-toggle-btn" id="ta-toggle-btn" onclick="toggleThemeAggregate()" title="Theme Aggregate">
-      <span class="ta-toggle-track"><span class="ta-toggle-thumb"></span></span>
-      <span class="ta-toggle-label">Theme Aggregate</span>
-    </button>
     <button class="btn-filled" onclick="openAddThemePanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
       <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
     </button>
@@ -4377,10 +4401,8 @@ document.getElementById('hdr-prompts-btns').innerHTML = buildPromptsHeader();
 // Theme Aggregate is ON by default
 _taActive = true;
 (function initThemeAggregate() {
-  const btn = document.getElementById('ta-toggle-btn');
   const table = document.getElementById('pt-v2-table');
-  if (!btn || !table) return;
-  btn.classList.add('active');
+  if (!table) return;
   table.classList.add('pt-agg-mode');
   table.querySelectorAll('.pt-group-row').forEach(function(groupRow) {
     const group = groupRow.dataset.group;
@@ -4899,6 +4921,82 @@ function switchPromptsScope(scope) {
   // No width tweak needed — table-layout:auto sizes from content
 }
 
+/* ── Prompts header search ── */
+function togglePtSearch() {
+  const box = document.getElementById('pt-hdr-search-box');
+  const btn = document.getElementById('pt-hdr-search-btn');
+  const isOpen = box.classList.contains('open');
+  if (isOpen) {
+    clearPtSearch();
+  } else {
+    box.style.display = 'flex';
+    btn.style.display = 'none';
+    requestAnimationFrame(() => {
+      box.classList.add('open');
+      document.getElementById('pt-hdr-search-input').focus();
+    });
+  }
+}
+
+function onPtSearchInput(input) {
+  const clear = document.getElementById('pt-hdr-search-clear');
+  clear.style.display = input.value ? 'flex' : 'none';
+  filterPtTable(input.value);
+}
+
+function clearPtSearch() {
+  const box = document.getElementById('pt-hdr-search-box');
+  const btn = document.getElementById('pt-hdr-search-btn');
+  const input = document.getElementById('pt-hdr-search-input');
+  const clear = document.getElementById('pt-hdr-search-clear');
+  input.value = '';
+  clear.style.display = 'none';
+  box.classList.remove('open');
+  setTimeout(() => { box.style.display = 'none'; btn.style.display = 'flex'; }, 200);
+  filterPtTable('');
+}
+
+function filterPtTable(q) {
+  const table = document.getElementById('pt-v2-table');
+  const tableWrap = document.getElementById('pt-v2-table-wrap');
+  const emptyState = document.getElementById('pt-search-empty');
+  if (!table) return;
+  const term = q.trim().toLowerCase();
+  let totalVisible = 0;
+
+  table.querySelectorAll('.pt-group-row').forEach(groupRow => {
+    const group = groupRow.dataset.group;
+    const themeName = (groupRow.querySelector('.pt-group-label')?.textContent || '').toLowerCase();
+    const dataRows = [...table.querySelectorAll(`.pt-data-row[data-group="${group}"]`)];
+
+    if (!term) {
+      groupRow.style.display = '';
+      dataRows.forEach(r => { r.classList.remove('pt-hidden'); r.style.display = ''; });
+      totalVisible++;
+      return;
+    }
+
+    const themeMatch = themeName.includes(term);
+    let anyPromptMatch = false;
+
+    dataRows.forEach(r => {
+      const promptText = (r.querySelector('.pt-v2-prompt')?.textContent || '').toLowerCase();
+      const match = themeMatch || promptText.includes(term);
+      r.style.display = match ? '' : 'none';
+      if (match) anyPromptMatch = true;
+    });
+
+    const groupVisible = themeMatch || anyPromptMatch;
+    groupRow.style.display = groupVisible ? '' : 'none';
+    if (groupVisible) totalVisible++;
+  });
+
+  // Show empty state when search yields no results
+  const hasResults = !term || totalVisible > 0;
+  if (tableWrap) tableWrap.style.display = hasResults ? '' : 'none';
+  if (emptyState) emptyState.style.display = hasResults ? 'none' : 'flex';
+}
+
 /* ── Theme Aggregate toggle ── */
 
 function parseMonthly(str) {
@@ -5114,7 +5212,7 @@ function confirmDeleteTheme(event, themeName) {
 
   const countPart = count ? `your ${count} ${scopeLabel}` : `your ${scopeLabel}`;
   document.getElementById('delete-theme-body').textContent =
-    `The "${themeName}" theme will be permanently deleted and tracking will stop across ${countPart} reports. Are you sure?`;
+    `The "${themeName}" theme will be permanently deleted and tracking will stop across ${countPart} reports. You can add it again anytime.`;
   document.getElementById('deleteThemeModal').classList.add('open');
 }
 
@@ -5385,6 +5483,45 @@ function closeNmModal(e) {
   if (e && e.target !== document.getElementById('nmEditModal')) return;
   document.getElementById('nmEditModal').classList.remove('open');
 }
+
+/* ── Column info tooltip ── */
+function showColInfoTooltip(e, text) {
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = text;
+  tip.style.display = 'block';
+  const r = e.target.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+}
+function hideColInfoTooltip() {
+  document.getElementById('pt-mod-tooltip').style.display = 'none';
+}
+
+/* ── AI site icon tooltips ── */
+const AI_SITE_NAMES = {
+  chatgpt: 'ChatGPT', gemini: 'Gemini', perplexity: 'Perplexity',
+  copilot: 'Copilot', claude: 'Claude'
+};
+document.addEventListener('mouseover', function(e) {
+  const svg = e.target.closest('.pt-ai-wrap svg');
+  if (!svg) return;
+  const use = svg.querySelector('use');
+  if (!use) return;
+  const key = (use.getAttribute('href') || '').replace('#s-', '');
+  const name = AI_SITE_NAMES[key];
+  if (!name) return;
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = name;
+  tip.style.display = 'block';
+  const r = svg.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+});
+document.addEventListener('mouseout', function(e) {
+  if (e.target.closest('.pt-ai-wrap svg')) {
+    document.getElementById('pt-mod-tooltip').style.display = 'none';
+  }
+});
 
 /* ── Remove next cycle chip tooltip ── */
 document.addEventListener('mouseover', function(e) {
@@ -5788,7 +5925,7 @@ function confirmDeletePrompt() {
   const isBrand = document.getElementById('pt-scope-brand')?.classList.contains('active');
   const scopeLabel = isBrand ? 'brand' : 'locations';
   document.getElementById('delete-prompt-body').textContent =
-    `The "${promptText}" prompt will be permanently deleted and tracking will stop across your ${scopeLabel} reports. Are you sure?`;
+    `The "${promptText}" prompt will be permanently deleted and tracking will stop across your ${scopeLabel} reports. You can add it again anytime.`;
   closeMorePopover();
   document.getElementById('deletePromptModal').classList.add('open');
 }
