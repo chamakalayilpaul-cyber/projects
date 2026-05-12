@@ -879,7 +879,7 @@ body{
 .snt-kpi-row{display:flex;gap:16px;margin-bottom:16px}
 .snt-kpi-card{
   flex:1;background:#fff;border:1px solid #eaeaea;border-radius:8px;
-  padding:20px 24px;
+  padding:16px;
 }
 .snt-kpi-val{font-size:32px;font-weight:400;color:rgb(33,33,33);margin-bottom:4px;height:39px}
 .snt-kpi-label{font-size:14px;font-weight:400;color:rgb(85,85,85)}
@@ -891,32 +891,39 @@ body{
   display:flex;align-items:flex-start;justify-content:space-between;
   margin-bottom:16px;gap:12px;
 }
-.snt-card-title{font-size:14px;color:rgb(33,33,33);font-weight:400;line-height:1.5}
+.snt-card-title{font-size:16px;color:rgb(33,33,33);font-weight:400;line-height:1.5}
 .snt-card-sub{font-size:12px;color:rgb(143,143,143);margin-top:2px}
 .snt-link{color:#1976d2;cursor:pointer}
 .snt-table td,.snt-loc-table td{font-size:14px;color:rgb(33,33,33);vertical-align:top;padding:14px 16px}
+.snt-table thead tr,.snt-table th{background:#fff}
+.snt-table tbody tr:hover td{background:#fff}
 .snt-ai-cell{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:400}
 .snt-pct{font-size:14px;font-weight:400;color:rgb(33,33,33)}
 .snt-summary{font-size:13px;color:rgb(85,85,85);line-height:1.6}
-/* Strengths & Weaknesses */
-.snt-sw-tabs{display:flex;gap:0;border-bottom:1px solid #eaeaea;margin-bottom:16px}
+/* Strengths & Weaknesses 2x2 grid */
+.snt-sw-tabs{display:flex;gap:0;border-bottom:1px solid #eaeaea;margin-bottom:0;padding:0 20px}
 .snt-sw-tab{
-  background:transparent;border:none;cursor:pointer;
+  background:transparent;border:none;border-bottom:3px solid transparent;cursor:pointer;
   font-size:14px;font-family:'Roboto',sans-serif;color:rgb(85,85,85);
-  padding:8px 20px 10px;border-bottom:2px solid transparent;
+  padding:8px 12px 9px;font-weight:400;position:relative;
 }
 .snt-sw-tab.active{color:rgb(33,33,33);border-bottom-color:#1976d2}
-.snt-sw-body{display:flex;gap:24px}
-.snt-sw-col{flex:1;min-width:0}
-.snt-sw-col-hdr{
-  font-size:12px;font-weight:400;letter-spacing:0.5px;text-transform:uppercase;
-  padding:4px 10px;border-radius:4px;margin-bottom:12px;display:inline-block;
-}
-.snt-strength-hdr{background:#e8f5e9;color:#2e7d32}
-.snt-weakness-hdr{background:#fdecea;color:#c62828}
-.snt-sw-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px}
-.snt-sw-list li{font-size:13px;color:rgb(33,33,33);line-height:1.5;font-weight:400}
-.snt-sw-list li strong{font-weight:400}
+.snt-sw-card{padding:0}
+.snt-quad-wrap{position:relative}
+.snt-quad-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #eaeaea}
+.snt-quad{padding:20px;position:relative;display:flex;flex-direction:column;gap:12px;border-right:1px solid #eaeaea;border-bottom:1px solid #eaeaea}
+.snt-quad:nth-child(2),.snt-quad:nth-child(4){border-right:none}
+.snt-quad:nth-child(3),.snt-quad:nth-child(4){border-bottom:none}
+.snt-quad-chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:400;color:#fff;font-family:'Roboto',sans-serif;width:fit-content}
+.snt-chip-green{background:#4cae3d}
+.snt-chip-red{background:#f3382b}
+.snt-chip-grey{background:#8f8f8f}
+.snt-chip-bottom{margin-top:auto}
+.snt-quad-chip-wrap-right{display:flex;justify-content:flex-end}
+.snt-quad-body{display:flex;flex-direction:column;gap:12px;font-size:14px;color:rgb(33,33,33);line-height:1.5}
+.snt-quad-body p{margin:0}
+.snt-quad-body strong{font-weight:500}
+.snt-quad-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:#6834B7;display:flex;align-items:center;justify-content:center;z-index:2}
 /* Location table */
 .snt-loc-table{margin:-1px}
 /* Search empty state */
@@ -1318,7 +1325,7 @@ body{
 /* ══ EXPLORE THEMES VIEW ══ */
 .et-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px;margin-bottom:16px}
 .et-card-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
-.et-card-title{font-size:18px;font-weight:400;color:rgb(33,33,33)}
+.et-card-title{font-size:16px;font-weight:400;color:rgb(33,33,33)}
 .et-card-title span{color:#1976d2;cursor:pointer}
 .et-card-sub{font-size:13px;color:rgb(143,143,143);margin-bottom:16px}
 .et-card-hdr-right{display:flex;align-items:center;gap:6px}
@@ -2994,80 +3001,59 @@ textarea.ap-input{
 
       <!-- Strengths & Weaknesses (2x2 grid) -->
       <div class="snt-card snt-sw-card">
-        <div class="snt-card-hdr">
+        <div class="snt-card-hdr" style="padding:20px 20px 12px">
           <div>
-            <span class="snt-card-title">What are the strengths &amp; weaknesses as seen by AI sites for <span class="snt-link">all locations ▾</span></span>
-            <div class="snt-card-sub">Track all identified strengths and opportunities and take prioritised actions to improve</div>
+            <div class="snt-card-title" style="font-size:16px;color:#555">What strengths and weaknesses do AI sites see for <span class="snt-link">Atlanta, GA ▾</span></div>
+            <div class="snt-card-sub">Track AI-identified strengths and opportunities and take prioritised actions to improve</div>
           </div>
-          <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="icon-btn-stroke" style="gap:6px;padding:0 10px;font-size:13px;width:auto;height:32px">June 2025<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+            <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded">more_vert</span></button>
+          </div>
         </div>
         <div class="snt-sw-tabs">
           <button class="snt-sw-tab active" onclick="switchSntTab(this,'chatgpt')">ChatGPT</button>
           <button class="snt-sw-tab" onclick="switchSntTab(this,'gemini')">Gemini</button>
           <button class="snt-sw-tab" onclick="switchSntTab(this,'perplexity')">Perplexity</button>
+          <button class="snt-sw-tab" onclick="switchSntTab(this,'claude')">Claude</button>
         </div>
-        <div class="snt-sw-body" id="snt-sw-chatgpt">
-          <div class="snt-sw-col">
-            <div class="snt-sw-col-hdr snt-strength-hdr">Strengths</div>
-            <ul class="snt-sw-list">
-              <li><strong>Wide Product Range:</strong> Offers a diverse selection of bridal gowns and accessories, appealing to various styles and budgets.</li>
-              <li><strong>Strong Brand Recognition:</strong> Nationally recognized brand trusted by many brides-to-be for decades.</li>
-              <li><strong>Affordability:</strong> Known for competitive pricing and frequent promotions, making products accessible to a broad audience.</li>
-              <li><strong>Online Sales Expansion:</strong> Growing e-commerce presence can attract a wider audience beyond physical locations.</li>
-              <li><strong>Diverse Occasion Wear:</strong> Expanding offerings for other formal and special occasions could increase market share.</li>
-              <li><strong>Sustainability Initiatives:</strong> Emphasizing eco-friendly materials and processes can appeal to environmentally conscious consumers.</li>
-            </ul>
-          </div>
-          <div class="snt-sw-col">
-            <div class="snt-sw-col-hdr snt-weakness-hdr">Weaknesses</div>
-            <ul class="snt-sw-list">
-              <li><strong>Financial Instability:</strong> Recent financial challenges and bankruptcy filings have raised concerns about long-term viability.</li>
-              <li><strong>Inconsistent In-Store Experience:</strong> Some locations report uneven customer service experiences and variability in staff expertise.</li>
-              <li><strong>Limited High-End Options:</strong> Lacks a significant presence in luxury bridal market, potentially limiting appeal for high-budget customers.</li>
-              <li><strong>Intense Competition:</strong> Facing competition from other bridal retailers and online platforms offering custom and lower cost options.</li>
-              <li><strong>Economic Downturn:</strong> Recessionary pressures may reduce consumer spending on weddings and related products.</li>
-              <li><strong>Changing Wedding Trends:</strong> Shifts in wedding preferences, such as casual or non-traditional ceremonies, could impact traditional bridal sales.</li>
-            </ul>
+        <div class="snt-quad-wrap" id="snt-sw-chatgpt">
+          <div class="snt-quad-grid">
+            <div class="snt-quad snt-quad-tl"><span class="snt-quad-chip snt-chip-green">Strengths</span><div class="snt-quad-body"><p><strong>DentalCorp National Footprint</strong>: Over 1,000 locations across the U.S. make Aspen one of the most accessible dental providers.</p><p><strong>Brand Recognition</strong>: Heavily advertised; well-known among middle-income patients looking for affordable care.</p><p><strong>Integrated Services</strong>: Offers a full range of dental services under one roof (general dentistry, dentures, implants, etc.).</p></div></div>
+            <div class="snt-quad snt-quad-tr"><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-red">Weaknesses</span></div><div class="snt-quad-body"><p><strong>Reputation for Upselling</strong>: Frequent complaints about aggressive sales tactics and upselling unnecessary procedures.</p><p><strong>Quality Variability</strong>: Due to the franchise-like model, quality and patient experience can vary significantly by location.</p><p><strong>Employee Turnover</strong>: High turnover among dentists and staff impacts continuity of care and trust.</p></div></div>
+            <div class="snt-quad snt-quad-bl"><div class="snt-quad-body"><p><strong>Insurance Partnerships</strong>: Growth in demand for Medicaid/Medicare-accessible dental care.</p><p><strong>Tech-Enabled Care</strong>: Tele-dentistry, AI diagnostics, and CRM integration could improve operational efficiency.</p><p><strong>Brand Rehabilitation</strong>: By improving training and transparency, Aspen could rebuild trust and reputation.</p></div><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Opportunities</span></div>
+            <div class="snt-quad snt-quad-br"><div class="snt-quad-body"><p><strong>Negative Publicity</strong>: Ongoing lawsuits alleging unethical practices could undermine brand value.</p><p><strong>Regulatory Scrutiny</strong>: As private equity–backed healthcare gets more attention, Aspen could face more oversight.</p><p><strong>Rise of Competitors</strong>: Newer, tech-savvy dental chains offer modernized experiences and attract urban patients.</p></div><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Threats</span></div></div>
+            <div class="snt-quad-center"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.81506 9.67057H5.25656L4.99867 10.4162H4.17457L5.58171 6.4975H6.49551L7.90265 10.4162H7.07294L6.81506 9.67057ZM6.60203 9.04269L6.03581 7.40569L5.46959 9.04269H6.60203Z" fill="#fff"/><path d="M9.21348 6.50311V10.4162H8.42862V6.50311H9.21348Z" fill="#fff"/><path d="M9.05872 4.09628H3.08985C2.26681 4.09628 1.59961 4.76348 1.59961 5.58652V11.5475C1.59961 12.3705 2.26682 13.0377 3.08985 13.0377H10.5411C11.3641 13.0377 12.0313 12.3705 12.0313 11.5475V7.08392C11.8859 7.1556 11.738 7.17791 11.618 7.17791C11.5048 7.17791 11.3924 7.15774 11.2862 7.1171V11.5475C11.2862 11.959 10.9526 12.2926 10.5411 12.2926H3.08985C2.67833 12.2926 2.34473 11.959 2.34473 11.5475V5.58652C2.34473 5.175 2.67833 4.8414 3.08985 4.8414H9.01277C8.97214 4.73007 8.95657 4.61882 8.95657 4.51896C8.95657 4.37789 8.98826 4.23158 9.05872 4.09628Z" fill="#fff"/><path d="M11.6568 6.43276C11.6104 6.43276 11.5707 6.41781 11.5376 6.38791C11.5078 6.36133 11.4913 6.32644 11.488 6.28324C11.4416 5.95098 11.3953 5.69182 11.3489 5.50575C11.3059 5.31969 11.2348 5.18014 11.1355 5.0871C11.0395 4.99075 10.8939 4.91599 10.6986 4.86283C10.5033 4.80967 10.2352 4.75152 9.89431 4.68839C9.79171 4.66846 9.74041 4.61197 9.74041 4.51894C9.74041 4.47242 9.7553 4.43421 9.78509 4.40431C9.81487 4.37441 9.85128 4.35613 9.89431 4.34949C10.2352 4.30297 10.5033 4.25645 10.6986 4.20994C10.8939 4.1601 11.0395 4.087 11.1355 3.99064C11.2348 3.89097 11.3076 3.74643 11.3539 3.55704C11.4002 3.36433 11.4449 3.09852 11.488 2.75962C11.5012 2.65662 11.5575 2.60512 11.6568 2.60512C11.756 2.60512 11.8107 2.65828 11.8206 2.7646C11.8636 3.09686 11.9066 3.35603 11.9497 3.54209C11.996 3.72816 12.0688 3.86771 12.1681 3.96074C12.2707 4.05377 12.4196 4.12687 12.6149 4.18003C12.8102 4.22987 13.0766 4.28636 13.4142 4.34949C13.5168 4.36942 13.5681 4.42591 13.5681 4.51894C13.5681 4.61197 13.5102 4.66846 13.3944 4.68839C13.0568 4.74155 12.792 4.79305 12.6 4.84289C12.4081 4.89273 12.2624 4.96583 12.1631 5.06219C12.0672 5.15854 11.996 5.30141 11.9497 5.4908C11.9066 5.68019 11.8636 5.94101 11.8206 6.27328C11.8107 6.3796 11.756 6.43276 11.6568 6.43276Z" fill="#fff"/></svg></div>
           </div>
         </div>
-        <div class="snt-sw-body" id="snt-sw-gemini" style="display:none">
-          <div class="snt-sw-col">
-            <div class="snt-sw-col-hdr snt-strength-hdr">Strengths</div>
-            <ul class="snt-sw-list">
-              <li><strong>Expert Staff:</strong> Highly rated alterations team and knowledgeable stylists across locations.</li>
-              <li><strong>High Review Volume:</strong> Thousands of verified positive reviews boost credibility and trust.</li>
-              <li><strong>Appointment Flexibility:</strong> Extended hours and weekend availability for working brides.</li>
-            </ul>
-          </div>
-          <div class="snt-sw-col">
-            <div class="snt-sw-col-hdr snt-weakness-hdr">Weaknesses</div>
-            <ul class="snt-sw-list">
-              <li><strong>Wait Times:</strong> Peak season appointments can be difficult to secure.</li>
-              <li><strong>Regional Gaps:</strong> Limited presence in rural and smaller metro markets.</li>
-              <li><strong>Digital Experience:</strong> Online browsing and virtual try-on features lag competitors.</li>
-            </ul>
+        <div class="snt-quad-wrap" id="snt-sw-gemini" style="display:none">
+          <div class="snt-quad-grid">
+            <div class="snt-quad snt-quad-tl"><span class="snt-quad-chip snt-chip-green">Strengths</span><div class="snt-quad-body"><p><strong>Expert Staff</strong>: Highly rated alteration teams and knowledgeable stylists across locations.</p><p><strong>High Review Volume</strong>: Thousands of verified positive reviews boost credibility and trust.</p><p><strong>Appointment Flexibility</strong>: Extended hours and weekend availability for working patients.</p></div></div>
+            <div class="snt-quad snt-quad-tr"><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-red">Weaknesses</span></div><div class="snt-quad-body"><p><strong>Wait Times</strong>: Peak season appointments can be difficult to secure.</p><p><strong>Regional Gaps</strong>: Limited presence in rural and smaller metro markets.</p><p><strong>Digital Experience</strong>: Online browsing features lag behind competitors.</p></div></div>
+            <div class="snt-quad snt-quad-bl"><div class="snt-quad-body"><p><strong>Telehealth Expansion</strong>: Growing acceptance of remote consultations opens new patient markets.</p><p><strong>Community Programs</strong>: Partnerships with schools and local organizations build brand loyalty.</p><p><strong>Loyalty Programmes</strong>: Introducing membership plans could improve patient retention.</p></div><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Opportunities</span></div>
+            <div class="snt-quad snt-quad-br"><div class="snt-quad-body"><p><strong>Market Saturation</strong>: Increasing competition from independent practices and chains.</p><p><strong>Economic Pressures</strong>: Patients may defer non-urgent treatments during downturns.</p><p><strong>Regulatory Changes</strong>: New compliance requirements could increase operational costs.</p></div><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Threats</span></div></div>
+            <div class="snt-quad-center"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.81506 9.67057H5.25656L4.99867 10.4162H4.17457L5.58171 6.4975H6.49551L7.90265 10.4162H7.07294L6.81506 9.67057ZM6.60203 9.04269L6.03581 7.40569L5.46959 9.04269H6.60203Z" fill="#fff"/><path d="M9.21348 6.50311V10.4162H8.42862V6.50311H9.21348Z" fill="#fff"/><path d="M9.05872 4.09628H3.08985C2.26681 4.09628 1.59961 4.76348 1.59961 5.58652V11.5475C1.59961 12.3705 2.26682 13.0377 3.08985 13.0377H10.5411C11.3641 13.0377 12.0313 12.3705 12.0313 11.5475V7.08392C11.8859 7.1556 11.738 7.17791 11.618 7.17791C11.5048 7.17791 11.3924 7.15774 11.2862 7.1171V11.5475C11.2862 11.959 10.9526 12.2926 10.5411 12.2926H3.08985C2.67833 12.2926 2.34473 11.959 2.34473 11.5475V5.58652C2.34473 5.175 2.67833 4.8414 3.08985 4.8414H9.01277C8.97214 4.73007 8.95657 4.61882 8.95657 4.51896C8.95657 4.37789 8.98826 4.23158 9.05872 4.09628Z" fill="#fff"/><path d="M11.6568 6.43276C11.6104 6.43276 11.5707 6.41781 11.5376 6.38791C11.5078 6.36133 11.4913 6.32644 11.488 6.28324C11.4416 5.95098 11.3953 5.69182 11.3489 5.50575C11.3059 5.31969 11.2348 5.18014 11.1355 5.0871C11.0395 4.99075 10.8939 4.91599 10.6986 4.86283C10.5033 4.80967 10.2352 4.75152 9.89431 4.68839C9.79171 4.66846 9.74041 4.61197 9.74041 4.51894C9.74041 4.47242 9.7553 4.43421 9.78509 4.40431C9.81487 4.37441 9.85128 4.35613 9.89431 4.34949C10.2352 4.30297 10.5033 4.25645 10.6986 4.20994C10.8939 4.1601 11.0395 4.087 11.1355 3.99064C11.2348 3.89097 11.3076 3.74643 11.3539 3.55704C11.4002 3.36433 11.4449 3.09852 11.488 2.75962C11.5012 2.65662 11.5575 2.60512 11.6568 2.60512C11.756 2.60512 11.8107 2.65828 11.8206 2.7646C11.8636 3.09686 11.9066 3.35603 11.9497 3.54209C11.996 3.72816 12.0688 3.86771 12.1681 3.96074C12.2707 4.05377 12.4196 4.12687 12.6149 4.18003C12.8102 4.22987 13.0766 4.28636 13.4142 4.34949C13.5168 4.36942 13.5681 4.42591 13.5681 4.51894C13.5681 4.61197 13.5102 4.66846 13.3944 4.68839C13.0568 4.74155 12.792 4.79305 12.6 4.84289C12.4081 4.89273 12.2624 4.96583 12.1631 5.06219C12.0672 5.15854 11.996 5.30141 11.9497 5.4908C11.9066 5.68019 11.8636 5.94101 11.8206 6.27328C11.8107 6.3796 11.756 6.43276 11.6568 6.43276Z" fill="#fff"/></svg></div>
           </div>
         </div>
-        <div class="snt-sw-body" id="snt-sw-perplexity" style="display:none">
-          <div class="snt-sw-col">
-            <div class="snt-sw-col-hdr snt-strength-hdr">Strengths</div>
-            <ul class="snt-sw-list">
-              <li><strong>Helpful Staff:</strong> Consistently praised for friendly and patient customer service.</li>
-              <li><strong>Affordability:</strong> Competitive pricing praised across the Omaha and midwest region.</li>
-              <li><strong>Wide Selection:</strong> Diverse inventory catering to varied tastes and sizes.</li>
-            </ul>
+        <div class="snt-quad-wrap" id="snt-sw-perplexity" style="display:none">
+          <div class="snt-quad-grid">
+            <div class="snt-quad snt-quad-tl"><span class="snt-quad-chip snt-chip-green">Strengths</span><div class="snt-quad-body"><p><strong>Helpful Staff</strong>: Consistently praised for friendly and patient customer service.</p><p><strong>Affordability</strong>: Competitive pricing praised across the midwest region.</p><p><strong>Wide Selection</strong>: Diverse inventory catering to varied tastes and sizes.</p></div></div>
+            <div class="snt-quad snt-quad-tr"><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-red">Weaknesses</span></div><div class="snt-quad-body"><p><strong>Scheduling Delays</strong>: Repeated mentions of long waits for fittings and alterations.</p><p><strong>Fitting Issues</strong>: Some customers report occasional inaccuracies in final alterations.</p><p><strong>Communication Gaps</strong>: Delays in responding to inquiries noted in multiple reviews.</p></div></div>
+            <div class="snt-quad snt-quad-bl"><div class="snt-quad-body"><p><strong>Online Booking</strong>: Streamlining digital scheduling could reduce wait complaints.</p><p><strong>Staff Training</strong>: Investing in alteration specialists could improve accuracy.</p><p><strong>Customer Follow-up</strong>: Proactive post-visit communication could improve retention.</p></div><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Opportunities</span></div>
+            <div class="snt-quad snt-quad-br"><div class="snt-quad-body"><p><strong>Online Competitors</strong>: Direct-to-consumer brands offer lower prices and convenience.</p><p><strong>Changing Preferences</strong>: Shift toward minimalist weddings may reduce demand.</p><p><strong>Supply Chain</strong>: Import delays for gowns can impact delivery commitments.</p></div><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Threats</span></div></div>
+            <div class="snt-quad-center"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.81506 9.67057H5.25656L4.99867 10.4162H4.17457L5.58171 6.4975H6.49551L7.90265 10.4162H7.07294L6.81506 9.67057ZM6.60203 9.04269L6.03581 7.40569L5.46959 9.04269H6.60203Z" fill="#fff"/><path d="M9.21348 6.50311V10.4162H8.42862V6.50311H9.21348Z" fill="#fff"/><path d="M9.05872 4.09628H3.08985C2.26681 4.09628 1.59961 4.76348 1.59961 5.58652V11.5475C1.59961 12.3705 2.26682 13.0377 3.08985 13.0377H10.5411C11.3641 13.0377 12.0313 12.3705 12.0313 11.5475V7.08392C11.8859 7.1556 11.738 7.17791 11.618 7.17791C11.5048 7.17791 11.3924 7.15774 11.2862 7.1171V11.5475C11.2862 11.959 10.9526 12.2926 10.5411 12.2926H3.08985C2.67833 12.2926 2.34473 11.959 2.34473 11.5475V5.58652C2.34473 5.175 2.67833 4.8414 3.08985 4.8414H9.01277C8.97214 4.73007 8.95657 4.61882 8.95657 4.51896C8.95657 4.37789 8.98826 4.23158 9.05872 4.09628Z" fill="#fff"/><path d="M11.6568 6.43276C11.6104 6.43276 11.5707 6.41781 11.5376 6.38791C11.5078 6.36133 11.4913 6.32644 11.488 6.28324C11.4416 5.95098 11.3953 5.69182 11.3489 5.50575C11.3059 5.31969 11.2348 5.18014 11.1355 5.0871C11.0395 4.99075 10.8939 4.91599 10.6986 4.86283C10.5033 4.80967 10.2352 4.75152 9.89431 4.68839C9.79171 4.66846 9.74041 4.61197 9.74041 4.51894C9.74041 4.47242 9.7553 4.43421 9.78509 4.40431C9.81487 4.37441 9.85128 4.35613 9.89431 4.34949C10.2352 4.30297 10.5033 4.25645 10.6986 4.20994C10.8939 4.1601 11.0395 4.087 11.1355 3.99064C11.2348 3.89097 11.3076 3.74643 11.3539 3.55704C11.4002 3.36433 11.4449 3.09852 11.488 2.75962C11.5012 2.65662 11.5575 2.60512 11.6568 2.60512C11.756 2.60512 11.8107 2.65828 11.8206 2.7646C11.8636 3.09686 11.9066 3.35603 11.9497 3.54209C11.996 3.72816 12.0688 3.86771 12.1681 3.96074C12.2707 4.05377 12.4196 4.12687 12.6149 4.18003C12.8102 4.22987 13.0766 4.28636 13.4142 4.34949C13.5168 4.36942 13.5681 4.42591 13.5681 4.51894C13.5681 4.61197 13.5102 4.66846 13.3944 4.68839C13.0568 4.74155 12.792 4.79305 12.6 4.84289C12.4081 4.89273 12.2624 4.96583 12.1631 5.06219C12.0672 5.15854 11.996 5.30141 11.9497 5.4908C11.9066 5.68019 11.8636 5.94101 11.8206 6.27328C11.8107 6.3796 11.756 6.43276 11.6568 6.43276Z" fill="#fff"/></svg></div>
           </div>
-          <div class="snt-sw-col">
-            <div class="snt-sw-col-hdr snt-weakness-hdr">Weaknesses</div>
-            <ul class="snt-sw-list">
-              <li><strong>Scheduling Delays:</strong> Repeated mentions of long waits for fittings and alterations.</li>
-              <li><strong>Fitting Issues:</strong> Some customers report occasional inaccuracies in final alterations.</li>
-              <li><strong>Communication Gaps:</strong> Delays in responding to inquiries noted in multiple reviews.</li>
-            </ul>
+        </div>
+        <div class="snt-quad-wrap" id="snt-sw-claude" style="display:none">
+          <div class="snt-quad-grid">
+            <div class="snt-quad snt-quad-tl"><span class="snt-quad-chip snt-chip-green">Strengths</span><div class="snt-quad-body"><p><strong>Patient-Centric Approach</strong>: Known for thorough consultations and personalised treatment plans.</p><p><strong>Modern Equipment</strong>: Investment in digital X-rays and CAD/CAM technology enhances precision.</p><p><strong>Community Trust</strong>: Long-standing presence builds strong local reputation.</p></div></div>
+            <div class="snt-quad snt-quad-tr"><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-red">Weaknesses</span></div><div class="snt-quad-body"><p><strong>Limited Marketing</strong>: Lower brand visibility compared to national chains.</p><p><strong>Staffing Challenges</strong>: Difficulty attracting specialists in rural locations.</p><p><strong>Insurance Complexity</strong>: Navigating multiple plans creates billing friction.</p></div></div>
+            <div class="snt-quad snt-quad-bl"><div class="snt-quad-body"><p><strong>Preventive Care Focus</strong>: Growing consumer interest in preventive dentistry aligns with services.</p><p><strong>Digital Marketing</strong>: Investing in SEO and social presence could grow patient acquisition.</p><p><strong>Specialist Partnerships</strong>: Collaborating with orthodontists expands service scope.</p></div><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Opportunities</span></div>
+            <div class="snt-quad snt-quad-br"><div class="snt-quad-body"><p><strong>DSO Consolidation</strong>: Large dental organisations acquiring independents pose competitive risk.</p><p><strong>Insurance Reimbursement</strong>: Declining reimbursement rates pressure profit margins.</p><p><strong>Workforce Shortage</strong>: National hygienist shortage may impact capacity and care quality.</p></div><div class="snt-quad-chip-wrap-right"><span class="snt-quad-chip snt-chip-grey snt-chip-bottom">Threats</span></div></div>
+            <div class="snt-quad-center"><svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.81506 9.67057H5.25656L4.99867 10.4162H4.17457L5.58171 6.4975H6.49551L7.90265 10.4162H7.07294L6.81506 9.67057ZM6.60203 9.04269L6.03581 7.40569L5.46959 9.04269H6.60203Z" fill="#fff"/><path d="M9.21348 6.50311V10.4162H8.42862V6.50311H9.21348Z" fill="#fff"/><path d="M9.05872 4.09628H3.08985C2.26681 4.09628 1.59961 4.76348 1.59961 5.58652V11.5475C1.59961 12.3705 2.26682 13.0377 3.08985 13.0377H10.5411C11.3641 13.0377 12.0313 12.3705 12.0313 11.5475V7.08392C11.8859 7.1556 11.738 7.17791 11.618 7.17791C11.5048 7.17791 11.3924 7.15774 11.2862 7.1171V11.5475C11.2862 11.959 10.9526 12.2926 10.5411 12.2926H3.08985C2.67833 12.2926 2.34473 11.959 2.34473 11.5475V5.58652C2.34473 5.175 2.67833 4.8414 3.08985 4.8414H9.01277C8.97214 4.73007 8.95657 4.61882 8.95657 4.51896C8.95657 4.37789 8.98826 4.23158 9.05872 4.09628Z" fill="#fff"/><path d="M11.6568 6.43276C11.6104 6.43276 11.5707 6.41781 11.5376 6.38791C11.5078 6.36133 11.4913 6.32644 11.488 6.28324C11.4416 5.95098 11.3953 5.69182 11.3489 5.50575C11.3059 5.31969 11.2348 5.18014 11.1355 5.0871C11.0395 4.99075 10.8939 4.91599 10.6986 4.86283C10.5033 4.80967 10.2352 4.75152 9.89431 4.68839C9.79171 4.66846 9.74041 4.61197 9.74041 4.51894C9.74041 4.47242 9.7553 4.43421 9.78509 4.40431C9.81487 4.37441 9.85128 4.35613 9.89431 4.34949C10.2352 4.30297 10.5033 4.25645 10.6986 4.20994C10.8939 4.1601 11.0395 4.087 11.1355 3.99064C11.2348 3.89097 11.3076 3.74643 11.3539 3.55704C11.4002 3.36433 11.4449 3.09852 11.488 2.75962C11.5012 2.65662 11.5575 2.60512 11.6568 2.60512C11.756 2.60512 11.8107 2.65828 11.8206 2.7646C11.8636 3.09686 11.9066 3.35603 11.9497 3.54209C11.996 3.72816 12.0688 3.86771 12.1681 3.96074C12.2707 4.05377 12.4196 4.12687 12.6149 4.18003C12.8102 4.22987 13.0766 4.28636 13.4142 4.34949C13.5168 4.36942 13.5681 4.42591 13.5681 4.51894C13.5681 4.61197 13.5102 4.66846 13.3944 4.68839C13.0568 4.74155 12.792 4.79305 12.6 4.84289C12.4081 4.89273 12.2624 4.96583 12.1631 5.06219C12.0672 5.15854 11.996 5.30141 11.9497 5.4908C11.9066 5.68019 11.8636 5.94101 11.8206 6.27328C11.8107 6.3796 11.756 6.43276 11.6568 6.43276Z" fill="#fff"/></svg></div>
           </div>
         </div>
       </div>
-
       <!-- Sentiment by location -->
       <div class="snt-card" style="padding-bottom:0">
         <div class="snt-card-hdr">
@@ -5950,10 +5936,11 @@ function closeNmModal(e) {
 /* ── Filter panel ── */
 /* ── Sentiment ── */
 function switchSntTab(btn, key) {
-  document.querySelectorAll('.snt-sw-tab').forEach(t => t.classList.remove('active'));
+  const card = btn.closest('.snt-sw-card') || btn.closest('.snt-card');
+  card.querySelectorAll('.snt-sw-tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.snt-sw-body').forEach(b => b.style.display = 'none');
-  document.getElementById('snt-sw-' + key).style.display = 'flex';
+  card.querySelectorAll('.snt-quad-wrap').forEach(b => b.style.display = 'none');
+  card.querySelector('#snt-sw-' + key).style.display = 'block';
 }
 
 function toggleFilterPanel(ctx) {
