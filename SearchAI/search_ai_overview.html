@@ -99,7 +99,7 @@ body{
 
 /* ── PAGE HEADER ── */
 .page-hdr{
-  height:64px;background:#fff;
+  height:64px;background:rgba(255,255,255,0);
   display:flex;align-items:center;justify-content:space-between;
   padding:0 24px;flex-shrink:0;
 }
@@ -875,6 +875,50 @@ body{
 .status-pill.in-review{background:#fef9c3;color:#a16207}
 
 /* ══ PROMPTS VIEW ══ */
+/* ── Sentiment view ── */
+.snt-kpi-row{display:flex;gap:16px;margin-bottom:16px}
+.snt-kpi-card{
+  flex:1;background:#fff;border:1px solid #eaeaea;border-radius:8px;
+  padding:20px 24px;
+}
+.snt-kpi-val{font-size:32px;font-weight:400;color:rgb(33,33,33);margin-bottom:4px;height:39px}
+.snt-kpi-label{font-size:14px;font-weight:400;color:rgb(85,85,85)}
+.snt-card{
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;
+  padding:20px 24px;margin-bottom:16px;
+}
+.snt-card-hdr{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:16px;gap:12px;
+}
+.snt-card-title{font-size:14px;color:rgb(33,33,33);font-weight:400;line-height:1.5}
+.snt-card-sub{font-size:12px;color:rgb(143,143,143);margin-top:2px}
+.snt-link{color:#1976d2;cursor:pointer}
+.snt-table td,.snt-loc-table td{font-size:14px;color:rgb(33,33,33);vertical-align:top;padding:14px 16px}
+.snt-ai-cell{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:400}
+.snt-pct{font-size:14px;font-weight:400;color:rgb(33,33,33)}
+.snt-summary{font-size:13px;color:rgb(85,85,85);line-height:1.6}
+/* Strengths & Weaknesses */
+.snt-sw-tabs{display:flex;gap:0;border-bottom:1px solid #eaeaea;margin-bottom:16px}
+.snt-sw-tab{
+  background:transparent;border:none;cursor:pointer;
+  font-size:14px;font-family:'Roboto',sans-serif;color:rgb(85,85,85);
+  padding:8px 20px 10px;border-bottom:2px solid transparent;
+}
+.snt-sw-tab.active{color:rgb(33,33,33);border-bottom-color:#1976d2}
+.snt-sw-body{display:flex;gap:24px}
+.snt-sw-col{flex:1;min-width:0}
+.snt-sw-col-hdr{
+  font-size:12px;font-weight:400;letter-spacing:0.5px;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;margin-bottom:12px;display:inline-block;
+}
+.snt-strength-hdr{background:#e8f5e9;color:#2e7d32}
+.snt-weakness-hdr{background:#fdecea;color:#c62828}
+.snt-sw-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px}
+.snt-sw-list li{font-size:13px;color:rgb(33,33,33);line-height:1.5;font-weight:400}
+.snt-sw-list li strong{font-weight:400}
+/* Location table */
+.snt-loc-table{margin:-1px}
 /* Search empty state */
 .pt-search-empty{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -887,7 +931,7 @@ body{
 .pt-hdr-search-wrap{display:flex;align-items:center}
 .pt-hdr-search-box{
   display:flex;align-items:center;gap:4px;
-  height:36px;border:1px solid #e5e9f0;border-radius:6px;
+  height:36px;border:1px solid #e5e9f0;border-radius:4px;
   padding:0 8px;background:#fff;width:0;overflow:hidden;
   transition:width 0.2s,border-color 0.2s;
 }
@@ -908,7 +952,7 @@ body{
 .pt-hdr-search-clear-inner .material-symbols-rounded{font-size:18px}
 .pt-scope-wrap{
   display:flex;align-items:center;gap:2px;
-  border:1px solid #e5e9f0;border-radius:8px;
+  border:1px solid #e5e9f0;border-radius:4px;
   padding:3px;height:36px;flex-shrink:0;background:#fff;
 }
 .pt-scope-tab{
@@ -1450,6 +1494,35 @@ body{
   transform:translateX(100%);transition:transform 0.25s ease;
   box-shadow:-4px 0 24px rgba(0,0,0,0.1);
 }
+/* Filter push panel */
+.fp-panel{
+  position:fixed;top:52px;right:0;height:calc(100vh - 52px);width:300px;
+  background:#fff;z-index:400;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform 0.25s ease;
+  border-left:1px solid #eaeaea;
+}
+.fp-panel.open{transform:translateX(0)}
+.main.fp-open .content{transition:padding-right 0.25s ease;padding-right:calc(300px + 24px)}
+.main.fp-open .page-hdr{transition:padding-right 0.25s ease;padding-right:calc(300px + 24px)}
+.fp-dropdown{
+  display:flex;align-items:center;justify-content:space-between;
+  height:44px;border:1px solid #e5e9f0;border-radius:4px;
+  padding:0 12px;cursor:pointer;background:#fff;position:relative;
+}
+.fp-dropdown:hover{border-color:#bbc8e0}
+.fp-dropdown-val{font-size:14px;color:#212121;flex:1}
+.fp-dropdown-menu{
+  display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;
+  background:#fff;border:1px solid #e5e9f0;border-radius:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);max-height:220px;overflow-y:auto;z-index:700;
+}
+.fp-dropdown.open .fp-dropdown-menu{display:block}
+.fp-opt{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;cursor:pointer;font-size:14px;color:#212121;
+}
+.fp-opt:hover{background:rgb(242,244,247)}
+.fp-opt input[type="checkbox"]{width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0}
 .ap-panel.open{transform:translateX(0)}
 .ap-header{
   height:52px;display:flex;align-items:center;justify-content:space-between;
@@ -1837,7 +1910,7 @@ textarea.ap-input{
       <div class="sb-sub-item">Visibility</div>
       <div class="sb-sub-item">Ranking</div>
       <div class="sb-sub-item">Accuracy</div>
-      <div class="sb-sub-item">Sentiment</div>
+      <div class="sb-sub-item" id="nav-sentiment" onclick="showView('sentiment')">Sentiment</div>
       <div class="sb-sub-item">Prompts</div>
       <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-explore-themes" onclick="showView('explore-themes')">Explore themes</div>
@@ -1963,11 +2036,16 @@ textarea.ap-input{
       </button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
     </div>
+    <div class="page-hdr-right" id="hdr-sentiment-btns" style="display:none;gap:6px;padding-right:8px">
+      <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto">September 2025<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+    </div>
     <div class="page-hdr-right" id="hdr-explore-btns" style="display:none;gap:6px;padding-right:8px">
       <span style="font-size:13px;color:rgb(143,143,143);margin-right:4px">Updated on May 04, 2026</span>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
       <button class="icon-btn-stroke" id="hdr-explore-more-btn" onclick="toggleHdrPopover(event)"><span class="material-symbols-rounded">more_vert</span></button>
-      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+      <button class="icon-btn-stroke" onclick="toggleFilterPanel('explore')"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
       <div class="art-score">
@@ -2857,6 +2935,173 @@ textarea.ap-input{
       </div>
     </div>
 
+    <!-- ══ SENTIMENT VIEW ══ -->
+    <div class="view" id="view-sentiment">
+
+      <!-- KPI Row -->
+      <div class="snt-kpi-row">
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">84%</div>
+          <div class="snt-kpi-label">Overall sentiment</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">82%</div>
+          <div class="snt-kpi-label">ChatGPT</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">80.5%</div>
+          <div class="snt-kpi-label">Gemini</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">89.3%</div>
+          <div class="snt-kpi-label">Perplexity</div>
+        </div>
+      </div>
+
+      <!-- Sentiment summary by AI site -->
+      <div class="snt-card">
+        <div class="snt-card-hdr">
+          <span class="snt-card-title">What is the sentiment and areas for improvement on AI sites for <span class="snt-link">all locations ▾</span></span>
+          <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+        </div>
+        <table class="pt-table snt-table">
+          <thead>
+            <tr>
+              <th style="width:120px">AI site</th>
+              <th style="width:100px">Sentiment</th>
+              <th>Summary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pt-data-row">
+              <td><span class="snt-ai-cell"><svg width="18" height="18"><use href="#s-chatgpt"/></svg>ChatGPT</span></td>
+              <td class="snt-pct">82%</td>
+              <td class="snt-summary">Positive reviews highlight excellent customer service and a wide selection of gowns. However, some local customers express concerns over appointment availability. Overall community sentiment remains favourable, reflecting strong sales and customer satisfaction in the area.</td>
+            </tr>
+            <tr class="pt-data-row">
+              <td><span class="snt-ai-cell"><svg width="18" height="18"><use href="#s-gemini"/></svg>Gemini</span></td>
+              <td class="snt-pct">80.5%</td>
+              <td class="snt-summary">With nearly 4,000 reviews and an average rating of 4.8 stars, Sandy's Bridal in Lubbock has overwhelmingly positive customer feedback, citing amazing stylists and helpful alterations staff.</td>
+            </tr>
+            <tr class="pt-data-row">
+              <td><span class="snt-ai-cell"><svg width="18" height="18"><use href="#s-perplexity"/></svg>Perplexity</span></td>
+              <td class="snt-pct">89.3%</td>
+              <td class="snt-summary">Local reviews often mention helpful staff and wide selection, but there are repeated concerns about scheduling delays and occasional fitting issues. Overall customer sentiment trends positive with praise for affordability and accessibility in the Omaha area.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Strengths & Weaknesses (2x2 grid) -->
+      <div class="snt-card snt-sw-card">
+        <div class="snt-card-hdr">
+          <div>
+            <span class="snt-card-title">What are the strengths &amp; weaknesses as seen by AI sites for <span class="snt-link">all locations ▾</span></span>
+            <div class="snt-card-sub">Track all identified strengths and opportunities and take prioritised actions to improve</div>
+          </div>
+          <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+        </div>
+        <div class="snt-sw-tabs">
+          <button class="snt-sw-tab active" onclick="switchSntTab(this,'chatgpt')">ChatGPT</button>
+          <button class="snt-sw-tab" onclick="switchSntTab(this,'gemini')">Gemini</button>
+          <button class="snt-sw-tab" onclick="switchSntTab(this,'perplexity')">Perplexity</button>
+        </div>
+        <div class="snt-sw-body" id="snt-sw-chatgpt">
+          <div class="snt-sw-col">
+            <div class="snt-sw-col-hdr snt-strength-hdr">Strengths</div>
+            <ul class="snt-sw-list">
+              <li><strong>Wide Product Range:</strong> Offers a diverse selection of bridal gowns and accessories, appealing to various styles and budgets.</li>
+              <li><strong>Strong Brand Recognition:</strong> Nationally recognized brand trusted by many brides-to-be for decades.</li>
+              <li><strong>Affordability:</strong> Known for competitive pricing and frequent promotions, making products accessible to a broad audience.</li>
+              <li><strong>Online Sales Expansion:</strong> Growing e-commerce presence can attract a wider audience beyond physical locations.</li>
+              <li><strong>Diverse Occasion Wear:</strong> Expanding offerings for other formal and special occasions could increase market share.</li>
+              <li><strong>Sustainability Initiatives:</strong> Emphasizing eco-friendly materials and processes can appeal to environmentally conscious consumers.</li>
+            </ul>
+          </div>
+          <div class="snt-sw-col">
+            <div class="snt-sw-col-hdr snt-weakness-hdr">Weaknesses</div>
+            <ul class="snt-sw-list">
+              <li><strong>Financial Instability:</strong> Recent financial challenges and bankruptcy filings have raised concerns about long-term viability.</li>
+              <li><strong>Inconsistent In-Store Experience:</strong> Some locations report uneven customer service experiences and variability in staff expertise.</li>
+              <li><strong>Limited High-End Options:</strong> Lacks a significant presence in luxury bridal market, potentially limiting appeal for high-budget customers.</li>
+              <li><strong>Intense Competition:</strong> Facing competition from other bridal retailers and online platforms offering custom and lower cost options.</li>
+              <li><strong>Economic Downturn:</strong> Recessionary pressures may reduce consumer spending on weddings and related products.</li>
+              <li><strong>Changing Wedding Trends:</strong> Shifts in wedding preferences, such as casual or non-traditional ceremonies, could impact traditional bridal sales.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="snt-sw-body" id="snt-sw-gemini" style="display:none">
+          <div class="snt-sw-col">
+            <div class="snt-sw-col-hdr snt-strength-hdr">Strengths</div>
+            <ul class="snt-sw-list">
+              <li><strong>Expert Staff:</strong> Highly rated alterations team and knowledgeable stylists across locations.</li>
+              <li><strong>High Review Volume:</strong> Thousands of verified positive reviews boost credibility and trust.</li>
+              <li><strong>Appointment Flexibility:</strong> Extended hours and weekend availability for working brides.</li>
+            </ul>
+          </div>
+          <div class="snt-sw-col">
+            <div class="snt-sw-col-hdr snt-weakness-hdr">Weaknesses</div>
+            <ul class="snt-sw-list">
+              <li><strong>Wait Times:</strong> Peak season appointments can be difficult to secure.</li>
+              <li><strong>Regional Gaps:</strong> Limited presence in rural and smaller metro markets.</li>
+              <li><strong>Digital Experience:</strong> Online browsing and virtual try-on features lag competitors.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="snt-sw-body" id="snt-sw-perplexity" style="display:none">
+          <div class="snt-sw-col">
+            <div class="snt-sw-col-hdr snt-strength-hdr">Strengths</div>
+            <ul class="snt-sw-list">
+              <li><strong>Helpful Staff:</strong> Consistently praised for friendly and patient customer service.</li>
+              <li><strong>Affordability:</strong> Competitive pricing praised across the Omaha and midwest region.</li>
+              <li><strong>Wide Selection:</strong> Diverse inventory catering to varied tastes and sizes.</li>
+            </ul>
+          </div>
+          <div class="snt-sw-col">
+            <div class="snt-sw-col-hdr snt-weakness-hdr">Weaknesses</div>
+            <ul class="snt-sw-list">
+              <li><strong>Scheduling Delays:</strong> Repeated mentions of long waits for fittings and alterations.</li>
+              <li><strong>Fitting Issues:</strong> Some customers report occasional inaccuracies in final alterations.</li>
+              <li><strong>Communication Gaps:</strong> Delays in responding to inquiries noted in multiple reviews.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sentiment by location -->
+      <div class="snt-card" style="padding-bottom:0">
+        <div class="snt-card-hdr">
+          <span class="snt-card-title">What is the sentiment by AI sites for each location</span>
+          <div style="display:flex;gap:6px">
+            <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">open_in_new</span></button>
+            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          </div>
+        </div>
+        <table class="pt-table snt-loc-table">
+          <thead>
+            <tr>
+              <th><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Average sentiment<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">ChatGPT<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Gemini<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Perplexity<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="pt-data-row"><td>120 Charleston</td><td>90%</td><td>99%</td><td>92%</td><td>98%</td></tr>
+            <tr class="pt-data-row"><td>291 Athens - Athenians</td><td>90%</td><td>95%</td><td>92%</td><td>99%</td></tr>
+            <tr class="pt-data-row"><td>0224 Buford</td><td>94.9%</td><td>94.7%</td><td>92%</td><td>98%</td></tr>
+            <tr class="pt-data-row"><td>584 Madison</td><td>94.9%</td><td>98.5%</td><td>92%</td><td>96%</td></tr>
+            <tr class="pt-data-row"><td>386 Modesto</td><td>94.4%</td><td>96.5%</td><td>92%</td><td>96%</td></tr>
+            <tr class="pt-data-row"><td>119 Santee - Albertsons</td><td>94.4%</td><td>90%</td><td>92%</td><td>90%</td></tr>
+            <tr class="pt-data-row"><td>163 Amarillo</td><td>94.2%</td><td>92.5%</td><td>92%</td><td>88%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /view-sentiment -->
+
     <!-- ══ EXPLORE THEMES VIEW ══ -->
     <div class="view" id="view-explore-themes">
 
@@ -2893,6 +3138,40 @@ textarea.ap-input{
           <span class="et-word untracked s2">dentures</span>
           <span class="et-word tracked s3">emergency dentist</span>
           <span class="et-word untracked s2">dental x-rays</span>
+          <span class="et-word untracked s3">tooth sensitivity</span>
+          <span class="et-word untracked s1">fluoride treatment</span>
+          <span class="et-word tracked s2">night guard</span>
+          <span class="et-word untracked s4">braces</span>
+          <span class="et-word untracked s1">oral hygiene</span>
+          <span class="et-word tracked s3">teeth grinding</span>
+          <span class="et-word untracked s2">dental abscess</span>
+          <span class="et-word untracked s1">mouth guard</span>
+          <span class="et-word tracked s2">jaw pain</span>
+          <span class="et-word untracked s3">dental bonding</span>
+          <span class="et-word untracked s2">gum recession</span>
+          <span class="et-word untracked s1">teeth grinding treatment</span>
+          <span class="et-word tracked s4">family dentist</span>
+          <span class="et-word untracked s2">sealants</span>
+          <span class="et-word untracked s3">tooth decay</span>
+          <span class="et-word untracked s1">halitosis treatment</span>
+          <span class="et-word tracked s2">smile makeover</span>
+          <span class="et-word untracked s3">dental sedation</span>
+          <span class="et-word untracked s1">cracked tooth</span>
+          <span class="et-word tracked s2">TMJ treatment</span>
+          <span class="et-word untracked s2">tooth whitening strips</span>
+          <span class="et-word untracked s1">affordable dentist</span>
+          <span class="et-word tracked s3">same day dentist</span>
+          <span class="et-word untracked s2">dental anxiety</span>
+          <span class="et-word untracked s1">gum surgery</span>
+          <span class="et-word tracked s2">retainer</span>
+          <span class="et-word untracked s3">snap on smile</span>
+          <span class="et-word untracked s1">plaque removal</span>
+          <span class="et-word tracked s2">dental financing</span>
+          <span class="et-word untracked s2">missing teeth</span>
+          <span class="et-word untracked s1">tooth pain relief</span>
+          <span class="et-word tracked s3">all on 4 implants</span>
+          <span class="et-word untracked s2">porcelain crowns</span>
+          <span class="et-word untracked s1">cavity filling</span>
         </div>
         <div class="et-legend">
           <div class="et-legend-item"><div class="et-legend-dot" style="background:#1976d2"></div>Tracking</div>
@@ -3836,6 +4115,92 @@ textarea.ap-input{
   </div><!-- /ch-content-area -->
 </div><!-- /ch-shell -->
 
+<!-- ══ FILTER SIDE PANEL ══ -->
+<div class="fp-panel" id="fp-panel">
+  <div class="ap-header">
+    <div class="ap-header-left">
+      <span class="ap-header-title">Filters</span>
+    </div>
+    <div class="ap-header-right">
+      <button class="btn-cancel" onclick="clearFilters()">Clear all</button>
+      <button class="icon-btn" onclick="toggleFilterPanel()"><span class="material-symbols-rounded">close</span></button>
+    </div>
+  </div>
+  <div class="ap-body" style="gap:16px">
+
+    <!-- Status -->
+    <div class="ap-field" id="fp-status-field">
+      <label class="ap-label">Tracking status</label>
+      <div class="fp-dropdown" id="fp-status-dropdown" onclick="toggleFpDropdown('fp-status-dropdown')">
+        <span class="fp-dropdown-val" id="fp-status-val">All statuses</span>
+        <span class="material-symbols-rounded" style="font-size:18px;color:#555">expand_more</span>
+        <div class="fp-dropdown-menu" id="fp-status-menu" onclick="event.stopPropagation()">
+          <label class="fp-opt"><input type="checkbox" value="tracking" onchange="updateFpLabel('fp-status');applyFilters()"/><span>Tracking</span></label>
+          <label class="fp-opt"><input type="checkbox" value="not-tracking" onchange="updateFpLabel('fp-status');applyFilters()"/><span>Not tracking</span></label>
+          <label class="fp-opt"><input type="checkbox" value="next-cycle" onchange="updateFpLabel('fp-status');applyFilters()"/><span>Starts next cycle</span></label>
+          <label class="fp-opt"><input type="checkbox" value="stop-tracking" onchange="updateFpLabel('fp-status');applyFilters()"/><span>Stops next cycle</span></label>
+          <label class="fp-opt"><input type="checkbox" value="stop-tracking-rm" onchange="updateFpLabel('fp-status');applyFilters()"/><span>Remove next cycle</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Locations -->
+    <div class="ap-field">
+      <label class="ap-label">Locations</label>
+      <div class="fp-dropdown" id="fp-loc-dropdown" onclick="toggleFpDropdown('fp-loc-dropdown')">
+        <span class="fp-dropdown-val" id="fp-loc-val">All locations</span>
+        <span class="material-symbols-rounded" style="font-size:18px;color:#555">expand_more</span>
+        <div class="fp-dropdown-menu" id="fp-loc-menu" onclick="event.stopPropagation()">
+          <div class="ap-ms-search-wrap"><span class="material-symbols-rounded ap-ms-search-icon">search</span><input class="ap-ms-search" placeholder="Search locations" oninput="filterFpOpts('fp-loc-menu',this.value)" onclick="event.stopPropagation()"/></div>
+          <label class="fp-opt"><input type="checkbox" value="Austin, TX" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Austin, TX</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Denver, CO" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Denver, CO</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Chicago, IL" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Chicago, IL</span></label>
+          <label class="fp-opt"><input type="checkbox" value="New York, NY" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>New York, NY</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Los Angeles, CA" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Los Angeles, CA</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Seattle, WA" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Seattle, WA</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Miami, FL" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Miami, FL</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Dallas, TX" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Dallas, TX</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Boston, MA" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Boston, MA</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Phoenix, AZ" onchange="updateFpLabel('fp-loc');applyFilters()"/><span>Phoenix, AZ</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Sites -->
+    <div class="ap-field" id="fp-ai-field">
+      <label class="ap-label">AI sites</label>
+      <div class="fp-dropdown" id="fp-ai-dropdown" onclick="toggleFpDropdown('fp-ai-dropdown')">
+        <span class="fp-dropdown-val" id="fp-ai-val">All AI sites</span>
+        <span class="material-symbols-rounded" style="font-size:18px;color:#555">expand_more</span>
+        <div class="fp-dropdown-menu" id="fp-ai-menu" onclick="event.stopPropagation()">
+          <label class="fp-opt"><input type="checkbox" value="chatgpt" onchange="updateFpLabel('fp-ai');applyFilters()"/><span>ChatGPT</span></label>
+          <label class="fp-opt"><input type="checkbox" value="gemini" onchange="updateFpLabel('fp-ai');applyFilters()"/><span>Gemini</span></label>
+          <label class="fp-opt"><input type="checkbox" value="perplexity" onchange="updateFpLabel('fp-ai');applyFilters()"/><span>Perplexity</span></label>
+          <label class="fp-opt"><input type="checkbox" value="copilot" onchange="updateFpLabel('fp-ai');applyFilters()"/><span>Copilot</span></label>
+          <label class="fp-opt"><input type="checkbox" value="claude" onchange="updateFpLabel('fp-ai');applyFilters()"/><span>Claude</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="ap-field" id="fp-tags-field">
+      <label class="ap-label">Tags</label>
+      <div class="fp-dropdown" id="fp-tags-dropdown" onclick="toggleFpDropdown('fp-tags-dropdown')">
+        <span class="fp-dropdown-val" id="fp-tags-val">All tags</span>
+        <span class="material-symbols-rounded" style="font-size:18px;color:#555">expand_more</span>
+        <div class="fp-dropdown-menu" id="fp-tags-menu" onclick="event.stopPropagation()">
+          <label class="fp-opt"><input type="checkbox" value="Invisalign" onchange="updateFpLabel('fp-tags');applyFilters()"/><span>Invisalign</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Orthodontics" onchange="updateFpLabel('fp-tags');applyFilters()"/><span>Orthodontics</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Teeth whitening" onchange="updateFpLabel('fp-tags');applyFilters()"/><span>Teeth whitening</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Dental implants" onchange="updateFpLabel('fp-tags');applyFilters()"/><span>Dental implants</span></label>
+          <label class="fp-opt"><input type="checkbox" value="Clear aligners" onchange="updateFpLabel('fp-tags');applyFilters()"/><span>Clear aligners</span></label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- ══ TAG EDIT SIDE PANEL ══ -->
 <div class="ap-overlay" id="tag-overlay" onclick="closeTagPanel()"></div>
 <div class="ap-panel" id="tag-panel">
@@ -4466,7 +4831,7 @@ function buildPromptsHeader() {
       <span class="material-symbols-rounded" style="font-size:16px">add</span>Add theme
     </button>
     <button class="icon-btn-stroke" id="hdr-more-btn" onclick="toggleHdrPopover(event)"><span class="material-symbols-rounded">more_vert</span></button>
-    <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+    <button class="icon-btn-stroke" id="pt-filter-btn" onclick="toggleFilterPanel()" title="Filter"><span class="material-symbols-rounded">filter_list</span></button>
   `;
 }
 let _taActive = false;
@@ -4529,7 +4894,7 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('page-info-icon').style.display = view === 'prompt-brandkit' ? 'inline-flex' : 'none';
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
@@ -4539,6 +4904,7 @@ function showView(view) {
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-import-btns').style.display = view === 'import-prompts' ? 'flex' : 'none';
   document.getElementById('hdr-explore-btns').style.display = view === 'explore-themes' ? 'flex' : 'none';
+  document.getElementById('hdr-sentiment-btns').style.display = view === 'sentiment' ? 'flex' : 'none';
   document.getElementById('hdr-tags-btns').style.display = view === 'tags' ? 'flex' : 'none';
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
@@ -4552,7 +4918,7 @@ function showView(view) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes') {
+  if (view === 'explore-themes' || view === 'sentiment') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
@@ -5580,6 +5946,81 @@ function closeNmModal(e) {
   if (e && e.target !== document.getElementById('nmEditModal')) return;
   document.getElementById('nmEditModal').classList.remove('open');
 }
+
+/* ── Filter panel ── */
+/* ── Sentiment ── */
+function switchSntTab(btn, key) {
+  document.querySelectorAll('.snt-sw-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.snt-sw-body').forEach(b => b.style.display = 'none');
+  document.getElementById('snt-sw-' + key).style.display = 'flex';
+}
+
+function toggleFilterPanel(ctx) {
+  const panel = document.getElementById('fp-panel');
+  const main = document.querySelector('.main');
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  if (main) main.classList.toggle('fp-open', !isOpen);
+  const btn = document.getElementById('pt-filter-btn');
+  if (btn) btn.classList.toggle('active', !isOpen);
+
+  // Explore themes: show Location only; Themes & Prompts: show all
+  const isExplore = ctx === 'explore';
+  ['fp-status-field','fp-ai-field','fp-tags-field'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = isExplore ? 'none' : '';
+  });
+}
+
+function toggleFpDropdown(id) {
+  const dd = document.getElementById(id);
+  document.querySelectorAll('.fp-dropdown.open').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
+  dd.classList.toggle('open');
+}
+
+function updateFpLabel(prefix) {
+  const menu = document.getElementById(prefix + '-menu');
+  const val = document.getElementById(prefix + '-val');
+  const checked = [...menu.querySelectorAll('input:checked')].map(c => c.nextElementSibling?.textContent || c.value);
+  const defaults = { 'fp-status':'All statuses', 'fp-loc':'All locations', 'fp-ai':'All AI sites', 'fp-tags':'All tags' };
+  val.textContent = checked.length === 0 ? defaults[prefix] : checked.length + ' selected';
+}
+
+function filterFpOpts(menuId, q) {
+  document.querySelectorAll('#' + menuId + ' .fp-opt').forEach(opt => {
+    const text = opt.querySelector('span')?.textContent.toLowerCase() || '';
+    opt.style.display = text.includes(q.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function applyFilters() {
+  const statuses = [...document.querySelectorAll('#fp-status-menu input:checked')].map(c => c.value);
+  const table = document.getElementById('pt-v2-table');
+  if (!table) return;
+
+  table.querySelectorAll('.pt-data-row').forEach(row => {
+    if (!statuses.length) { row.style.display = ''; return; }
+    const pill = row.querySelector('.pt-status-pill');
+    const cls = pill ? [...pill.classList].find(c => ['tracking','not-tracking','next-cycle','stop-tracking'].includes(c)) : '';
+    row.style.display = statuses.includes(cls) ? '' : 'none';
+  });
+}
+
+function clearFilters() {
+  document.querySelectorAll('#fp-status-menu input, #fp-loc-menu input, #fp-ai-menu input, #fp-tags-menu input').forEach(c => c.checked = false);
+  ['fp-status','fp-loc','fp-ai','fp-tags'].forEach(p => updateFpLabel(p));
+  // Show all rows
+  const table = document.getElementById('pt-v2-table');
+  if (table) table.querySelectorAll('.pt-data-row, .pt-group-row').forEach(r => r.style.display = '');
+}
+
+// Close fp dropdowns on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.fp-dropdown')) {
+    document.querySelectorAll('.fp-dropdown.open').forEach(d => d.classList.remove('open'));
+  }
+});
 
 /* ── Column info tooltip ── */
 function showColInfoTooltip(e, text) {
