@@ -2141,6 +2141,11 @@ textarea.ap-input{
       </button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
     </div>
+    <div class="page-hdr-right" id="hdr-ai-crawler-btns" style="display:none;gap:6px;padding-right:8px">
+      <button class="btn-filled" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
+        <span class="material-symbols-rounded" style="font-size:16px">add</span>Add link
+      </button>
+    </div>
     <div class="page-hdr-right" id="hdr-sentiment-btns" style="display:none;gap:6px;padding-right:8px">
       <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto">September 2025<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
@@ -3161,21 +3166,19 @@ textarea.ap-input{
     </div>
 
     <!-- ══ AI CRAWLER STATUS VIEW ══ -->
-    <div class="view" id="view-ai-crawler">
+    <div class="view" id="view-ai-crawler" style="display:flex;flex-direction:column;gap:16px">
+
+      <!-- HTTP results -->
       <div class="pt-table-wrap" style="overflow:hidden">
-        <div class="pbk-card-hdr" style="padding:16px 20px 0;margin-bottom:0">
+        <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0;border-bottom:1px solid #eaeaea">
           <div class="pbk-card-hdr-left">
-            <span class="pbk-view-title-text">AI crawler status</span>
+            <span style="font-size:14px;font-weight:500;color:rgb(33,33,33)">HTTP results</span>
           </div>
-          <button class="btn-filled" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:32px;flex-shrink:0">
-            <span class="material-symbols-rounded" style="font-size:16px">add</span>Add link
-          </button>
         </div>
-        <table class="acs-table" style="margin-top:12px">
+        <table class="acs-table">
           <thead>
             <tr>
-              <th style="width:220px">Link</th>
-              <th style="width:10px"></th>
+              <th style="width:240px">Link</th>
               <th class="acs-site-col">ChatGPT</th>
               <th class="acs-site-col">Gemini</th>
               <th class="acs-site-col">Perplexity</th>
@@ -3184,39 +3187,81 @@ textarea.ap-input{
             </tr>
           </thead>
           <tbody>
-            <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g1')">
-              <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>birdeye.com</div></td>
+            <tr class="acs-group-row">
+              <td>birdeye.com</td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
-              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
-              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
-              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
-            </tr>
-            <tr class="acs-child-row" data-acs-group="acs-g1"><td style="padding-left:42px">HTTP</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
-            <tr class="acs-child-row" data-acs-group="acs-g1"><td style="padding-left:42px">Robots.txt</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
-            <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g2')">
-              <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>blog.birdeye.com</div></td>
-              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
-              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
             </tr>
-            <tr class="acs-child-row" data-acs-group="acs-g2"><td style="padding-left:42px">HTTP</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
-            <tr class="acs-child-row" data-acs-group="acs-g2"><td style="padding-left:42px">Robots.txt</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
-            <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g3')">
-              <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>support.birdeye.com</div></td>
+            <tr class="acs-group-row">
+              <td>blog.birdeye.com</td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
-              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
               <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
             </tr>
-            <tr class="acs-child-row" data-acs-group="acs-g3"><td style="padding-left:42px">HTTP</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
-            <tr class="acs-child-row" data-acs-group="acs-g3"><td style="padding-left:42px">Robots.txt</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+            <tr class="acs-group-row">
+              <td>support.birdeye.com</td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
           </tbody>
         </table>
       </div>
+
+      <!-- Robots.txt -->
+      <div class="pt-table-wrap" style="overflow:hidden">
+        <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0;border-bottom:1px solid #eaeaea">
+          <div class="pbk-card-hdr-left">
+            <span style="font-size:14px;font-weight:500;color:rgb(33,33,33)">Robots.txt</span>
+          </div>
+        </div>
+        <table class="acs-table">
+          <thead>
+            <tr>
+              <th style="width:240px">Link</th>
+              <th class="acs-site-col">ChatGPT</th>
+              <th class="acs-site-col">Gemini</th>
+              <th class="acs-site-col">Perplexity</th>
+              <th class="acs-site-col">Copilot</th>
+              <th class="acs-site-col">Claude</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="acs-group-row">
+              <td>birdeye.com</td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
+            <tr class="acs-group-row">
+              <td>blog.birdeye.com</td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
+            <tr class="acs-group-row">
+              <td>support.birdeye.com</td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div><!-- /view-ai-crawler -->
 
     <!-- ══ TAGS VIEW ══ -->
@@ -5376,6 +5421,7 @@ function showView(view) {
   document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
   document.getElementById('hdr-import-btns').style.display = view === 'import-prompts' ? 'flex' : 'none';
   document.getElementById('hdr-explore-btns').style.display = view === 'explore-themes' ? 'flex' : 'none';
+  document.getElementById('hdr-ai-crawler-btns').style.display = view === 'ai-crawler' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-btns').style.display = view === 'sentiment' ? 'flex' : 'none';
   document.getElementById('hdr-tags-btns').style.display = view === 'tags' ? 'flex' : 'none';
   document.getElementById('hdr-settings-reports-btns').style.display = view === 'settings-reports' ? 'flex' : 'none';
