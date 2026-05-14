@@ -104,7 +104,7 @@ body{
   padding:0 24px;flex-shrink:0;
 }
 .page-title{font-size:18px;font-weight:400;color:rgba(33, 33, 33, 1)}
-.page-info-icon{display:inline-flex;align-items:center;cursor:default}
+.page-info-icon{display:inline-flex;align-items:center;cursor:default;vertical-align:middle}
 .page-hdr-right{display:flex;align-items:center;gap:4px}
 .icon-btn{
   width:28px;height:28px;border-radius:4px;border:none;background:transparent;
@@ -1117,6 +1117,28 @@ body{
 .nm-modal-item-name{font-size:14px;color:rgb(33,33,33)}
 .nm-modal-item-meta{font-size:13px;color:rgb(85,85,85)}
 .nm-pct-span{cursor:default}
+.nm-suggest-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eaeaea}
+.nm-suggest-item:last-child{border-bottom:none}
+.nm-suggest-info{display:flex;flex-direction:column;gap:2px}
+.nm-suggest-name{font-size:14px;color:rgb(33,33,33)}
+.nm-suggest-meta{font-size:13px;color:rgb(85,85,85)}
+.nm-map-btn{
+  background:transparent;border:1px solid #e5e9f0;border-radius:4px;
+  cursor:pointer;width:32px;height:32px;display:flex;align-items:center;
+  justify-content:center;color:rgb(85,85,85);flex-shrink:0;
+}
+.nm-map-btn:hover{background:rgb(242,244,247);border-color:#1976d2;color:#1976d2}
+.nm-map-btn.mapped{background:#e8f5e9;border-color:#4cae3d;color:#2e7d32}
+.nm-mapped-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;background:#ECF5FD;border-radius:16px;
+  font-size:13px;color:#1976d2;
+}
+.nm-mapped-chip button{
+  background:transparent;border:none;cursor:pointer;
+  color:#1976d2;display:flex;align-items:center;padding:0;
+}
+.nm-mapped-chip button .material-symbols-rounded{font-size:14px}
 .nm-modal-remove{
   width:24px;height:24px;border:none;background:transparent;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
@@ -1145,6 +1167,7 @@ body{
 .nm-table .nm-actions-col{width:44px;text-align:center}
 .nm-table tbody tr{background:#fff}
 .nm-table tbody tr:hover td{background:rgb(242,244,247)}
+.nm-you-tag{display:inline-flex;align-items:center;padding:3px 12px;background:#0F7195;color:#fff;border-radius:20px;font-size:12px;font-weight:500;margin-left:8px;vertical-align:middle;letter-spacing:0.01em}
 .nm-name-cell{font-size:14px;color:rgb(33,33,33);font-weight:400}
 .nm-owned-chip{
   display:inline-block;padding:1px 8px;border-radius:4px;
@@ -1323,7 +1346,7 @@ body{
 .at-add-prompt-btn .material-symbols-rounded{font-size:18px}
 .at-prompts-ph{font-size:14px;color:rgb(143,143,143);padding:8px 0;margin:0}
 /* ── Themes banner ── */
-.tp-banner{display:flex;align-items:center;gap:10px;background:#e8f0fe;border-radius:8px;padding:8px 16px;margin-bottom:8px;font-size:14px;color:rgb(33,33,33);line-height:1.5}
+.tp-banner{display:flex;align-items:center;gap:10px;background:#e8f0fe;border-radius:8px;padding:8px 16px;margin:8px 0;font-size:14px;color:rgb(33,33,33);line-height:1.5}
 .tp-banner .material-symbols-rounded{font-size:18px;color:#1976d2;flex-shrink:0}
 .tp-banner-link{color:#1976d2;background:none;border:none;cursor:pointer;font-size:14px;font-family:'Roboto',sans-serif;text-decoration:none;padding:0}
 .tp-banner-link:hover{text-decoration:underline}
@@ -2064,7 +2087,7 @@ textarea.ap-input{
       <span class="page-info-icon" id="page-info-icon" style="display:none"
         onmouseenter="showPageInfoTooltip(event)"
         onmouseleave="hidePageInfoTooltip()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span class="material-symbols-rounded" style="font-size:18px;color:rgb(143,143,143)">info</span>
       </span>
     </div>
     <div class="page-hdr-right" id="hdr-overview-btns">
@@ -2588,7 +2611,7 @@ textarea.ap-input{
 
     <!-- ══ PROMPTS V2 VIEW ══ -->
     <div class="view" id="view-prompts-v2">
-      <div class="tp-banner">
+      <div class="tp-banner" style="margin-top:12px">
         <span class="material-symbols-rounded">lightbulb</span>
         <span style="flex:1">Discover trending themes and prompts across AI platforms</span>
         <button class="tp-banner-link" onclick="goToExploreThemes()">Explore trends</button>
@@ -2920,11 +2943,14 @@ textarea.ap-input{
             <div class="pbk-card-hdr nm-card-hdr">
               <div>
                 <div class="nm-title">Name mapping</div>
-                <div class="nm-sub">Manage the names AI might use to refer to your brand across responses.</div>
+                <div class="nm-sub">Manage the names AI might use to refer to brands across responses.</div>
               </div>
+              <button class="btn-filled" onclick="openAddBrandPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:32px;flex-shrink:0">
+                <span class="material-symbols-rounded" style="font-size:16px">add</span>Add brand
+              </button>
             </div>
             <table class="pt-table nm-table">
-              <colgroup><col style="width:32%"><col><col style="width:80px"><col style="width:44px"></colgroup>
+              <colgroup><col style="width:32%"><col><col style="width:80px"><col style="width:80px"></colgroup>
               <thead>
                 <tr>
                   <th>Brand</th>
@@ -2935,17 +2961,61 @@ textarea.ap-input{
               </thead>
               <tbody>
                 <tr class="pt-data-row">
-                  <td class="nm-name-cell">Birdeye</td>
-                  <td class="nm-mentions-cell" id="nm-birdeye-chips">
-                    <span class="nm-mention-chip">Reputation Cloud</span>
-                    <span class="nm-mention-chip">The Reputation Management Company</span>
-                    <span class="nm-mention-chip">Birdeye Social</span>
-                    <span class="nm-more-link">+5 more</span>
+                  <td class="nm-name-cell">Aspen Dental <span class="nm-you-tag">You</span></td>
+                  <td class="nm-mentions-cell">
+                    <span class="nm-mention-chip">Aspen Dental Management</span>
+                    <span class="nm-mention-chip">ADMI</span>
+                    <span class="nm-mention-chip">Aspen Dental Group</span>
+                    <span class="nm-more-link">+3 more</span>
                   </td>
-                  <td class="nm-count-col">8</td>
+                  <td class="nm-count-col">12</td>
                   <td class="nm-actions-col pt-action-cell">
                     <span class="pt-row-hover-actions">
-                      <button class="pt-row-icon-btn" onclick="openNmModal('Birdeye')"><span class="material-symbols-rounded">edit</span></button>
+                      <button class="pt-row-icon-btn" onclick="openNmModal('Aspen Dental')"><span class="material-symbols-rounded">edit</span></button>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="pt-data-row">
+                  <td class="nm-name-cell">Heartland Dental</td>
+                  <td class="nm-mentions-cell">
+                    <span class="nm-mention-chip">Heartland Dental Care</span>
+                    <span class="nm-mention-chip">HD Dental</span>
+                    <span class="nm-mention-chip">Heartland</span>
+                  </td>
+                  <td class="nm-count-col">6</td>
+                  <td class="nm-actions-col pt-action-cell">
+                    <span class="pt-row-hover-actions">
+                      <button class="pt-row-icon-btn" onclick="openNmModal('Heartland Dental')"><span class="material-symbols-rounded">edit</span></button>
+                      <button class="pt-row-icon-btn" onclick="this.closest('tr').remove()" style="color:#e53935"><span class="material-symbols-rounded">delete</span></button>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="pt-data-row">
+                  <td class="nm-name-cell">Bright Now! Dental</td>
+                  <td class="nm-mentions-cell">
+                    <span class="nm-mention-chip">Smile Brands</span>
+                    <span class="nm-mention-chip">Bright Now Dental</span>
+                    <span class="nm-mention-chip">BND</span>
+                  </td>
+                  <td class="nm-count-col">4</td>
+                  <td class="nm-actions-col pt-action-cell">
+                    <span class="pt-row-hover-actions">
+                      <button class="pt-row-icon-btn" onclick="openNmModal('Bright Now! Dental')"><span class="material-symbols-rounded">edit</span></button>
+                      <button class="pt-row-icon-btn" onclick="this.closest('tr').remove()" style="color:#e53935"><span class="material-symbols-rounded">delete</span></button>
+                    </span>
+                  </td>
+                </tr>
+                <tr class="pt-data-row">
+                  <td class="nm-name-cell">Western Dental</td>
+                  <td class="nm-mentions-cell">
+                    <span class="nm-mention-chip">Western Dental &amp; Orthodontics</span>
+                    <span class="nm-mention-chip">Western Dental Services</span>
+                  </td>
+                  <td class="nm-count-col">3</td>
+                  <td class="nm-actions-col pt-action-cell">
+                    <span class="pt-row-hover-actions">
+                      <button class="pt-row-icon-btn" onclick="openNmModal('Western Dental')"><span class="material-symbols-rounded">edit</span></button>
+                      <button class="pt-row-icon-btn" onclick="this.closest('tr').remove()" style="color:#e53935"><span class="material-symbols-rounded">delete</span></button>
                     </span>
                   </td>
                 </tr>
@@ -3297,7 +3367,7 @@ textarea.ap-input{
             </div>
           </div>
         </div>
-        <div class="pt-table-wrap" style="border:none;border-radius:0;border-top:1px solid #eaeaea">
+        <div class="pt-table-wrap" style="border:none;border-radius:0;border-top:1px solid #eaeaea;overflow:visible">
           <table class="pt-table">
             <colgroup>
               <col style="width:55%"><col style="width:22%"><col>
@@ -3814,10 +3884,10 @@ textarea.ap-input{
 
       </div>
 
-      <!-- Card: Configure prompt tracking frequency -->
+      <!-- Card: Prompt tracking report frequency -->
       <div class="card" style="margin-bottom:20px">
         <div style="padding:20px 24px 16px">
-          <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Configure prompt tracking frequency</div>
+          <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Prompt tracking report frequency</div>
         </div>
         
 
@@ -3850,10 +3920,10 @@ textarea.ap-input{
         </div>
       </div>
 
-      <!-- Card: Which AI sites do you want to track? -->
+      <!-- Card: AI site tracking -->
       <div class="card" style="margin-bottom:20px">
         <div style="padding:20px 24px 16px">
-          <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Which AI sites do you want to track?</div>
+          <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">AI site tracking</div>
         </div>
         
 
@@ -4912,91 +4982,78 @@ textarea.ap-input{
   </div>
 </div>
 
-<div class="modal-overlay" id="nmEditModal" onclick="closeNmModal(event)">
-  <div class="modal nm-modal" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <span class="modal-title" id="nmEditModalTitle">Map names for Birdeye</span>
-      <button class="modal-close" onclick="closeNmModal()" title="Close">
-        <span class="material-symbols-rounded" style="font-size:20px">close</span>
-      </button>
+<!-- ══ ADD BRAND SIDE PANEL ══ -->
+<div class="ap-overlay" id="nm-add-overlay" onclick="closeAddBrandPanel()"></div>
+<div class="ap-panel" id="nm-add-panel">
+  <div class="ap-header">
+    <div class="ap-header-left">
+      <button class="icon-btn" onclick="closeAddBrandPanel()"><span class="material-symbols-rounded">arrow_back</span></button>
+      <span class="ap-header-title">Add brand</span>
     </div>
-    <div class="modal-subtitle" style="margin-bottom:20px">Add or remove name mappings of your brand</div>
-    <div class="nm-modal-search-wrap" style="position:relative">
-      <span class="material-symbols-rounded nm-modal-search-icon">search</span>
-      <input class="nm-modal-search" type="text" placeholder="Search mentions" id="nmModalSearchInput"
-        oninput="filterNmSearch(this.value)" autocomplete="off"/>
-      <div class="nm-search-dropdown" id="nmSearchDropdown"></div>
+    <div class="ap-header-right">
+      <button class="btn-cancel" onclick="closeAddBrandPanel()">Cancel</button>
+      <button class="ap-btn-add" id="nm-add-save-btn" onclick="saveAddBrand()">Save</button>
     </div>
-    <div class="nm-modal-section-hdr">Mapped mentions <span class="nm-modal-count">(9)</span></div>
-    <div class="nm-modal-list" id="nmModalList">
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">Birdeye</span>
-          <span class="nm-modal-item-meta">54,121 mentions · <span class="nm-pct-span">66.78%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">BirdEye</span>
-          <span class="nm-modal-item-meta">2,034 mentions · <span class="nm-pct-span">2.51%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">birdeye</span>
-          <span class="nm-modal-item-meta">222 mentions · <span class="nm-pct-span">0.27%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">Birdeye Search AI</span>
-          <span class="nm-modal-item-meta">12 mentions · <span class="nm-pct-span">0.01%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">The Reputation Management Company</span>
-          <span class="nm-modal-item-meta">8 mentions · <span class="nm-pct-span">&lt;0.01%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">birdeye.com</span>
-          <span class="nm-modal-item-meta">8 mentions · <span class="nm-pct-span">&lt;0.01%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">Reputation Cloud</span>
-          <span class="nm-modal-item-meta">2 mentions · <span class="nm-pct-span">&lt;0.01%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">BirdEye Listings AI</span>
-          <span class="nm-modal-item-meta">1 mention · <span class="nm-pct-span">&lt;0.01%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
-      <div class="nm-modal-item">
-        <div class="nm-modal-item-info">
-          <span class="nm-modal-item-name">Birdeye Social</span>
-          <span class="nm-modal-item-meta">1 mention · <span class="nm-pct-span">&lt;0.01%</span></span>
-        </div>
-        <button class="nm-modal-remove" onclick="removeNmModalItem(this)" title="Remove"><span class="material-symbols-rounded">close</span></button>
-      </div>
+  </div>
+  <div class="ap-body" style="gap:16px">
+    <div class="ap-field">
+      <label class="ap-label">Brand name <span class="ap-req">*</span></label>
+      <input class="ap-input" type="text" id="nm-brand-input" placeholder="Enter brand name"
+        oninput="onNmBrandInput(this.value)" autocomplete="off"/>
     </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeNmModal()">Cancel</button>
-      <button class="btn-generate" onclick="saveNmChanges()">Save Changes</button>
+
+    <!-- Mapped names section -->
+    <div id="nm-mapped-section" style="display:none">
+      <label class="ap-label" style="margin-bottom:8px;display:block">Mapped names</label>
+      <div id="nm-mapped-list"></div>
     </div>
+
+    <!-- Name mapping suggestions section (always visible) -->
+    <div id="nm-suggest-section">
+      <label class="ap-label" style="margin-bottom:8px;display:block">Name mapping suggestions</label>
+      <!-- Empty state -->
+      <div id="nm-suggest-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;gap:12px;text-align:center">
+        <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8.0628" cy="33.9388" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+          <circle cx="33.7747" cy="33.9388" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+          <circle cx="8.0628" cy="8.0628" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+          <circle cx="34.3138" cy="8.0628" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+        </svg>
+        <p style="font-size:13px;color:rgb(143,143,143);margin:0;font-family:'Roboto',sans-serif">Add brand name to get name suggestions</p>
+      </div>
+      <div id="nm-suggest-list" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<div class="ap-overlay" id="nmEditOverlay" onclick="closeNmModal()"></div>
+<div class="ap-panel" id="nmEditModal">
+  <div class="ap-header">
+    <div class="ap-header-left">
+      <button class="icon-btn" onclick="closeNmModal()"><span class="material-symbols-rounded">arrow_back</span></button>
+      <span class="ap-header-title">Edit name mapping</span>
+    </div>
+    <div class="ap-header-right">
+      <button class="ap-btn-add enabled" onclick="saveNmChanges()">Save</button>
+    </div>
+  </div>
+  <div class="ap-body" style="gap:16px">
+    <div class="ap-field">
+      <label class="ap-label">Brand name</label>
+      <input class="ap-input" type="text" id="nm-edit-brand-name" placeholder="Brand name" readonly style="background:#f9f9f9;color:rgb(85,85,85)"/>
+    </div>
+    <div class="ap-field">
+      <label class="ap-label">Search names</label>
+      <input class="ap-input" type="text" id="nmModalSearchInput" placeholder="Search mentions"
+        oninput="filterNmEditSearch(this.value)" autocomplete="off"/>
+    </div>
+
+    <!-- Mapped names (edit) -->
+    <div id="nm-edit-mapped-section">
+      <label class="ap-label" style="margin-bottom:8px;display:block">Mapped names</label>
+      <div id="nmModalList"></div>
+    </div>
+
   </div>
 </div>
 
@@ -5096,7 +5153,7 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'settings-reports':'Report'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'settings-reports':'Reports'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('page-info-icon').style.display = view === 'prompt-brandkit' ? 'inline-flex' : 'none';
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
@@ -6067,10 +6124,213 @@ function hidePageInfoTooltip() {
   document.getElementById('pt-mod-tooltip').style.display = 'none';
 }
 
-/* ── Edit Mentions modal ── */
+/* ── Add Brand side panel ── */
+const NM_BRAND_SUGGESTIONS = [
+  { name: 'Birdeye',                        meta: '54,121 mentions · 66.78%' },
+  { name: 'BirdEye',                        meta: '2,034 mentions · 2.51%' },
+  { name: 'birdeye.com',                    meta: '8 mentions · <0.01%' },
+  { name: 'Birdeye Search AI',              meta: '12 mentions · 0.01%' },
+  { name: 'Reputation Cloud',               meta: '2 mentions · <0.01%' },
+  { name: 'The Reputation Management Company', meta: '8 mentions · <0.01%' },
+  { name: 'Birdeye Social',                 meta: '1 mention · <0.01%' },
+  { name: 'BirdEye Listings AI',            meta: '1 mention · <0.01%' },
+  { name: 'Heartland Dental',               meta: '3,200 mentions · 4.12%' },
+  { name: 'Heartland Dental Care',          meta: '1,100 mentions · 1.41%' },
+  { name: 'HD Dental',                      meta: '320 mentions · 0.41%' },
+  { name: 'Western Dental & Orthodontics',  meta: '890 mentions · 1.15%' },
+  { name: 'Western Dental Services',        meta: '210 mentions · 0.27%' },
+];
+
+let _nmMappedNames = [];
+
+function openAddBrandPanel() {
+  _nmMappedNames = [];
+  document.getElementById('nm-brand-input').value = '';
+  document.getElementById('nm-suggest-list').innerHTML = '';
+  document.getElementById('nm-suggest-list').style.display = 'none';
+  document.getElementById('nm-suggest-empty').style.display = 'flex';
+  document.getElementById('nm-mapped-list').innerHTML = '';
+  document.getElementById('nm-mapped-section').style.display = 'none';
+  document.getElementById('nm-add-save-btn').classList.remove('enabled');
+  document.getElementById('nm-add-overlay').classList.add('open');
+  document.getElementById('nm-add-panel').classList.add('open');
+  setTimeout(() => document.getElementById('nm-brand-input').focus(), 100);
+}
+
+function closeAddBrandPanel() {
+  document.getElementById('nm-add-panel').classList.remove('open');
+  document.getElementById('nm-add-overlay').classList.remove('open');
+}
+
+function onNmBrandInput(q) {
+  const trimmed = q.trim().toLowerCase();
+  const sugList = document.getElementById('nm-suggest-list');
+  const emptyState = document.getElementById('nm-suggest-empty');
+  if (!trimmed) {
+    sugList.style.display = 'none'; sugList.innerHTML = '';
+    emptyState.style.display = 'flex';
+    return;
+  }
+
+  const matches = NM_BRAND_SUGGESTIONS.filter(s =>
+    s.name.toLowerCase().includes(trimmed) && !_nmMappedNames.includes(s.name)
+  );
+  emptyState.style.display = 'none';
+  sugList.style.display = matches.length ? '' : 'none';
+  sugList.innerHTML = matches.map(s =>
+    `<div class="nm-suggest-item">
+      <div class="nm-suggest-info">
+        <span class="nm-suggest-name">${s.name}</span>
+        <span class="nm-suggest-meta">${s.meta}</span>
+      </div>
+      <button class="nm-map-btn" title="Map name" onclick="mapNmSuggestion('${s.name.replace(/'/g,"\\'")}')">
+        <span class="material-symbols-rounded" style="font-size:18px">check</span>
+      </button>
+    </div>`
+  ).join('');
+}
+
+function mapNmSuggestion(name) {
+  if (_nmMappedNames.includes(name)) return;
+  const suggestion = NM_BRAND_SUGGESTIONS.find(s => s.name === name);
+  const meta = suggestion ? suggestion.meta : '';
+  _nmMappedNames.push(name);
+
+  // Add as a row (same style as suggestions) with trash icon
+  const mappedList = document.getElementById('nm-mapped-list');
+  const row = document.createElement('div');
+  row.className = 'nm-suggest-item';
+  row.dataset.name = name;
+  row.innerHTML =
+    `<div class="nm-suggest-info">` +
+    `<span class="nm-suggest-name">${name}</span>` +
+    (meta ? `<span class="nm-suggest-meta">${meta}</span>` : '') +
+    `</div>` +
+    `<button class="nm-map-btn" title="Remove" onclick="unmapNmName('${name.replace(/'/g,"\\'")}',this.closest('.nm-suggest-item'))">` +
+    `<span class="material-symbols-rounded" style="font-size:18px">delete</span></button>`;
+  mappedList.appendChild(row);
+  document.getElementById('nm-mapped-section').style.display = '';
+  document.getElementById('nm-add-save-btn').classList.add('enabled');
+
+  // Refresh suggestions
+  onNmBrandInput(document.getElementById('nm-brand-input').value);
+}
+
+function unmapNmName(name, row) {
+  _nmMappedNames = _nmMappedNames.filter(n => n !== name);
+  row.remove();
+  if (!_nmMappedNames.length) {
+    document.getElementById('nm-mapped-section').style.display = 'none';
+    document.getElementById('nm-add-save-btn').classList.remove('enabled');
+  }
+  onNmBrandInput(document.getElementById('nm-brand-input').value);
+}
+
+function saveAddBrand() {
+  if (!_nmMappedNames.length) return;
+  closeAddBrandPanel();
+  showToast('Brand added with ' + _nmMappedNames.length + ' mapped name' + (_nmMappedNames.length > 1 ? 's' : '') + '.');
+}
+
+/* ── Map names side panel ── */
+const NM_BRAND_DATA = {
+  'Aspen Dental': [
+    { name: 'Birdeye',                        meta: '54,121 mentions · 66.78%' },
+    { name: 'BirdEye',                        meta: '2,034 mentions · 2.51%' },
+    { name: 'birdeye',                        meta: '222 mentions · 0.27%' },
+    { name: 'Birdeye Search AI',              meta: '12 mentions · 0.01%' },
+    { name: 'The Reputation Management Company', meta: '8 mentions · <0.01%' },
+    { name: 'birdeye.com',                    meta: '8 mentions · <0.01%' },
+    { name: 'Reputation Cloud',               meta: '2 mentions · <0.01%' },
+    { name: 'BirdEye Listings AI',            meta: '1 mention · <0.01%' },
+    { name: 'Birdeye Social',                 meta: '1 mention · <0.01%' },
+  ],
+  'Heartland Dental': [
+    { name: 'Heartland Dental Care',          meta: '3,200 mentions · 4.12%' },
+    { name: 'HD Dental',                      meta: '1,100 mentions · 1.41%' },
+    { name: 'Heartland',                      meta: '320 mentions · 0.41%' },
+  ],
+  'Bright Now! Dental': [
+    { name: 'Smile Brands',                   meta: '890 mentions · 1.15%' },
+    { name: 'Bright Now Dental',              meta: '560 mentions · 0.72%' },
+    { name: 'BND',                            meta: '210 mentions · 0.27%' },
+  ],
+  'Western Dental': [
+    { name: 'Western Dental & Orthodontics',  meta: '740 mentions · 0.95%' },
+    { name: 'Western Dental Services',        meta: '180 mentions · 0.23%' },
+  ],
+};
+
 function openNmModal(brandName) {
-  document.getElementById('nmEditModalTitle').textContent = 'Map names for ' + brandName;
+  // Pre-fill brand name input
+  document.getElementById('nm-edit-brand-name').value = brandName;
+  document.getElementById('nmModalSearchInput').value = '';
+  document.getElementById('nmSearchDropdown').innerHTML = '';
+  const mappedData = NM_BRAND_DATA[brandName] || NM_EDIT_DEFAULT || [];
+
+  // Populate mapped names as rows with trash icon
+  const list = document.getElementById('nmModalList');
+  list.innerHTML = mappedData.map(s =>
+    `<div class="nm-suggest-item nm-modal-item">
+      <div class="nm-suggest-info">
+        <span class="nm-suggest-name">${s.name}</span>
+        <span class="nm-suggest-meta">${s.meta}</span>
+      </div>
+      <button class="nm-map-btn" onclick="removeNmModalItem(this)" title="Remove">
+        <span class="material-symbols-rounded" style="font-size:18px">delete</span>
+      </button>
+    </div>`
+  ).join('');
+
+  document.getElementById('nmEditOverlay').classList.add('open');
   document.getElementById('nmEditModal').classList.add('open');
+}
+
+function filterNmEditSearch(q) {
+  const dd = document.getElementById('nmSearchDropdown');
+  const input = document.getElementById('nmModalSearchInput');
+  if (!q.trim()) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
+  const existing = [...document.querySelectorAll('#nmModalList .nm-suggest-name')].map(e => e.textContent);
+  // Combine all known names into one pool
+  const allPool = [];
+  const seen = new Set();
+  [...NM_BRAND_SUGGESTIONS, ...Object.values(NM_BRAND_DATA).flat()].forEach(s => {
+    if (!seen.has(s.name)) { seen.add(s.name); allPool.push(s); }
+  });
+  const matches = allPool.filter(s => s.name.toLowerCase().includes(q.toLowerCase()) && !existing.includes(s.name));
+  if (!matches.length) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
+  dd.innerHTML = matches.map(s =>
+    `<div class="nm-search-opt" onclick="addNmEditItem('${s.name.replace(/'/g,"\\'")}','${s.meta.replace(/'/g,"\\'")}')">
+      <span class="nm-search-opt-name">${s.name}</span>
+      <span class="nm-search-opt-meta">${s.meta}</span>
+    </div>`
+  ).join('');
+  // Position fixed to escape overflow:hidden of ap-body
+  const rect = input.getBoundingClientRect();
+  dd.style.position = 'fixed';
+  dd.style.top = (rect.bottom + 4) + 'px';
+  dd.style.left = rect.left + 'px';
+  dd.style.width = rect.width + 'px';
+  dd.style.zIndex = '1200';
+  dd.classList.add('open');
+}
+
+function addNmEditItem(name, meta) {
+  const list = document.getElementById('nmModalList');
+  const item = document.createElement('div');
+  item.className = 'nm-suggest-item nm-modal-item';
+  item.innerHTML =
+    `<div class="nm-suggest-info">` +
+    `<span class="nm-suggest-name">${name}</span>` +
+    `<span class="nm-suggest-meta">${meta}</span>` +
+    `</div>` +
+    `<button class="nm-map-btn" onclick="removeNmModalItem(this)" title="Remove">` +
+    `<span class="material-symbols-rounded" style="font-size:18px">delete</span></button>`;
+  list.appendChild(item);
+  // Close dropdown and clear search
+  const dd = document.getElementById('nmSearchDropdown');
+  dd.classList.remove('open'); dd.innerHTML = '';
+  document.getElementById('nmModalSearchInput').value = '';
 }
 
 /* ── Map names search suggestions ── */
@@ -6128,12 +6388,12 @@ function addNmSuggestion(name, meta) {
   dd.innerHTML = '';
 }
 
-// Close dropdown on outside click
+// Close edit search dropdown on outside click
 document.addEventListener('click', function(e) {
-  const wrap = document.getElementById('nmModalSearchInput')?.closest('.nm-modal-search-wrap');
-  if (wrap && !wrap.contains(e.target)) {
-    const dd = document.getElementById('nmSearchDropdown');
-    if (dd) { dd.classList.remove('open'); dd.innerHTML = ''; }
+  const input = document.getElementById('nmModalSearchInput');
+  const dd = document.getElementById('nmSearchDropdown');
+  if (dd && input && !input.contains(e.target) && !dd.contains(e.target)) {
+    dd.classList.remove('open'); dd.innerHTML = '';
   }
 });
 
@@ -6148,9 +6408,9 @@ function removeNmModalItem(btn) {
 }
 
 function saveNmChanges() {
-  // Collect remaining mapped mentions from modal list
-  const remaining = [...document.querySelectorAll('#nmModalList .nm-modal-item')]
-    .map(item => item.querySelector('.nm-modal-item-name')?.textContent.trim())
+  // Collect remaining mapped names from row list
+  const remaining = [...document.querySelectorAll('#nmModalList .nm-suggest-name')]
+    .map(el => el.textContent.trim())
     .filter(Boolean);
 
   // Update the chips in the table cell
@@ -6175,8 +6435,8 @@ function saveNmChanges() {
   document.getElementById('nmEditModal').classList.remove('open');
 }
 function closeNmModal(e) {
-  if (e && e.target !== document.getElementById('nmEditModal')) return;
   document.getElementById('nmEditModal').classList.remove('open');
+  document.getElementById('nmEditOverlay').classList.remove('open');
 }
 
 /* ── Filter panel ── */
@@ -6552,9 +6812,17 @@ function openEditPromptPanel(e, btn) {
         const label = cb.closest('label');
         if (!label) return;
         if (addedSet.has(cb.value)) {
-          label.appendChild(Object.assign(document.createElement('img'), {src:'Start tracking.svg',className:'ap-ms-track-icon',width:16,height:16,title:'Start tracking'}));
+          const span = document.createElement('span');
+          span.className = 'material-symbols-rounded ap-ms-track-icon';
+          span.style.cssText = 'font-size:14px;color:#4cae3d;margin-left:auto;flex-shrink:0';
+          span.title = 'Start tracking'; span.textContent = 'play_circle';
+          label.appendChild(span);
         } else if (removedSet.has(cb.value)) {
-          label.appendChild(Object.assign(document.createElement('img'), {src:'Stop tracking.svg',className:'ap-ms-track-icon',width:16,height:16,title:'Stop tracking'}));
+          const span = document.createElement('span');
+          span.className = 'material-symbols-rounded ap-ms-track-icon';
+          span.style.cssText = 'font-size:14px;color:#e53935;margin-left:auto;flex-shrink:0';
+          span.title = 'Stop tracking'; span.textContent = 'stop_circle';
+          label.appendChild(span);
         }
       });
     };
@@ -6604,8 +6872,8 @@ function saveEditPrompt() {
   const locsChanged   = locs !== _editOrigLocs;
   const aiChanged     = sites.slice().sort().join() !== _editOrigAiKeys.slice().sort().join();
 
-  const _modSvgPath = 'M7.25 5.59134C6.20517 6.36318 5.40225 7.30426 4.84125 8.41459C4.28042 9.52476 4 10.7196 4 11.9991C4 13.8773 4.56733 15.5304 5.702 16.9586C6.8365 18.3869 8.30508 19.3223 10.1077 19.7646C10.3001 19.8184 10.4552 19.9306 10.573 20.1011C10.691 20.2716 10.75 20.4581 10.75 20.6606C10.75 20.8631 10.6776 21.032 10.5328 21.1673C10.3878 21.3025 10.2275 21.3483 10.052 21.3048C7.85317 20.8458 6.04483 19.7568 4.627 18.0376C3.209 16.3183 2.5 14.3054 2.5 11.9991C2.5 10.5209 2.80742 9.15134 3.42225 7.89034C4.03692 6.62951 4.91733 5.53759 6.0635 4.61459H4.125C3.91217 4.61459 3.734 4.54276 3.5905 4.39909C3.44683 4.25559 3.375 4.07743 3.375 3.86459C3.375 3.65176 3.44683 3.47351 3.5905 3.32984C3.734 3.18634 3.91217 3.11459 4.125 3.11459H7.84625C8.10392 3.11459 8.31892 3.20076 8.49125 3.37309C8.66375 3.54559 8.75 3.76068 8.75 4.01834V7.73959C8.75 7.95243 8.67817 8.13059 8.5345 8.27409C8.391 8.41776 8.21283 8.48959 8 8.48959C7.78717 8.48959 7.609 8.41776 7.4655 8.27409C7.32183 8.13059 7.25 7.95243 7.25 7.73959V5.59134ZM10.575 14.1298L15.723 8.98184C15.8718 8.83318 16.0459 8.75976 16.2452 8.76159C16.4446 8.76359 16.6218 8.84209 16.777 8.99709C16.9218 9.15226 16.9968 9.32793 17.002 9.52409C17.007 9.72026 16.932 9.89593 16.777 10.0511L11.2078 15.6203C11.0269 15.801 10.816 15.8913 10.575 15.8913C10.334 15.8913 10.1231 15.801 9.94225 15.6203L7.223 12.8856C7.08467 12.7471 7.01133 12.5756 7.003 12.3711C6.99467 12.1668 7.068 11.987 7.223 11.8318C7.368 11.687 7.54367 11.6146 7.75 11.6146C7.95633 11.6146 8.132 11.687 8.277 11.8318L10.575 14.1298ZM17.9365 19.3933H19.875C20.0878 19.3933 20.266 19.4651 20.4095 19.6086C20.5532 19.7523 20.625 19.9305 20.625 20.1433C20.625 20.3562 20.5532 20.5343 20.4095 20.6778C20.266 20.8215 20.0878 20.8933 19.875 20.8933H16.1538C15.8961 20.8933 15.6811 20.8071 15.5087 20.6346C15.3362 20.4623 15.25 20.2472 15.25 19.9893V16.2683C15.25 16.0555 15.3218 15.8773 15.4655 15.7336C15.609 15.5901 15.7872 15.5183 16 15.5183C16.2128 15.5183 16.391 15.5901 16.5345 15.7336C16.6782 15.8773 16.75 16.0555 16.75 16.2683V18.4163C17.7885 17.628 18.5898 16.6813 19.1538 15.5761C19.7179 14.4709 20 13.2786 20 11.9991C20 10.1209 19.4327 8.46776 18.298 7.03959C17.1635 5.61126 15.6949 4.67593 13.8923 4.23359C13.6999 4.17976 13.5448 4.06926 13.427 3.90209C13.309 3.73476 13.25 3.54976 13.25 3.34709C13.25 3.14459 13.3224 2.97409 13.4672 2.83559C13.6122 2.69726 13.7725 2.64984 13.948 2.69334C16.1468 3.14584 17.9552 4.23334 19.373 5.95584C20.791 7.67834 21.5 9.69276 21.5 11.9991C21.5 13.4773 21.1926 14.8484 20.5777 16.1126C19.9631 17.3766 19.0827 18.4702 17.9365 19.3933Z';
-  const _modSvg = (field) => '<svg class="pt-modified-icon" width="18" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-mod-tooltip="' + field + '"><path d="' + _modSvgPath + '" fill="#8F8F8F"/></svg>';
+  const _modSvgPath = 'M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z';
+  const _modSvg = (field) => '<svg class="pt-modified-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" data-mod-tooltip="' + field + '"><path d="' + _modSvgPath + '" fill="#8F8F8F"/></svg>';
 
   if (promptChanged) {
     const ts = _editPromptRow.querySelector('.pt-v2-text') || _editPromptRow.querySelector('.pt-v2-row-inner');
@@ -7201,6 +7469,7 @@ function copyField(btn) {
 
 <!-- ── TOAST ── -->
 
+<div class="nm-search-dropdown" id="nmSearchDropdown" style="position:fixed;z-index:2000"></div>
 <div id="pt-mod-tooltip"></div>
 
 <div class="toast" id="main-toast">
