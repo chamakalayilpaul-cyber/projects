@@ -1155,10 +1155,10 @@ body{
   padding:10px 14px;font-size:12px;font-weight:400;color:rgb(143,143,143);
   text-align:left;border-bottom:1px solid #eaeaea;background:#fff;white-space:nowrap;
 }
-.acs-table th.acs-site-col{text-align:center}
-.acs-group-row{cursor:pointer;background:#fff}
+.acs-table th.acs-site-col{text-align:left}
+.acs-group-row{background:#fff}
 .acs-group-row:hover td{background:rgb(242,244,247)}
-.acs-group-row td{padding:12px 14px;font-size:14px;color:rgb(33,33,33);border-bottom:1px solid #eaeaea;font-weight:500}
+.acs-group-row td{padding:12px 14px;font-size:14px;color:rgb(33,33,33);border-bottom:1px solid #eaeaea;font-weight:400}
 .acs-child-row td{padding:10px 14px;font-size:14px;color:rgb(85,85,85);border-bottom:1px solid #f5f5f5;background:#fafafa}
 .acs-child-row:last-child td{border-bottom:none}
 .acs-group-cell{display:flex;align-items:center;gap:8px}
@@ -3172,14 +3172,15 @@ textarea.ap-input{
       <!-- HTTP results -->
       <div class="pt-table-wrap" style="overflow:hidden">
         <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0;border-bottom:1px solid #eaeaea">
-          <div class="pbk-card-hdr-left">
-            <span style="font-size:14px;font-weight:500;color:rgb(33,33,33)">HTTP results</span>
+          <div class="pbk-card-hdr-left" style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:16px;font-weight:400;color:rgb(33,33,33)">HTTP results</span>
+            <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);cursor:default" onmouseenter="showAcsTip(event,'http')" onmouseleave="hideAcsTip()">info</span>
           </div>
         </div>
         <table class="acs-table">
           <thead>
             <tr>
-              <th style="width:240px">Link</th>
+              <th style="width:240px;padding-left:20px">Link</th>
               <th class="acs-site-col">ChatGPT</th>
               <th class="acs-site-col">Gemini</th>
               <th class="acs-site-col">Perplexity</th>
@@ -3216,17 +3217,18 @@ textarea.ap-input{
         </table>
       </div>
 
-      <!-- Robots.txt -->
+      <!-- Robots.txt results -->
       <div class="pt-table-wrap" style="overflow:hidden">
         <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0;border-bottom:1px solid #eaeaea">
-          <div class="pbk-card-hdr-left">
-            <span style="font-size:14px;font-weight:500;color:rgb(33,33,33)">Robots.txt</span>
+          <div class="pbk-card-hdr-left" style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Robots.txt results</span>
+            <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);cursor:default" onmouseenter="showAcsTip(event,'robots')" onmouseleave="hideAcsTip()">info</span>
           </div>
         </div>
         <table class="acs-table">
           <thead>
             <tr>
-              <th style="width:240px">Link</th>
+              <th style="width:240px;padding-left:20px">Link</th>
               <th class="acs-site-col">ChatGPT</th>
               <th class="acs-site-col">Gemini</th>
               <th class="acs-site-col">Perplexity</th>
@@ -6590,6 +6592,21 @@ document.addEventListener('click', function(e) {
   const wrap = document.getElementById('pbk-select-wrap');
   if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
 });
+
+/* ── AI crawler section tooltips ── */
+const _acsTips = {
+  http: 'Checks whether the URL returns readable content over HTTP like the page loads, no blockages, and the content is accessible to a bot making a direct request',
+  robots: "Checks the site's robots.txt file to see if each AI crawler's bot user-agent (e.g., GPTBot, ClaudeBot, PerplexityBot) is allowed or blocked"
+};
+function showAcsTip(e, key) {
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = _acsTips[key];
+  tip.style.display = 'block';
+  const r = e.target.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+}
+function hideAcsTip() { document.getElementById('pt-mod-tooltip').style.display = 'none'; }
 
 /* ── Page info icon tooltip ── */
 function showPageInfoTooltip(e) {
