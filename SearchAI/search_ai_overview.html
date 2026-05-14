@@ -1148,6 +1148,30 @@ body{
 .nm-modal-remove .material-symbols-rounded{font-size:16px}
 /* ── Name Matching section ── */
 .nm-section{margin-top:24px}
+/* AI Crawler Status */
+.acs-section{margin-top:24px}
+.acs-table{width:100%;border-collapse:collapse}
+.acs-table th{
+  padding:10px 14px;font-size:12px;font-weight:400;color:rgb(143,143,143);
+  text-align:left;border-bottom:1px solid #eaeaea;background:#fff;white-space:nowrap;
+}
+.acs-table th.acs-site-col{text-align:center}
+.acs-group-row{cursor:pointer;background:#fff}
+.acs-group-row:hover td{background:rgb(242,244,247)}
+.acs-group-row td{padding:12px 14px;font-size:14px;color:rgb(33,33,33);border-bottom:1px solid #eaeaea;font-weight:500}
+.acs-child-row td{padding:10px 14px;font-size:14px;color:rgb(85,85,85);border-bottom:1px solid #f5f5f5;background:#fafafa}
+.acs-child-row:last-child td{border-bottom:none}
+.acs-group-cell{display:flex;align-items:center;gap:8px}
+.acs-chev{font-size:18px;color:rgb(85,85,85);transition:transform 0.2s;flex-shrink:0}
+.acs-group-row.collapsed .acs-chev{transform:rotate(-90deg)}
+.acs-chips{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.acs-chip{
+  display:inline-flex;align-items:center;gap:3px;
+  padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;
+}
+.acs-chip.allowed{background:#e8f5e9;color:#2e7d32}
+.acs-chip.blocked{background:#fdecea;color:#c62828}
+.acs-chip .material-symbols-rounded{font-size:13px}
 .nm-card-hdr{align-items:flex-start}
 .nm-title{font-size:16px;font-weight:400;color:#212121;font-family:'Roboto',sans-serif;margin-bottom:4px}
 .nm-sub{font-size:12px;color:rgba(85, 85, 85, 1);font-family:'Roboto',sans-serif}
@@ -1989,6 +2013,7 @@ textarea.ap-input{
       <div class="sb-sub-item" id="nav-sentiment" onclick="showView('sentiment')">Sentiment</div>
       <div class="sb-sub-item">Prompts</div>
       <div class="sb-sub-item">Platforms</div>
+      <div class="sb-sub-item" id="nav-ai-crawler" onclick="showView('ai-crawler')">AI crawler status</div>
       <div class="sb-sub-item" id="nav-explore-themes" onclick="showView('explore-themes')">Explore themes</div>
     </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('agents',this)">
@@ -2108,7 +2133,7 @@ textarea.ap-input{
       <button class="btn-cancel" onclick="showView('prompts-v2')">Cancel</button>
       <button class="btn-export" style="background:#f5f5f5;color:#bbb;border-color:#e5e9f0;cursor:default">Start import</button>
     </div>
-        <div class="page-hdr-right" id="hdr-settings-reports-btns" style="display:none;gap:6px;padding-right:8px"><button class="btn-filled" style="padding:0 20px;font-size:13px;height:36px;border-radius:6px">Save</button></div>
+        <div class="page-hdr-right" id="hdr-settings-reports-btns" style="display:none;gap:6px;padding-right:8px"><button class="btn-filled" style="padding:0 20px;font-size:13px;height:36px;border-radius:6px" onclick="saveReportSettings()">Save</button></div>
     <div class="page-hdr-right" id="hdr-tags-btns" style="display:none;gap:6px;padding-right:8px">
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
       <button class="btn-filled" onclick="openAddTagPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
@@ -2560,7 +2585,7 @@ textarea.ap-input{
               <th><span class="pt-th-inner">Prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
               <th><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">AI sites</span></th>
-              <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Shows date when the last changes were made to the prompt')" onmouseleave="hideColInfoTooltip()">info</span><span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th>Tracking status</th>
             </tr>
           </thead>
@@ -2642,7 +2667,7 @@ textarea.ap-input{
               <th><span class="pt-th-inner">Monthly searches<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Average number of monthly AI searches for this prompt across platforms')" onmouseleave="hideColInfoTooltip()">info</span><span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">AI sites</span></th>
               <th>Tracking status</th>
-              <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
+              <th><span class="pt-th-inner">Updated on<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Shows date when the last changes were made to the prompt')" onmouseleave="hideColInfoTooltip()">info</span><span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
             </tr>
           </thead>
           <tbody id="pt-v2-locs-tbody">
@@ -3024,7 +3049,175 @@ textarea.ap-input{
           </div>
         </div>
       </div>
+
+      <!-- AI Crawler Status moved to Reports > AI crawler status view -->
+      <div class="acs-section" style="display:none">
+        <div class="pt-table-wrap" style="overflow:hidden">
+          <div class="pbk-card-hdr" style="padding:16px 20px 0;margin-bottom:0">
+            <div class="pbk-card-hdr-left">
+              <span class="pbk-view-title-text">AI crawler status</span>
+            </div>
+            <button class="btn-filled" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:32px;flex-shrink:0">
+              <span class="material-symbols-rounded" style="font-size:16px">add</span>Add link
+            </button>
+          </div>
+          <table class="acs-table" style="margin-top:12px">
+            <thead>
+              <tr>
+                <th style="width:220px">Link</th>
+                <th style="width:10px"></th>
+                <th class="acs-site-col">ChatGPT</th>
+                <th class="acs-site-col">Gemini</th>
+                <th class="acs-site-col">Perplexity</th>
+                <th class="acs-site-col">Copilot</th>
+                <th class="acs-site-col">Claude</th>
+              </tr>
+            </thead>
+            <tbody id="acs-tbody">
+
+              <!-- birdeye.com -->
+              <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g1')">
+                <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>birdeye.com</div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+              <tr class="acs-child-row" data-acs-group="acs-g1">
+                <td style="padding-left:42px">HTTP</td><td></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+              <tr class="acs-child-row" data-acs-group="acs-g1">
+                <td style="padding-left:42px">Robots.txt</td><td></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+
+              <!-- blog.birdeye.com -->
+              <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g2')">
+                <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>blog.birdeye.com</div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+              <tr class="acs-child-row" data-acs-group="acs-g2">
+                <td style="padding-left:42px">HTTP</td><td></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+              <tr class="acs-child-row" data-acs-group="acs-g2">
+                <td style="padding-left:42px">Robots.txt</td><td></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+
+              <!-- support.birdeye.com -->
+              <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g3')">
+                <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>support.birdeye.com</div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+              <tr class="acs-child-row" data-acs-group="acs-g3">
+                <td style="padding-left:42px">HTTP</td><td></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+              <tr class="acs-child-row" data-acs-group="acs-g3">
+                <td style="padding-left:42px">Robots.txt</td><td></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+                <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
+
+    <!-- ══ AI CRAWLER STATUS VIEW ══ -->
+    <div class="view" id="view-ai-crawler">
+      <div class="pt-table-wrap" style="overflow:hidden">
+        <div class="pbk-card-hdr" style="padding:16px 20px 0;margin-bottom:0">
+          <div class="pbk-card-hdr-left">
+            <span class="pbk-view-title-text">AI crawler status</span>
+          </div>
+          <button class="btn-filled" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:32px;flex-shrink:0">
+            <span class="material-symbols-rounded" style="font-size:16px">add</span>Add link
+          </button>
+        </div>
+        <table class="acs-table" style="margin-top:12px">
+          <thead>
+            <tr>
+              <th style="width:220px">Link</th>
+              <th style="width:10px"></th>
+              <th class="acs-site-col">ChatGPT</th>
+              <th class="acs-site-col">Gemini</th>
+              <th class="acs-site-col">Perplexity</th>
+              <th class="acs-site-col">Copilot</th>
+              <th class="acs-site-col">Claude</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g1')">
+              <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>birdeye.com</div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
+            <tr class="acs-child-row" data-acs-group="acs-g1"><td style="padding-left:42px">HTTP</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+            <tr class="acs-child-row" data-acs-group="acs-g1"><td style="padding-left:42px">Robots.txt</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+            <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g2')">
+              <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>blog.birdeye.com</div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
+            <tr class="acs-child-row" data-acs-group="acs-g2"><td style="padding-left:42px">HTTP</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+            <tr class="acs-child-row" data-acs-group="acs-g2"><td style="padding-left:42px">Robots.txt</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+            <tr class="acs-group-row" onclick="toggleAcsGroup(this,'acs-g3')">
+              <td colspan="2"><div class="acs-group-cell"><span class="material-symbols-rounded acs-chev">expand_more</span>support.birdeye.com</div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+              <td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td>
+            </tr>
+            <tr class="acs-child-row" data-acs-group="acs-g3"><td style="padding-left:42px">HTTP</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+            <tr class="acs-child-row" data-acs-group="acs-g3"><td style="padding-left:42px">Robots.txt</td><td></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip blocked"><span class="material-symbols-rounded">close</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td><td class="acs-site-col"><div class="acs-chips"><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Chat</span><span class="acs-chip allowed"><span class="material-symbols-rounded">check</span>Train</span></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /view-ai-crawler -->
 
     <!-- ══ TAGS VIEW ══ -->
     <div class="view" id="view-tags">
@@ -3394,17 +3587,17 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-invis">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
               <td class="pt-monthly-cell">89.4K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-invis">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend Invisalign specialists for complex bite corrections?</span></td>
               <td class="pt-monthly-cell">76.2K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#c62828"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-invis">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does Invisalign cost with insurance coverage?</span></td>
               <td class="pt-monthly-cell">79.7K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#c62828"/></svg></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-twh" onclick="togglePtGroup('et-twh')">
               <td><div class="pt-group-inner">
@@ -3420,17 +3613,17 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-twh">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best teeth whitening dentist near me with same-day appointments</span></td>
               <td class="pt-monthly-cell">98.3K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#c62828"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-twh">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Professional teeth whitening vs at-home kits which is better</span></td>
               <td class="pt-monthly-cell">67.4K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-twh">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How long does professional teeth whitening last?</span></td>
               <td class="pt-monthly-cell">36.1K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-dimpl" onclick="togglePtGroup('et-dimpl')">
               <td><div class="pt-group-inner">
@@ -3446,17 +3639,17 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-dimpl">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do dental implants cost and what affects pricing?</span></td>
               <td class="pt-monthly-cell">87.2K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#c62828"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-dimpl">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best dental implant specialists near me</span></td>
               <td class="pt-monthly-cell">65.1K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-dimpl">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Are dental implants covered by insurance?</span></td>
               <td class="pt-monthly-cell">37.1K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-calig" onclick="togglePtGroup('et-calig')">
               <td><div class="pt-group-inner">
@@ -3472,12 +3665,12 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-calig">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Clear aligners vs braces which is better for adults?</span></td>
               <td class="pt-monthly-cell">78.9K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-stop-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill tracking">Tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Stop tracking" onclick="etStopTracking(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#c62828"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-calig">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find clear aligner providers accepting new patients near me</span></td>
               <td class="pt-monthly-cell">55.3K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-group-row" data-group="et-orth" onclick="togglePtGroup('et-orth')">
               <td><div class="pt-group-inner">
@@ -3493,12 +3686,12 @@ textarea.ap-input{
             <tr class="pt-data-row" data-group="et-orth">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best orthodontist near me for adults seeking discreet treatment</span></td>
               <td class="pt-monthly-cell">54.2K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="et-orth">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Orthodontic treatment options and costs for teenagers</span></td>
               <td class="pt-monthly-cell">44.5K</td>
-              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button></span></td>
+              <td class="pt-status-cell pt-action-cell"><span class="pt-status-pill not-tracking">Not tracking</span><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" title="Start tracking" onclick="openEtTrackingPanel(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button></span></td>
             </tr>
             </tbody>
           </table>
@@ -3877,8 +4070,8 @@ textarea.ap-input{
     <!-- ══ SETTINGS › REPORTS VIEW ══ -->
     <div class="view" id="view-settings-reports">
 
-      <!-- Info banner -->
-      <div id="report-info-banner" style="display:flex;align-items:flex-start;gap:10px;background:#e8f4fd;border:1px solid #bbd6f0;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#1a6fa8;line-height:1.5">
+      <!-- Info banner (hidden until changes detected) -->
+      <div id="report-info-banner" style="display:none;align-items:flex-start;gap:10px;background:#e8f4fd;border:1px solid #bbd6f0;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#1a6fa8;line-height:1.5">
         <span class="material-symbols-rounded" style="font-size:16px;color:#1976d2;flex-shrink:0;margin-top:1px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">info</span>
         <span style="flex:1">Reports are generated in configured cycles. Any updates might impact trend reports &amp; prompt consumed. Any configuration changes apply from the next update.</span>
 
@@ -3886,80 +4079,91 @@ textarea.ap-input{
 
       <!-- Card: Prompt tracking report frequency -->
       <div class="card" style="margin-bottom:20px">
-        <div style="padding:20px 24px 16px">
+        <div style="padding:24px 24px 0">
           <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Prompt tracking report frequency</div>
         </div>
         
 
         <!-- Location prompts row -->
-        <div style="padding:18px 24px 12px;display:flex;align-items:flex-start;gap:16px">
-          <div class="sett-toggle on" id="loc-toggle" style="margin-top:2px" onclick="reportToggleFreq(this,'loc-freq','loc-chev')" title="Toggle location prompts"></div>
+        <div style="padding:12px 24px;display:flex;align-items:center;gap:16px">
+          <div class="sett-toggle on" id="loc-toggle" onclick="reportToggleFreq(this,'loc-freq','loc-chev');checkReportChanges()" title="Toggle location prompts"></div>
           <div style="flex:1">
-            <div style="font-size:14px;font-weight:400;color:#212121">Location prompts</div>
+            <div style="font-size:14px;font-weight:400;color:#212121;display:inline-flex;align-items:center;gap:6px">Location prompts<span id="loc-toggle-icon" style="display:none"></span></div>
           </div>
-          <div style="position:relative;width:180px">
-            <select id="loc-freq" style="width:100%;height:36px;border:1px solid #d0d0d0;border-radius:6px;font-size:13px;color:#212121;padding:0 32px 0 12px;background:#fff;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none">
-              <option>Weekly</option><option>Daily</option><option>Monthly</option>
-            </select>
-            <svg id="loc-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none"><polyline points="6 9 12 15 18 9"/></svg>
+          <div style="width:180px">
+            <div class="fp-dropdown" id="loc-freq-dd" onclick="toggleSettDd('loc-freq-dd')">
+              <span class="fp-dropdown-val has-val" id="loc-freq-val">Weekly</span>
+              <span id="loc-freq-icon" style="display:none"></span>
+              <span class="material-symbols-rounded" style="font-size:18px;color:#555;flex-shrink:0">expand_more</span>
+              <div class="fp-dropdown-menu" id="loc-freq-menu" onclick="event.stopPropagation()">
+                <div class="fp-opt" onclick="selectSettDd('loc-freq','Daily')"><span>Daily</span><span id="loc-freq-opt-Daily" style="margin-left:auto"></span></div>
+                <div class="fp-opt" onclick="selectSettDd('loc-freq','Weekly')"><span>Weekly</span><span id="loc-freq-opt-Weekly" style="margin-left:auto"></span></div>
+                <div class="fp-opt" onclick="selectSettDd('loc-freq','Monthly')"><span>Monthly</span><span id="loc-freq-opt-Monthly" style="margin-left:auto"></span></div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Brand prompts row -->
-        <div style="padding:18px 24px;display:flex;align-items:flex-start;gap:16px">
-          <div class="sett-toggle" id="brand-toggle" style="margin-top:2px" onclick="reportToggleFreq(this,'brand-freq','brand-chev')" title="Toggle brand prompts"></div>
+        <div style="padding:12px 24px 24px;display:flex;align-items:center;gap:16px">
+          <div class="sett-toggle" id="brand-toggle" onclick="reportToggleFreq(this,'brand-freq','brand-chev');checkReportChanges()" title="Toggle brand prompts"></div>
           <div style="flex:1">
-            <div style="font-size:14px;font-weight:400;color:#212121">Brand prompts</div>
+            <div style="font-size:14px;font-weight:400;color:#212121;display:inline-flex;align-items:center;gap:6px">Brand prompts<span id="brand-toggle-icon" style="display:none"></span></div>
           </div>
-          <div style="position:relative;width:180px">
-            <select id="brand-freq" disabled style="width:100%;height:36px;border:1px solid #eaeaea;border-radius:6px;font-size:13px;color:#b0b0b0;padding:0 32px 0 12px;background:#f5f5f5;cursor:not-allowed;outline:none;-webkit-appearance:none;appearance:none">
-              <option>Weekly</option><option>Daily</option><option>Monthly</option>
-            </select>
-            <svg id="brand-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none"><polyline points="6 9 12 15 18 9"/></svg>
+          <div style="width:180px">
+            <div class="fp-dropdown ap-disabled" id="brand-freq-dd" onclick="toggleSettDd('brand-freq-dd')">
+              <span class="fp-dropdown-val has-val" id="brand-freq-val">Weekly</span>
+              <span id="brand-freq-icon" style="display:none"></span>
+              <span class="material-symbols-rounded" style="font-size:18px;color:#ccc;flex-shrink:0">expand_more</span>
+              <div class="fp-dropdown-menu" id="brand-freq-menu" onclick="event.stopPropagation()">
+                <div class="fp-opt" onclick="selectSettDd('brand-freq','Daily')"><span>Daily</span><span id="brand-freq-opt-Daily" style="margin-left:auto"></span></div>
+                <div class="fp-opt" onclick="selectSettDd('brand-freq','Weekly')"><span>Weekly</span><span id="brand-freq-opt-Weekly" style="margin-left:auto"></span></div>
+                <div class="fp-opt" onclick="selectSettDd('brand-freq','Monthly')"><span>Monthly</span><span id="brand-freq-opt-Monthly" style="margin-left:auto"></span></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Card: AI site tracking -->
       <div class="card" style="margin-bottom:20px">
-        <div style="padding:20px 24px 16px">
+        <div style="padding:20px 24px 24px">
           <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">AI site tracking</div>
         </div>
-        
 
-        <div style="padding:16px 24px;display:flex;flex-direction:column;gap:16px">
+        <div style="padding:0 24px 24px;display:flex;flex-direction:column;gap:16px">
 
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#212121;cursor:pointer">
-            <input type="checkbox" checked style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
+            <input type="checkbox" id="ai-chatgpt" checked onchange="checkReportChanges()" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
             <svg width="20" height="20" style="flex-shrink:0"><use href="#s-chatgpt"/></svg>
-            ChatGPT
+            ChatGPT<span id="ai-chatgpt-icon" style="display:none"></span>
           </label>
 
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#212121;cursor:pointer">
-            <input type="checkbox" checked style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
+            <input type="checkbox" id="ai-gemini" checked onchange="checkReportChanges()" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
             <svg width="20" height="20" style="flex-shrink:0"><use href="#s-gemini"/></svg>
-            Gemini
+            Gemini<span id="ai-gemini-icon" style="display:none"></span>
           </label>
 
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#212121;cursor:pointer">
-            <input type="checkbox" checked style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
+            <input type="checkbox" id="ai-perplexity" checked onchange="checkReportChanges()" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
             <svg width="20" height="20" style="flex-shrink:0"><use href="#s-perplexity"/></svg>
-            Perplexity
+            Perplexity<span id="ai-perplexity-icon" style="display:none"></span>
           </label>
 
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#212121;cursor:pointer">
-            <input type="checkbox" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
+            <input type="checkbox" id="ai-google-aio" onchange="checkReportChanges()" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
             <svg width="20" height="20" viewBox="0 0 24 24" style="flex-shrink:0">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            Google AI Overviews
+            Google AI Overviews<span id="ai-google-aio-icon" style="display:none"></span>
           </label>
 
           <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#212121;cursor:pointer">
-            <input type="checkbox" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
+            <input type="checkbox" id="ai-google-aim" onchange="checkReportChanges()" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0">
             <svg width="20" height="20" viewBox="0 0 20 20" style="flex-shrink:0">
               <circle cx="3.5" cy="3.5" r="2" fill="#4285F4"/><circle cx="10" cy="2.5" r="2" fill="#EA4335"/>
               <circle cx="16.5" cy="3.5" r="2" fill="#FBBC05"/><circle cx="3" cy="10" r="2" fill="#34A853"/>
@@ -3967,7 +4171,16 @@ textarea.ap-input{
               <circle cx="3.5" cy="16.5" r="2" fill="#EA4335"/><circle cx="10" cy="17.5" r="2" fill="#FBBC05"/>
               <circle cx="16.5" cy="16.5" r="2" fill="#34A853"/>
             </svg>
-            Google AI Mode
+            Google AI Mode<span id="ai-google-aim-icon" style="display:none"></span>
+          </label>
+
+          <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#212121;cursor:pointer">
+            <input type="checkbox" id="ai-claude" onchange="checkReportChanges()" style="width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0;align-self:flex-start;margin-top:3px">
+            <svg width="20" height="20" style="flex-shrink:0;align-self:flex-start;margin-top:1px"><use href="#s-claude"/></svg>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <div style="display:inline-flex;align-items:center;gap:6px">Claude<span id="ai-claude-icon" style="display:none"></span></div>
+              <div style="font-size:12px;color:rgb(143,143,143)">Uses 3x more prompts</div>
+            </div>
           </label>
 
         </div>
@@ -5153,7 +5366,7 @@ function showView(view) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'settings-reports':'Reports'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('page-info-icon').style.display = view === 'prompt-brandkit' ? 'inline-flex' : 'none';
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
@@ -5178,7 +5391,7 @@ function showView(view) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment') {
+  if (view === 'explore-themes' || view === 'sentiment' || view === 'ai-crawler') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
@@ -5213,14 +5426,14 @@ function showView(view) {
 function reportToggleFreq(toggle, freqId, chevId) {
   toggle.classList.toggle('on');
   const on = toggle.classList.contains('on');
-  const sel = document.getElementById(freqId);
-  const chev = document.getElementById(chevId);
-  sel.disabled = !on;
-  sel.style.background   = on ? '#fff'      : '#f5f5f5';
-  sel.style.borderColor  = on ? '#d0d0d0'   : '#eaeaea';
-  sel.style.color        = on ? '#212121'   : '#b0b0b0';
-  sel.style.cursor       = on ? 'pointer'   : 'not-allowed';
-  if (chev) chev.setAttribute('stroke', on ? '#555' : '#ccc');
+  const dd = document.getElementById(freqId + '-dd');
+  if (dd) {
+    dd.classList.toggle('ap-disabled', !on);
+    const val = dd.querySelector('.fp-dropdown-val');
+    if (val) val.style.color = on ? '#212121' : '#b0b0b0';
+    const chev = dd.querySelector('.material-symbols-rounded');
+    if (chev) chev.style.color = on ? '#555' : '#ccc';
+  }
 }
 function settSetFreq(btn) {
   btn.closest('.sett-freq').querySelectorAll('.sett-freq-btn').forEach(b => b.classList.remove('active'));
@@ -5941,6 +6154,225 @@ function switchNmTab(btn, tab) {
   document.getElementById('nm-unmapped-body').style.display = tab === 'unmapped' ? '' : 'none';
 }
 
+/* ── Settings > Reports change tracking ── */
+const REPORT_DEFAULTS = {
+  'loc-toggle': true, 'loc-freq': 'Weekly',
+  'brand-toggle': false, 'brand-freq': 'Weekly',
+  'ai-chatgpt': true, 'ai-gemini': true, 'ai-perplexity': true,
+  'ai-google-aio': false, 'ai-google-aim': false, 'ai-claude': false
+};
+
+function getReportSavedState() {
+  try { return JSON.parse(localStorage.getItem('reportSettings')) || {...REPORT_DEFAULTS}; }
+  catch(e) { return {...REPORT_DEFAULTS}; }
+}
+
+function toggleSettDd(id) {
+  const dd = document.getElementById(id);
+  if (dd.classList.contains('ap-disabled')) return;
+  document.querySelectorAll('.fp-dropdown.open').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
+  dd.classList.toggle('open');
+}
+
+function selectSettDd(freqId, value) {
+  document.getElementById(freqId + '-val').textContent = value;
+  document.getElementById(freqId + '-dd').classList.remove('open');
+  checkReportChanges();
+}
+
+// Close on outside click (settings dropdowns)
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#loc-freq-dd') && !e.target.closest('#brand-freq-dd')) {
+    document.getElementById('loc-freq-dd')?.classList.remove('open');
+    document.getElementById('brand-freq-dd')?.classList.remove('open');
+  }
+});
+
+function getReportCurrentState() {
+  return {
+    'loc-toggle': document.getElementById('loc-toggle')?.classList.contains('on') ?? true,
+    'loc-freq': document.getElementById('loc-freq-val')?.textContent || 'Weekly',
+    'brand-toggle': document.getElementById('brand-toggle')?.classList.contains('on') ?? false,
+    'brand-freq': document.getElementById('brand-freq-val')?.textContent || 'Weekly',
+    'ai-chatgpt': document.getElementById('ai-chatgpt')?.checked ?? true,
+    'ai-gemini': document.getElementById('ai-gemini')?.checked ?? true,
+    'ai-perplexity': document.getElementById('ai-perplexity')?.checked ?? true,
+    'ai-google-aio': document.getElementById('ai-google-aio')?.checked ?? false,
+    'ai-google-aim': document.getElementById('ai-google-aim')?.checked ?? false,
+    'ai-claude': document.getElementById('ai-claude')?.checked ?? false,
+  };
+}
+
+const SYNC_ICON_GREEN = `<svg style="width:14px;height:14px;flex-shrink:0;vertical-align:middle" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg>`;
+const SYNC_ICON_RED = SYNC_ICON_GREEN.replace('fill="#4cae3d"','fill="#c62828"');
+
+const AI_SITE_LABELS = {
+  'ai-chatgpt':'ChatGPT','ai-gemini':'Gemini','ai-perplexity':'Perplexity',
+  'ai-google-aio':'Google AI Overviews','ai-google-aim':'Google AI Mode','ai-claude':'Claude'
+};
+const FREQ_LABELS = {'loc-freq':'Location','brand-freq':'Brand'};
+
+function setSettIcon(el, isStart, tip) {
+  el.innerHTML = isStart ? SYNC_ICON_GREEN : SYNC_ICON_RED;
+  el.style.display = 'inline-flex';
+  el.dataset.settTip = tip;
+}
+
+function checkReportChanges() {
+  const saved = getReportSavedState();
+  const current = getReportCurrentState();
+  let hasChanges = false;
+
+  // Toggle controls
+  ['loc-toggle','brand-toggle'].forEach(id => {
+    const iconEl = document.getElementById(id + '-icon');
+    if (!iconEl) return;
+    const label = id === 'loc-toggle' ? 'Location' : 'Brand';
+    const freq = document.getElementById(id === 'loc-toggle' ? 'loc-freq-val' : 'brand-freq-val')?.textContent || 'Weekly';
+    if (current[id] !== saved[id]) {
+      hasChanges = true;
+      const isStart = current[id];
+      const tip = isStart
+        ? `${label} reports will be generated ${freq} next cycle.`
+        : `${label} reports is currently generated ${freq} and this will stop next cycle.`;
+      setSettIcon(iconEl, isStart, tip);
+    } else {
+      iconEl.style.display = 'none'; iconEl.innerHTML = '';
+    }
+  });
+
+  // Frequency dropdowns
+  ['loc-freq','brand-freq'].forEach(id => {
+    const iconEl = document.getElementById(id + '-icon');
+    const savedVal = saved[id]; const currentVal = current[id];
+    const changed = currentVal !== savedVal;
+    const label = FREQ_LABELS[id];
+    if (changed) hasChanges = true;
+    if (iconEl) {
+      if (changed) {
+        const tip = `${label} reports will be generated ${currentVal} next cycle.`;
+        setSettIcon(iconEl, true, tip);
+      } else {
+        iconEl.style.display = 'none'; iconEl.innerHTML = '';
+      }
+    }
+    ['Weekly','Daily','Monthly'].forEach(opt => {
+      const optIcon = document.getElementById(id + '-opt-' + opt);
+      if (!optIcon) return;
+      if (opt === currentVal && !changed) {
+        optIcon.innerHTML = '<span class="material-symbols-rounded" style="font-size:16px;color:#1976d2">check</span>';
+        optIcon.removeAttribute('data-sett-tip');
+      } else if (opt === currentVal && changed) {
+        const tip = `${label} reports will be generated ${opt} next cycle.`;
+        setSettIcon(optIcon, true, tip);
+      } else if (opt === savedVal && changed) {
+        const tip = `${label} reports is currently generated ${opt} and this will stop next cycle.`;
+        setSettIcon(optIcon, false, tip);
+      } else {
+        optIcon.innerHTML = ''; optIcon.removeAttribute('data-sett-tip');
+      }
+    });
+  });
+
+  // AI site checkboxes
+  ['ai-chatgpt','ai-gemini','ai-perplexity','ai-google-aio','ai-google-aim','ai-claude'].forEach(id => {
+    const iconEl = document.getElementById(id + '-icon');
+    if (!iconEl) return;
+    const name = AI_SITE_LABELS[id] || id;
+    if (current[id] !== saved[id]) {
+      hasChanges = true;
+      const isStart = current[id];
+      const tip = isStart
+        ? `Prompt reports for ${name} will start next cycle.`
+        : `Prompt reports for ${name} will stop next cycle.`;
+      setSettIcon(iconEl, isStart, tip);
+    } else {
+      iconEl.style.display = 'none'; iconEl.innerHTML = ''; iconEl.removeAttribute('data-sett-tip');
+    }
+  });
+
+  document.getElementById('report-info-banner').style.display = hasChanges ? 'flex' : 'none';
+}
+
+function saveReportSettings() {
+  const current = getReportCurrentState();
+  localStorage.setItem('reportSettings', JSON.stringify(current));
+  // Clear all icons and hide banner
+  ['loc-toggle-icon','brand-toggle-icon','loc-freq-icon',
+   'ai-chatgpt-icon','ai-gemini-icon','ai-perplexity-icon','ai-google-aio-icon','ai-google-aim-icon','ai-claude-icon'
+  ].forEach(id => { const el = document.getElementById(id); if (el) { el.style.display='none'; el.innerHTML=''; }});
+  document.getElementById('report-info-banner').style.display = 'none';
+  showToast('Settings saved.');
+}
+
+// Apply saved state on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const saved = getReportSavedState();
+  // Restore toggle states
+  const locToggle = document.getElementById('loc-toggle');
+  const brandToggle = document.getElementById('brand-toggle');
+  if (locToggle) { locToggle.classList.toggle('on', saved['loc-toggle']); }
+  if (brandToggle) { brandToggle.classList.toggle('on', saved['brand-toggle']); }
+  // Restore freq dropdowns
+  const locFreqVal = document.getElementById('loc-freq-val');
+  if (locFreqVal) locFreqVal.textContent = saved['loc-freq'] || 'Weekly';
+  const brandFreqVal = document.getElementById('brand-freq-val');
+  if (brandFreqVal) brandFreqVal.textContent = saved['brand-freq'] || 'Weekly';
+  // Restore checkboxes
+  ['ai-chatgpt','ai-gemini','ai-perplexity','ai-google-aio','ai-google-aim','ai-claude'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = saved[id];
+  });
+  // Render initial checkmarks in dropdowns
+  checkReportChanges();
+});
+
+/* ── Multiselect track icon tooltips ── */
+document.addEventListener('mouseover', function(e) {
+  // e.target may be <path> inside <svg>, so check both element and its parent
+  const icon = (e.target.dataset && e.target.dataset.msTip && e.target.getAttribute('class') === 'ap-ms-track-icon')
+    ? e.target
+    : (e.target.parentElement && e.target.parentElement.dataset && e.target.parentElement.dataset.msTip && e.target.parentElement.getAttribute('class') === 'ap-ms-track-icon')
+    ? e.target.parentElement : null;
+  if (!icon) return;
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = icon.dataset.msTip;
+  tip.style.display = 'block';
+  const r = icon.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+});
+document.addEventListener('mouseout', function(e) {
+  const el = e.target;
+  const isIcon = (el.dataset && el.dataset.msTip) || (el.parentElement && el.parentElement.dataset && el.parentElement.dataset.msTip);
+  if (isIcon) document.getElementById('pt-mod-tooltip').style.display = 'none';
+});
+
+/* ── Settings report change tooltips ── */
+document.addEventListener('mouseover', function(e) {
+  const el = e.target.closest('[data-sett-tip]');
+  if (!el) return;
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = el.dataset.settTip;
+  tip.style.display = 'block';
+  const r = el.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+});
+document.addEventListener('mouseout', function(e) {
+  if (e.target.closest('[data-sett-tip]')) {
+    document.getElementById('pt-mod-tooltip').style.display = 'none';
+  }
+});
+
+/* ── AI Crawler Status accordion ── */
+function toggleAcsGroup(row, groupId) {
+  row.classList.toggle('collapsed');
+  document.querySelectorAll('[data-acs-group="' + groupId + '"]').forEach(r => {
+    r.style.display = row.classList.contains('collapsed') ? 'none' : '';
+  });
+}
+
 /* ── Tags ── */
 let _tagEditRow = null;
 
@@ -5998,7 +6430,7 @@ function executeDeleteTheme() {
     if (hoverActions) {
       hoverActions.innerHTML =
         `<button class="pt-row-icon-btn" title="Start tracking" onclick="startTrackingTheme(this)">` +
-        `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><use href="#s-start-tracking"/></svg></button>`;
+        `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z" fill="#4cae3d"/></svg></button>`;
     }
   }
   document.getElementById('deleteThemeModal').classList.remove('open');
@@ -6594,7 +7026,12 @@ document.addEventListener('mouseover', function(e) {
   const delIcon = e.target.closest('.pt-deleted-icon');
   if (modIcon) {
     const field = modIcon.dataset.modTooltip || 'field';
-    tip.textContent = field.charAt(0).toUpperCase() + field.slice(1) + ' was modified. Reports for updated ' + field + ' will be available in the next monthly update.';
+    if (field.startsWith('prompt||')) {
+      const pendingText = field.slice(8);
+      tip.textContent = 'Prompt will be changed to "' + pendingText + '" starting next update.';
+    } else {
+      tip.textContent = field.charAt(0).toUpperCase() + field.slice(1) + ' was modified. Reports for updated ' + field + ' will be available in the next monthly update.';
+    }
   } else if (delIcon) {
     tip.textContent = 'Prompt will be deleted. Tracking will stop in next monthly update.';
   } else return;
@@ -6760,22 +7197,31 @@ function openEditPromptPanel(e, btn) {
   _editPromptRow = row;
   _apEditMode    = true;
 
-  // Snapshot originals for modified detection
+  // Use pending (saved-but-not-reflected) values if available, else read from table
   const origSc = row.querySelector('.pt-scope-cell');
-  _editOrigLocs = parseInt(origSc?.dataset.locations || origSc?.textContent || 0);
-  _editOrigAiKeys = [...row.querySelectorAll('.pt-ai-wrap use')].map(u => (u.getAttribute('href') || '').replace('#s-', '')).filter(Boolean);
+  const tableLocs = parseInt(origSc?.dataset.locations || origSc?.textContent || 0);
+  const tableAiKeys = [...row.querySelectorAll('.pt-ai-wrap use')].map(u => (u.getAttribute('href') || '').replace('#s-', '')).filter(Boolean);
+
+  const pendingLocsStr = row.dataset.pendingLocs;
+  const pendingAiStr  = row.dataset.pendingAi;
+  const effectiveLocs   = pendingLocsStr ? parseInt(pendingLocsStr) : tableLocs;
+  const effectiveAiKeys = pendingAiStr   ? pendingAiStr.split(',').filter(Boolean) : tableAiKeys;
+
+  // Snapshot original TABLE values for change detection
+  _editOrigLocs    = tableLocs;
+  _editOrigAiKeys  = tableAiKeys;
 
   // Theme from group header
   const grpRow = document.querySelector('.pt-group-row[data-group="' + row.dataset.group + '"]');
   const theme  = grpRow ? grpRow.querySelector('.pt-group-label').textContent.trim() : '';
 
-  // Prompt text
+  // Prompt text — use pending if exists
   const inner  = row.querySelector('.pt-v2-row-inner');
-  const prompt = inner ? inner.textContent.trim() : '';
-  _editOrigPrompt = prompt;
+  const tablePrompt = inner ? inner.querySelector('.pt-v2-text')?.textContent.trim() || inner.textContent.trim() : '';
+  const effectivePrompt = row.dataset.pendingPrompt || tablePrompt;
+  _editOrigPrompt = tablePrompt;
 
-  // AI sites from icons
-  const aiKeys = [...row.querySelectorAll('.pt-ai-wrap use')].map(u => (u.getAttribute('href') || '').replace('#s-', '')).filter(Boolean);
+  // AI sites from table (for _editOrigAiKeys already set above)
 
   // Switch panel to edit mode
   document.querySelector('#ap-panel .ap-header-title').textContent = 'Edit prompt';
@@ -6784,50 +7230,107 @@ function openEditPromptPanel(e, btn) {
   // Pre-fill fields
   document.getElementById('ap-theme-val').textContent = theme;
   const apNameEl = document.getElementById('ap-name');
-  apNameEl.value = prompt;
+  apNameEl.value = effectivePrompt;
   apNameEl.style.height = 'auto';
   apNameEl.style.height = apNameEl.scrollHeight + 'px';
 
-  // Reset + pre-check locations (select first N to match stored count)
+  // Pre-check locations
   const locCheckboxes = [...document.querySelectorAll('#ap-loc-ms input[type="checkbox"]')];
-  const preCheckCount = Math.min(_editOrigLocs, locCheckboxes.length);
-  locCheckboxes.forEach((c, i) => { c.checked = i < preCheckCount; });
-  _editOrigLocs = preCheckCount;
-  // Pre-check AI sites
-  document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => { c.checked = aiKeys.includes(c.value); });
+  // Effective values: use pendingLocValues if saved, else derive from count
+  const pendingLocValues = row.dataset.pendingLocValues ? row.dataset.pendingLocValues.split(',').filter(Boolean) : null;
+  const effectiveLocValues = pendingLocValues || locCheckboxes.slice(0, Math.min(effectiveLocs, locCheckboxes.length)).map(c => c.value);
+  locCheckboxes.forEach(c => { c.checked = effectiveLocValues.includes(c.value); });
+  _editOrigLocs = Math.min(tableLocs, locCheckboxes.length);
+
+  // Store original specific values on first open (used for sync icon comparison)
+  if (!row.dataset.origLocValues) {
+    row.dataset.origLocValues = locCheckboxes.slice(0, Math.min(tableLocs, locCheckboxes.length)).map(c => c.value).join(',');
+  }
+  const origLocValues = (row.dataset.origLocValues || '').split(',').filter(Boolean);
+
+  // Pre-check AI sites using effective keys
+  const origAiValues = tableAiKeys;
+  document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => { c.checked = effectiveAiKeys.includes(c.value); });
   refreshApMs('ap-loc-ms', 'ap-loc-label', 'Select locations');
   refreshApAiMs();
   checkApAdd();
+
+  // Remove old track icons
+  document.querySelectorAll('#ap-loc-ms .ap-ms-track-icon, #ap-ai-ms .ap-ms-track-icon').forEach(el => el.remove());
+  // Store original specific values on first open (AI sites)
+  if (!row.dataset.origAiValues) row.dataset.origAiValues = origAiValues.join(',');
+
+  const syncPath = 'M5.75 12.0694C5.75 12.8507 5.89792 13.6103 6.19375 14.3481C6.48942 15.086 6.9505 15.7674 7.577 16.3924L8.2115 17.0271V15.0386C8.2115 14.8261 8.28342 14.648 8.42725 14.5041C8.57108 14.3605 8.74925 14.2886 8.96175 14.2886C9.17442 14.2886 9.35258 14.3605 9.49625 14.5041C9.63975 14.648 9.7115 14.8261 9.7115 15.0386V18.7694C9.7115 19.0254 9.62492 19.2401 9.45175 19.4134C9.27842 19.5866 9.06375 19.6731 8.80775 19.6731H5.077C4.8645 19.6731 4.68633 19.6012 4.5425 19.4574C4.39883 19.3136 4.327 19.1354 4.327 18.9229C4.327 18.7102 4.39883 18.5321 4.5425 18.3886C4.68633 18.245 4.8645 18.1731 5.077 18.1731H7.25L6.523 17.4771C5.70133 16.7168 5.11708 15.8651 4.77025 14.9221C4.42342 13.9793 4.25 13.0284 4.25 12.0694C4.25 10.5604 4.63717 9.18606 5.4115 7.9464C6.18583 6.70656 7.22558 5.7514 8.53075 5.0809C8.71275 4.97956 8.90408 4.96806 9.10475 5.0464C9.30542 5.12456 9.43783 5.2639 9.502 5.4644C9.566 5.6524 9.56208 5.84223 9.49025 6.0339C9.41825 6.22573 9.29075 6.37281 9.10775 6.47515C8.08342 7.02765 7.26767 7.79973 6.6605 8.7914C6.0535 9.78323 5.75 10.8759 5.75 12.0694ZM18.25 11.9309C18.25 11.1496 18.1021 10.39 17.8063 9.65215C17.5106 8.91432 17.0495 8.2329 16.423 7.6079L15.7885 6.97315V8.96165C15.7885 9.17415 15.7166 9.35232 15.5727 9.49615C15.4289 9.63982 15.2508 9.71165 15.0383 9.71165C14.8256 9.71165 14.6474 9.63982 14.5038 9.49615C14.3603 9.35232 14.2885 9.17415 14.2885 8.96165V5.2309C14.2885 4.9749 14.3751 4.76023 14.5483 4.5869C14.7216 4.41373 14.9363 4.32715 15.1923 4.32715H18.923C19.1355 4.32715 19.3137 4.39907 19.4575 4.5429C19.6012 4.68673 19.673 4.8649 19.673 5.0774C19.673 5.29007 19.6012 5.46815 19.4575 5.61165C19.3137 5.75532 19.1355 5.82715 18.923 5.82715H16.75L17.477 6.52315C18.2668 7.31298 18.8432 8.1714 19.206 9.0984C19.5687 10.0252 19.75 10.9699 19.75 11.9324C19.75 13.4404 19.3644 14.8126 18.5932 16.0491C17.8221 17.2856 16.7839 18.2391 15.4788 18.9096C15.2968 19.011 15.1054 19.0241 14.9047 18.9491C14.7041 18.8741 14.5718 18.7364 14.5078 18.5359C14.4436 18.3479 14.4478 18.1578 14.5203 17.9656C14.5926 17.7733 14.7166 17.6265 14.8923 17.5251C15.9166 16.9726 16.7323 16.2006 17.3395 15.2089C17.9465 14.2171 18.25 13.1244 18.25 11.9309Z';
+
+  // Add sync icons to location checkboxes showing changes vs original table state
+  document.querySelectorAll('#ap-loc-ms .ap-ms-track-icon').forEach(el => el.remove());
+  if (pendingLocValues) {
+    locCheckboxes.forEach(cb => {
+      const wasOrig = origLocValues.includes(cb.value);
+      const isPending = pendingLocValues.includes(cb.value);
+      if (wasOrig === isPending) return; // no change
+      const label = cb.closest('label'); if (!label) return;
+      const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg.setAttribute('width','16'); svg.setAttribute('height','16');
+      svg.setAttribute('viewBox','0 0 24 24'); svg.setAttribute('fill','none');
+      svg.style.cssText = 'margin-left:auto;flex-shrink:0;cursor:default';
+      svg.setAttribute('class','ap-ms-track-icon');
+      svg.dataset.msTip = isPending ? 'This location prompt tracking will start next cycle' : 'This location prompt tracking will stop next cycle';
+      const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d', syncPath);
+      p.setAttribute('fill', isPending ? '#4cae3d' : '#c62828');
+      svg.appendChild(p); label.appendChild(svg);
+    });
+  }
+
+  // AI sites sync icons
+  if (pendingAiStr) {
+    const pendingAiValues = pendingAiStr.split(',').filter(Boolean);
+    const origAiVals = (row.dataset.origAiValues || '').split(',').filter(Boolean);
+    document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(cb => {
+      const wasOrig = origAiVals.includes(cb.value);
+      const isPending = pendingAiValues.includes(cb.value);
+      if (wasOrig === isPending) return;
+      const label = cb.closest('label'); if (!label) return;
+      const svg2 = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      svg2.setAttribute('width','16'); svg2.setAttribute('height','16');
+      svg2.setAttribute('viewBox','0 0 24 24'); svg2.setAttribute('fill','none');
+      svg2.style.cssText = 'margin-left:auto;flex-shrink:0;cursor:default';
+      svg2.setAttribute('class','ap-ms-track-icon');
+      svg2.dataset.msTip = isPending ? 'This AI site prompt tracking will start next cycle' : 'This AI site prompt tracking will stop next cycle';
+      const p2 = document.createElementNS('http://www.w3.org/2000/svg','path');
+      p2.setAttribute('d', syncPath); p2.setAttribute('fill', isPending ? '#4cae3d' : '#c62828');
+      svg2.appendChild(p2); label.appendChild(svg2);
+    });
+  }
 
   // Snapshot checked sets so save can diff them
   _origLocSet = new Set([...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value));
   _origAiSet  = new Set([...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value));
 
-  // Clear stale tracking icons then re-apply stored ones for this row
-  document.querySelectorAll('#ap-loc-ms .ap-ms-track-icon, #ap-ai-ms .ap-ms-track-icon').forEach(el => el.remove());
-  const tracking = _rowTracking.get(row);
-  if (tracking) {
-    const applyTrackIcons = (msId, addedSet, removedSet) => {
-      document.querySelectorAll('#' + msId + ' input[type="checkbox"]').forEach(cb => {
-        const label = cb.closest('label');
-        if (!label) return;
-        if (addedSet.has(cb.value)) {
-          const span = document.createElement('span');
-          span.className = 'material-symbols-rounded ap-ms-track-icon';
-          span.style.cssText = 'font-size:14px;color:#4cae3d;margin-left:auto;flex-shrink:0';
-          span.title = 'Start tracking'; span.textContent = 'play_circle';
-          label.appendChild(span);
-        } else if (removedSet.has(cb.value)) {
-          const span = document.createElement('span');
-          span.className = 'material-symbols-rounded ap-ms-track-icon';
-          span.style.cssText = 'font-size:14px;color:#e53935;margin-left:auto;flex-shrink:0';
-          span.title = 'Stop tracking'; span.textContent = 'stop_circle';
-          label.appendChild(span);
-        }
+  // If no pending values yet, fall back to _rowTracking for in-session change icons
+  if (!pendingLocValues && !pendingAiStr) {
+    const tracking = _rowTracking.get(row);
+    if (tracking) {
+      [['ap-loc-ms', tracking.addedLocs, tracking.removedLocs],
+       ['ap-ai-ms', tracking.addedAi, tracking.removedAi]].forEach(([msId, addedSet, removedSet]) => {
+        document.querySelectorAll('#' + msId + ' input[type="checkbox"]').forEach(cb => {
+          const label = cb.closest('label'); if (!label) return;
+          const isAdded = addedSet.has(cb.value);
+          const isRemoved = removedSet.has(cb.value);
+          if (!isAdded && !isRemoved) return;
+          const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+          svg.setAttribute('width','16'); svg.setAttribute('height','16');
+          svg.setAttribute('viewBox','0 0 24 24'); svg.setAttribute('fill','none');
+          svg.style.cssText = 'margin-left:auto;flex-shrink:0;cursor:default';
+          svg.setAttribute('class','ap-ms-track-icon');
+          svg.dataset.msTip = isAdded ? 'This location prompt tracking will start next cycle' : 'This location prompt tracking will stop next cycle';
+          const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+          p.setAttribute('d', syncPath); p.setAttribute('fill', isAdded ? '#4cae3d' : '#c62828');
+          svg.appendChild(p); label.appendChild(svg);
+        });
       });
-    };
-    applyTrackIcons('ap-loc-ms', tracking.addedLocs, tracking.removedLocs);
-    applyTrackIcons('ap-ai-ms', tracking.addedAi, tracking.removedAi);
+    }
   }
 
   document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
@@ -6843,29 +7346,28 @@ function saveEditPrompt() {
   const locs    = document.querySelectorAll('#ap-loc-ms input:checked').length;
   const sites   = [...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value);
 
-  // Update prompt text
+  // Keep existing prompt text in table — pending change stored as data attribute
   const inner = _editPromptRow.querySelector('.pt-v2-row-inner');
   if (inner) {
-    const spacer = inner.querySelector('.pt-v2-spacer').cloneNode(true);
-    inner.innerHTML = '';
-    inner.appendChild(spacer);
-    const textSpan = document.createElement('span');
-    textSpan.className = 'pt-v2-text';
-    textSpan.textContent = newText;
-    inner.appendChild(textSpan);
+    // Ensure text is in a pt-v2-text span (needed for icon placement)
+    if (!inner.querySelector('.pt-v2-text')) {
+      const textNode = [...inner.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+      if (textNode) {
+        const sp = document.createElement('span');
+        sp.className = 'pt-v2-text';
+        sp.textContent = textNode.textContent;
+        textNode.replaceWith(sp);
+      }
+    }
   }
+  // Store new text for tooltip without changing visible text
+  _editPromptRow.dataset.pendingPrompt = newText;
 
-  // Update location count
-  if (locs > 0) {
-    const sc = _editPromptRow.querySelector('.pt-scope-cell');
-    if (sc) { sc.textContent = locs; sc.dataset.locations = locs; }
-  }
-
-  // Update AI icons
-  if (sites.length > 0) {
-    const wrap = _editPromptRow.querySelector('.pt-ai-wrap');
-    if (wrap) wrap.innerHTML = sites.map(s => '<svg width="16" height="16"><use href="#s-' + s + '"/></svg>').join('');
-  }
+  // Store pending specific values — do NOT update table cells
+  const checkedLocValues = [...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value);
+  _editPromptRow.dataset.pendingLocs = locs;
+  _editPromptRow.dataset.pendingLocValues = checkedLocValues.join(',');
+  _editPromptRow.dataset.pendingAi = sites.join(',');
 
   // Modified indicators — strictly per changed field only
   const promptChanged = newText !== _editOrigPrompt;
@@ -6877,7 +7379,11 @@ function saveEditPrompt() {
 
   if (promptChanged) {
     const ts = _editPromptRow.querySelector('.pt-v2-text') || _editPromptRow.querySelector('.pt-v2-row-inner');
-    if (ts && !ts.querySelector('.pt-modified-icon')) ts.insertAdjacentHTML('beforeend', _modSvg('prompt'));
+    if (ts) {
+      ts.querySelector('.pt-modified-icon')?.remove();
+      const pendingTip = 'prompt||' + newText;
+      ts.insertAdjacentHTML('beforeend', _modSvg(pendingTip));
+    }
   }
   if (locsChanged) {
     const sc = _editPromptRow.querySelector('.pt-scope-cell');
