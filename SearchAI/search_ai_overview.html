@@ -1164,7 +1164,7 @@ body{
 .acs-group-cell{display:flex;align-items:center;gap:8px}
 .acs-chev{font-size:18px;color:rgb(85,85,85);transition:transform 0.2s;flex-shrink:0}
 .acs-group-row.collapsed .acs-chev{transform:rotate(-90deg)}
-.acs-chips{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.acs-chips{display:flex;align-items:center;justify-content:flex-start;gap:6px;flex-wrap:wrap}
 .acs-chip{
   display:inline-flex;align-items:center;gap:3px;
   padding:2px 8px;border-radius:12px;font-size:12px;font-weight:400;
@@ -3171,7 +3171,7 @@ textarea.ap-input{
 
       <!-- HTTP results -->
       <div class="pt-table-wrap" style="overflow:hidden">
-        <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0;border-bottom:1px solid #eaeaea">
+        <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0">
           <div class="pbk-card-hdr-left" style="display:flex;align-items:center;gap:6px">
             <span style="font-size:16px;font-weight:400;color:rgb(33,33,33)">HTTP results</span>
             <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);cursor:default" onmouseenter="showAcsTip(event,'http')" onmouseleave="hideAcsTip()">info</span>
@@ -3219,7 +3219,7 @@ textarea.ap-input{
 
       <!-- Robots.txt results -->
       <div class="pt-table-wrap" style="overflow:hidden">
-        <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0;border-bottom:1px solid #eaeaea">
+        <div class="pbk-card-hdr" style="padding:14px 20px;margin-bottom:0">
           <div class="pbk-card-hdr-left" style="display:flex;align-items:center;gap:6px">
             <span style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Robots.txt results</span>
             <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);cursor:default" onmouseenter="showAcsTip(event,'robots')" onmouseleave="hideAcsTip()">info</span>
