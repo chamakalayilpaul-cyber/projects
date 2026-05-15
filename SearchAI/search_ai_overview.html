@@ -4116,16 +4116,17 @@ textarea.ap-input{
 
     <!-- ══ SETTINGS › REPORTS VIEW ══ -->
     <div class="view" id="view-settings-reports">
+    <div style="display:flex;flex-direction:column;gap:0">
 
       <!-- Info banner (hidden until changes detected) -->
-      <div id="report-info-banner" style="display:none;align-items:flex-start;gap:10px;background:#e8f4fd;border:1px solid #bbd6f0;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#1a6fa8;line-height:1.5">
+      <div id="report-info-banner" style="display:none;align-items:flex-start;gap:10px;background:#e8f4fd;border:1px solid #bbd6f0;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px;color:#1a6fa8;line-height:1.5">
         <span class="material-symbols-rounded" style="font-size:16px;color:#1976d2;flex-shrink:0;margin-top:1px;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20">info</span>
         <span style="flex:1">Reports are generated in configured cycles. Any updates might impact trend reports &amp; prompt consumed. Any configuration changes apply from the next update.</span>
 
       </div>
 
       <!-- Card: Prompt tracking report frequency -->
-      <div class="card" style="margin-bottom:20px">
+      <div class="card">
         <div style="padding:24px 24px 0">
           <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Prompt tracking report frequency</div>
         </div>
@@ -4173,7 +4174,7 @@ textarea.ap-input{
       </div>
 
       <!-- Card: AI site tracking -->
-      <div class="card" style="margin-bottom:20px">
+      <div class="card">
         <div style="padding:20px 24px 24px">
           <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">AI site tracking</div>
         </div>
@@ -4233,6 +4234,7 @@ textarea.ap-input{
         </div>
       </div>
 
+    </div>
     </div><!-- /view-settings-reports -->
 
   </div><!-- /content -->
