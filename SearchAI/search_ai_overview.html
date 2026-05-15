@@ -3279,23 +3279,23 @@ textarea.ap-input{
           <tbody>
             <tr class="pt-data-row">
               <td style="font-size:14px;color:rgb(33,33,33)">Invisalign</td>
-              <td class="pt-monthly-cell pt-action-cell">6<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-monthly-cell pt-action-cell">6<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row">
               <td style="font-size:14px;color:rgb(33,33,33)">Orthodontics</td>
-              <td class="pt-monthly-cell pt-action-cell">5<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-monthly-cell pt-action-cell">5<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row">
               <td style="font-size:14px;color:rgb(33,33,33)">Teeth whitening</td>
-              <td class="pt-monthly-cell pt-action-cell">3<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-monthly-cell pt-action-cell">3<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row">
               <td style="font-size:14px;color:rgb(33,33,33)">Dental implants</td>
-              <td class="pt-monthly-cell pt-action-cell">4<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-monthly-cell pt-action-cell">4<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row">
               <td style="font-size:14px;color:rgb(33,33,33)">Clear aligners</td>
-              <td class="pt-monthly-cell pt-action-cell">2<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button></span></td>
+              <td class="pt-monthly-cell pt-action-cell">2<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
           </tbody>
         </table>
@@ -5255,6 +5255,23 @@ textarea.ap-input{
   </div>
 </div>
 
+<!-- ══ DELETE TAG MODAL ══ -->
+<div class="modal-overlay" id="deleteTagModal" onclick="closeDeleteTagModal(event)">
+  <div class="modal" style="max-width:480px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Delete tag?</span>
+      <button class="modal-close" onclick="closeDeleteTagModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <p id="delete-tag-body" style="font-size:14px;color:#212121;line-height:1.6;margin:16px 0 28px"></p>
+    <div class="modal-footer" style="border-top:none;margin-top:0;padding-top:0">
+      <button class="btn-cancel" onclick="closeDeleteTagModal()">Cancel</button>
+      <button class="btn-delete-confirm" onclick="executeDeleteTag()">Delete</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ ADD BRAND SIDE PANEL ══ -->
 <div class="ap-overlay" id="nm-add-overlay" onclick="closeAddBrandPanel()"></div>
 <div class="ap-panel" id="nm-add-panel">
@@ -6642,6 +6659,29 @@ function startTrackingTheme(btn) {
       `<button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'${theme}')"><span class="material-symbols-rounded">add</span></button>` +
       `<button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'${theme}')"><span class="material-symbols-rounded">delete</span></button>`;
   }
+}
+
+let _deleteTagRow = null;
+
+function openDeleteTagModal(btn) {
+  _deleteTagRow = btn.closest('.pt-data-row');
+  const name = _deleteTagRow.querySelector('td').textContent.trim();
+  const count = parseInt(_deleteTagRow.querySelector('.pt-monthly-cell').textContent.trim()) || 0;
+  document.getElementById('delete-tag-body').innerHTML =
+    `You are about to delete <strong>${name}</strong> which is tied to ${count} prompt${count !== 1 ? 's' : ''}. You will not be able to filter themes and prompts by this tag.`;
+  document.getElementById('deleteTagModal').classList.add('open');
+}
+
+function closeDeleteTagModal(e) {
+  if (e && e.target !== document.getElementById('deleteTagModal')) return;
+  document.getElementById('deleteTagModal').classList.remove('open');
+  _deleteTagRow = null;
+}
+
+function executeDeleteTag() {
+  if (_deleteTagRow) _deleteTagRow.remove();
+  document.getElementById('deleteTagModal').classList.remove('open');
+  _deleteTagRow = null;
 }
 
 function openAddTagPanel() {
