@@ -4914,8 +4914,21 @@ textarea.ap-input{
     </div>
 
     <div class="ap-field">
-      <label class="ap-label">Tag</label>
-      <input class="ap-input" type="text" id="ap-tag" placeholder="Enter tag"/>
+      <label class="ap-label">Tags</label>
+      <div class="ap-multiselect" id="ap-tag-ms">
+        <div class="ap-ms-trigger" onclick="toggleApMs('ap-tag-ms')">
+          <span class="ap-ms-label" id="ap-tag-label">Select tags</span>
+          <span class="material-symbols-rounded">expand_more</span>
+        </div>
+        <div class="ap-ms-menu">
+          <div class="ap-ms-search-wrap"><span class="material-symbols-rounded ap-ms-search-icon">search</span><input class="ap-ms-search" placeholder="Search tags" oninput="filterApMs('ap-tag-ms',this.value)" onclick="event.stopPropagation()"/></div>
+          <label class="ap-ms-opt"><input type="checkbox" value="Invisalign" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Invisalign</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Orthodontics" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Orthodontics</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Teeth whitening" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Teeth whitening</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Dental implants" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Dental implants</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Clear aligners" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Clear aligners</span></label>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -6093,10 +6106,13 @@ function openAddPromptPanel(event, theme) {
   if (locFld) locFld.style.display = "";  // Clear multiselects
   document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.querySelectorAll('#ap-tag-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.getElementById('ap-loc-label').textContent = 'Select locations';
   document.getElementById('ap-loc-label').classList.remove('has-val');
   document.getElementById('ap-ai-label').textContent = 'Select AI sites';
   document.getElementById('ap-ai-label').classList.remove('has-val');
+  document.getElementById('ap-tag-label').textContent = 'Select tags';
+  document.getElementById('ap-tag-label').classList.remove('has-val');
   // Close any open menus
   document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
   // Disable Add
@@ -7427,6 +7443,9 @@ function openEditPromptPanel(e, btn) {
   // Pre-check AI sites using effective keys
   const origAiValues = tableAiKeys;
   document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => { c.checked = effectiveAiKeys.includes(c.value); });
+  document.querySelectorAll('#ap-tag-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.getElementById('ap-tag-label').textContent = 'Select tags';
+  document.getElementById('ap-tag-label').classList.remove('has-val');
   refreshApMs('ap-loc-ms', 'ap-loc-label', 'Select locations');
   refreshApAiMs();
   checkApAdd();
