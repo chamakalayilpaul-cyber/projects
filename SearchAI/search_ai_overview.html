@@ -1164,6 +1164,7 @@ body{
 .acs-group-cell{display:flex;align-items:center;gap:8px}
 .acs-chev{font-size:18px;color:rgb(85,85,85);transition:transform 0.2s;flex-shrink:0}
 .acs-group-row.collapsed .acs-chev{transform:rotate(-90deg)}
+@keyframes acs-spin{to{transform:rotate(360deg)}}
 .acs-chips{display:flex;align-items:center;justify-content:flex-start;gap:6px;flex-wrap:wrap}
 .acs-chip{
   display:inline-flex;align-items:center;gap:4px;
@@ -2143,7 +2144,7 @@ textarea.ap-input{
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-ai-crawler-btns" style="display:none;gap:6px;padding-right:8px">
-      <button class="btn-filled" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
+      <button class="btn-filled" onclick="openAcsAddPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
         <span class="material-symbols-rounded" style="font-size:16px">add</span>Add link
       </button>
     </div>
@@ -3173,7 +3174,7 @@ textarea.ap-input{
             <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);cursor:default" onmouseenter="showAcsTip(event,'http')" onmouseleave="hideAcsTip()">info</span>
           </div>
         </div>
-        <table class="acs-table">
+        <table class="acs-table" id="acs-http-table">
           <thead>
             <tr>
               <th style="width:240px">Link</th>
@@ -3221,7 +3222,7 @@ textarea.ap-input{
             <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);cursor:default" onmouseenter="showAcsTip(event,'robots')" onmouseleave="hideAcsTip()">info</span>
           </div>
         </div>
-        <table class="acs-table">
+        <table class="acs-table" id="acs-robots-table">
           <thead>
             <tr>
               <th style="width:240px">Link</th>
@@ -5284,6 +5285,29 @@ textarea.ap-input{
   </div>
 </div>
 
+<!-- ══ ADD LINK SIDE PANEL (AI Crawler) ══ -->
+<div class="ap-overlay" id="acs-add-overlay" onclick="closeAcsAddPanel()"></div>
+<div class="ap-panel" id="acs-add-panel">
+  <div class="ap-header">
+    <div class="ap-header-left">
+      <button class="icon-btn" onclick="closeAcsAddPanel()"><span class="material-symbols-rounded">arrow_back</span></button>
+      <span class="ap-header-title">Add link</span>
+    </div>
+    <div class="ap-header-right">
+      <button class="btn-cancel" onclick="closeAcsAddPanel()">Cancel</button>
+      <button class="ap-btn-add" id="acs-add-btn" onclick="submitAcsLink()">Add</button>
+    </div>
+  </div>
+  <div class="ap-body">
+    <div class="ap-field">
+      <label class="ap-label">URL <span class="ap-req">*</span></label>
+      <input class="ap-input" type="text" id="acs-link-input" placeholder="e.g. birdeye.com/blog"
+        oninput="document.getElementById('acs-add-btn').classList.toggle('enabled', this.value.trim().length > 0)"
+        autocomplete="off"/>
+    </div>
+  </div>
+</div>
+
 <div class="ap-overlay" id="nmEditOverlay" onclick="closeNmModal()"></div>
 <div class="ap-panel" id="nmEditModal">
   <div class="ap-header">
@@ -6417,6 +6441,74 @@ function toggleAcsGroup(row, groupId) {
   document.querySelectorAll('[data-acs-group="' + groupId + '"]').forEach(r => {
     r.style.display = row.classList.contains('collapsed') ? 'none' : '';
   });
+}
+
+/* ── AI Crawler: Add link panel ── */
+function openAcsAddPanel() {
+  const inp = document.getElementById('acs-link-input');
+  inp.value = '';
+  document.getElementById('acs-add-btn').classList.remove('enabled');
+  document.getElementById('acs-add-overlay').classList.add('open');
+  document.getElementById('acs-add-panel').classList.add('open');
+  setTimeout(() => inp.focus(), 120);
+}
+function closeAcsAddPanel() {
+  document.getElementById('acs-add-overlay').classList.remove('open');
+  document.getElementById('acs-add-panel').classList.remove('open');
+}
+
+const _acsAiSites = ['ChatGPT','Gemini','Perplexity','Copilot','Claude'];
+const _acsStatuses = [
+  ['allowed','allowed'],['allowed','allowed'],['allowed','allowed'],
+  ['allowed','allowed'],['allowed','allowed']
+];
+const _acsStatusesRobots = [
+  ['allowed','allowed'],['allowed','blocked'],['allowed','allowed'],
+  ['allowed','allowed'],['allowed','allowed']
+];
+
+function _acsInProgressCell() {
+  return '<div class="acs-chips"><span class="acs-chip" style="background:#f5f5f5;color:#8f8f8f"><span class="material-symbols-rounded" style="font-size:14px;animation:acs-spin 1s linear infinite">sync</span>In progress</span></div>';
+}
+function _acsChips(pair) {
+  const labels = ['Chat','Train'];
+  return '<div class="acs-chips">' + pair.map((s,i) =>
+    `<span class="acs-chip ${s}"><span class="material-symbols-rounded">${s==='allowed'?'check':'close'}</span>${labels[i]}</span>`
+  ).join('') + '</div>';
+}
+function _acsRow(link, inProgress) {
+  const cells = _acsAiSites.map(() =>
+    `<td class="acs-site-col">${inProgress ? _acsInProgressCell() : ''}</td>`
+  ).join('');
+  return `<tr class="acs-group-row"><td>${link}</td>${cells}</tr>`;
+}
+
+function submitAcsLink() {
+  const val = document.getElementById('acs-link-input').value.trim();
+  if (!val) return;
+  closeAcsAddPanel();
+
+  const httpTbody = document.querySelector('#acs-http-table tbody');
+  const robotsTbody = document.querySelector('#acs-robots-table tbody');
+
+  const httpRow = httpTbody.insertRow();
+  httpRow.className = 'acs-group-row';
+  httpRow.innerHTML = `<td>${val}</td>` + _acsAiSites.map(() =>
+    `<td class="acs-site-col">${_acsInProgressCell()}</td>`).join('');
+
+  const robotsRow = robotsTbody.insertRow();
+  robotsRow.className = 'acs-group-row';
+  robotsRow.innerHTML = `<td>${val}</td>` + _acsAiSites.map(() =>
+    `<td class="acs-site-col">${_acsInProgressCell()}</td>`).join('');
+
+  setTimeout(() => {
+    [httpRow, robotsRow].forEach((row, ri) => {
+      const statuses = ri === 0 ? _acsStatuses : _acsStatusesRobots;
+      row.querySelectorAll('.acs-site-col').forEach((cell, i) => {
+        cell.innerHTML = _acsChips(statuses[i]);
+      });
+    });
+  }, 5000);
 }
 
 /* ── Tags ── */
