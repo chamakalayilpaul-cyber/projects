@@ -6483,23 +6483,46 @@ function _acsRow(link, inProgress) {
   return `<tr class="acs-group-row"><td>${link}</td>${cells}</tr>`;
 }
 
+function _acsDeleteCell(pairId) {
+  return `<td class="pt-action-cell" style="width:44px;text-align:center">` +
+    `<span class="pt-row-hover-actions">` +
+    `<button class="pt-row-icon-btn" style="color:#e53935" onclick="deleteAcsLink('${pairId}')">` +
+    `<span class="material-symbols-rounded">delete</span></button></span></td>`;
+}
+
+let _acsPairs = {};
+let _acsPairCount = 0;
+
+function deleteAcsLink(pairId) {
+  const pair = _acsPairs[pairId];
+  if (!pair) return;
+  pair.forEach(row => row.remove());
+  delete _acsPairs[pairId];
+  showToast('Link deleted');
+}
+
 function submitAcsLink() {
   const val = document.getElementById('acs-link-input').value.trim();
   if (!val) return;
   closeAcsAddPanel();
 
+  const pairId = 'acs-pair-' + (++_acsPairCount);
   const httpTbody = document.querySelector('#acs-http-table tbody');
   const robotsTbody = document.querySelector('#acs-robots-table tbody');
 
   const httpRow = httpTbody.insertRow();
   httpRow.className = 'acs-group-row';
-  httpRow.innerHTML = `<td>${val}</td>` + _acsAiSites.map(() =>
-    `<td class="acs-site-col">${_acsInProgressCell()}</td>`).join('');
+  httpRow.innerHTML = `<td>${val}</td>` +
+    _acsAiSites.map(() => `<td class="acs-site-col">${_acsInProgressCell()}</td>`).join('') +
+    _acsDeleteCell(pairId);
 
   const robotsRow = robotsTbody.insertRow();
   robotsRow.className = 'acs-group-row';
-  robotsRow.innerHTML = `<td>${val}</td>` + _acsAiSites.map(() =>
-    `<td class="acs-site-col">${_acsInProgressCell()}</td>`).join('');
+  robotsRow.innerHTML = `<td>${val}</td>` +
+    _acsAiSites.map(() => `<td class="acs-site-col">${_acsInProgressCell()}</td>`).join('') +
+    _acsDeleteCell(pairId);
+
+  _acsPairs[pairId] = [httpRow, robotsRow];
 
   setTimeout(() => {
     [httpRow, robotsRow].forEach((row, ri) => {
