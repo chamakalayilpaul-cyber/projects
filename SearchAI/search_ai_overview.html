@@ -1616,6 +1616,10 @@ body{
 }
 .ap-input:focus{border-color:#1976d2}
 .ap-input::placeholder{color:#bbb}
+.ap-input.error{border-color:#e53935}
+.ap-input.error:focus{border-color:#e53935}
+.ap-field-error{font-size:12px;color:#e53935;margin-top:4px;display:none}
+.ap-field-error.visible{display:block}
 textarea.ap-input{
   height:auto;min-height:calc(1.5em * 2 + 20px);padding:10px 12px;
   resize:none;overflow:hidden;line-height:1.5;box-sizing:border-box;
@@ -5334,8 +5338,9 @@ textarea.ap-input{
     <div class="ap-field">
       <label class="ap-label">URL <span class="ap-req">*</span></label>
       <input class="ap-input" type="text" id="acs-link-input" placeholder="e.g. birdeye.com/blog"
-        oninput="document.getElementById('acs-add-btn').classList.toggle('enabled', this.value.trim().length > 0)"
+        oninput="onAcsLinkInput(this.value)"
         autocomplete="off"/>
+      <span class="ap-field-error" id="acs-link-error">Please enter a valid URL</span>
     </div>
   </div>
 </div>
@@ -6482,10 +6487,39 @@ function toggleAcsGroup(row, groupId) {
 function openAcsAddPanel() {
   const inp = document.getElementById('acs-link-input');
   inp.value = '';
+  inp.classList.remove('error');
+  document.getElementById('acs-link-error').classList.remove('visible');
   document.getElementById('acs-add-btn').classList.remove('enabled');
   document.getElementById('acs-add-overlay').classList.add('open');
   document.getElementById('acs-add-panel').classList.add('open');
   setTimeout(() => inp.focus(), 120);
+}
+
+let _acsLinkTimer = null;
+function _isValidUrl(val) {
+  return /^(https?:\/\/)?([a-z0-9]([a-z0-9\-]*[a-z0-9])?\.)+[a-z]{2,}(\/\S*)?$/i.test(val.trim());
+}
+function onAcsLinkInput(val) {
+  const inp = document.getElementById('acs-link-input');
+  const err = document.getElementById('acs-link-error');
+  const btn = document.getElementById('acs-add-btn');
+  clearTimeout(_acsLinkTimer);
+  // Clear error state while typing
+  inp.classList.remove('error');
+  err.classList.remove('visible');
+  btn.classList.remove('enabled');
+  if (!val.trim()) return;
+  _acsLinkTimer = setTimeout(() => {
+    if (_isValidUrl(val)) {
+      inp.classList.remove('error');
+      err.classList.remove('visible');
+      btn.classList.add('enabled');
+    } else {
+      inp.classList.add('error');
+      err.classList.add('visible');
+      btn.classList.remove('enabled');
+    }
+  }, 2000);
 }
 function closeAcsAddPanel() {
   document.getElementById('acs-add-overlay').classList.remove('open');
