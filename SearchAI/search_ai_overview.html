@@ -6794,7 +6794,8 @@ document.addEventListener('mouseover', function(e) {
   tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
 });
 document.addEventListener('mouseout', function(e) {
-  if (e.target.closest && e.target.closest('.acs-chip')) {
+  const chip = e.target.closest && e.target.closest('.acs-chip');
+  if (chip && !chip.contains(e.relatedTarget)) {
     document.getElementById('pt-mod-tooltip').style.display = 'none';
   }
 });
