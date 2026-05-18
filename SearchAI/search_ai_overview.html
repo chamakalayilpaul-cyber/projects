@@ -2150,7 +2150,7 @@ textarea.ap-input{
     </div>
     <div class="page-hdr-right" id="hdr-ai-crawler-btns" style="display:none;gap:6px;padding-right:8px">
       <button class="btn-filled" onclick="openAcsAddPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
-        <span class="material-symbols-rounded" style="font-size:16px">add</span>Add link
+        <span class="material-symbols-rounded" style="font-size:16px">add</span>Add URL
       </button>
     </div>
     <div class="page-hdr-right" id="hdr-sentiment-btns" style="display:none;gap:6px;padding-right:8px">
@@ -3178,7 +3178,7 @@ textarea.ap-input{
             <span style="font-size:16px;font-weight:400;color:rgb(33,33,33)">HTTP results</span>
           </div>
         </div>
-        <div style="font-size:12px;color:rgb(143,143,143);padding:0 24px 12px;margin-top:-8px">Checks whether your website pages are publicly accessible to AI crawlers through HTTP requests</div>
+        <div style="font-size:12px;color:rgb(143,143,143);padding:0 24px 12px;margin-top:-16px">Checks whether your website pages are publicly accessible to AI crawlers through HTTP requests</div>
         <table class="acs-table" id="acs-http-table">
           <thead>
             <tr>
@@ -5291,7 +5291,7 @@ textarea.ap-input{
   <div class="ap-header">
     <div class="ap-header-left">
       <button class="icon-btn" onclick="closeAcsAddPanel()"><span class="material-symbols-rounded">arrow_back</span></button>
-      <span class="ap-header-title">Add link</span>
+      <span class="ap-header-title">Add URL</span>
     </div>
     <div class="ap-header-right">
       <button class="btn-cancel" onclick="closeAcsAddPanel()">Cancel</button>
@@ -5299,6 +5299,7 @@ textarea.ap-input{
     </div>
   </div>
   <div class="ap-body">
+    <p style="font-size:14px;color:rgb(85,85,85);margin:0 0 4px;line-height:1.5">Add a website, subdomain, or sitemap URL to check AI crawler access</p>
     <div class="ap-field">
       <label class="ap-label">URL <span class="ap-req">*</span></label>
       <input class="ap-input" type="text" id="acs-link-input" placeholder="e.g. birdeye.com/blog"
