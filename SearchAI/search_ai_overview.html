@@ -6783,8 +6783,8 @@ document.addEventListener('mouseover', function(e) {
   const isAllowed = chip.classList.contains('allowed');
   const text = chip.textContent.trim();
   let msg = '';
-  if (text.includes('Chat')) msg = isAllowed ? "Can appear in AI-generated answers" : "Can't appear in AI-generated answers";
-  else if (text.includes('Train')) msg = isAllowed ? "Can be used for AI model training" : "Can't be used for AI model training";
+  if (text.includes('Responses')) msg = isAllowed ? "Can appear in AI-generated answers" : "Can't appear in AI-generated answers";
+  else if (text.includes('Training')) msg = isAllowed ? "Can be used for AI model training" : "Can't be used for AI model training";
   if (!msg) return;
   const tip = document.getElementById('pt-mod-tooltip');
   tip.textContent = msg;
