@@ -1617,6 +1617,7 @@ body{
 }
 .ap-input:focus{border-color:#1976d2}
 .ap-input::placeholder{color:#bbb}
+.tag-prompt-result:hover{background:rgb(242,244,247)}
 .ap-input.error{border-color:#e53935}
 .ap-input.error:focus{border-color:#e53935}
 .ap-field-error{font-size:12px;color:#e53935;margin-top:4px;display:none}
@@ -2950,14 +2951,37 @@ textarea.ap-input{
             <tbody>
               <tr class="pt-data-row">
                 <td style="font-size:14px;color:rgb(33,33,33)">Aspen Dental <span class="pbk-default-chip">Default</span></td>
-                <td style="font-size:14px;color:rgb(33,33,33)">95 locations <span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;color:rgb(85,85,85)">expand_more</span></td>
+                <td style="font-size:14px;color:rgb(33,33,33);position:relative">
+                  <div class="pbk-loc-trigger" onclick="togglePbkLoc(this)" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer">
+                    95 locations <span class="material-symbols-rounded" style="font-size:16px;color:rgb(85,85,85)">expand_more</span>
+                  </div>
+                  <div class="pbk-loc-dropdown" style="display:none;position:absolute;left:0;top:100%;z-index:200;background:#fff;border:1px solid #eaeaea;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);min-width:240px;padding:8px 0;margin-top:4px">
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Austin, TX</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Denver, CO</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Chicago, IL</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">New York, NY</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Los Angeles, CA</div>
+                    <div style="padding:8px 16px;font-size:13px;color:rgb(143,143,143)">+90 more</div>
+                  </div>
+                </td>
                 <td style="font-size:14px;color:rgb(33,33,33)">Sophia</td>
                 <td style="font-size:14px;color:rgb(33,33,33)">Dec 05, 2025</td>
                 <td><a class="pbk-edit-link" href="#">Edit <span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle">open_in_new</span></a></td>
               </tr>
               <tr class="pt-data-row">
                 <td style="font-size:14px;color:rgb(33,33,33)">Aspen 2 - Brand identity</td>
-                <td style="font-size:14px;color:rgb(33,33,33)">5 locations</td>
+                <td style="font-size:14px;color:rgb(33,33,33);position:relative">
+                  <div class="pbk-loc-trigger" onclick="togglePbkLoc(this)" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer">
+                    5 locations <span class="material-symbols-rounded" style="font-size:16px;color:rgb(85,85,85)">expand_more</span>
+                  </div>
+                  <div class="pbk-loc-dropdown" style="display:none;position:absolute;left:0;top:100%;z-index:200;background:#fff;border:1px solid #eaeaea;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);min-width:240px;padding:8px 0;margin-top:4px">
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Boston, MA</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Seattle, WA</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Miami, FL</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Dallas, TX</div>
+                    <div style="padding:8px 16px;font-size:14px;color:rgb(33,33,33)">Phoenix, AZ</div>
+                  </div>
+                </td>
                 <td style="font-size:14px;color:rgb(33,33,33)">Olivia</td>
                 <td style="font-size:14px;color:rgb(33,33,33)">Dec 05, 2025</td>
                 <td><a class="pbk-edit-link" href="#">Edit <span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle">open_in_new</span></a></td>
@@ -3282,24 +3306,99 @@ textarea.ap-input{
           </thead>
           <tbody>
             <tr class="pt-data-row">
-              <td style="font-size:14px;color:rgb(33,33,33)">Invisalign</td>
+              <td style="font-size:14px;color:rgb(33,33,33)">
+                <div style="display:flex;align-items:center;gap:6px">
+                  Invisalign
+                  <button class="pt-row-icon-btn" style="width:24px;height:24px" onclick="toggleTagPrompts(this,'tag-prompts-1')"><span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+                </div>
+              </td>
               <td class="pt-monthly-cell pt-action-cell">6<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
+            <tr class="tag-prompts-row" id="tag-prompts-1" style="display:none">
+              <td colspan="2" style="padding:0 20px 12px;background:#fafafa">
+                <div style="font-size:13px;color:rgb(85,85,85);padding-top:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Best-rated Invisalign providers near me</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Invisalign cost with insurance</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Invisalign specialists for complex bite corrections</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Clear aligner therapy for adults</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Invisalign vs traditional braces</div>
+                  <div style="padding:6px 0">Fastest Invisalign results</div>
+                </div>
+              </td>
+            </tr>
             <tr class="pt-data-row">
-              <td style="font-size:14px;color:rgb(33,33,33)">Orthodontics</td>
+              <td style="font-size:14px;color:rgb(33,33,33)">
+                <div style="display:flex;align-items:center;gap:6px">
+                  Orthodontics
+                  <button class="pt-row-icon-btn" style="width:24px;height:24px" onclick="toggleTagPrompts(this,'tag-prompts-2')"><span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+                </div>
+              </td>
               <td class="pt-monthly-cell pt-action-cell">5<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
+            <tr class="tag-prompts-row" id="tag-prompts-2" style="display:none">
+              <td colspan="2" style="padding:0 20px 12px;background:#fafafa">
+                <div style="font-size:13px;color:rgb(85,85,85);padding-top:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Best orthodontists for adults near me</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Invisible braces for adults</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Orthodontic specialists with payment plans</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Most advanced clear aligner clinics</div>
+                  <div style="padding:6px 0">Orthodontic centres for faster results</div>
+                </div>
+              </td>
+            </tr>
             <tr class="pt-data-row">
-              <td style="font-size:14px;color:rgb(33,33,33)">Teeth whitening</td>
+              <td style="font-size:14px;color:rgb(33,33,33)">
+                <div style="display:flex;align-items:center;gap:6px">
+                  Teeth whitening
+                  <button class="pt-row-icon-btn" style="width:24px;height:24px" onclick="toggleTagPrompts(this,'tag-prompts-3')"><span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+                </div>
+              </td>
               <td class="pt-monthly-cell pt-action-cell">3<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
-            <tr class="pt-data-row">
-              <td style="font-size:14px;color:rgb(33,33,33)">Dental implants</td>
-              <td class="pt-monthly-cell pt-action-cell">4<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
+            <tr class="tag-prompts-row" id="tag-prompts-3" style="display:none">
+              <td colspan="2" style="padding:0 20px 12px;background:#fafafa">
+                <div style="font-size:13px;color:rgb(85,85,85);padding-top:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Best teeth whitening near me</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Professional whitening vs home kits</div>
+                  <div style="padding:6px 0">Laser teeth whitening cost</div>
+                </div>
+              </td>
             </tr>
             <tr class="pt-data-row">
-              <td style="font-size:14px;color:rgb(33,33,33)">Clear aligners</td>
+              <td style="font-size:14px;color:rgb(33,33,33)">
+                <div style="display:flex;align-items:center;gap:6px">
+                  Dental implants
+                  <button class="pt-row-icon-btn" style="width:24px;height:24px" onclick="toggleTagPrompts(this,'tag-prompts-4')"><span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+                </div>
+              </td>
+              <td class="pt-monthly-cell pt-action-cell">4<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
+            </tr>
+            <tr class="tag-prompts-row" id="tag-prompts-4" style="display:none">
+              <td colspan="2" style="padding:0 20px 12px;background:#fafafa">
+                <div style="font-size:13px;color:rgb(85,85,85);padding-top:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Dental implants cost near me</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">All-on-4 implants providers</div>
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Best dental implant specialists</div>
+                  <div style="padding:6px 0">Implant-supported dentures near me</div>
+                </div>
+              </td>
+            </tr>
+            <tr class="pt-data-row">
+              <td style="font-size:14px;color:rgb(33,33,33)">
+                <div style="display:flex;align-items:center;gap:6px">
+                  Clear aligners
+                  <button class="pt-row-icon-btn" style="width:24px;height:24px" onclick="toggleTagPrompts(this,'tag-prompts-5')"><span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+                </div>
+              </td>
               <td class="pt-monthly-cell pt-action-cell">2<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span></td>
+            </tr>
+            <tr class="tag-prompts-row" id="tag-prompts-5" style="display:none">
+              <td colspan="2" style="padding:0 20px 12px;background:#fafafa">
+                <div style="font-size:13px;color:rgb(85,85,85);padding-top:8px;display:flex;flex-direction:column;gap:6px">
+                  <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">Clear aligner therapy providers</div>
+                  <div style="padding:6px 0">Best clear aligner brands near me</div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -4719,6 +4818,42 @@ textarea.ap-input{
     <div class="ap-field">
       <label class="ap-label">Tag name <span class="ap-req">*</span></label>
       <input class="ap-input" type="text" id="tag-name-input" placeholder="Enter tag name"/>
+    </div>
+    <div class="ap-field" style="margin-top:4px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <label class="ap-label">Prompts</label>
+        <div style="position:relative">
+          <button class="pt-row-icon-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Add prompt"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
+          <div id="tag-prompt-popover" style="display:none;position:absolute;right:0;top:100%;z-index:300;background:#fff;border:1px solid #eaeaea;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);width:280px;padding:8px 0;margin-top:4px">
+            <div style="padding:6px 12px;border-bottom:1px solid #eaeaea">
+              <input type="text" id="tag-prompt-search-input" class="ap-input" style="height:36px;font-size:13px" placeholder="Search prompts..." oninput="filterTagPromptSearch(this.value)" autocomplete="off"/>
+            </div>
+            <div id="tag-prompt-search-results" style="max-height:200px;overflow-y:auto">
+              <div class="tag-prompt-result" onclick="addTagPrompt('Best-rated Invisalign providers near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Best-rated Invisalign providers near me</div>
+              <div class="tag-prompt-result" onclick="addTagPrompt('Invisalign cost with insurance')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Invisalign cost with insurance</div>
+              <div class="tag-prompt-result" onclick="addTagPrompt('Invisible braces for adults near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Invisible braces for adults near me</div>
+              <div class="tag-prompt-result" onclick="addTagPrompt('Best teeth whitening near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Best teeth whitening near me</div>
+              <div class="tag-prompt-result" onclick="addTagPrompt('Dental implants cost near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Dental implants cost near me</div>
+              <div class="tag-prompt-result" onclick="addTagPrompt('Clear aligner therapy providers')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Clear aligner therapy providers</div>
+              <div class="tag-prompt-result" onclick="addTagPrompt('Best orthodontists for adults near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Best orthodontists for adults near me</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0">
+        <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
+          <span>Best-rated Invisalign providers near me</span>
+          <button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+        </div>
+        <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
+          <span>Invisalign cost with insurance</span>
+          <button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+        </div>
+        <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:14px;color:rgb(33,33,33)">
+          <span>Invisible braces for adults near me</span>
+          <button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -6711,6 +6846,60 @@ function closeTagPanel() {
   _tagEditRow = null;
 }
 
+function toggleTagPrompts(btn, id) {
+  const row = document.getElementById(id);
+  const chev = btn.querySelector('.material-symbols-rounded');
+  const isOpen = row.style.display !== 'none';
+  row.style.display = isOpen ? 'none' : 'table-row';
+  chev.textContent = isOpen ? 'expand_more' : 'expand_less';
+}
+
+function toggleTagPromptSearch() {
+  const pop = document.getElementById('tag-prompt-popover');
+  const isOpen = pop.style.display === 'block';
+  pop.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) setTimeout(() => document.getElementById('tag-prompt-search-input').focus(), 50);
+}
+function filterTagPromptSearch(q) {
+  const lower = q.toLowerCase();
+  document.querySelectorAll('#tag-prompt-search-results .tag-prompt-result').forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(lower) ? '' : 'none';
+  });
+}
+function addTagPrompt(text) {
+  const list = document.getElementById('tag-prompt-list');
+  // Don't add duplicates
+  const exists = [...list.querySelectorAll('.tag-prompt-item span')].some(s => s.textContent === text);
+  if (exists) { document.getElementById('tag-prompt-popover').style.display = 'none'; return; }
+  // Build new item
+  const div = document.createElement('div');
+  div.className = 'tag-prompt-item';
+  div.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)';
+  div.innerHTML = `<span>${text}</span><button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
+  list.appendChild(div);
+  // Fix last item border
+  list.querySelectorAll('.tag-prompt-item').forEach((item, i, arr) => {
+    item.style.borderBottom = i < arr.length - 1 ? '1px solid #f0f0f0' : 'none';
+  });
+  document.getElementById('tag-prompt-popover').style.display = 'none';
+}
+function removeTagPrompt(btn) {
+  const item = btn.closest('.tag-prompt-item');
+  const list = item.parentElement;
+  item.remove();
+  // Fix last item border
+  list.querySelectorAll('.tag-prompt-item').forEach((item, i, arr) => {
+    item.style.borderBottom = i < arr.length - 1 ? '1px solid #f0f0f0' : 'none';
+  });
+}
+// Close tag prompt popover on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#tag-prompt-search-btn') && !e.target.closest('#tag-prompt-popover')) {
+    const pop = document.getElementById('tag-prompt-popover');
+    if (pop) pop.style.display = 'none';
+  }
+});
+
 function saveTag() {
   const name = document.getElementById('tag-name-input').value.trim();
   if (!name) return;
@@ -6736,6 +6925,25 @@ function showBrandkitTable() {
   document.getElementById('pbk-empty').style.display = 'none';
   document.getElementById('pbk-table').style.display = 'block';
 }
+
+function togglePbkLoc(trigger) {
+  const dropdown = trigger.nextElementSibling;
+  const chev = trigger.querySelector('.material-symbols-rounded');
+  const isOpen = dropdown.style.display === 'block';
+  // Close all open loc dropdowns first
+  document.querySelectorAll('.pbk-loc-dropdown').forEach(d => { d.style.display = 'none'; });
+  document.querySelectorAll('.pbk-loc-trigger .material-symbols-rounded').forEach(c => { c.textContent = 'expand_more'; });
+  if (!isOpen) {
+    dropdown.style.display = 'block';
+    chev.textContent = 'expand_less';
+  }
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.pbk-loc-trigger')) {
+    document.querySelectorAll('.pbk-loc-dropdown').forEach(d => { d.style.display = 'none'; });
+    document.querySelectorAll('.pbk-loc-trigger .material-symbols-rounded').forEach(c => { c.textContent = 'expand_more'; });
+  }
+});
 
 function togglePbkDropdown() {
   document.getElementById('pbk-select-wrap').classList.toggle('open');
