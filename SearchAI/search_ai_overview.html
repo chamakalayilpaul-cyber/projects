@@ -913,7 +913,8 @@ body{
 .snt-link{color:#1976d2;cursor:pointer}
 .snt-table td,.snt-loc-table td{font-size:14px;color:rgb(33,33,33);vertical-align:top;padding:14px 16px}
 .snt-table thead tr,.snt-table th{background:#fff}
-.snt-table tbody tr:hover td{background:#fff}
+.snt-table tbody tr td{background:#fff}
+.snt-table tbody tr:hover td{background:rgb(242,244,247)}
 .snt-ai-cell{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:400}
 .snt-pct{font-size:14px;font-weight:400;color:rgb(33,33,33)}
 .snt-summary{font-size:13px;color:rgb(85,85,85);line-height:1.6}
@@ -3448,7 +3449,7 @@ textarea.ap-input{
       <!-- Sentiment summary by AI site -->
       <div class="snt-card">
         <div class="snt-card-hdr">
-          <span class="snt-card-title">What is the sentiment and areas for improvement on AI sites for <span class="snt-link">all locations ▾</span></span>
+          <span class="snt-card-title">What is the sentiment and areas for improvement for <span class="snt-link">all locations ▾</span></span>
           <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
         </div>
         <table class="pt-table snt-table">
@@ -3474,6 +3475,16 @@ textarea.ap-input{
               <td><span class="snt-ai-cell"><svg width="18" height="18"><use href="#s-perplexity"/></svg>Perplexity</span></td>
               <td class="snt-pct">89.3%</td>
               <td class="snt-summary">Local reviews often mention helpful staff and wide selection, but there are repeated concerns about scheduling delays and occasional fitting issues. Overall customer sentiment trends positive with praise for affordability and accessibility in the Omaha area.</td>
+            </tr>
+            <tr class="pt-data-row">
+              <td><span class="snt-ai-cell"><svg width="18" height="18"><use href="#s-copilot"/></svg>Copilot</span></td>
+              <td class="snt-pct">76%</td>
+              <td class="snt-summary">Feedback surfaces strong satisfaction with front-desk staff and clean facilities, though pricing transparency is a recurring concern. Patients appreciate the range of services but note inconsistency in wait times across locations. Sentiment is moderately positive overall.</td>
+            </tr>
+            <tr class="pt-data-row">
+              <td><span class="snt-ai-cell"><svg width="18" height="18"><use href="#s-claude"/></svg>Claude</span></td>
+              <td class="snt-pct">85%</td>
+              <td class="snt-summary">Reviews consistently highlight personalised care and knowledgeable staff as key strengths. A minority of responses flag billing complexities and limited specialist availability. Overall tone is positive, with strong trust signals in patient-facing interactions.</td>
             </tr>
           </tbody>
         </table>
