@@ -4855,11 +4855,19 @@ textarea.ap-input{
     </div>
     <div class="ap-field" style="margin-top:4px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <label class="ap-label" id="tag-prompts-label" style="flex:1">Prompts</label>
-        <input type="text" id="tag-prompt-search-input" class="ap-input" style="display:none;flex:1;height:36px;font-size:13px" placeholder="Search prompts to add…" oninput="filterTagPromptSearch(this.value)" autocomplete="off"/>
+        <label class="ap-label" style="flex:1">Prompts</label>
+        <!-- Collapsed state: icon button -->
         <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
           <span class="material-symbols-rounded" style="font-size:18px">search</span>
         </button>
+        <!-- Expanded state: inline search bar replaces the button -->
+        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1">
+          <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);flex-shrink:0">search</span>
+          <input type="text" id="tag-prompt-search-input" style="flex:1;border:none;outline:none;font-size:13px;color:rgb(33,33,33);background:transparent;min-width:0" placeholder="Search prompts to add…" oninput="filterTagPromptSearch(this.value)" autocomplete="off"/>
+          <button onclick="toggleTagPromptSearch()" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;flex-shrink:0">
+            <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143)">close</span>
+          </button>
+        </div>
       </div>
       <!-- Search suggestions (shown while typing) -->
       <div id="tag-prompt-search-results" style="display:none;margin-bottom:8px">
@@ -6903,18 +6911,19 @@ document.addEventListener('click', function(e) {
 });
 
 function toggleTagPromptSearch() {
-  const label = document.getElementById('tag-prompts-label');
+  const btn = document.getElementById('tag-prompt-search-btn');
+  const expanded = document.getElementById('tag-search-expanded');
   const inp = document.getElementById('tag-prompt-search-input');
   const results = document.getElementById('tag-prompt-search-results');
-  const isOpen = inp.style.display !== 'none';
+  const isOpen = expanded.style.display === 'flex';
   if (isOpen) {
-    inp.style.display = 'none';
-    label.style.display = '';
+    expanded.style.display = 'none';
+    btn.style.display = '';
     results.style.display = 'none';
     inp.value = '';
   } else {
-    label.style.display = 'none';
-    inp.style.display = 'block';
+    btn.style.display = 'none';
+    expanded.style.display = 'flex';
     setTimeout(() => inp.focus(), 50);
   }
 }
