@@ -1637,6 +1637,10 @@ body{
 }
 .ap-input:focus{border-color:#1976d2}
 .ap-input::placeholder{color:#bbb}
+.tag-action-btn{width:36px;height:36px;border:1px solid #eaeaea;border-radius:6px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:rgb(85,85,85)}
+.tag-action-btn:hover{background:rgb(242,244,247)}
+.tag-prompt-result{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;font-size:13px;color:rgb(33,33,33);border-bottom:1px solid #f5f5f5}
+.tag-prompt-result:last-child{border-bottom:none}
 .tag-prompt-result:hover{background:rgb(242,244,247)}
 .ap-input.error{border-color:#e53935}
 .ap-input.error:focus{border-color:#e53935}
@@ -4852,36 +4856,39 @@ textarea.ap-input{
     <div class="ap-field" style="margin-top:4px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
         <label class="ap-label">Prompts</label>
-        <div style="position:relative">
-          <button class="pt-row-icon-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Add prompt"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
-          <div id="tag-prompt-popover" style="display:none;position:absolute;right:0;top:100%;z-index:300;background:#fff;border:1px solid #eaeaea;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);width:280px;padding:8px 0;margin-top:4px">
-            <div style="padding:6px 12px;border-bottom:1px solid #eaeaea">
-              <input type="text" id="tag-prompt-search-input" class="ap-input" style="height:36px;font-size:13px" placeholder="Search prompts..." oninput="filterTagPromptSearch(this.value)" autocomplete="off"/>
-            </div>
-            <div id="tag-prompt-search-results" style="max-height:200px;overflow-y:auto">
-              <div class="tag-prompt-result" onclick="addTagPrompt('Best-rated Invisalign providers near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Best-rated Invisalign providers near me</div>
-              <div class="tag-prompt-result" onclick="addTagPrompt('Invisalign cost with insurance')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Invisalign cost with insurance</div>
-              <div class="tag-prompt-result" onclick="addTagPrompt('Invisible braces for adults near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Invisible braces for adults near me</div>
-              <div class="tag-prompt-result" onclick="addTagPrompt('Best teeth whitening near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Best teeth whitening near me</div>
-              <div class="tag-prompt-result" onclick="addTagPrompt('Dental implants cost near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Dental implants cost near me</div>
-              <div class="tag-prompt-result" onclick="addTagPrompt('Clear aligner therapy providers')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Clear aligner therapy providers</div>
-              <div class="tag-prompt-result" onclick="addTagPrompt('Best orthodontists for adults near me')" style="padding:8px 12px;font-size:13px;color:rgb(33,33,33);cursor:pointer">Best orthodontists for adults near me</div>
-            </div>
-          </div>
-        </div>
+        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
+          <span class="material-symbols-rounded" style="font-size:18px">search</span>
+        </button>
       </div>
+      <!-- Inline search bar (hidden until search icon clicked) -->
+      <div id="tag-prompt-search-bar" style="display:none;margin-bottom:8px">
+        <input type="text" id="tag-prompt-search-input" class="ap-input" style="height:36px;font-size:13px" placeholder="Search prompts to add…" oninput="filterTagPromptSearch(this.value)" autocomplete="off"/>
+      </div>
+      <!-- Search suggestions (shown while typing) -->
+      <div id="tag-prompt-search-results" style="display:none;border:1px solid #eaeaea;border-radius:6px;overflow:hidden;margin-bottom:8px">
+        <div class="tag-prompt-result" data-prompt="Best-rated Invisalign providers near me"></div>
+        <div class="tag-prompt-result" data-prompt="Invisalign cost with insurance"></div>
+        <div class="tag-prompt-result" data-prompt="Invisible braces for adults near me"></div>
+        <div class="tag-prompt-result" data-prompt="Best teeth whitening near me"></div>
+        <div class="tag-prompt-result" data-prompt="Dental implants cost near me"></div>
+        <div class="tag-prompt-result" data-prompt="Clear aligner therapy providers"></div>
+        <div class="tag-prompt-result" data-prompt="Best orthodontists for adults near me"></div>
+        <div class="tag-prompt-result" data-prompt="Orthodontic specialists with payment plans"></div>
+        <div class="tag-prompt-result" data-prompt="Fastest Invisalign results near me"></div>
+      </div>
+      <!-- Attached prompts list -->
       <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0">
         <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
           <span>Best-rated Invisalign providers near me</span>
-          <button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+          <button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
         </div>
         <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
           <span>Invisalign cost with insurance</span>
-          <button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+          <button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
         </div>
         <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:14px;color:rgb(33,33,33)">
           <span>Invisible braces for adults near me</span>
-          <button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+          <button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
         </div>
       </div>
     </div>
@@ -6892,50 +6899,90 @@ document.addEventListener('click', function(e) {
 });
 
 function toggleTagPromptSearch() {
-  const pop = document.getElementById('tag-prompt-popover');
-  const isOpen = pop.style.display === 'block';
-  pop.style.display = isOpen ? 'none' : 'block';
-  if (!isOpen) setTimeout(() => document.getElementById('tag-prompt-search-input').focus(), 50);
+  const bar = document.getElementById('tag-prompt-search-bar');
+  const results = document.getElementById('tag-prompt-search-results');
+  const inp = document.getElementById('tag-prompt-search-input');
+  const isOpen = bar.style.display !== 'none';
+  if (isOpen) {
+    bar.style.display = 'none';
+    results.style.display = 'none';
+    inp.value = '';
+    _renderTagSearchResults('');
+  } else {
+    bar.style.display = 'block';
+    setTimeout(() => inp.focus(), 50);
+  }
 }
-function filterTagPromptSearch(q) {
+
+const _tagPromptPool = [
+  'Best-rated Invisalign providers near me',
+  'Invisalign cost with insurance',
+  'Invisible braces for adults near me',
+  'Best teeth whitening near me',
+  'Dental implants cost near me',
+  'Clear aligner therapy providers',
+  'Best orthodontists for adults near me',
+  'Orthodontic specialists with payment plans',
+  'Fastest Invisalign results near me'
+];
+
+function _renderTagSearchResults(q) {
+  const container = document.getElementById('tag-prompt-search-results');
   const lower = q.toLowerCase();
-  document.querySelectorAll('#tag-prompt-search-results .tag-prompt-result').forEach(r => {
-    r.style.display = r.textContent.toLowerCase().includes(lower) ? '' : 'none';
-  });
+  const matched = q.trim() ? _tagPromptPool.filter(p => p.toLowerCase().includes(lower)) : [];
+  if (!matched.length) { container.style.display = 'none'; return; }
+  container.innerHTML = matched.map(p => `
+    <div class="tag-prompt-result">
+      <span style="flex:1;font-size:13px;color:rgb(33,33,33)">${p}</span>
+      <button class="tag-action-btn" style="flex-shrink:0" onclick="addTagPrompt('${p.replace(/'/g,'&#39;')}')" title="Add tag to prompt" onmouseenter="showTagAddTip(event)" onmouseleave="hideTagAddTip()">
+        <span class="material-symbols-rounded" style="font-size:18px">add</span>
+      </button>
+    </div>`).join('');
+  container.style.display = 'block';
 }
+
+function filterTagPromptSearch(q) {
+  _renderTagSearchResults(q);
+}
+
+function showTagAddTip(e) {
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.textContent = 'Add tag to prompt';
+  tip.style.display = 'block';
+  const r = e.target.closest('.tag-action-btn').getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+}
+function hideTagAddTip() { document.getElementById('pt-mod-tooltip').style.display = 'none'; }
+
 function addTagPrompt(text) {
   const list = document.getElementById('tag-prompt-list');
-  // Don't add duplicates
   const exists = [...list.querySelectorAll('.tag-prompt-item span')].some(s => s.textContent === text);
-  if (exists) { document.getElementById('tag-prompt-popover').style.display = 'none'; return; }
-  // Build new item
+  if (exists) return;
   const div = document.createElement('div');
   div.className = 'tag-prompt-item';
   div.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)';
-  div.innerHTML = `<span>${text}</span><button class="pt-row-icon-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
+  div.innerHTML = `<span>${text}</span><button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
   list.appendChild(div);
-  // Fix last item border
-  list.querySelectorAll('.tag-prompt-item').forEach((item, i, arr) => {
-    item.style.borderBottom = i < arr.length - 1 ? '1px solid #f0f0f0' : 'none';
-  });
-  document.getElementById('tag-prompt-popover').style.display = 'none';
+  _fixTagPromptBorders(list);
+  // Clear search
+  document.getElementById('tag-prompt-search-input').value = '';
+  document.getElementById('tag-prompt-search-results').style.display = 'none';
 }
+
 function removeTagPrompt(btn) {
   const item = btn.closest('.tag-prompt-item');
   const list = item.parentElement;
   item.remove();
-  // Fix last item border
-  list.querySelectorAll('.tag-prompt-item').forEach((item, i, arr) => {
-    item.style.borderBottom = i < arr.length - 1 ? '1px solid #f0f0f0' : 'none';
+  _fixTagPromptBorders(list);
+}
+
+function _fixTagPromptBorders(list) {
+  const items = list.querySelectorAll('.tag-prompt-item');
+  items.forEach((item, i) => {
+    item.style.borderBottom = i < items.length - 1 ? '1px solid #f0f0f0' : 'none';
   });
 }
-// Close tag prompt popover on outside click
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('#tag-prompt-search-btn') && !e.target.closest('#tag-prompt-popover')) {
-    const pop = document.getElementById('tag-prompt-popover');
-    if (pop) pop.style.display = 'none';
-  }
-});
 
 function saveTag() {
   const name = document.getElementById('tag-name-input').value.trim();
