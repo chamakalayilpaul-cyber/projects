@@ -911,13 +911,15 @@ body{
 .snt-card-title{font-size:16px;color:rgb(33,33,33);font-weight:400;line-height:1.5}
 .snt-card-sub{font-size:12px;color:rgb(143,143,143);margin-top:2px}
 .snt-link{color:#1976d2;cursor:pointer}
-.snt-table td,.snt-loc-table td{font-size:14px;color:rgb(33,33,33);vertical-align:top;padding:14px 16px}
+.snt-table td,.snt-loc-table td{font-size:14px;color:rgb(33,33,33);vertical-align:top;padding:14px 16px;white-space:normal;overflow:visible;text-overflow:unset;height:auto}
+table.snt-table td{white-space:normal!important;overflow:visible!important;text-overflow:unset!important;height:auto!important}
+table.snt-table td.snt-summary{white-space:normal!important;word-break:break-word;overflow-wrap:break-word;max-width:0;width:100%}
 .snt-table thead tr,.snt-table th{background:#fff}
 .snt-table tbody tr td{background:#fff}
 .snt-table tbody tr:hover td{background:rgb(242,244,247)}
 .snt-ai-cell{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:400}
 .snt-pct{font-size:14px;font-weight:400;color:rgb(33,33,33)}
-.snt-summary{font-size:13px;color:rgb(85,85,85);line-height:1.6}
+.snt-summary{font-size:13px;color:rgb(85,85,85);line-height:1.6;white-space:normal;overflow:visible;text-overflow:unset;height:auto}
 /* Strengths & Weaknesses 2x2 grid */
 .snt-sw-tabs{display:flex;gap:0;border-bottom:1px solid #eaeaea;margin-bottom:0;padding:0 20px}
 .snt-sw-tab{
@@ -944,6 +946,89 @@ body{
 .snt-quad-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:#6834B7;display:flex;align-items:center;justify-content:center;z-index:2}
 /* Location table */
 .snt-loc-table{margin:-1px}
+.snt-loc-table .pt-data-row{background:#fff}
+.snt-loc-table .pt-data-row:hover td{background:rgb(242,244,247)}
+.snt-neutral{font-size:14px;font-weight:400;color:#757575}
+.snt-prompt-scroll{max-height:340px;overflow-y:auto}
+.snt-prompt-scroll::-webkit-scrollbar{width:4px}
+.snt-prompt-scroll::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+/* ── PROMPT RESPONSE SIDE PANEL ── */
+.prsp-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.25);z-index:300;opacity:0;pointer-events:none;transition:opacity .25s}
+.prsp-overlay.open{opacity:1;pointer-events:all}
+.prsp-panel{position:fixed;top:0;right:-560px;width:540px;height:100vh;background:#fff;z-index:301;display:flex;flex-direction:column;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-6px 0 32px rgba(0,0,0,0.13)}
+.prsp-panel.open{right:0}
+.prsp-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;flex-shrink:0;background:#fff}
+.prsp-title{font-size:15px;font-weight:500;color:#212121}
+.prsp-close{width:28px;height:28px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#555}
+.prsp-close:hover{background:#f5f5f5}
+/* tabs */
+.prsp-tabs{display:flex;border-bottom:1px solid #eaeaea;flex-shrink:0;padding:0 8px;background:#fff}
+.prsp-tab{display:flex;align-items:center;gap:7px;padding:0 12px;height:40px;font-size:13px;color:#777;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;user-select:none}
+.prsp-tab:hover{color:#212121}
+.prsp-tab.active{color:#1976d2;border-bottom-color:#1976d2}
+.prsp-tab img,.prsp-tab svg{width:16px;height:16px;flex-shrink:0}
+/* content */
+.prsp-body{flex:1;overflow-y:auto;background:#f4f4f4}
+.prsp-pane{display:none}
+.prsp-pane.active{display:block}
+/* highlight spans */
+.prsp-hl-pos{background:rgba(46,125,50,0.13);color:#1b5e20;border-radius:2px;padding:0 2px}
+.prsp-hl-neg{background:rgba(198,40,40,0.12);color:#b71c1c;border-radius:2px;padding:0 2px}
+/* ── ChatGPT pane (accurate replica) ── */
+.prsp-gpt-wrap{background:#fff;min-height:100%;display:flex;flex-direction:column;font-family:ui-sans-serif,system-ui,-apple-system,sans-serif}
+.prsp-gpt-user-row{display:flex;justify-content:flex-end;padding:24px 20px 8px}
+.prsp-gpt-bubble{background:#f4f4f4;border-radius:18px;padding:12px 18px;font-size:15px;color:#0d0d0d;line-height:1.6;max-width:88%}
+.prsp-gpt-resp{padding:16px 20px 20px;font-size:15px;color:#0d0d0d;line-height:1.75}
+.prsp-gpt-resp p{margin-bottom:14px}
+.prsp-gpt-resp ul{padding-left:24px;margin-bottom:14px}
+.prsp-gpt-resp li{margin-bottom:7px;list-style-type:disc}
+.prsp-gpt-resp strong{font-weight:600}
+/* ── Gemini pane (accurate replica) ── */
+.prsp-gem-wrap{background:#fff;min-height:100%;font-family:Google Sans,Roboto,sans-serif}
+.prsp-gem-user-row{display:flex;justify-content:flex-end;padding:24px 20px 8px;align-items:flex-start;gap:8px}
+.prsp-gem-bubble{background:#e8eaf0;border-radius:20px 20px 4px 20px;padding:14px 18px;font-size:15px;color:#1f1f1f;line-height:1.6;max-width:88%}
+.prsp-gem-chev{color:#9aa0a6;margin-top:18px;flex-shrink:0;font-size:18px;line-height:1}
+.prsp-gem-resp-row{display:flex;align-items:flex-start;gap:14px;padding:20px 20px 8px}
+.prsp-gem-diamond{flex-shrink:0;margin-top:2px}
+.prsp-gem-resp-body{font-size:15px;color:#1f1f1f;line-height:1.8;flex:1}
+.prsp-gem-resp-body p{margin-bottom:14px}
+.prsp-gem-resp-body strong{font-weight:600}
+.prsp-gem-resp-body ul{padding-left:20px;margin-bottom:14px}
+.prsp-gem-resp-body li{margin-bottom:8px}
+.prsp-gem-footer{display:flex;align-items:center;gap:2px;padding:4px 20px 20px 54px}
+.prsp-gem-foot-btn{width:34px;height:34px;border:none;background:none;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#5f6368;font-size:16px}
+.prsp-gem-foot-btn:hover{background:#f1f3f4}
+/* ── Perplexity pane (accurate replica) ── */
+.prsp-pplx-wrap{background:#f9f8f5;min-height:100%;font-family:Georgia,"Noto Serif","Times New Roman",serif}
+.prsp-pplx-user-row{display:flex;justify-content:flex-end;padding:24px 20px 8px}
+.prsp-pplx-pill{background:#e5e2dc;border-radius:20px;padding:9px 16px;font-size:14px;color:#1a1a1a;max-width:85%;line-height:1.5;font-family:-apple-system,sans-serif}
+.prsp-pplx-steps{font-size:12px;color:#9a9a8e;padding:4px 20px 12px;display:flex;align-items:center;gap:4px}
+.prsp-pplx-resp{padding:4px 20px 20px;font-size:15px;color:#1a1a1a;line-height:1.85;font-family:Georgia,"Noto Serif",serif}
+.prsp-pplx-resp p{margin-bottom:14px}
+.prsp-pplx-resp strong{font-weight:700}
+.prsp-pplx-resp h3{font-size:16px;font-weight:700;color:#1a1a1a;margin:20px 0 10px;padding:0}
+.prsp-pplx-resp ul{list-style:none;padding-left:0;margin-bottom:14px}
+.prsp-pplx-resp li{padding-left:14px;margin-bottom:12px;position:relative}
+.prsp-pplx-resp li::before{content:"·";position:absolute;left:2px;font-size:20px;line-height:1.1;color:#777}
+.prsp-pplx-chip{display:inline-flex;align-items:center;background:#e5e2dc;border-radius:4px;padding:1px 7px;font-size:11px;color:#666;margin-left:5px;vertical-align:middle;font-family:ui-monospace,monospace;white-space:nowrap}
+/* ── Claude pane (accurate replica) ── */
+.prsp-claude-wrap{background:#fff;min-height:100%;display:flex;flex-direction:column;font-family:Georgia,"Book Antiqua","Palatino Linotype",serif}
+.prsp-claude-user-row{display:flex;justify-content:center;padding:24px 28px 8px}
+.prsp-claude-bubble{background:#f0ece8;border-radius:14px;padding:14px 20px;font-size:15px;color:#1a1a1a;max-width:92%;line-height:1.6;font-family:-apple-system,sans-serif}
+.prsp-claude-resp{padding:16px 20px 12px;flex:1;font-size:15px;color:#1a1a1a;line-height:1.85;font-family:Georgia,"Book Antiqua","Palatino Linotype",serif}
+.prsp-claude-resp p{margin-bottom:16px}
+.prsp-claude-resp hr{border:none;border-top:1px solid #e8e8e8;margin:18px 0}
+.prsp-claude-resp h3{font-size:15px;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.prsp-claude-resp ol{padding-left:0;margin-bottom:14px;list-style:none;counter-reset:cl}
+.prsp-claude-resp ol li{counter-increment:cl;padding-left:28px;margin-bottom:8px;position:relative}
+.prsp-claude-resp ol li::before{content:counter(cl)".";position:absolute;left:4px;color:#888;font-size:14px}
+.prsp-claude-footer{border-top:1px solid #eaeaea;padding:10px 20px;display:flex;align-items:center;gap:10px;font-size:12px;color:#888;flex-shrink:0;background:#fafafa}
+.prsp-claude-usage-bar{flex:1;height:4px;background:#e5e5e5;border-radius:2px}
+.prsp-claude-usage-fill{height:100%;width:75%;background:#cf6679;border-radius:2px}
+.prsp-claude-req{font-size:12px;color:#1976d2;cursor:pointer;white-space:nowrap;flex-shrink:0}
+/* prompt link cursor */
+#snt-prompt-table .pt-data-row .pt-v2-prompt{cursor:pointer}
+
 .snt-loc-table tbody tr td{background:#fff}
 .snt-loc-table tbody tr:hover td{background:rgb(242,244,247)}
 .snt-pos{font-size:14px;font-weight:400;color:#2e7d32}
@@ -3039,7 +3124,7 @@ textarea.ap-input{
               <thead>
                 <tr>
                   <th>Brand</th>
-                  <th>Mapped mentions</th>
+                  <th>Brand variations</th>
                   <th class="nm-actions-col"></th>
                 </tr>
               </thead>
@@ -3572,13 +3657,16 @@ textarea.ap-input{
             </tr>
           </thead>
           <tbody>
-            <tr class="pt-data-row"><td>120 Charleston</td><td>90%</td><td>99%</td><td>92%</td><td>98%</td></tr>
-            <tr class="pt-data-row"><td>291 Athens - Athenians</td><td>90%</td><td>95%</td><td>92%</td><td>99%</td></tr>
-            <tr class="pt-data-row"><td>0224 Buford</td><td>94.9%</td><td>94.7%</td><td>92%</td><td>98%</td></tr>
-            <tr class="pt-data-row"><td>584 Madison</td><td>94.9%</td><td>98.5%</td><td>92%</td><td>96%</td></tr>
-            <tr class="pt-data-row"><td>386 Modesto</td><td>94.4%</td><td>96.5%</td><td>92%</td><td>96%</td></tr>
-            <tr class="pt-data-row"><td>119 Santee - Albertsons</td><td>94.4%</td><td>90%</td><td>92%</td><td>90%</td></tr>
-            <tr class="pt-data-row"><td>163 Amarillo</td><td>94.2%</td><td>92.5%</td><td>92%</td><td>88%</td></tr>
+            <tr class="pt-data-row"><td>120 Charleston</td><td><span class="snt-pos">90%</span></td><td><span class="snt-pos">99%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-pos">98%</span></td></tr>
+            <tr class="pt-data-row"><td>291 Athens - Athenians</td><td><span class="snt-pos">90%</span></td><td><span class="snt-pos">95%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">99%</span></td></tr>
+            <tr class="pt-data-row"><td>0224 Buford</td><td><span class="snt-pos">94.9%</span></td><td><span class="snt-pos">94.7%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-pos">98%</span></td></tr>
+            <tr class="pt-data-row"><td>584 Madison</td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">98.5%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-pos">96%</span></td></tr>
+            <tr class="pt-data-row"><td>386 Modesto</td><td><span class="snt-pos">94.4%</span></td><td><span class="snt-pos">96.5%</span></td><td><span class="snt-neg">72%</span></td><td><span class="snt-pos">96%</span></td></tr>
+            <tr class="pt-data-row"><td>119 Santee - Albertsons</td><td><span class="snt-neg">78%</span></td><td><span class="snt-pos">90%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-neutral">Neutral</span></td></tr>
+            <tr class="pt-data-row"><td>163 Amarillo</td><td><span class="snt-pos">94.2%</span></td><td><span class="snt-pos">92.5%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-neg">68%</span></td></tr>
+            <tr class="pt-data-row"><td>447 Tucson - Grant</td><td><span class="snt-pos">91%</span></td><td><span class="snt-pos">93%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">89%</span></td></tr>
+            <tr class="pt-data-row"><td>302 Memphis - Poplar</td><td><span class="snt-neg">74%</span></td><td><span class="snt-neg">71%</span></td><td><span class="snt-neg">76%</span></td><td><span class="snt-neg">75%</span></td></tr>
+            <tr class="pt-data-row"><td>518 Columbus - Polaris</td><td><span class="snt-pos">88%</span></td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">90%</span></td><td><span class="snt-neutral">Neutral</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -3593,9 +3681,10 @@ textarea.ap-input{
           </div>
         </div>
         <div class="pt-table-wrap" style="border:none;border-radius:0;margin-top:8px">
+          <div class="snt-prompt-scroll">
           <table class="pt-table" id="snt-prompt-table">
             <colgroup><col><col style="width:100px"><col style="width:130px"><col style="width:120px"><col style="width:120px"><col style="width:120px"></colgroup>
-            <thead>
+            <thead style="position:sticky;top:0;z-index:1">
               <tr>
                 <th><span class="pt-th-inner">Themes and prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
                 <th><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
@@ -3606,48 +3695,108 @@ textarea.ap-input{
               </tr>
             </thead>
             <tbody>
+              <!-- Invisalign -->
               <tr class="pt-group-row" data-group="snt-inv" onclick="togglePtGroup('snt-inv')">
                 <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisalign</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
-                <td>76</td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">91%</span></td><td><span class="snt-pos">82%</span></td>
+                <td>76</td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">90%</span></td><td><span class="snt-pos">82%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-inv">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
                 <td>34</td><td><span class="snt-pos">89%</span></td><td><span class="snt-pos">90%</span></td><td><span class="snt-pos">91%</span></td><td><span class="snt-pos">85%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-inv">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend Invisalign specialists for complex bite corrections?</span></td>
-                <td>22</td><td><span class="snt-neg">75%</span></td><td><span class="snt-neg">75%</span></td><td><span class="snt-neg">78%</span></td><td><span class="snt-neg">72%</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend Invisalign specialists for complex bite corrections?</span></td>
+                <td>22</td><td><span class="snt-neg">75%</span></td><td><span class="snt-neg">75%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-neg">72%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-inv">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does Invisalign cost with insurance coverage?</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does Invisalign cost with insurance coverage?</span></td>
                 <td>20</td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">88%</span></td><td><span class="snt-pos">89%</span></td><td><span class="snt-pos">84%</span></td>
               </tr>
+              <!-- Teeth whitening -->
               <tr class="pt-group-row" data-group="snt-twh" onclick="togglePtGroup('snt-twh')">
                 <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Teeth whitening</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
-                <td>54</td><td><span class="snt-neg">68%</span></td><td><span class="snt-neg">65%</span></td><td><span class="snt-neg">70%</span></td><td><span class="snt-neg">68%</span></td>
+                <td>54</td><td><span class="snt-neg">68%</span></td><td><span class="snt-neg">65%</span></td><td><span class="snt-neg">75%</span></td><td><span class="snt-neg">68%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-twh">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best teeth whitening dentist near me with same-day appointments</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best teeth whitening dentist near me with same-day appointments</span></td>
                 <td>30</td><td><span class="snt-neg">72%</span></td><td><span class="snt-neg">72%</span></td><td><span class="snt-neg">75%</span></td><td><span class="snt-neg">68%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-twh">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Professional teeth whitening vs at-home kits which is better</span></td>
-                <td>24</td><td><span class="snt-neg">61%</span></td><td><span class="snt-neg">58%</span></td><td><span class="snt-neg">65%</span></td><td><span class="snt-neg">60%</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Professional teeth whitening vs at-home kits which is better</span></td>
+                <td>24</td><td><span class="snt-neg">61%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-neg">65%</span></td><td><span class="snt-neg">60%</span></td>
               </tr>
+              <!-- Dental implants -->
               <tr class="pt-group-row" data-group="snt-dimpl" onclick="togglePtGroup('snt-dimpl')">
                 <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Dental implants</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
-                <td>45</td><td><span class="snt-pos">82%</span></td><td><span class="snt-pos">82%</span></td><td><span class="snt-neg">79%</span></td><td><span class="snt-pos">85%</span></td>
+                <td>45</td><td><span class="snt-pos">82%</span></td><td><span class="snt-pos">82%</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">85%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-dimpl">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do dental implants cost and what affects pricing?</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do dental implants cost and what affects pricing?</span></td>
                 <td>28</td><td><span class="snt-pos">84%</span></td><td><span class="snt-pos">85%</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">88%</span></td>
               </tr>
               <tr class="pt-data-row" data-group="snt-dimpl">
-                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best dental implant specialists near me</span></td>
-                <td>17</td><td><span class="snt-neg">65%</span></td><td><span class="snt-neg">78%</span></td><td><span class="snt-neg">77%</span></td><td><span class="snt-neg">40%</span></td>
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best dental implant specialists near me</span></td>
+                <td>17</td><td><span class="snt-neg">65%</span></td><td><span class="snt-neg">78%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-neg">40%</span></td>
+              </tr>
+              <!-- Emergency dental care -->
+              <tr class="pt-group-row" data-group="snt-emrg" onclick="togglePtGroup('snt-emrg')">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Emergency dental care</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
+                <td>62</td><td><span class="snt-pos">83%</span></td><td><span class="snt-pos">85%</span></td><td><span class="snt-pos">81%</span></td><td><span class="snt-pos">84%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-emrg">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Where can I get emergency dental care near me today?</span></td>
+                <td>28</td><td><span class="snt-pos">88%</span></td><td><span class="snt-pos">90%</span></td><td><span class="snt-pos">85%</span></td><td><span class="snt-pos">88%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-emrg">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>24-hour emergency dentist open on weekends</span></td>
+                <td>20</td><td><span class="snt-pos">82%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">83%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-emrg">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How to handle a knocked-out tooth before seeing a dentist</span></td>
+                <td>14</td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">78%</span></td><td><span class="snt-pos">81%</span></td>
+              </tr>
+              <!-- Root canal treatment -->
+              <tr class="pt-group-row" data-group="snt-root" onclick="togglePtGroup('snt-root')">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Root canal treatment</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>38</td><td><span class="snt-neg">68%</span></td><td><span class="snt-neg">69%</span></td><td><span class="snt-neg">73%</span></td><td><span class="snt-neg">70%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-root">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How painful is a root canal and what should I expect?</span></td>
+                <td>22</td><td><span class="snt-neg">68%</span></td><td><span class="snt-neg">66%</span></td><td><span class="snt-neg">70%</span></td><td><span class="snt-neg">67%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-root">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best root canal dentist near me affordable pricing</span></td>
+                <td>16</td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-neg">72%</span></td><td><span class="snt-neg">76%</span></td><td><span class="snt-neg">73%</span></td>
+              </tr>
+              <!-- Pediatric dentistry -->
+              <tr class="pt-group-row" data-group="snt-peds" onclick="togglePtGroup('snt-peds')">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Pediatric dentistry</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>44</td><td><span class="snt-pos">91%</span></td><td><span class="snt-pos">93%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-pos">89%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-peds">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best pediatric dentist for kids near me accepting new patients</span></td>
+                <td>26</td><td><span class="snt-pos">93%</span></td><td><span class="snt-pos">95%</span></td><td><span class="snt-pos">92%</span></td><td><span class="snt-pos">91%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-peds">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How often should children visit the dentist?</span></td>
+                <td>18</td><td><span class="snt-pos">88%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">87%</span></td><td><span class="snt-pos">86%</span></td>
+              </tr>
+              <!-- Dental financing -->
+              <tr class="pt-group-row" data-group="snt-fin" onclick="togglePtGroup('snt-fin')">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Dental financing</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>51</td><td><span class="snt-pos">83%</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">78%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-fin">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Dental payment plans for uninsured patients near me</span></td>
+                <td>30</td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">81%</span></td><td><span class="snt-neutral">Neutral</span></td><td><span class="snt-pos">79%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="snt-fin">
+                <td class="pt-v2-prompt" style="cursor:pointer" onclick="(function(el){var r=el.closest('tr');openPrsp(el.textContent.trim(),r?r.getAttribute('data-group'):'')})(this)"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Does Aspen Dental accept CareCredit and other financing?</span></td>
+                <td>21</td><td><span class="snt-pos">83%</span></td><td><span class="snt-pos">79%</span></td><td><span class="snt-pos">80%</span></td><td><span class="snt-pos">77%</span></td>
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
 
@@ -5068,12 +5217,18 @@ textarea.ap-input{
           <span class="material-symbols-rounded">expand_more</span>
         </div>
         <div class="ap-ms-menu">
-          <div class="ap-ms-search-wrap"><span class="material-symbols-rounded ap-ms-search-icon">search</span><input class="ap-ms-search" placeholder="Search tags" oninput="filterApMs('ap-tag-ms',this.value)" onclick="event.stopPropagation()"/></div>
+          <div class="ap-ms-search-wrap"><span class="material-symbols-rounded ap-ms-search-icon">search</span><input class="ap-ms-search" id="ap-tag-ms-search" placeholder="Search tags" oninput="filterApMs('ap-tag-ms',this.value)" onclick="event.stopPropagation()"/></div>
           <label class="ap-ms-opt"><input type="checkbox" value="Invisalign" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Invisalign</span></label>
           <label class="ap-ms-opt"><input type="checkbox" value="Orthodontics" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Orthodontics</span></label>
           <label class="ap-ms-opt"><input type="checkbox" value="Teeth whitening" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Teeth whitening</span></label>
           <label class="ap-ms-opt"><input type="checkbox" value="Dental implants" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Dental implants</span></label>
           <label class="ap-ms-opt"><input type="checkbox" value="Clear aligners" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Clear aligners</span></label>
+          <div id="ap-tag-create-btn" style="display:none;padding:8px 12px;border-top:1px solid #f0f0f0">
+            <button onclick="createAndAddTag()" style="background:none;border:none;cursor:pointer;font-size:13px;color:#1976d2;padding:0;display:flex;align-items:center;gap:4px">
+              <span class="material-symbols-rounded" style="font-size:15px">add</span>
+              <span id="ap-tag-create-label">Create tag</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -5440,7 +5595,7 @@ textarea.ap-input{
 
     <!-- Mapped names section -->
     <div id="nm-mapped-section" style="display:none">
-      <label class="ap-label" style="margin-bottom:8px;display:block">Mapped names</label>
+      <label class="ap-label" style="margin-bottom:8px;display:block">Brand variations</label>
       <div id="nm-mapped-list"></div>
     </div>
 
@@ -5511,7 +5666,7 @@ textarea.ap-input{
 
     <!-- Mapped names (edit) -->
     <div id="nm-edit-mapped-section">
-      <label class="ap-label" style="margin-bottom:8px;display:block">Mapped names</label>
+      <label class="ap-label" style="margin-bottom:8px;display:block">Brand variations</label>
       <div id="nmModalList"></div>
     </div>
 
@@ -6368,10 +6523,40 @@ function toggleApMs(id) {
 
 function filterApMs(msId, q) {
   const term = q.toLowerCase();
+  let anyVisible = false;
   document.querySelectorAll('#' + msId + ' .ap-ms-opt').forEach(opt => {
     const text = opt.querySelector('span')?.textContent.toLowerCase() || '';
-    opt.style.display = text.includes(term) ? '' : 'none';
+    const show = text.includes(term);
+    opt.style.display = show ? '' : 'none';
+    if (show) anyVisible = true;
   });
+  if (msId === 'ap-tag-ms') {
+    const createBtn = document.getElementById('ap-tag-create-btn');
+    const createLabel = document.getElementById('ap-tag-create-label');
+    if (q.trim() && !anyVisible) {
+      createLabel.textContent = '+ Create tag “' + q.trim() + '”';
+      createBtn.style.display = 'block';
+    } else {
+      createBtn.style.display = 'none';
+    }
+  }
+}
+
+function createAndAddTag() {
+  const q = document.getElementById('ap-tag-ms-search').value.trim();
+  if (!q) return;
+  const menu = document.querySelector('#ap-tag-ms .ap-ms-menu');
+  const createBtn = document.getElementById('ap-tag-create-btn');
+  // Add new option before the create button
+  const label = document.createElement('label');
+  label.className = 'ap-ms-opt';
+  label.innerHTML = `<input type="checkbox" value="${q}" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')" checked><span>${q}</span>`;
+  menu.insertBefore(label, createBtn);
+  // Clear search and hide create button
+  document.getElementById('ap-tag-ms-search').value = '';
+  createBtn.style.display = 'none';
+  document.querySelectorAll('#ap-tag-ms .ap-ms-opt').forEach(o => o.style.display = '');
+  refreshApMs('ap-tag-ms', 'ap-tag-label', 'Select tags');
 }
 
 function refreshApMs(msId, labelId, placeholder) {
@@ -8558,5 +8743,155 @@ function copyField(btn) {
   </button>
 </div>
 
+
+<!-- ══ PROMPT RESPONSE SIDE PANEL ══ -->
+<div class="prsp-overlay" id="prsp-overlay" onclick="closePrsp()"></div>
+<div class="prsp-panel" id="prsp-panel">
+  <div class="prsp-hdr">
+    <span class="prsp-title">Prompt response</span>
+    <button class="prsp-close" onclick="closePrsp()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <!-- Tabs -->
+  <div class="prsp-tabs" id="prsp-tabs">
+    <div class="prsp-tab active" onclick="switchPrspTab('chatgpt')">
+      <svg viewBox="0 0 41 41" fill="none"><path d="M37.532 16.87a9.963 9.963 0 0 0-.856-8.184 10.078 10.078 0 0 0-10.855-4.835 9.964 9.964 0 0 0-6.666-2.983 10.079 10.079 0 0 0-9.488 6.975 9.967 9.967 0 0 0-6.664 4.834 10.08 10.08 0 0 0 1.24 11.817 9.965 9.965 0 0 0 .856 8.185 10.079 10.079 0 0 0 10.855 4.835 9.965 9.965 0 0 0 6.666 2.983 10.079 10.079 0 0 0 9.49-6.975 9.967 9.967 0 0 0 6.663-4.834 10.079 10.079 0 0 0-1.241-11.818zm-14.558 20.438a7.48 7.48 0 0 1-4.798-1.735l.237-.134 7.964-4.6a1.294 1.294 0 0 0 .655-1.134V19.054l3.366 1.944a.12.12 0 0 1 .066.092v9.299a7.505 7.505 0 0 1-7.49 7.919zm-16.072-6.949a7.48 7.48 0 0 1-.894-5.023l.237.142 7.964 4.6a1.297 1.297 0 0 0 1.308 0l9.724-5.614v3.888a.12.12 0 0 1-.048.103l-8.051 4.649a7.504 7.504 0 0 1-10.24-2.745zm-2.09-17.524a7.477 7.477 0 0 1 3.93-3.288l-.005.275v9.201a1.294 1.294 0 0 0 .654 1.132l9.723 5.614-3.366 1.944a.12.12 0 0 1-.114.012L8.17 25.31a7.504 7.504 0 0 1-.358-12.476zm27.68 6.441l-9.724-5.615 3.367-1.943a.121.121 0 0 1 .114-.012l8.048 4.648a7.498 7.498 0 0 1-1.158 13.528v-9.476a1.293 1.293 0 0 0-.647-1.13zm3.35-5.043l-.237-.142-7.965-4.6a1.298 1.298 0 0 0-1.308 0l-9.723 5.614v-3.888a.12.12 0 0 1 .048-.103l8.05-4.645a7.497 7.497 0 0 1 11.135 7.764zm-21.063 6.929l-3.367-1.944a.12.12 0 0 1-.065-.092v-9.299a7.497 7.497 0 0 1 12.293-5.756l-.237.134-7.965 4.6a1.294 1.294 0 0 0-.654 1.132l-.005 11.225zm1.829-3.943l4.33-2.501 4.332 2.5v4.999l-4.331 2.5-4.331-2.5V18.22z" fill="currentColor"/></svg>
+      ChatGPT
+    </div>
+    <div class="prsp-tab" onclick="switchPrspTab('gemini')">
+      <svg viewBox="0 0 24 24"><defs><linearGradient id="gg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4285F4"/><stop offset="100%" style="stop-color:#9B72CB"/></linearGradient></defs><path d="M12 2C10.5 7 7 10.5 2 12c5 1.5 8.5 5 10 10 1.5-5 5-8.5 10-10-5-1.5-8.5-5-10-10z" fill="url(#gg1)"/></svg>
+      Gemini
+    </div>
+    <div class="prsp-tab" onclick="switchPrspTab('perplexity')">
+      <svg width="16" height="16"><use href="#s-perplexity"/></svg>
+      Perplexity
+    </div>
+    <div class="prsp-tab" onclick="switchPrspTab('claude')">
+      <svg width="16" height="16"><use href="#s-claude"/></svg>
+      Claude
+    </div>
+  </div>
+  <!-- Body -->
+  <div class="prsp-body" id="prsp-body">
+    <!-- ChatGPT pane -->
+    <div class="prsp-pane active" id="prsp-pane-chatgpt">
+      <div class="prsp-gpt-wrap">
+        <div class="prsp-gpt-user-row">
+          <div class="prsp-gpt-bubble" id="prsp-gpt-q"></div>
+        </div>
+        <div class="prsp-gpt-resp" id="prsp-gpt-resp"></div>
+      </div>
+    </div>
+    <!-- Gemini pane -->
+    <div class="prsp-pane" id="prsp-pane-gemini">
+      <div class="prsp-gem-wrap">
+        <div class="prsp-gem-user-row">
+          <div class="prsp-gem-bubble" id="prsp-gem-q"></div>
+          <span class="prsp-gem-chev">&#8964;</span>
+        </div>
+        <div class="prsp-gem-resp-row">
+          <svg class="prsp-gem-diamond" width="20" height="20" viewBox="0 0 24 24"><defs><linearGradient id="gg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4285F4"/><stop offset="100%" stop-color="#9B72CB"/></linearGradient></defs><path d="M12 2C10.5 7 7 10.5 2 12c5 1.5 8.5 5 10 10 1.5-5 5-8.5 10-10-5-1.5-8.5-5-10-10z" fill="url(#gg3)"/></svg>
+          <div class="prsp-gem-resp-body" id="prsp-gem-resp"></div>
+        </div>
+        <div class="prsp-gem-footer">
+          <button class="prsp-gem-foot-btn" title="Like">&#128077;</button>
+          <button class="prsp-gem-foot-btn" title="Dislike">&#128078;</button>
+          <button class="prsp-gem-foot-btn" title="Retry">&#8635;</button>
+          <button class="prsp-gem-foot-btn" title="Copy">&#10697;</button>
+          <button class="prsp-gem-foot-btn" title="More">&#8942;</button>
+        </div>
+      </div>
+    </div>
+    <!-- Perplexity pane -->
+    <div class="prsp-pane" id="prsp-pane-perplexity">
+      <div class="prsp-pplx-wrap">
+        <div class="prsp-pplx-user-row">
+          <div class="prsp-pplx-pill" id="prsp-pplx-q"></div>
+        </div>
+        <div class="prsp-pplx-steps">2 steps completed &nbsp;&#8250;</div>
+        <div class="prsp-pplx-resp" id="prsp-pplx-resp"></div>
+      </div>
+    </div>
+    <!-- Claude pane -->
+    <div class="prsp-pane" id="prsp-pane-claude">
+      <div class="prsp-claude-wrap">
+        <div class="prsp-claude-user-row">
+          <div class="prsp-claude-bubble" id="prsp-claude-q"></div>
+        </div>
+        <div class="prsp-claude-resp" id="prsp-claude-resp"></div>
+        <div class="prsp-claude-footer">
+          <span>You've used 75% of your usage</span>
+          <div class="prsp-claude-usage-bar"><div class="prsp-claude-usage-fill"></div></div>
+          <span class="prsp-claude-req">Request more</span>
+          <span style="color:#aaa;cursor:pointer">&#10005;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function() {
+  var H = {
+    "default": {
+      chatgpt: "<p>Aspen Dental <span class=\"prsp-hl-pos\">consistently ranks among the top dental providers</span> cited in AI responses, driven by its 900+ location network and <span class=\"prsp-hl-pos\">transparent pricing model</span>.</p><ul><li><span class=\"prsp-hl-pos\">Free first exams</span> for new patients lower the barrier to entry</li><li><span class=\"prsp-hl-pos\">Flexible payment plans</span> via CareCredit and Lending Club</li><li><span class=\"prsp-hl-pos\">Extended evening and weekend hours</span> at most locations</li></ul><p>That said, responses surface recurring concerns:</p><ul><li><span class=\"prsp-hl-neg\">Variability in care quality</span> across franchise locations</li><li><span class=\"prsp-hl-neg\">High-pressure upselling</span> of additional treatments</li><li><span class=\"prsp-hl-neg\">Longer wait times for follow-up</span> in high-volume markets</li></ul>",
+      gemini:  "<p>Aspen Dental is <span class=\"prsp-hl-pos\">one of the most frequently cited dental brands</span> in local AI search results, especially for patients seeking <span class=\"prsp-hl-pos\">affordable, accessible care</span> without insurance.</p><p><span class=\"prsp-hl-pos\">Free new patient exams, strong financing partnerships, and high appointment availability</span> are consistently surfaced as strengths.</p><p>On the negative side, AI responses flag <span class=\"prsp-hl-neg\">unexpected add-on charges reported by patients</span>, <span class=\"prsp-hl-neg\">inconsistent quality across the franchise network</span>, and <span class=\"prsp-hl-neg\">limited specialist availability</span> at smaller locations.</p>",
+      perplexity: "<p>Aspen Dental <span class=\"prsp-hl-pos\">appears in the top 3 results for most dental queries</span> in markets where it operates. <span class=\"prsp-pplx-chip\">healthgrades +3</span></p><h3>What patients say</h3><ul><li><strong><span class=\"prsp-hl-pos\">Same-day appointments</span></strong> &#8212; Frequently cited as a key differentiator. <span class=\"prsp-pplx-chip\">google.com/maps</span></li><li><strong><span class=\"prsp-hl-pos\">SmilePlan financing</span></strong> &#8212; Makes treatment accessible for uninsured patients. <span class=\"prsp-pplx-chip\">aspendental</span></li></ul><h3>Areas of concern</h3><ul><li><span class=\"prsp-hl-neg\">Profit-driven treatment recommendations</span> flagged across review platforms. <span class=\"prsp-pplx-chip\">yelp</span></li><li><span class=\"prsp-hl-neg\">Follow-up care inconsistency</span> noted across locations. <span class=\"prsp-pplx-chip\">healthgrades</span></li></ul>",
+      claude: "<p>Here is my analysis of Aspen Dental's sentiment profile based on AI-generated responses:</p><hr><h3>Positive signals</h3><ol><li><strong>Accessibility</strong> &#8212; <span class=\"prsp-hl-pos\">900+ locations with extended hours</span> make Aspen the most accessible large dental brand nationally.</li><li><strong>Pricing</strong> &#8212; <span class=\"prsp-hl-pos\">Transparent fee schedules and financing options</span> are the most cited reasons patients choose Aspen.</li><li><strong>Onboarding</strong> &#8212; <span class=\"prsp-hl-pos\">Free exams and same-day care</span> drive strong initial sentiment.</li></ol><hr><h3>Areas of concern</h3><ol><li><strong>Consistency</strong> &#8212; <span class=\"prsp-hl-neg\">Care quality varies significantly between franchise locations</span>, diluting overall brand trust.</li><li><strong>Sales pressure</strong> &#8212; <span class=\"prsp-hl-neg\">Upselling of additional treatments</span> is the most recurring complaint across platforms.</li><li><strong>Retention</strong> &#8212; <span class=\"prsp-hl-neg\">Post-treatment communication gaps</span> are consistently cited as a reason patients do not return.</li></ol>"
+    },
+    "snt-inv": {
+      chatgpt: "<p>For Invisalign queries, ChatGPT highlights Aspen Dental as a <span class=\"prsp-hl-pos\">top option for affordability and accessibility</span> with <span class=\"prsp-hl-pos\">free initial consultations</span>.</p><p><strong>Positives:</strong></p><ul><li><span class=\"prsp-hl-pos\">Competitive pricing: $3,000-$4,500 vs $5,000-$8,000 at boutique orthodontists</span></li><li><span class=\"prsp-hl-pos\">SmilePlan financing keeps monthly payments manageable</span></li><li><span class=\"prsp-hl-pos\">Certified Invisalign providers at most locations</span></li></ul><p><strong>Negatives:</strong></p><ul><li><span class=\"prsp-hl-neg\">Complex cases referred to external orthodontist specialists</span></li><li><span class=\"prsp-hl-neg\">Inconsistent follow-up appointment availability across locations</span></li></ul>",
+      gemini:  "<p>Gemini positions Aspen Dental as a <span class=\"prsp-hl-pos\">highly accessible entry point for clear aligner treatment</span> with <span class=\"prsp-hl-pos\">more competitive pricing than independent practices</span>.</p><p><strong>Positives:</strong></p><ul><li><span class=\"prsp-hl-pos\">National network ensures consistent Invisalign certification</span></li><li><span class=\"prsp-hl-pos\">Integrated general dental care alongside aligner treatment</span></li></ul><p><strong>Negatives:</strong></p><ul><li><span class=\"prsp-hl-neg\">Complex bite cases may require external orthodontic referral</span></li><li><span class=\"prsp-hl-neg\">Patient experience ratings vary between markets</span></li></ul>",
+      perplexity: "<p>Perplexity shows Aspen Dental as a <span class=\"prsp-hl-pos\">leading volume Invisalign provider</span> with <span class=\"prsp-hl-pos\">over 500 certified locations</span>. <sup>1</sup></p><p>Reviews show <span class=\"prsp-hl-pos\">strong satisfaction for straightforward cases</span> and <span class=\"prsp-hl-pos\">friendly staff</span>. <sup>2,4</sup></p><p>Negatives include <span class=\"prsp-hl-neg\">case hand-offs when complexity exceeds in-house capability</span> and <span class=\"prsp-hl-neg\">some delays in receiving aligner trays</span>. <sup>3</sup></p>",
+      claude: "<p>Based on how Aspen Dental is represented in Invisalign-related AI responses, here is my assessment:</p><hr><h3>Positive signals</h3><ol><li><strong>Pricing advantage</strong> &#8212; <span class=\"prsp-hl-pos\">Aspen consistently prices Invisalign 30&#8211;40% below boutique orthodontists</span>, making it the most cited brand for cost-conscious patients.</li><li><strong>Accessibility</strong> &#8212; <span class=\"prsp-hl-pos\">500+ certified Invisalign providers across the network</span> means patients rarely need to travel far for treatment.</li><li><strong>Financing</strong> &#8212; <span class=\"prsp-hl-pos\">SmilePlan monthly payment options starting around $89</span> are frequently highlighted as a differentiator in AI responses.</li></ol><hr><h3>Areas of concern</h3><ol><li><strong>Case complexity limits</strong> &#8212; <span class=\"prsp-hl-neg\">Complex bite corrections are often referred externally</span>, which creates a fragmented experience that patients rate poorly.</li><li><strong>Tray delivery delays</strong> &#8212; <span class=\"prsp-hl-neg\">A recurring complaint across review sources is delayed aligner delivery</span> after impressions or scans.</li><li><strong>Follow-up consistency</strong> &#8212; <span class=\"prsp-hl-neg\">Check-up appointment availability varies significantly between franchise locations</span>, affecting treatment continuity.</li></ol>"
+    },
+    "snt-dimpl": {
+      chatgpt: "<p>ChatGPT surfaces Aspen Dental as a <span class=\"prsp-hl-pos\">widely available implant option with transparent pricing</span> and <span class=\"prsp-hl-pos\">same-day placement capability</span> at select locations.</p><p><strong>Positives:</strong></p><ul><li><span class=\"prsp-hl-pos\">All-on-4 and single implants available nationally</span></li><li><span class=\"prsp-hl-pos\">Free implant consultations with imaging</span></li><li><span class=\"prsp-hl-pos\">In-house financing reduces upfront cost barrier</span></li></ul><p><strong>Negatives:</strong></p><ul><li><span class=\"prsp-hl-neg\">Costs vary widely ($1,500-$2,500) by location</span></li><li><span class=\"prsp-hl-neg\">Some reviews cite rushed consultations</span></li><li><span class=\"prsp-hl-neg\">Post-implant follow-up care flagged as inconsistent</span></li></ul>",
+      gemini:  "<p>Gemini rates Aspen Dental <span class=\"prsp-hl-pos\">strong on accessibility and pricing transparency</span> for implants.</p><p><strong>Positives:</strong></p><ul><li><span class=\"prsp-hl-pos\">Clear pricing pages on the Aspen website</span></li><li><span class=\"prsp-hl-pos\">Bone grafting and implants handled in a single practice</span></li></ul><p><strong>Negatives:</strong></p><ul><li><span class=\"prsp-hl-neg\">Long-term success data not readily available</span></li><li><span class=\"prsp-hl-neg\">Specialist referrals required at some locations</span></li></ul>",
+      perplexity: "<p>Perplexity data shows implants at Aspen average <span class=\"prsp-hl-pos\">$1,800 per tooth</span> — well below the national average of $3,000-$4,500. <sup>1,3</sup></p><p>Sentiment is <span class=\"prsp-hl-pos\">positive on consultation quality</span> but <span class=\"prsp-hl-neg\">mixed on long-term follow-up</span> and <span class=\"prsp-hl-neg\">inconsistent handling of complications across franchise locations</span>. <sup>2,4</sup></p>",
+      claude: "<p>Here is my analysis of how Aspen Dental is positioned in dental implant-related AI responses:</p><hr><h3>Positive signals</h3><ol><li><strong>Price leadership</strong> &#8212; At an average of <span class=\"prsp-hl-pos\">$1,800 per implant versus a national average of $3,000&#8211;$4,500</span>, Aspen is the most cited affordable implant provider in AI responses.</li><li><strong>All-inclusive care</strong> &#8212; <span class=\"prsp-hl-pos\">Bone grafting, extraction, and implant placement are handled in a single practice</span>, reducing the coordination burden on patients.</li><li><strong>Free consultations</strong> &#8212; <span class=\"prsp-hl-pos\">Complimentary implant consultations with X-rays</span> are consistently surfaced as a conversion driver in AI citations.</li></ol><hr><h3>Areas of concern</h3><ol><li><strong>Pricing inconsistency</strong> &#8212; <span class=\"prsp-hl-neg\">Costs vary by $500&#8211;$1,000 across locations</span> for the same procedure, which patients find confusing and erodes trust.</li><li><strong>Post-op follow-up</strong> &#8212; <span class=\"prsp-hl-neg\">Long-term aftercare quality is rated significantly below the initial consultation</span> in patient reviews, suggesting a drop-off in attention after payment.</li><li><strong>Rushed consultations</strong> &#8212; <span class=\"prsp-hl-neg\">High patient volume at some locations leads to consultations that feel transactional</span> rather than diagnostic.</li></ol>"
+    }
+  };
+
+  function getR(g, s) { return (H[g] && H[g][s]) ? H[g][s] : H["default"][s]; }
+
+  window.openPrsp = function(promptText, group) {
+    document.getElementById("prsp-gpt-q").textContent = promptText;
+    document.getElementById("prsp-gem-q").textContent = promptText;
+    document.getElementById("prsp-pplx-q").textContent = promptText;
+    document.getElementById("prsp-gpt-resp").innerHTML    = getR(group, "chatgpt");
+    document.getElementById("prsp-gem-resp").innerHTML    = getR(group, "gemini");
+    document.getElementById("prsp-pplx-resp").innerHTML   = getR(group, "perplexity");
+    document.getElementById("prsp-claude-q").textContent  = promptText;
+    document.getElementById("prsp-claude-resp").innerHTML = getR(group, "claude");
+    document.getElementById("prsp-panel").classList.add("open");
+    document.getElementById("prsp-overlay").classList.add("open");
+    switchPrspTab("chatgpt");
+  };
+
+  window.closePrsp = function() {
+    document.getElementById("prsp-panel").classList.remove("open");
+    document.getElementById("prsp-overlay").classList.remove("open");
+  };
+
+  window.switchPrspTab = function(site) {
+    document.querySelectorAll(".prsp-tab").forEach(function(t){ t.classList.remove("active"); });
+    document.querySelectorAll(".prsp-pane").forEach(function(p){ p.classList.remove("active"); });
+    var tabs = document.querySelectorAll(".prsp-tab");
+    var idx  = {chatgpt:0, gemini:1, perplexity:2, claude:3};
+    if (tabs[idx[site]]) tabs[idx[site]].classList.add("active");
+    var pane = document.getElementById("prsp-pane-" + site);
+    if (pane) pane.classList.add("active");
+    document.getElementById("prsp-body").scrollTop = 0;
+  };
+
+  document.addEventListener("click", function(e) {
+    var cell = e.target.closest("td.pt-v2-prompt");
+    if (!cell || !cell.closest("#snt-prompt-table")) return;
+    var row = cell.closest("tr");
+    openPrsp(cell.textContent.trim(), row ? row.getAttribute("data-group") || "" : "");
+  });
+})();
+</script>
 </body>
 </html>
