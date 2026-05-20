@@ -3418,7 +3418,7 @@ textarea.ap-input{
           <thead>
             <tr>
               <th><span class="pt-th-inner">Name<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
-              <th><span class="pt-th-inner">Prompts tagged<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              <th><span class="pt-th-inner">Tagged prompts<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
             </tr>
           </thead>
           <tbody>
@@ -7201,9 +7201,9 @@ function addTagPrompt(text) {
   div.innerHTML = `<span>${text}</span><button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
   list.appendChild(div);
   _fixTagPromptBorders(list);
-  // Clear search
   document.getElementById('tag-prompt-search-input').value = '';
   document.getElementById('tag-prompt-search-results').style.display = 'none';
+  showToast('Tag added to prompt');
 }
 
 function removeTagPrompt(btn) {
@@ -7211,6 +7211,7 @@ function removeTagPrompt(btn) {
   const list = item.parentElement;
   item.remove();
   _fixTagPromptBorders(list);
+  showToast('Tag removed from prompt');
 }
 
 function _fixTagPromptBorders(list) {
@@ -7223,7 +7224,8 @@ function _fixTagPromptBorders(list) {
 function saveTag() {
   const name = document.getElementById('tag-name-input').value.trim();
   if (!name) return;
-  if (_tagEditRow) {
+  const isEdit = !!_tagEditRow;
+  if (isEdit) {
     _tagEditRow.querySelector('td').textContent = name;
   } else {
     const tbody = document.querySelector('#tags-table tbody');
@@ -7231,14 +7233,15 @@ function saveTag() {
     tr.className = 'pt-data-row';
     tr.innerHTML =
       `<td style="font-size:14px;color:rgb(33,33,33)">${name}</td>` +
-      `<td class="pt-monthly-cell pt-action-cell">0<span class="pt-row-hover-actions">` +
-      `<button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button>` +
-      `<button class="pt-row-icon-btn"><span class="material-symbols-rounded">more_vert</span></button>` +
-      `</span></td>`;
+      `<td class="pt-monthly-cell pt-action-cell" style="position:relative">` +
+      `<span class="tag-count-trigger" onclick="toggleTagPopover(this)" style="display:inline-flex;align-items:center;gap:3px;cursor:pointer">0 <span class="material-symbols-rounded" style="font-size:15px;color:rgb(85,85,85)">expand_more</span></span>` +
+      `<div class="tag-prompts-popover" style="display:none;z-index:300;background:#fff;border:1px solid #eaeaea;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);min-width:280px;padding:8px 16px;font-size:13px;color:rgb(143,143,143)">No prompts tagged yet</div>` +
+      `<span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openTagEditPanel(this)"><span class="material-symbols-rounded">edit</span></button><button class="pt-row-icon-btn" style="color:#e53935" onclick="openDeleteTagModal(this)"><span class="material-symbols-rounded">delete</span></button></span>` +
+      `</td>`;
     tbody.appendChild(tr);
   }
   closeTagPanel();
-  showToast('Tag changes saved');
+  showToast(isEdit ? 'Tag updated' : 'Tag created');
 }
 
 function showBrandkitTable() {
