@@ -8452,29 +8452,52 @@ function restoreColDefault() {
 function saveColCustomizer() {
   const table = document.getElementById('pt-v2-table');
   if (!table) { closeColCustomizer(); return; }
-  const ths = table.querySelectorAll('thead th');
+
+  // Snapshot current th elements and their original indices before any DOM changes
+  const thsSnapshot = [...table.querySelectorAll('thead th')];
+
+  // Build map: col.label → original column index (0-based)
+  const labelToOrigIdx = {};
+  thsSnapshot.forEach((th, i) => {
+    labelToOrigIdx[th.textContent.trim().slice(0, 20)] = i;
+  });
+
+  // Build newOrder: array of original indices in the desired new order
+  const newOrder = _colState.map(col => {
+    for (const [key, idx] of Object.entries(labelToOrigIdx)) {
+      if (key.startsWith(col.label.slice(0, 8)) || col.label.slice(0, 8).startsWith(key.slice(0, 6))) return idx;
+    }
+    return -1;
+  }).filter(i => i >= 0);
+
+  // Reorder thead ths
+  const thead = table.querySelector('thead tr');
+  newOrder.forEach(origIdx => thead.appendChild(thsSnapshot[origIdx]));
+
+  // Reorder colgroup cols
   const colgroup = table.querySelector('colgroup');
-  const cols = colgroup ? colgroup.querySelectorAll('col') : [];
-  // Map colState order/visibility to thead th index order
+  if (colgroup) {
+    const colsSnap = [...colgroup.querySelectorAll('col')];
+    newOrder.forEach(origIdx => colgroup.appendChild(colsSnap[origIdx]));
+  }
+
+  // Reorder tds in every tbody row
+  table.querySelectorAll('tbody tr').forEach(row => {
+    const tds = [...row.querySelectorAll('td')];
+    if (tds.length !== newOrder.length) return; // skip malformed rows
+    newOrder.forEach(origIdx => row.appendChild(tds[origIdx]));
+  });
+
+  // Apply visibility
   _colState.forEach((col, newIdx) => {
-    // Find th by label text match
-    ths.forEach((th, oldIdx) => {
-      const text = th.textContent.trim();
-      if (text.startsWith(col.label.slice(0,8))) {
-        th.style.display = col.enabled ? '' : 'none';
-        if (cols[oldIdx]) cols[oldIdx].style.display = col.enabled ? '' : 'none';
-      }
+    const th = thead.querySelectorAll('th')[newIdx];
+    if (th) th.style.display = col.enabled ? '' : 'none';
+    table.querySelectorAll('tbody tr').forEach(row => {
+      const td = row.querySelectorAll('td')[newIdx];
+      if (td) td.style.display = col.enabled ? '' : 'none';
     });
   });
-  // Reorder columns in thead
-  const thead = table.querySelector('thead tr');
-  const orderedThs = [];
-  _colState.forEach(col => {
-    for (const th of ths) {
-      if (th.textContent.trim().startsWith(col.label.slice(0,8))) { orderedThs.push(th); break; }
-    }
-  });
-  orderedThs.forEach(th => thead.appendChild(th));
+
   closeColCustomizer();
 }
 
