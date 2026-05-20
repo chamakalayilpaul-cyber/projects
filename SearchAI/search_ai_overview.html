@@ -887,9 +887,20 @@ body{
 .snt-metrics-row{display:flex;align-items:flex-start;gap:0}
 .snt-metric-item{flex:1;padding:0 16px 0 0;margin-right:16px;display:flex;flex-direction:column;justify-content:space-between;min-height:64px}
 .snt-metric-item:last-child{margin-right:0;padding-right:0}
-.snt-metric-val{font-size:36px;font-weight:400;color:rgb(33,33,33);line-height:1;margin-bottom:6px}
+.snt-metric-val{font-size:36px;font-weight:400;color:rgb(33,33,33);line-height:1;margin-bottom:6px;height:40px;display:flex;align-items:flex-end}
 .snt-metric-label{font-size:14px;font-weight:400;color:rgb(85,85,85);display:flex;align-items:flex-start;gap:6px}
 .snt-metric-label svg{flex-shrink:0;margin-top:2px}
+.snt-msdrop{position:fixed;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.13);z-index:9999;min-width:240px;display:none}
+.snt-msdrop-search{padding:10px 12px;border-bottom:1px solid #f0f0f0}
+.snt-msdrop-search input{width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:7px 10px;font-size:13px;outline:none;font-family:inherit;box-sizing:border-box}
+.snt-msdrop-search input:focus{border-color:#1976d2}
+.snt-msdrop-list{max-height:220px;overflow-y:auto;padding:4px 0}
+.snt-msdrop-item{display:flex;align-items:center;gap:8px;padding:7px 12px;font-size:13px;cursor:pointer;color:rgb(33,33,33)}
+.snt-msdrop-item:hover{background:#f5f7fa}
+.snt-msdrop-item input[type=checkbox]{width:16px;height:16px;accent-color:#1976d2;cursor:pointer;flex-shrink:0}
+.snt-msdrop-footer{padding:10px 12px;border-top:1px solid #f0f0f0;display:flex;justify-content:flex-end;gap:8px}
+.snt-msdrop-cancel{background:none;border:1px solid #e0e0e0;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;font-family:inherit;color:rgb(85,85,85)}
+.snt-msdrop-apply{background:#1976d2;border:none;border-radius:6px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:inherit;color:#fff;font-weight:500}
 .snt-you{display:inline-flex;align-items:center;justify-content:center;background:#00695c;color:#fff;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;white-space:nowrap}
 .snt-ci{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:11px;font-weight:600;flex-shrink:0}
 .snt-ci-sb{background:#bbdefb;color:#0d47a1}.snt-ci-hd{background:#c8e6c9;color:#1b5e20}.snt-ci-pd{background:#c5cae9;color:#1a237e}
@@ -3537,7 +3548,7 @@ textarea.ap-input{
             <div class="snt-summary-title">Summary</div>
             <div class="snt-summary-sub">Sentiment scores across AI sites for all locations</div>
           </div>
-          <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          
         </div>
         <div class="snt-metrics-row">
           <div class="snt-metric-item">
@@ -3561,10 +3572,6 @@ textarea.ap-input{
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-google-aim"/></svg>Google AI Mode</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">74%</div>
-            <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-google-aio"/></svg>Google AI Overview</div>
-          </div>
-          <div class="snt-metric-item snt-ai">
             <div class="snt-metric-val">71%</div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-grok"/></svg>Grok</div>
           </div>
@@ -3584,8 +3591,8 @@ textarea.ap-input{
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto;height:32px">Last 6 months<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
-            <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">tune</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+            
+            
           </div>
         </div>
         <!-- KPI values -->
@@ -3637,7 +3644,7 @@ textarea.ap-input{
           </div>
           <div style="display:flex;gap:8px;align-items:center">
             <button class="icon-btn-stroke" style="gap:6px;padding:0 10px;font-size:13px;width:auto;height:32px">June 2025<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
-            <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded">more_vert</span></button>
+            
           </div>
         </div>
         <div class="snt-sw-tabs">
@@ -3687,11 +3694,11 @@ textarea.ap-input{
       <div class="snt-card" style="padding:0;overflow:hidden">
         <div class="snt-card-hdr" style="padding:20px 20px 0">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span class="snt-card-title">Sentiment rank across themes and prompts for <button style="background:none;border:none;padding:0;color:#1976d2;font-size:16px;font-weight:400;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:1px">All locations<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle">expand_more</span></button></span>
+            <span class="snt-card-title">Sentiment rank across themes and prompts for <button id="snt-trig-locations" onclick="openSntDrop(this,'locations')" style="background:none;border:none;padding:0;color:#1976d2;font-size:16px;font-weight:400;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:1px">All locations<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle">expand_more</span></button></span>
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+            
           </div>
         </div>
         <!-- AI site tabs -->
@@ -3792,7 +3799,7 @@ textarea.ap-input{
           <span class="snt-card-title">Sentiment by theme and prompt</span>
           <div style="display:flex;gap:6px">
             <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+            
           </div>
         </div>
         <div class="pt-table-wrap" style="border:none;border-radius:0;margin-top:8px">
@@ -3919,11 +3926,11 @@ textarea.ap-input{
       <div class="snt-card" style="padding:0;overflow:hidden">
         <div class="snt-card-hdr" style="padding:20px 20px 0">
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span class="snt-card-title">Sentiment rank across locations for <button style="background:none;border:none;padding:0;color:#1976d2;font-size:16px;font-weight:400;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:1px">All themes<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle">expand_more</span></button> <button style="background:none;border:none;padding:0;color:#1976d2;font-size:16px;font-weight:400;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:1px">All prompts<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle">expand_more</span></button></span>
+            <span class="snt-card-title">Sentiment rank across locations for <button id="snt-trig-themes" onclick="openSntDrop(this,'themes')" style="background:none;border:none;padding:0;color:#1976d2;font-size:16px;font-weight:400;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:1px">All themes<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle">expand_more</span></button> <button id="snt-trig-prompts" onclick="openSntDrop(this,'prompts')" style="background:none;border:none;padding:0;color:#1976d2;font-size:16px;font-weight:400;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:1px">All prompts<span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle">expand_more</span></button></span>
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+            
           </div>
         </div>
         <div class="snt-sw-tabs" style="padding:0 20px;margin-top:12px">
@@ -3974,7 +3981,7 @@ textarea.ap-input{
           <div style="display:flex;gap:6px">
             <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
             <button class="icon-btn"><span class="material-symbols-rounded">open_in_new</span></button>
-            <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+            
           </div>
         </div>
         <table class="pt-table snt-loc-table">
@@ -4006,7 +4013,7 @@ textarea.ap-input{
       <div class="snt-card">
         <div class="snt-card-hdr">
           <span class="snt-card-title">What is the sentiment and areas for improvement across AI sites</span>
-          <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+          
         </div>
         <table class="pt-table snt-table">
           <thead>
@@ -9292,6 +9299,126 @@ function copyField(btn) {
     openPrsp(cell.textContent.trim(), row ? row.getAttribute("data-group") || "" : "");
   });
 })();
+
+/* ── Sentiment multi-select dropdowns ── */
+const _sntDropData = {
+  locations: ['120 Charleston','291 Athens','0224 Buford','584 Madison','386 Modesto','119 Santee - Albertsons','163 Amarillo','447 Tucson - Grant','302 Memphis - Poplar','518 Columbus - Polaris'],
+  themes: ['Invisalign','Teeth whitening','Dental implants','Emergency dental care','Root canal treatment','Pediatric dentistry','Dental financing'],
+  prompts: ['What are the best-rated Invisalign providers near me?','Can you recommend Invisalign specialists for complex bite corrections?','How much does Invisalign cost with insurance coverage?','Best teeth whitening dentist near me with same-day appointments','Professional teeth whitening vs at-home kits which is better','How much do dental implants cost and what affects pricing?','Best dental implant specialists near me','Where can I get emergency dental care near me today?','24-hour emergency dentist open on weekends','How to handle a knocked-out tooth before seeing a dentist']
+};
+
+function openSntDrop(btn, type) {
+  const drop = document.getElementById('snt-drop-' + type);
+  if (!drop) return;
+  document.querySelectorAll('.snt-msdrop').forEach(d => { if (d !== drop) d.style.display = 'none'; });
+  if (drop.style.display === 'block') { drop.style.display = 'none'; return; }
+  const r = btn.getBoundingClientRect();
+  drop.style.left = Math.min(r.left, window.innerWidth - 260) + 'px';
+  drop.style.top = (r.bottom + 6) + 'px';
+  drop.style.display = 'block';
+  const searchEl = drop.querySelector('.snt-msdrop-search input');
+  if (searchEl) { searchEl.value = ''; filterSntDrop(searchEl, type); searchEl.focus(); }
+  setTimeout(() => {
+    document.addEventListener('click', function _c(e) {
+      if (!drop.contains(e.target) && !btn.contains(e.target)) {
+        drop.style.display = 'none';
+        document.removeEventListener('click', _c);
+      }
+    });
+  }, 10);
+}
+
+function applySntDrop(type) {
+  const drop = document.getElementById('snt-drop-' + type);
+  const all = _sntDropData[type];
+  const checked = [...drop.querySelectorAll('input[type=checkbox].snt-drop-item-cb:checked')].map(cb => cb.value);
+  const btn = document.getElementById('snt-trig-' + type);
+  if (btn) {
+    const label = (checked.length === 0 || checked.length === all.length)
+      ? 'All ' + type
+      : checked.length + ' ' + type;
+    btn.childNodes[0].textContent = label;
+  }
+  drop.style.display = 'none';
+}
+
+function filterSntDrop(input, type) {
+  const q = input.value.toLowerCase();
+  input.closest('.snt-msdrop').querySelectorAll('.snt-msdrop-item').forEach(item => {
+    item.style.display = item.querySelector('span').textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+function toggleSntDropAll(chk, type) {
+  const drop = document.getElementById('snt-drop-' + type);
+  drop.querySelectorAll('input.snt-drop-item-cb').forEach(cb => cb.checked = chk.checked);
+}
 </script>
+
+<!-- Sentiment multi-select dropdown: Locations -->
+<div id="snt-drop-locations" class="snt-msdrop">
+  <div class="snt-msdrop-search"><input type="text" placeholder="Search locations..." oninput="filterSntDrop(this,'locations')"></div>
+  <div class="snt-msdrop-list">
+    <label class="snt-msdrop-item"><input type="checkbox" onchange="toggleSntDropAll(this,'locations')" checked id="snt-drop-locations-all"><span style="font-weight:500">Select all</span></label>
+    <div style="height:1px;background:#f0f0f0;margin:2px 0"></div>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="120 Charleston" checked><span>120 Charleston</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="291 Athens" checked><span>291 Athens</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="0224 Buford" checked><span>0224 Buford</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="584 Madison" checked><span>584 Madison</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="386 Modesto" checked><span>386 Modesto</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="119 Santee - Albertsons" checked><span>119 Santee - Albertsons</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="163 Amarillo" checked><span>163 Amarillo</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="447 Tucson - Grant" checked><span>447 Tucson - Grant</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="302 Memphis - Poplar" checked><span>302 Memphis - Poplar</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="518 Columbus - Polaris" checked><span>518 Columbus - Polaris</span></label>
+  </div>
+  <div class="snt-msdrop-footer">
+    <button class="snt-msdrop-cancel" onclick="document.getElementById('snt-drop-locations').style.display='none'">Cancel</button>
+    <button class="snt-msdrop-apply" onclick="applySntDrop('locations')">Apply</button>
+  </div>
+</div>
+
+<!-- Sentiment multi-select dropdown: Themes -->
+<div id="snt-drop-themes" class="snt-msdrop">
+  <div class="snt-msdrop-search"><input type="text" placeholder="Search themes..." oninput="filterSntDrop(this,'themes')"></div>
+  <div class="snt-msdrop-list">
+    <label class="snt-msdrop-item"><input type="checkbox" onchange="toggleSntDropAll(this,'themes')" checked><span style="font-weight:500">Select all</span></label>
+    <div style="height:1px;background:#f0f0f0;margin:2px 0"></div>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Invisalign" checked><span>Invisalign</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Teeth whitening" checked><span>Teeth whitening</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Dental implants" checked><span>Dental implants</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Emergency dental care" checked><span>Emergency dental care</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Root canal treatment" checked><span>Root canal treatment</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Pediatric dentistry" checked><span>Pediatric dentistry</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="Dental financing" checked><span>Dental financing</span></label>
+  </div>
+  <div class="snt-msdrop-footer">
+    <button class="snt-msdrop-cancel" onclick="document.getElementById('snt-drop-themes').style.display='none'">Cancel</button>
+    <button class="snt-msdrop-apply" onclick="applySntDrop('themes')">Apply</button>
+  </div>
+</div>
+
+<!-- Sentiment multi-select dropdown: Prompts -->
+<div id="snt-drop-prompts" class="snt-msdrop">
+  <div class="snt-msdrop-search"><input type="text" placeholder="Search prompts..." oninput="filterSntDrop(this,'prompts')"></div>
+  <div class="snt-msdrop-list">
+    <label class="snt-msdrop-item"><input type="checkbox" onchange="toggleSntDropAll(this,'prompts')" checked><span style="font-weight:500">Select all</span></label>
+    <div style="height:1px;background:#f0f0f0;margin:2px 0"></div>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p1" checked><span>What are the best-rated Invisalign providers near me?</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p2" checked><span>Can you recommend Invisalign specialists for complex bite corrections?</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p3" checked><span>How much does Invisalign cost with insurance coverage?</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p4" checked><span>Best teeth whitening dentist near me with same-day appointments</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p5" checked><span>Professional teeth whitening vs at-home kits which is better</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p6" checked><span>How much do dental implants cost and what affects pricing?</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p7" checked><span>Best dental implant specialists near me</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p8" checked><span>Where can I get emergency dental care near me today?</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p9" checked><span>24-hour emergency dentist open on weekends</span></label>
+    <label class="snt-msdrop-item"><input type="checkbox" class="snt-drop-item-cb" value="p10" checked><span>How to handle a knocked-out tooth before seeing a dentist</span></label>
+  </div>
+  <div class="snt-msdrop-footer">
+    <button class="snt-msdrop-cancel" onclick="document.getElementById('snt-drop-prompts').style.display='none'">Cancel</button>
+    <button class="snt-msdrop-apply" onclick="applySntDrop('prompts')">Apply</button>
+  </div>
+</div>
 </body>
 </html>
