@@ -5004,7 +5004,7 @@ textarea.ap-input{
     </div>
     <div class="ap-field" style="margin-top:4px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <label style="flex:1;font-size:14px;font-weight:400;color:#212121">Tagged prompts</label>
+        <label id="tag-prompts-header-label" style="flex:1;font-size:14px;font-weight:400;color:#212121">Tagged prompts</label>
         <!-- Collapsed state: icon button -->
         <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
           <span class="material-symbols-rounded" style="font-size:18px">search</span>
@@ -5225,7 +5225,6 @@ textarea.ap-input{
           <label class="ap-ms-opt"><input type="checkbox" value="Clear aligners" onchange="refreshApMs('ap-tag-ms','ap-tag-label','Select tags')"><span>Clear aligners</span></label>
           <div id="ap-tag-create-btn" style="display:none;padding:8px 12px;border-top:1px solid #f0f0f0">
             <button onclick="createAndAddTag()" style="background:none;border:none;cursor:pointer;font-size:13px;color:#1976d2;padding:0;display:flex;align-items:center;gap:4px">
-              <span class="material-symbols-rounded" style="font-size:15px">add</span>
               <span id="ap-tag-create-label">Create tag</span>
             </button>
           </div>
@@ -7100,15 +7099,19 @@ function toggleTagPromptSearch() {
   const expanded = document.getElementById('tag-search-expanded');
   const inp = document.getElementById('tag-prompt-search-input');
   const results = document.getElementById('tag-prompt-search-results');
+  const headerLabel = document.getElementById('tag-prompts-header-label');
   const isOpen = expanded.style.display === 'flex';
   if (isOpen) {
     expanded.style.display = 'none';
     btn.style.display = '';
     results.style.display = 'none';
     inp.value = '';
+    if (headerLabel) headerLabel.textContent = 'Tagged prompts';
   } else {
     btn.style.display = 'none';
     expanded.style.display = 'flex';
+    if (headerLabel) headerLabel.textContent = 'Search prompts';
+    _renderTagSearchResults('');
     setTimeout(() => inp.focus(), 50);
   }
 }
@@ -7128,7 +7131,7 @@ const _tagPromptPool = [
 function _renderTagSearchResults(q) {
   const container = document.getElementById('tag-prompt-search-results');
   const lower = q.toLowerCase();
-  const matched = q.trim() ? _tagPromptPool.filter(p => p.toLowerCase().includes(lower)) : [];
+  const matched = q.trim() ? _tagPromptPool.filter(p => p.toLowerCase().includes(lower)) : _tagPromptPool;
   if (!matched.length) { container.style.display = 'none'; return; }
   container.innerHTML = matched.map(p => `
     <div class="tag-prompt-result">
@@ -7142,6 +7145,8 @@ function _renderTagSearchResults(q) {
 
 function filterTagPromptSearch(q) {
   _renderTagSearchResults(q);
+  const headerLabel = document.getElementById('tag-prompts-header-label');
+  if (headerLabel) headerLabel.textContent = q.trim() ? 'Search prompts' : 'Tagged prompts';
 }
 
 function showTagAddTip(e) {
