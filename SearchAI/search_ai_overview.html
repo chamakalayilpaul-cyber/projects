@@ -932,7 +932,7 @@ body{
 .snt-kpi-label{font-size:14px;font-weight:400;color:rgb(85,85,85)}
 .snt-card{
   background:#fff;border:1px solid #eaeaea;border-radius:8px;
-  padding:20px 24px;margin-bottom:16px;
+  padding:20px 24px;margin-bottom:16px;min-height:512px;
 }
 .snt-card-hdr{
   display:flex;align-items:flex-start;justify-content:space-between;
@@ -981,7 +981,7 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .snt-loc-table .pt-data-row{background:#fff}
 .snt-loc-table .pt-data-row:hover td{background:rgb(242,244,247)}
 .snt-neutral{font-size:14px;font-weight:400;color:#757575}
-.snt-prompt-scroll{max-height:340px;overflow-y:auto}
+.snt-prompt-scroll{overflow-y:auto}
 .snt-prompt-scroll::-webkit-scrollbar{width:4px}
 .snt-prompt-scroll::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
 /* ── PROMPT RESPONSE SIDE PANEL ── */
@@ -1127,6 +1127,10 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 #tags-table tbody tr:hover td{background:rgb(242,244,247)}
 #tags-table thead tr{border-bottom:none;background:transparent}
 #tags-table th{border-bottom:none;background:transparent}
+.tags-empty-state{display:none;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px;text-align:center;gap:12px}
+.tags-empty-state.visible{display:flex}
+.tags-empty-title{font-size:16px;font-weight:500;color:rgb(33,33,33)}
+.tags-empty-sub{font-size:14px;color:rgb(143,143,143);max-width:320px;line-height:1.5}
 #pbk-table .pt-table tbody tr:hover td{background:#fff}
 .pbk-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .pbk-label{font-size:14px;color:rgb(33,33,33);white-space:nowrap}
@@ -2333,7 +2337,6 @@ textarea.ap-input{
       <span style="font-size:13px;color:rgb(143,143,143);margin-right:4px">Updated on May 04, 2026</span>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
       <button class="icon-btn-stroke" id="hdr-explore-more-btn" onclick="toggleHdrPopover(event)"><span class="material-symbols-rounded">more_vert</span></button>
-      <button class="icon-btn-stroke" onclick="toggleFilterPanel('explore')"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
       <div class="art-score">
@@ -3543,6 +3546,20 @@ textarea.ap-input{
           </tbody>
         </table>
       </div>
+      <!-- Tags empty state -->
+      <div class="tags-empty-state" id="tags-empty-state">
+        <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8.0628" cy="33.9388" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+          <circle cx="33.7747" cy="33.9388" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+          <circle cx="8.0628" cy="8.0628" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+          <circle cx="34.3138" cy="8.0628" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
+        </svg>
+        <div class="tags-empty-title">No tags yet</div>
+        <div class="tags-empty-sub">Tags keep your prompts organized and easy to find later.</div>
+        <button class="btn-filled" onclick="openAddTagPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px;margin-top:4px">
+          <span class="material-symbols-rounded" style="font-size:16px">add</span>Create tag
+        </button>
+      </div>
     </div>
 
     <!-- ══ SENTIMENT VIEW ══ -->
@@ -3590,7 +3607,7 @@ textarea.ap-input{
       </div>
 
       <!-- Sentiment score over time -->
-      <div class="snt-card">
+      <div class="snt-card" style="display:flex;flex-direction:column">
         <div class="snt-card-hdr">
           <div style="display:flex;align-items:center;gap:6px">
             <span class="snt-card-title">Sentiment score over time</span>
@@ -3598,8 +3615,6 @@ textarea.ap-input{
           </div>
           <div style="display:flex;gap:6px;align-items:center">
             <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto;height:32px">Last 6 months<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
-            
-            
           </div>
         </div>
         <!-- KPI values -->
@@ -3613,25 +3628,27 @@ textarea.ap-input{
             <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">Avg competitor sentiment</div>
           </div>
         </div>
-        <!-- Chart -->
-        <div style="position:relative;padding-left:40px">
-          <span style="position:absolute;left:0;top:-6px;width:36px;text-align:right;font-size:11px;color:#9e9e9e">90%</span>
-          <span style="position:absolute;left:0;top:34px;width:36px;text-align:right;font-size:11px;color:#9e9e9e">85%</span>
-          <span style="position:absolute;left:0;top:74px;width:36px;text-align:right;font-size:11px;color:#9e9e9e">80%</span>
-          <span style="position:absolute;left:0;top:114px;width:36px;text-align:right;font-size:11px;color:#9e9e9e">75%</span>
-          <span style="position:absolute;left:0;top:154px;width:36px;text-align:right;font-size:11px;color:#9e9e9e">70%</span>
-          <svg width="100%" height="160" viewBox="0 0 860 160" preserveAspectRatio="none" style="display:block;overflow:visible">
-            <line x1="0" y1="0" x2="860" y2="0" stroke="#f0f0f0" stroke-width="1"/>
-            <line x1="0" y1="40" x2="860" y2="40" stroke="#f0f0f0" stroke-width="1"/>
-            <line x1="0" y1="80" x2="860" y2="80" stroke="#f0f0f0" stroke-width="1"/>
-            <line x1="0" y1="120" x2="860" y2="120" stroke="#f0f0f0" stroke-width="1"/>
-            <line x1="0" y1="160" x2="860" y2="160" stroke="#f0f0f0" stroke-width="1"/>
-            <!-- Avg competitor sentiment (gray): Dec:74 Jan:73 Feb:75 Mar:76 Apr:75 May:76.4 -->
-            <path d="M0,128 C57,128 115,136 172,136 C229,136 287,120 344,120 C401,120 459,112 516,112 C573,112 631,120 688,120 C745,120 803,109 860,109" stroke="#bdbdbd" stroke-width="2" fill="none"/>
-            <!-- Sentiment score (blue): Dec:76 Jan:78 Feb:80 Mar:81 Apr:83 May:82.3 -->
-            <path d="M0,112 C57,112 115,96 172,96 C229,96 287,80 344,80 C401,80 459,72 516,72 C573,72 631,56 688,56 C745,56 803,62 860,62" stroke="#1976d2" stroke-width="2.5" fill="none"/>
-          </svg>
-          <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:#9e9e9e">
+        <!-- Chart — grows to fill remaining card height -->
+        <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+          <div style="flex:1;position:relative;padding-left:40px;min-height:0">
+            <span style="position:absolute;left:0;top:0%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">90%</span>
+            <span style="position:absolute;left:0;top:25%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">85%</span>
+            <span style="position:absolute;left:0;top:50%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">80%</span>
+            <span style="position:absolute;left:0;top:75%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">75%</span>
+            <span style="position:absolute;left:0;top:100%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">70%</span>
+            <svg width="100%" height="100%" viewBox="0 0 860 160" preserveAspectRatio="none" style="display:block;overflow:visible;position:absolute;top:0;left:40px;right:0;width:calc(100% - 40px)">
+              <line x1="0" y1="0" x2="860" y2="0" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="40" x2="860" y2="40" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="80" x2="860" y2="80" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="120" x2="860" y2="120" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="160" x2="860" y2="160" stroke="#f0f0f0" stroke-width="1"/>
+              <!-- Avg competitor sentiment (gray) -->
+              <path d="M0,128 C57,128 115,136 172,136 C229,136 287,120 344,120 C401,120 459,112 516,112 C573,112 631,120 688,120 C745,120 803,109 860,109" stroke="#bdbdbd" stroke-width="2" fill="none"/>
+              <!-- Sentiment score (blue) -->
+              <path d="M0,112 C57,112 115,96 172,96 C229,96 287,80 344,80 C401,80 459,72 516,72 C573,72 631,56 688,56 C745,56 803,62 860,62" stroke="#1976d2" stroke-width="2.5" fill="none"/>
+            </svg>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding-left:40px;margin-top:8px;font-size:11px;color:#9e9e9e">
             <span>Dec 2025</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May 2026</span>
           </div>
         </div>
@@ -4333,7 +4350,7 @@ textarea.ap-input{
       <div class="et-card" style="padding:20px 0">
         <div style="padding:0 24px 12px;display:flex;align-items:flex-start;justify-content:space-between">
           <div>
-            <div class="et-card-title">What are the most searched themes for <span>all locations ▾</span></div>
+            <div class="et-card-title">What are the most searched themes for all locations</div>
             <div class="et-card-sub" style="margin-bottom:0">Start tracking the right themes for each location</div>
           </div>
           <div class="et-card-hdr-right">
@@ -4821,13 +4838,14 @@ textarea.ap-input{
       <!-- Info banner (hidden until changes detected) -->
       <div id="report-info-banner" class="tp-banner" style="display:none">
         <span class="material-symbols-rounded">info</span>
-        <span style="flex:1">Reports are generated in configured cycles. Any updates might impact trend reports &amp; prompt consumed. Any configuration changes apply from the next update.</span>
+        <span style="flex:1">Reports are generated in scheduled cycles. Changes to prompts, tracking, or AI sites may affect trends and prompt usage. Updates apply from the next reporting cycle.</span>
       </div>
 
       <!-- Card: Prompt tracking report frequency -->
       <div class="card">
         <div style="padding:24px 24px 0">
-          <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Prompt tracking report frequency</div>
+          <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">Prompt tracking</div>
+          <div style="font-size:13px;color:rgb(143,143,143)">Choose which prompt types to include in reporting cycles</div>
         </div>
         
 
@@ -4876,6 +4894,7 @@ textarea.ap-input{
       <div class="card">
         <div style="padding:20px 24px 24px">
           <div style="font-size:15px;font-weight:400;color:#212121;margin-bottom:4px">AI site tracking</div>
+          <div style="font-size:13px;color:rgb(143,143,143)">Choose which AI sites to include in tracking reports</div>
         </div>
 
         <div style="padding:0 24px 24px;display:flex;flex-direction:column;gap:16px">
@@ -6045,6 +6064,30 @@ textarea.ap-input{
   </div>
 </div>
 
+<!-- AI site update confirmation modal -->
+<div class="modal-overlay" id="aiSiteUpdateModal" onclick="if(event.target===this)closeAiSiteUpdateModal()">
+  <div class="modal" style="max-width:480px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">AI site tracking changes</span>
+      <button class="modal-close" onclick="closeAiSiteUpdateModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div style="font-size:14px;color:#212121;line-height:1.6;margin:16px 0 28px">
+      <p style="margin:0 0 12px">The following changes will take effect after you save:</p>
+      <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+        <li>Changes to AI site tracking will apply from the next reporting cycle.</li>
+        <li>Disabled AI sites will continue to appear in current cycle reports and won't be available when creating or editing prompts.</li>
+        <li>Disabled AI sites will be removed from reports starting in the next cycle.</li>
+      </ul>
+    </div>
+    <div class="modal-footer" style="border-top:none;margin-top:0;padding-top:0">
+      <button class="btn-cancel" onclick="closeAiSiteUpdateModal()">Cancel</button>
+      <button class="btn-delete-confirm" style="background:#1976d2" onclick="confirmSaveReportSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ ADD BRAND SIDE PANEL ══ -->
 <div class="ap-overlay" id="nm-add-overlay" onclick="closeAddBrandPanel()"></div>
 <div class="ap-panel" id="nm-add-panel">
@@ -7207,9 +7250,30 @@ function checkReportChanges() {
 }
 
 function saveReportSettings() {
+  // Check if any AI site tracking changed — show confirmation modal if so
+  const saved = getReportSavedState();
+  const current = getReportCurrentState();
+  const aiIds = ['ai-chatgpt','ai-gemini','ai-perplexity','ai-google-aio','ai-google-aim','ai-claude'];
+  const aiChanged = aiIds.some(id => current[id] !== saved[id]);
+  if (aiChanged) {
+    document.getElementById('aiSiteUpdateModal').classList.add('open');
+    return;
+  }
+  _applyReportSettingsSave();
+}
+
+function confirmSaveReportSettings() {
+  document.getElementById('aiSiteUpdateModal').classList.remove('open');
+  _applyReportSettingsSave();
+}
+
+function closeAiSiteUpdateModal() {
+  document.getElementById('aiSiteUpdateModal').classList.remove('open');
+}
+
+function _applyReportSettingsSave() {
   const current = getReportCurrentState();
   localStorage.setItem('reportSettings', JSON.stringify(current));
-  // Clear all icons and hide banner
   ['loc-toggle-icon','brand-toggle-icon','loc-freq-icon',
    'ai-chatgpt-icon','ai-gemini-icon','ai-perplexity-icon','ai-google-aio-icon','ai-google-aim-icon','ai-claude-icon'
   ].forEach(id => { const el = document.getElementById(id); if (el) { el.style.display='none'; el.innerHTML=''; }});
@@ -7519,6 +7583,12 @@ function executeDeleteTag() {
   if (_deleteTagRow) _deleteTagRow.remove();
   document.getElementById('deleteTagModal').classList.remove('open');
   _deleteTagRow = null;
+  // Show empty state if no rows remain
+  const remaining = document.querySelectorAll('#tags-table tbody .pt-data-row');
+  const isEmpty = remaining.length === 0;
+  document.getElementById('tags-empty-state').classList.toggle('visible', isEmpty);
+  document.querySelector('#tags-table').closest('.pt-table-wrap').style.display = isEmpty ? 'none' : '';
+  document.getElementById('hdr-tags-btns').style.display = isEmpty ? 'none' : 'flex';
 }
 
 function openAddTagPanel() {
@@ -7526,6 +7596,17 @@ function openAddTagPanel() {
   document.querySelector('#tag-panel .ap-header-title').textContent = 'Add tag';
   document.getElementById('tag-save-btn').textContent = 'Add';
   document.getElementById('tag-name-input').value = '';
+  // New tag has no attached prompts — clear the list
+  document.getElementById('tag-prompt-list').innerHTML = '';
+  // Reset search state
+  const expanded = document.getElementById('tag-search-expanded');
+  const btn = document.getElementById('tag-prompt-search-btn');
+  const results = document.getElementById('tag-prompt-search-results');
+  const headerLabel = document.getElementById('tag-prompts-header-label');
+  if (expanded) expanded.style.display = 'none';
+  if (btn) btn.style.display = '';
+  if (results) results.style.display = 'none';
+  if (headerLabel) headerLabel.textContent = 'Tagged prompts';
   document.getElementById('tag-overlay').classList.add('open');
   document.getElementById('tag-panel').classList.add('open');
   document.getElementById('tag-name-input').focus();
