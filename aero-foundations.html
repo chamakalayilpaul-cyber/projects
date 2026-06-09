@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aero ↔ Geist — Design System Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  /* Aero tokens */
+  --a:#1976d2;--al:#ecf5fd;--at:#212121;--at2:#555;--at3:#8f8f8f;
+  --ab:#fff;--ab2:#f5f5f5;--ab3:#fafafa;--abr:#eaeaea;--abrf:#e5e9f0;
+  --af:'Inter',system-ui,sans-serif;
+  /* Geist LIGHT mode tokens (from geist-colors npm, :root / .light) */
+  --gb:#ffffff;      /* bg-100 */
+  --gb2:#fafafa;     /* bg-200 */
+  --gs:#fafafa;      /* surface (was #111 dark) */
+  --gs2:#f2f2f2;     /* hover surface */
+  --gs3:#e6e6e6;     /* active surface */
+  --gbr:#e2e2e2;     /* border default (gray-200/300 range) */
+  --gbr2:#c9c9c9;    /* border hover (gray-500) */
+  --gbr3:#a8a8a8;    /* border active (gray-600) */
+  --gt:#171717;      /* primary text (gray-1000) */
+  --gt2:#666666;     /* secondary text (gray-900) */
+  --gt3:#8f8f8f;     /* tertiary text (gray-700) */
+  --gtm:#171717;     /* mono primary */
+  --gblue:#0072f5;   /* blue-700 */
+  --gred:#e5484d;    /* red-700 */
+  --gf:'Inter',system-ui,sans-serif;
+  --gm:'JetBrains Mono',monospace;
+}
+body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;line-height:1.5;}
+
+/* NAV */
+.nav{background:#1976d2;padding:0 32px;height:54px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
+.nav-title{color:#fff;font-size:15px;font-weight:700;letter-spacing:-.02em;}
+.nav-tag{background:rgba(255,255,255,.18);color:#fff;padding:3px 9px;border-radius:20px;font-size:11px;}
+.nav-badge{background:#f5f5f5;color:#555;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.nav-meta{color:rgba(255,255,255,.5);font-size:11px;margin-left:auto;font-family:var(--gm);}
+.page{max-width:1240px;margin:0 auto;padding:24px 32px 80px;}
+
+/* ACCORDION */
+.acc{border:1px solid #dde0e8;border-radius:10px;overflow:hidden;margin-bottom:12px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.acc-trigger{display:flex;align-items:center;gap:10px;padding:14px 20px;cursor:pointer;user-select:none;background:#fff;}
+.acc-trigger:hover{background:#f8f9fc;}
+.acc-trigger.open{background:#fafbfc;border-bottom:1px solid #dde0e8;}
+.acc-icon{font-size:16px;flex-shrink:0;}
+.acc-title{font-size:14px;font-weight:700;letter-spacing:-.02em;font-family:'Inter',sans-serif;flex:1;}
+.acc-meta{font-size:11px;color:#9ca3af;font-family:var(--gm);}
+.acc-chev{margin-left:auto;color:#9ca3af;font-size:12px;transition:transform .2s;flex-shrink:0;}
+.acc-trigger.open .acc-chev{transform:rotate(180deg);}
+.acc-body{display:none;padding:18px;}
+.acc-body.open{display:block;}
+
+/* SPLIT */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.split-col{display:flex;flex-direction:column;}
+.col-hd{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:7px 7px 0 0;}
+.col-hd-a{background:#1976d2;}
+/* Geist light header: white bg, black text, border */
+.col-hd-g{background:#ffffff;border:1px solid #e2e2e2;border-bottom:2px solid #171717;border-radius:7px 7px 0 0;}
+.col-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.col-lbl-a{color:#fff;font-family:var(--af);}
+.col-lbl-g{color:#171717;font-family:var(--gf);}
+.col-meta2{font-size:10px;opacity:.6;margin-left:4px;}
+.col-bd-a{background:#fff;border:1px solid #eaeaea;border-radius:0 0 7px 7px;padding:14px;flex:1;}
+/* Geist light body: white bg */
+.col-bd-g{background:#ffffff;border:1px solid #e2e2e2;border-top:none;border-radius:0 0 7px 7px;padding:14px;flex:1;}
+
+/* NOTE */
+.note{background:#fffbe6;border:1px solid #ffe066;border-left:4px solid #f59f00;border-radius:5px;padding:10px 14px;font-size:11px;line-height:1.7;margin-bottom:14px;font-family:'Inter',sans-serif;}
+.note strong{color:#7c5900;}
+.src-tag{display:inline-flex;align-items:center;background:#ecf5fd;color:#1976d2;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;font-family:var(--gm);margin-left:5px;}
+.src-tag-g{background:#f2f2f2;color:#444;border:1px solid #e2e2e2;}
+
+/* PALETTE */
+.pal{margin-bottom:12px;}
+.pal-name{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9ca3af;margin-bottom:7px;font-family:'Inter',sans-serif;}
+.pal-name-g{color:#8f8f8f;}
+.swatches{display:flex;gap:3px;flex-wrap:wrap;}
+.sw{display:flex;flex-direction:column;gap:3px;width:62px;}
+.sw-block{height:38px;border-radius:4px;border:1px solid rgba(0,0,0,.07);}
+.sw-num{font-size:9px;font-weight:600;font-family:var(--gm);color:#9ca3af;}
+.sw-hex{font-size:9px;font-family:var(--gm);color:#bbb;}
+.sw-star{outline:2px solid #1976d2;outline-offset:2px;}
+/* Geist light swatch label colours */
+.sw-num-g{font-size:9px;font-weight:600;font-family:var(--gm);color:#8f8f8f;}
+.sw-hex-g{font-size:9px;font-family:var(--gm);color:#a8a8a8;}
+.sw-star-g{outline:2px solid #171717;outline-offset:2px;}
+.social-row{display:flex;flex-wrap:wrap;gap:7px;}
+.soc{display:flex;align-items:center;gap:6px;padding:5px 10px;background:#fff;border:1px solid #eaeaea;border-radius:20px;font-size:11px;font-weight:500;font-family:var(--af);}
+.soc-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+.soc-hex{font-family:var(--gm);font-size:10px;color:#9ca3af;margin-left:2px;}
+.sep{height:1px;background:#f0f0f0;margin:10px 0;}
+.sep-g{background:#e2e2e2;}
+
+/* SECTION HEADER */
+.shd{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px;}
+.shd-a{color:#1976d2;font-family:var(--af);}
+.shd-g{color:#444;font-family:var(--gf);}
+
+/* TYPOGRAPHY TABLES */
+.tt{width:100%;border-collapse:collapse;}
+.tt th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid;}
+.tt-a th{background:#f5f5f5;color:#555;border-color:#eaeaea;font-family:var(--af);}
+/* Geist light table header */
+.tt-g th{background:#f2f2f2;color:#666;border-color:#e2e2e2;font-family:var(--gf);}
+.tt td{padding:8px 10px;border-bottom:1px solid;vertical-align:middle;font-size:12px;}
+.tt-a td{border-color:#f0f0f0;color:var(--at);background:#fff;}
+/* Geist light table cell */
+.tt-g td{border-color:#f2f2f2;color:#171717;background:#fff;}
+.tt tr:last-child td{border-bottom:none;}
+.tl{display:inline-block;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:600;text-transform:uppercase;}
+.tl-a{background:#ecf5fd;color:#1976d2;font-family:var(--af);}
+.tl-g{background:#f2f2f2;color:#444;border:1px solid #e2e2e2;font-family:var(--gf);}
+.tc{font-family:var(--gm);font-size:11px;color:#555;}
+.tc-g{font-family:var(--gm);font-size:11px;color:#8f8f8f;}
+
+/* RADIUS */
+.radius-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.ri{display:flex;flex-direction:column;align-items:center;gap:7px;}
+.ri-box{width:68px;height:44px;background:#1976d2;}
+.ri-name{font-size:11px;font-weight:700;color:var(--at2);}
+.ri-val{font-size:11px;font-family:var(--gm);color:#1976d2;}
+.ri-note{font-size:10px;color:var(--at3);text-align:center;line-height:1.3;}
+/* Geist light radius boxes */
+.ri-box-g{width:68px;height:44px;background:#171717;}
+.ri-name-g{font-size:11px;font-weight:700;color:#171717;}
+.ri-val-g{font-size:11px;font-family:var(--gm);color:#444;}
+.ri-note-g{font-size:10px;color:#8f8f8f;text-align:center;line-height:1.3;}
+
+/* ICONS */
+.icon-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.icon-item{display:flex;flex-direction:column;align-items:center;gap:4px;width:58px;}
+.icon-box{width:38px;height:38px;border-radius:7px;border:1px solid #eaeaea;display:flex;align-items:center;justify-content:center;background:#fafafa;}
+/* Geist light icon box */
+.icon-box-g{border:1px solid #e2e2e2;background:#f2f2f2;}
+.icon-name{font-size:9px;color:#9ca3af;text-align:center;line-height:1.2;font-family:var(--gm);}
+.icon-name-g{font-size:9px;color:#8f8f8f;text-align:center;line-height:1.2;font-family:var(--gm);}
+
+/* AVATAR */
+.av-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
+.av-group{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.av-label{font-size:10px;color:#9ca3af;font-family:'Inter',sans-serif;}
+.av-label-g{font-size:10px;color:#8f8f8f;font-family:'Inter',sans-serif;}
+/* Aero avatar */
+.aav{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--af);flex-shrink:0;position:relative;border:1px solid #eaeaea;}
+.aav-s{width:24px;height:24px;font-size:10px;} .aav-m{width:32px;height:32px;font-size:13px;} .aav-l{width:40px;height:40px;font-size:15px;}
+.aav-1{background:#fafafa;color:#212121;} .aav-2{background:#f1faf0;color:#377e2c;} .aav-3{background:#fff9ea;color:#c69204;}
+.aav-badge{width:12px;height:12px;border-radius:50%;border:2px solid #fff;position:absolute;top:-2px;right:-2px;}
+.aav-on{background:#4cae3d;} .aav-off{background:#eaeaea;}
+.aav-stack{display:flex;} .aav-stack .aav{border:2px solid #fff;margin-left:-7px;} .aav-stack .aav:first-child{margin-left:0;}
+/* Geist LIGHT avatar */
+.gav{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--gf);flex-shrink:0;position:relative;}
+.gav-s{width:24px;height:24px;font-size:9px;border:1px solid #e2e2e2;}
+.gav-m{width:32px;height:32px;font-size:11px;border:1px solid #e2e2e2;}
+.gav-l{width:40px;height:40px;font-size:13px;border:1px solid #e2e2e2;}
+/* Light mode: light gray bg, dark text */
+.gav-1{background:#f2f2f2;color:#444;}
+.gav-stack{display:flex;} .gav-stack .gav{border:2px solid #fff;margin-left:-6px;} .gav-stack .gav:first-child{margin-left:0;}
+
+/* BUTTONS */
+.ab{display:inline-flex;align-items:center;gap:5px;border:none;cursor:pointer;font-family:var(--af);border-radius:4px;font-size:14px;font-weight:500;padding:6px 16px;height:36px;}
+.ab-primary{background:#1976d2;color:#fff;} .ab-secondary{background:transparent;color:#1976d2;border:1px solid #1976d2;}
+.ab-tertiary{background:transparent;color:#1976d2;border:none;} .ab-danger{background:#de1b0c;color:#fff;}
+.ab-danger-outline{background:transparent;color:#de1b0c;border:1px solid #de1b0c;}
+/* Geist LIGHT buttons */
+.gb{display:inline-flex;align-items:center;gap:5px;border:none;cursor:pointer;font-family:var(--gf);border-radius:6px;font-size:13px;font-weight:500;height:32px;padding:0 12px;}
+/* Light Primary: black bg, white text */
+.gb-p{background:#171717;color:#fff;}
+/* Light Secondary: white bg, dark border */
+.gb-s{background:#fff;color:#171717;border:1px solid #c9c9c9;}
+/* Light Ghost: transparent, muted text */
+.gb-ghost{background:transparent;color:#666666;}
+/* Light Error: light red bg */
+.gb-err{background:#fff0f0;color:#cb2a2f;border:1px solid #fdd8d8;}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
+
+/* TEXT FIELDS */
+.atf-wrap{display:flex;flex-direction:column;gap:4px;max-width:240px;}
+.atf-label{font-size:12px;font-family:var(--af);color:#212121;}
+.atf{height:36px;padding:8px 12px;font-family:var(--af);font-size:14px;color:#8f8f8f;background:#fff;border:1px solid #e5e9f0;border-radius:4px;outline:none;width:100%;letter-spacing:-.28px;}
+.atf-focused{border-color:#1976d2;color:#212121;}
+/* Geist LIGHT text field */
+.gtf-wrap{display:flex;flex-direction:column;gap:4px;max-width:240px;}
+.gtf-label{font-size:11px;font-family:var(--gf);font-weight:500;color:#666;}
+.gtf{height:32px;padding:0 10px;font-family:var(--gf);font-size:12px;color:#8f8f8f;background:#fff;border:1px solid #c9c9c9;border-radius:6px;outline:none;width:100%;}
+.gtf-focused{border-color:#171717;color:#171717;}
+
+/* POPUP / MODAL */
+.apop{background:#fff;border-radius:4px;box-shadow:0 4px 8px rgba(33,33,33,.18);max-width:300px;overflow:hidden;}
+.apop-hd{display:flex;align-items:center;justify-content:space-between;padding:24px 24px 12px;}
+.apop-title{font-family:var(--af);font-size:16px;font-weight:400;color:#212121;line-height:24px;letter-spacing:-.32px;}
+.apop-close{width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;font-size:15px;}
+.apop-body{padding:8px 24px 12px;font-family:var(--af);font-size:14px;color:#1f2328;line-height:20px;letter-spacing:-.28px;}
+.apop-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:12px 24px 24px;}
+/* Geist LIGHT modal */
+.gpop{background:#fff;border:1px solid #e2e2e2;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.12);max-width:300px;}
+.gpop-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 10px;}
+.gpop-title{font-family:var(--gf);font-size:14px;font-weight:600;color:#171717;}
+.gpop-close{width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#666;background:#f2f2f2;border-radius:4px;font-size:13px;}
+.gpop-body{padding:6px 20px 14px;font-family:var(--gf);font-size:12px;color:#666;line-height:1.6;}
+.gpop-foot{display:flex;align-items:center;justify-content:flex-end;gap:7px;padding:10px 20px 14px;border-top:1px solid #e2e2e2;}
+
+/* TABLE */
+.a-table{width:100%;border-collapse:collapse;border:1px solid #eaeaea;overflow:hidden;}
+.a-table th{background:#fff;border-bottom:1px solid #eaeaea;padding:0 4px;height:56px;text-align:left;font-family:var(--af);font-size:12px;font-weight:500;color:#555;letter-spacing:-.24px;}
+.a-table td{border-bottom:1px solid #eaeaea;padding:8px 4px;height:56px;font-family:var(--af);font-size:14px;color:#212121;letter-spacing:-.28px;vertical-align:middle;}
+.a-table tr:last-child td{border-bottom:none;}
+.a-table .td-sub{font-size:12px;color:#757575;letter-spacing:-.24px;display:block;}
+.a-chip{display:inline-flex;align-items:center;padding:4px 8px;border-radius:4px;font-size:12px;font-family:var(--af);}
+.ac-green{background:#f1faf0;color:#377e2c;} .ac-blue{background:#ecf5fd;color:#757575;} .ac-red{background:#fef6f5;color:#de1b0c;} .ac-yellow{background:#fef3d6;color:#c69204;} .ac-gray{background:#eaeaea;color:#555;}
+/* Geist LIGHT table */
+.g-table{width:100%;border-collapse:collapse;border:1px solid #e2e2e2;overflow:hidden;}
+.g-table th{background:#f2f2f2;border-bottom:1px solid #e2e2e2;padding:0 10px;height:40px;text-align:left;font-family:var(--gf);font-size:11px;font-weight:600;color:#666;}
+.g-table td{border-bottom:1px solid #e2e2e2;padding:0 10px;height:48px;font-family:var(--gf);font-size:12px;color:#171717;vertical-align:middle;background:#fff;}
+.g-table tr:last-child td{border-bottom:none;}
+.g-table .td-sub{font-size:10px;color:#8f8f8f;display:block;font-family:var(--gm);}
+/* Geist LIGHT badges (light bg, saturated text, subtle border) */
+.g-badge-sm{display:inline-flex;align-items:center;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;font-family:var(--gf);}
+.gb-green{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;}
+.gb-blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
+.gb-red{background:#fff0f0;color:#cb2a2f;border:1px solid #fdd8d8;}
+.gb-yellow{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
+.gb-gray{background:#f5f5f5;color:#555;border:1px solid #e2e2e2;}
+
+/* ALPHA SWATCHES */
+.alpha-sw{width:48px;display:flex;flex-direction:column;gap:3px;}
+.aw{position:relative;height:32px;border-radius:4px;overflow:hidden;}
+/* Light mode alpha: show on white checkerboard */
+.aw-bg{position:absolute;inset:0;background:repeating-conic-gradient(#e5e5e5 0% 25%,#fff 0% 50%) 0 0/8px 8px;}
+.aw-fill{position:absolute;inset:0;}
+
+/* INFO BOX */
+.info-g{margin-top:10px;font-size:11px;color:#666;font-family:var(--gf);line-height:1.6;}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-title">Aero ↔ Geist</div>
+  <span class="nav-tag">Design System Foundations</span>
+  <span class="nav-badge">Geist: Light Mode</span>
+  <span class="nav-meta">Aero: Figma MCP · Geist: geist-colors npm + vercel.com/geist · June 2026</span>
+</nav>
+<div class="page">
+<!-- ═══ TYPOGRAPHY ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">✍️</span>
+    <span class="acc-title">Typography <span class="src-tag">Figma 17-236</span><span class="src-tag src-tag-g">vercel.com/geist/typography</span></span>
+    <span class="acc-meta">Aero: Inter 7-step · Geist: Geist Sans 4-category system</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero — Inter</span><span class="col-meta2 col-lbl-a">300/400/500 · Web & Mobile Android</span></div>
+        <div class="col-bd-a" style="padding:0;">
+          <table class="tt tt-a"><thead><tr><th>Usage</th><th>Size</th><th>L.H.</th><th>Track</th><th>Light / Reg / Medium</th></tr></thead><tbody>
+            <tr><td><span class="tl tl-a">Display</span></td><td class="tc">32px</td><td class="tc">48px</td><td class="tc">-0.64</td><td style="font-size:16px;font-family:'Inter';"><span style="font-weight:300;">Aa</span> Aa <span style="font-weight:500;">Aa</span></td></tr>
+            <tr><td><span class="tl tl-a">Heading 1</span></td><td class="tc">24px</td><td class="tc">36px</td><td class="tc">-0.48</td><td style="font-size:13px;font-family:'Inter';"><span style="font-weight:300;">Heading</span> Heading <span style="font-weight:500;">Heading</span></td></tr>
+            <tr><td><span class="tl tl-a">Heading 2</span></td><td class="tc">20px</td><td class="tc">30px</td><td class="tc">-0.40</td><td style="font-size:12px;font-family:'Inter';"><span style="font-weight:300;">H2</span> H2 <span style="font-weight:500;">H2</span></td></tr>
+            <tr><td><span class="tl tl-a">Heading 3</span></td><td class="tc">18px</td><td class="tc">26px</td><td class="tc">-0.36</td><td style="font-size:12px;font-family:'Inter';"><span style="font-weight:300;">H3</span> H3 <span style="font-weight:500;">H3</span></td></tr>
+            <tr><td><span class="tl tl-a">Body 1</span></td><td class="tc">16px</td><td class="tc">24px</td><td class="tc">-0.32</td><td style="font-size:12px;font-family:'Inter';"><span style="font-weight:300;">Body</span> Body <span style="font-weight:500;">Body</span></td></tr>
+            <tr><td><span class="tl tl-a">Body 2/Btn</span></td><td class="tc">14px</td><td class="tc">20px</td><td class="tc">-0.28</td><td style="font-size:12px;font-family:'Inter';"><span style="font-weight:300;">Button</span> Button <span style="font-weight:500;">Button</span></td></tr>
+            <tr><td><span class="tl tl-a">Caption/Pill</span></td><td class="tc">12px</td><td class="tc">18px</td><td class="tc">-0.24</td><td style="font-size:11px;font-family:'Inter';"><span style="font-weight:300;">Caption</span> Caption <span style="font-weight:500;">Caption</span></td></tr>
+          </tbody></table>
+          <div style="padding:10px;font-size:11px;color:#9ca3af;">Font: Inter · Weights used: 300 Light, 400 Regular, 500 Medium.</div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist — Geist Sans (Light)</span><span class="col-meta2" style="color:#666;">Heading · Button · Label · Copy</span></div>
+        <div class="col-bd-g" style="padding:0;">
+          <table class="tt tt-g"><thead><tr><th>Category</th><th>Class</th><th>Usage</th><th>Preview</th></tr></thead><tbody>
+            <tr><td><span class="tl tl-g">Heading</span></td><td class="tc-g">heading-72</td><td style="font-size:10px;color:#8f8f8f;">Marketing heroes</td><td style="font-size:17px;font-weight:700;font-family:'Inter';color:#171717;letter-spacing:-.04em;">Vercel</td></tr>
+            <tr><td><span class="tl tl-g">Heading</span></td><td class="tc-g">heading-32</td><td style="font-size:10px;color:#8f8f8f;">Dashboard headings</td><td style="font-size:14px;font-weight:700;font-family:'Inter';color:#171717;letter-spacing:-.03em;">Overview</td></tr>
+            <tr><td><span class="tl tl-g">Button</span></td><td class="tc-g">button-14 ★</td><td style="font-size:10px;color:#8f8f8f;">Default button</td><td style="font-size:12px;font-weight:500;font-family:'Inter';color:#171717;">Deploy Now</td></tr>
+            <tr><td><span class="tl tl-g">Label</span></td><td class="tc-g">label-14 ★</td><td style="font-size:10px;color:#8f8f8f;">Most common UI text</td><td style="font-size:12px;font-weight:500;font-family:'Inter';color:#171717;">Settings <strong>Active</strong></td></tr>
+            <tr><td><span class="tl tl-g">Label</span></td><td class="tc-g">label-13</td><td style="font-size:10px;color:#8f8f8f;">Secondary label</td><td style="font-size:11px;font-family:'Inter';color:#666;">Tag <strong style="font-weight:700;color:#171717;">123</strong></td></tr>
+            <tr><td><span class="tl tl-g">Label</span></td><td class="tc-g">label-13-mono</td><td style="font-size:10px;color:#8f8f8f;">Tabular numerics</td><td style="font-size:11px;font-family:'JetBrains Mono';color:#666;">v1.2.4</td></tr>
+            <tr><td><span class="tl tl-g">Copy</span></td><td class="tc-g">copy-14 ★</td><td style="font-size:10px;color:#8f8f8f;">Most common body</td><td style="font-size:12px;font-family:'Inter';color:#444;line-height:1.6;">Body copy text</td></tr>
+            <tr><td><span class="tl tl-g">Copy</span></td><td class="tc-g">copy-13-mono</td><td style="font-size:10px;color:#8f8f8f;">Inline code</td><td style="font-size:11px;font-family:'JetBrains Mono';color:#666;">npm install</td></tr>
+          </tbody></table>
+          <div style="padding:10px;font-size:10px;color:#8f8f8f;font-family:var(--gf);">Same type scale in light mode — text shifts from #ededed to #171717, secondary from #888 to #666.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CORNER RADIUS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">⬛</span>
+    <span class="acc-title">Corner Radius <span class="src-tag">Figma 374-336</span><span class="src-tag src-tag-g">Geist docs</span></span>
+    <span class="acc-meta">Aero: 7-step tokens · Geist: 0 marketing, 6px components</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Radius Tokens</span><span class="col-meta2 col-lbl-a">xs=2 · sm=4★web · md=8★mobile · lg=12 · xl=16 · 2xl=24 · max=9999</span></div>
+        <div class="col-bd-a">
+          <div class="radius-grid">
+            <div class="ri"><div class="ri-box" style="border-radius:0;"></div><div class="ri-name">none / 0px</div><div class="ri-note">Dividers</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:2px;"></div><div class="ri-name">xs / 2px</div><div class="ri-note">Chips</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:4px;border:2px solid #0b355f;background:#ecf5fd;"></div><div class="ri-name">sm ★web / 4px</div><div class="ri-note">Buttons, inputs, cards</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:8px;background:#daeafb;border:2px solid #1976d2;"></div><div class="ri-name">md ★mob / 8px</div><div class="ri-note">Mobile cards & modals</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:12px;"></div><div class="ri-name">lg / 12px</div><div class="ri-note">Large cards</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:16px;"></div><div class="ri-name">xl / 16px</div><div class="ri-note">Panels</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:24px;"></div><div class="ri-name">2xl / 24px</div><div class="ri-note">Large panels</div></div>
+            <div class="ri"><div style="width:68px;height:44px;background:#1976d2;border-radius:9999px;"></div><div class="ri-name">max / 9999px</div><div class="ri-note">Pills, badges</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Radius (Light)</span><span class="col-meta2" style="color:#666;">0 marketing · 6px components · 9999 pills</span></div>
+        <div class="col-bd-g">
+          <div class="radius-grid">
+            <div class="ri"><div class="ri-box-g" style="border-radius:0;background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="ri-name-g">none / 0px</div><div class="ri-note-g">Marketing — sharp brand</div></div>
+            <div class="ri"><div class="ri-box-g" style="border-radius:3px;background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="ri-name-g">~3px</div><div class="ri-note-g">Badges, chips</div></div>
+            <div class="ri"><div class="ri-box-g" style="border-radius:6px;background:#171717;border:2px solid #171717;"></div><div class="ri-name-g" style="font-weight:800;">6px ★ default</div><div class="ri-note-g">Buttons, inputs, modals</div></div>
+            <div class="ri"><div class="ri-box-g" style="border-radius:8px;background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="ri-name-g">8px</div><div class="ri-note-g">Sheets, modals</div></div>
+            <div class="ri" style="grid-column:span 2;"><div style="width:100%;height:40px;background:#171717;border-radius:9999px;"></div><div class="ri-name-g" style="margin-top:5px;">max / 9999px — pills &amp; badges</div></div>
+          </div>
+          <div class="info-g" style="margin-top:12px;">Same radius scale in light mode — boxes just render on white instead of near-black. Zero-radius marketing surfaces are even more prominent in Geist light.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ICONS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">⚙️</span>
+    <span class="acc-title">Icons <span class="src-tag">Figma 1136-3742</span><span class="src-tag src-tag-g">vercel.com/geist/icons</span></span>
+    <span class="acc-meta">Aero: Material-style · Geist: Vercel-proprietary developer icons</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="note" style="margin-bottom:12px;">Aero icon node timed out in MCP due to size. 10 representative icons shown from usage in other component nodes.</div>
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Icons</span><span class="col-meta2 col-lbl-a">16/20/24px · 2px stroke · Material-derived</span></div>
+        <div class="col-bd-a">
+          <div class="icon-grid">
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="icon-name">search</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="icon-name">email</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="icon-name">person</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><div class="icon-name">overview</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="icon-name">analytics</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="icon-name">check_circle</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="icon-name">warning</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2"/></svg></div><div class="icon-name">settings</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></div><div class="icon-name">delete</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="icon-name">info</div></div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:#9ca3af;">Sizes: 16px (inline), 20px (default), 24px (large) · Stroke: 2px</div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Icons (Light)</span><span class="col-meta2" style="color:#666;">16/24px · 1.5px stroke · #444 on light bg</span></div>
+        <div class="col-bd-g">
+          <div class="icon-grid">
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><line x1="11" y1="11" x2="14" y2="14"/></svg></div><div class="icon-name-g">search</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M8 2L2 14h12L8 2z"/></svg></div><div class="icon-name-g">triangle ▲</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6h12"/></svg></div><div class="icon-name-g">window</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div><div class="icon-name-g">arrow-right</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div class="icon-name-g">clock</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 8h4"/></svg></div><div class="icon-name-g">file-text</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div class="icon-name-g">plus</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M3 8h10"/></svg></div><div class="icon-name-g">minus</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><circle cx="8" cy="5" r="2.5"/><path d="M3 13a5 5 0 0110 0"/></svg></div><div class="icon-name-g">user</div></div>
+            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M9 2L4 8h4l-1 6 5-6H8z"/></svg></div><div class="icon-name-g">bolt</div></div>
+          </div>
+          <div class="info-g">Light mode: stroke colour shifts from #888 (dark) to #444 (light). Same 1.5px stroke, same minimal geometry — background simply flips from #111 to #f2f2f2.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AVATAR ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">👤</span>
+    <span class="acc-title">Avatar <span class="src-tag">Figma 1306-863</span><span class="src-tag src-tag-g">vercel.com/geist/avatar</span></span>
+    <span class="acc-meta">Aero: S/M/L · 3 color variants · badge · Geist: S/M/L · light gray bg · dark text</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Avatar</span><span class="col-meta2 col-lbl-a">S=24 M=32 L=40 · 3 color variants · Inter Medium</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Sizes &amp; Color Variants</div>
+          <div class="av-row" style="margin-bottom:14px;">
+            <div class="av-group"><div class="aav aav-s aav-1">AB</div><div class="av-label">S/neutral</div></div>
+            <div class="av-group"><div class="aav aav-m aav-1">AB</div><div class="av-label">M/neutral</div></div>
+            <div class="av-group"><div class="aav aav-l aav-1">AB</div><div class="av-label">L/neutral</div></div>
+            <div class="av-group"><div class="aav aav-m aav-2">AB</div><div class="av-label">M/green</div></div>
+            <div class="av-group"><div class="aav aav-m aav-3">AB</div><div class="av-label">M/yellow</div></div>
+          </div>
+          <div class="shd shd-a">Status Badges</div>
+          <div class="av-row" style="margin-bottom:14px;">
+            <div class="av-group"><div class="aav aav-m aav-1" style="position:relative;">AB<span class="aav-badge aav-on"></span></div><div class="av-label">Online</div></div>
+            <div class="av-group"><div class="aav aav-m aav-1" style="position:relative;">AB<span class="aav-badge aav-off"></span></div><div class="av-label">Away</div></div>
+          </div>
+          <div class="shd shd-a">Stacked</div>
+          <div class="aav-stack">
+            <div class="aav aav-m aav-1">AB</div>
+            <div class="aav aav-m aav-2">CD</div>
+            <div class="aav aav-m aav-3">EF</div>
+            <div class="aav aav-m aav-1" style="font-size:10px;">+5</div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Avatar (Light)</span><span class="col-meta2" style="color:#666;">bg=#f2f2f2 · text=#444 · border=#e2e2e2</span></div>
+        <div class="col-bd-g">
+          <div class="shd shd-g">Sizes</div>
+          <div class="av-row" style="margin-bottom:14px;">
+            <div class="av-group"><div class="gav gav-s gav-1">AB</div><div class="av-label-g">Small</div></div>
+            <div class="av-group"><div class="gav gav-m gav-1">AB</div><div class="av-label-g">Medium</div></div>
+            <div class="av-group"><div class="gav gav-l gav-1">AB</div><div class="av-label-g">Large</div></div>
+            <div class="av-group"><div class="gav gav-m" style="background:conic-gradient(at 30% 30%,#a78bfa,#60a5fa,#34d399);color:#fff;font-size:11px;font-weight:700;border-color:#e2e2e2;">AB</div><div class="av-label-g">Gradient bg</div></div>
+          </div>
+          <div class="shd shd-g">Status</div>
+          <div class="av-row" style="margin-bottom:14px;">
+            <div class="av-group">
+              <div class="gav gav-m gav-1" style="position:relative;">AB<span style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;position:absolute;top:-1px;right:-1px;background:#16a34a;"></span></div>
+              <div class="av-label-g">Online</div>
+            </div>
+            <div class="av-group">
+              <div class="gav gav-m gav-1" style="position:relative;">AB<span style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;position:absolute;top:-1px;right:-1px;background:#c9c9c9;"></span></div>
+              <div class="av-label-g">Offline</div>
+            </div>
+          </div>
+          <div class="shd shd-g">Stacked</div>
+          <div class="gav-stack">
+            <div class="gav gav-m gav-1">AB</div>
+            <div class="gav gav-m" style="background:#f0f7ff;color:#0062d1;border:1px solid #e2e2e2;width:32px;height:32px;font-size:11px;font-weight:500;">CD</div>
+            <div class="gav gav-m" style="background:#f0fdf4;color:#166534;border:1px solid #e2e2e2;width:32px;height:32px;font-size:11px;font-weight:500;">EF</div>
+            <div class="gav gav-m gav-1" style="font-size:9px;">+5</div>
+          </div>
+          <div class="info-g" style="margin-top:10px;">Light mode: background flips from #1a1a1a to #f2f2f2, text from #888 to #444, border from #2a2a2a to #e2e2e2. Status badge border matches bg (white in light).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BUTTONS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🔘</span>
+    <span class="acc-title">Buttons <span class="src-tag">Aero Figma docs</span><span class="src-tag src-tag-g">vercel.com/geist/button</span></span>
+    <span class="acc-meta">Aero: 4px/36px/Inter · Geist: 6px/32px/Inter — light primary = black fill</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Buttons</span><span class="col-meta2 col-lbl-a">4px · 36px · Inter 500 14px</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Variants</div>
+          <div class="btn-row" style="margin-bottom:12px;">
+            <button class="ab ab-primary">Primary</button>
+            <button class="ab ab-secondary">Secondary</button>
+            <button class="ab ab-tertiary">Tertiary / Text</button>
+            <button class="ab ab-danger">Danger</button>
+            <button class="ab ab-danger-outline">Danger Outline</button>
+          </div>
+          <div class="shd shd-a">With icons</div>
+          <div class="btn-row">
+            <button class="ab ab-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Add Location</button>
+            <button class="ab ab-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Message</button>
+            <button class="ab ab-tertiary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Buttons (Light)</span><span class="col-meta2" style="color:#666;">6px · 32px · Inter 500 13px · Primary = black</span></div>
+        <div class="col-bd-g">
+          <div class="shd shd-g">Variants</div>
+          <div class="btn-row" style="margin-bottom:12px;">
+            <button class="gb gb-p">Primary</button>
+            <button class="gb gb-s">Secondary</button>
+            <button class="gb gb-ghost">Ghost</button>
+            <button class="gb gb-err">Error</button>
+          </div>
+          <div class="shd shd-g">With icons</div>
+          <div class="btn-row">
+            <button class="gb gb-p"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Deploy</button>
+            <button class="gb gb-s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Integrations</button>
+            <button class="gb gb-ghost"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</button>
+          </div>
+          <div class="info-g" style="margin-top:10px;">Key light mode flip: Primary goes from <strong style="background:#fff;padding:1px 4px;border-radius:2px;color:#000;border:1px solid #e2e2e2;">white fill</strong> (dark mode) to <strong style="background:#171717;padding:1px 4px;border-radius:2px;color:#fff;">black fill</strong> (light mode). Secondary flips border/bg accordingly. Error goes from dark red bg to light red bg.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TEXT FIELD ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📝</span>
+    <span class="acc-title">Text Field <span class="src-tag">Figma 2455-19312</span><span class="src-tag src-tag-g">vercel.com/geist/input</span></span>
+    <span class="acc-meta">Aero: #e5e9f0→#1976d2 · Geist light: #c9c9c9→#171717</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Text Field</span><span class="col-meta2 col-lbl-a">4px · 36px · Inter · #e5e9f0 default → #1976d2 focus</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Default</div>
+          <div class="atf-wrap" style="margin-bottom:14px;">
+            <div class="atf-label">Label</div>
+            <input class="atf" placeholder="Enter input" style="pointer-events:none;">
+          </div>
+          <div class="shd shd-a">Focused</div>
+          <div class="atf-wrap" style="margin-bottom:14px;">
+            <div class="atf-label">Label</div>
+            <div style="position:relative;max-width:240px;">
+              <input class="atf atf-focused" placeholder="Enter input" style="pointer-events:none;">
+              <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:1px;height:18px;background:#212121;"></span>
+            </div>
+          </div>
+          <div class="shd shd-a">With leading icon</div>
+          <div class="atf-wrap">
+            <div class="atf-label">Search</div>
+            <div style="position:relative;max-width:240px;">
+              <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#8f8f8f;display:flex;pointer-events:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input class="atf" style="padding-left:30px;" placeholder="Enter input" style="pointer-events:none;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Input (Light)</span><span class="col-meta2" style="color:#666;">6px · 32px · #c9c9c9 default → #171717 focus</span></div>
+        <div class="col-bd-g">
+          <div class="shd shd-g">Default</div>
+          <div class="gtf-wrap" style="margin-bottom:14px;">
+            <div class="gtf-label">Label</div>
+            <input class="gtf" placeholder="Enter input" style="pointer-events:none;">
+          </div>
+          <div class="shd shd-g">Focused</div>
+          <div class="gtf-wrap" style="margin-bottom:14px;">
+            <div class="gtf-label">Label</div>
+            <div style="position:relative;max-width:240px;">
+              <input class="gtf gtf-focused" style="pointer-events:none;" placeholder="Enter input">
+              <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:1px;height:14px;background:#171717;"></span>
+            </div>
+          </div>
+          <div class="shd shd-g">With prefix icon</div>
+          <div class="gtf-wrap">
+            <div class="gtf-label">Search</div>
+            <div style="position:relative;max-width:240px;">
+              <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#8f8f8f;display:flex;pointer-events:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input class="gtf" style="padding-left:26px;" placeholder="Enter input" style="pointer-events:none;">
+            </div>
+          </div>
+          <div class="info-g" style="margin-top:10px;">Light: border #c9c9c9 (default) → #171717 (focused). Label #666 → #171717. Background stays #fff. Caret is dark. Same 6px radius, 32px height.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ POPUP ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🗔</span>
+    <span class="acc-title">Popup / Modal <span class="src-tag">Figma 5730-45700</span><span class="src-tag src-tag-g">vercel.com/geist/modal</span></span>
+    <span class="acc-meta">Aero: 4px/shadow(.18) · Geist light: 8px/border+shadow(.12) white bg</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Popup Regular</span><span class="col-meta2 col-lbl-a">4px radius · shadow(0,4,8,rgba(33,33,33,.18))</span></div>
+        <div class="col-bd-a">
+          <div class="apop">
+            <div class="apop-hd"><span class="apop-title">Title</span><span class="apop-close">✕</span></div>
+            <div class="apop-body">Use this modal for Error, warning, confirmation popups.<br>Avoid using more than 4 lines of text.<br>Enable Text field if needed & swap it with a component.</div>
+            <div class="apop-foot">
+              <button class="ab ab-tertiary" style="font-size:13px;height:32px;">Secondary</button>
+              <button class="ab ab-primary" style="font-size:13px;height:32px;">Primary</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Modal (Light)</span><span class="col-meta2" style="color:#666;">8px · border #e2e2e2 · shadow(0,8,40,rgba(0,0,0,.12))</span></div>
+        <div class="col-bd-g">
+          <div class="gpop">
+            <div class="gpop-hd"><span class="gpop-title">Delete project?</span><span class="gpop-close">✕</span></div>
+            <div class="gpop-body">This will permanently remove all deployments, analytics data, and settings. This action cannot be undone.</div>
+            <div class="gpop-foot">
+              <button class="gb gb-s" style="height:28px;font-size:12px;">Cancel</button>
+              <button class="gb gb-err" style="height:28px;font-size:12px;">Delete project</button>
+            </div>
+          </div>
+          <div class="info-g" style="margin-top:10px;">Light mode: shadow goes from near-black (0,20,60,rgba(0,0,0,.7)) to a lighter ambient shadow (0,8,40,rgba(0,0,0,.12)) with a visible border #e2e2e2. Close button bg shifts from #1a1a1a to #f2f2f2.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TABLE ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📊</span>
+    <span class="acc-title">Table — 6+ columns <span class="src-tag">Figma 2239-22154</span><span class="src-tag src-tag-g">vercel.com/geist/table</span></span>
+    <span class="acc-meta">Aero: 56px rows · filled chips · Geist light: 48px rows · bordered badges on white</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Table (Double Line)</span><span class="col-meta2 col-lbl-a">56px rows · Inter · #eaeaea borders · status chips 4px</span></div>
+        <div class="col-bd-a" style="padding:0;overflow-x:auto;">
+          <table class="a-table">
+            <thead><tr>
+              <th style="min-width:150px;padding-left:8px;">Location <span style="font-size:10px;color:#9ca3af;">↓</span></th>
+              <th style="min-width:60px;">Rating <span style="font-size:10px;color:#9ca3af;">↑</span></th>
+              <th style="min-width:70px;">Reviews</th>
+              <th style="min-width:80px;">Status</th>
+              <th style="min-width:80px;">Listings</th>
+              <th style="min-width:50px;">Actions</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding-left:8px;">Atlanta, GA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.8</td><td>124</td><td><span class="a-chip ac-green">Label</span></td><td><span class="a-chip ac-blue">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Stamford, CT<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>3.9</td><td>56</td><td><span class="a-chip ac-blue">Label</span></td><td><span class="a-chip ac-green">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Los Angeles, CA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.2</td><td>89</td><td><span class="a-chip ac-red">Label</span></td><td><span class="a-chip ac-yellow">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">New York City, NY<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.5</td><td>312</td><td><span class="a-chip ac-yellow">Label</span></td><td><span class="a-chip ac-green">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">San Diego, CA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.1</td><td>67</td><td><span class="a-chip ac-green">Label</span></td><td><span class="a-chip ac-gray">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Las Vegas, NV<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.7</td><td>201</td><td><span class="a-chip ac-yellow">Label</span></td><td><span class="a-chip ac-green">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Table (Light)</span><span class="col-meta2" style="color:#666;">48px rows · Inter · #e2e2e2 borders · light badges · mono numerics</span></div>
+        <div class="col-bd-g" style="padding:0;overflow-x:auto;">
+          <table class="g-table">
+            <thead><tr>
+              <th style="min-width:150px;">Location</th>
+              <th style="min-width:60px;">Rating</th>
+              <th style="min-width:70px;">Reviews</th>
+              <th style="min-width:80px;">Status</th>
+              <th style="min-width:80px;">Listings</th>
+              <th style="min-width:40px;">···</th>
+            </tr></thead>
+            <tbody>
+              <tr><td>Atlanta, GA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.8</td><td style="font-family:var(--gm);">124</td><td><span class="g-badge-sm gb-green">Active</span></td><td><span class="g-badge-sm gb-blue">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+              <tr><td>Stamford, CT<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">3.9</td><td style="font-family:var(--gm);">56</td><td><span class="g-badge-sm gb-blue">Pending</span></td><td><span class="g-badge-sm gb-green">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+              <tr><td>Los Angeles, CA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.2</td><td style="font-family:var(--gm);">89</td><td><span class="g-badge-sm gb-red">Error</span></td><td><span class="g-badge-sm gb-yellow">Warning</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+              <tr><td>New York City, NY<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.5</td><td style="font-family:var(--gm);">312</td><td><span class="g-badge-sm gb-yellow">Building</span></td><td><span class="g-badge-sm gb-green">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+              <tr><td>San Diego, CA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.1</td><td style="font-family:var(--gm);">67</td><td><span class="g-badge-sm gb-green">Ready</span></td><td><span class="g-badge-sm gb-gray">Unknown</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+              <tr><td>Las Vegas, NV<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.7</td><td style="font-family:var(--gm);">201</td><td><span class="g-badge-sm gb-yellow">Queued</span></td><td><span class="g-badge-sm gb-green">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+            </tbody>
+          </table>
+          <div class="info-g" style="padding:8px;">Light badges: saturated text on pale tinted backgrounds (green=f0fdf4/166534, blue=eff6ff/1d4ed8, red=fff0f0/cb2a2f, amber=fffbeb/92400e). Tabular monospace numerics unchanged.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ COLORS ═══ -->
+<div class="acc">
+  <div class="acc-trigger open" onclick="toggle(this)">
+    <span class="acc-icon">🎨</span>
+    <span class="acc-title">Color Palettes <span class="src-tag">Figma 238-759</span><span class="src-tag src-tag-g">geist-colors npm · light scale</span></span>
+    <span class="acc-meta">Aero: 6 palettes + social · Geist: 10 light scales + backgrounds</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body open">
+    <div class="split">
+      <!-- AERO -->
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero</span><span class="col-meta2 col-lbl-a">Material Blue · #1976d2 primary</span></div>
+        <div class="col-bd-a">
+          <div class="pal"><div class="pal-name">Blue — Primary Action</div><div class="swatches">
+            <div class="sw"><div class="sw-block" style="background:#07213a;"></div><div class="sw-num">900</div><div class="sw-hex">#07213a</div></div>
+            <div class="sw"><div class="sw-block" style="background:#0b355f;"></div><div class="sw-num">500</div><div class="sw-hex">#0b355f</div></div>
+            <div class="sw"><div class="sw-block" style="background:#125598;"></div><div class="sw-num">300</div><div class="sw-hex">#125598</div></div>
+            <div class="sw"><div class="sw-block sw-star" style="background:#1976d2;"></div><div class="sw-num">100 ★</div><div class="sw-hex">#1976d2</div></div>
+            <div class="sw"><div class="sw-block" style="background:#3790e7;"></div><div class="sw-num">90</div><div class="sw-hex">#3790e7</div></div>
+            <div class="sw"><div class="sw-block" style="background:#5ba4ec;"></div><div class="sw-num">80</div><div class="sw-hex">#5ba4ec</div></div>
+            <div class="sw"><div class="sw-block" style="background:#a4ccf4;"></div><div class="sw-num">60</div><div class="sw-hex">#a4ccf4</div></div>
+            <div class="sw"><div class="sw-block" style="background:#ecf5fd;border:1px solid #ddd;"></div><div class="sw-num">20</div><div class="sw-hex">#ecf5fd</div></div>
+          </div></div>
+          <div class="pal"><div class="pal-name">Red / Green / Gray / Yellow / Purple</div><div class="swatches">
+            <div class="sw"><div class="sw-block sw-star" style="background:#de1b0c;"></div><div class="sw-num">Red ★</div><div class="sw-hex">#de1b0c</div></div>
+            <div class="sw"><div class="sw-block sw-star" style="background:#4cae3d;"></div><div class="sw-num">Green ★</div><div class="sw-hex">#4cae3d</div></div>
+            <div class="sw"><div class="sw-block sw-star" style="background:#212121;"></div><div class="sw-num">Gray-900</div><div class="sw-hex">#212121</div></div>
+            <div class="sw"><div class="sw-block sw-star" style="background:#eaeaea;border:1px solid #ddd;"></div><div class="sw-num">Gray-40</div><div class="sw-hex">#eaeaea</div></div>
+            <div class="sw"><div class="sw-block sw-star" style="background:#e6aa04;"></div><div class="sw-num">Yellow ★</div><div class="sw-hex">#e6aa04</div></div>
+            <div class="sw"><div class="sw-block sw-star" style="background:#6834b7;"></div><div class="sw-num">Purple ★</div><div class="sw-hex">#6834b7</div></div>
+          </div></div>
+          <div class="sep"></div>
+          <div class="pal-name">Social Brand Colors</div>
+          <div class="social-row">
+            <div class="soc"><div class="soc-dot" style="background:#1877f2;"></div>Facebook<span class="soc-hex">#1877f2</span></div>
+            <div class="soc"><div class="soc-dot" style="background:#1d9bf0;"></div>Twitter<span class="soc-hex">#1d9bf0</span></div>
+            <div class="soc"><div class="soc-dot" style="background:#14171a;border:1px solid #ddd;"></div>X<span class="soc-hex">#14171a</span></div>
+            <div class="soc"><div class="soc-dot" style="background:#ea4335;"></div>Google<span class="soc-hex">#ea4335</span></div>
+            <div class="soc"><div class="soc-dot" style="background:#1a73e8;"></div>GMB<span class="soc-hex">#1a73e8</span></div>
+            <div class="soc"><div class="soc-dot" style="background:#0a66c2;"></div>LinkedIn<span class="soc-hex">#0a66c2</span></div>
+            <div class="soc"><div class="soc-dot" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);"></div>Instagram<span class="soc-hex">#ff0069</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- GEIST LIGHT -->
+      <div class="split-col">
+        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist — Light Mode</span><span class="col-meta2" style="color:#666;">:root / .light-theme tokens</span></div>
+        <div class="col-bd-g">
+          <div class="pal"><div class="pal-name pal-name-g">Backgrounds</div><div class="swatches">
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#fff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">bg-100</div><div class="sw-hex-g">#ffffff</div></div>
+            <div class="sw"><div class="sw-block" style="background:#fafafa;border:1px solid #e2e2e2;"></div><div class="sw-num-g">bg-200</div><div class="sw-hex-g">#fafafa</div></div>
+          </div></div>
+          <div class="pal"><div class="pal-name pal-name-g">Gray (Light scale — 100 to 1000)</div><div class="swatches">
+            <div class="sw"><div class="sw-block" style="background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="sw-num-g">100</div><div class="sw-hex-g">#f2f2f2</div></div>
+            <div class="sw"><div class="sw-block" style="background:#ebebeb;border:1px solid #e2e2e2;"></div><div class="sw-num-g">200</div><div class="sw-hex-g">#ebebeb</div></div>
+            <div class="sw"><div class="sw-block" style="background:#e6e6e6;border:1px solid #e2e2e2;"></div><div class="sw-num-g">300</div><div class="sw-hex-g">#e6e6e6</div></div>
+            <div class="sw"><div class="sw-block" style="background:#c9c9c9;border:1px solid #e2e2e2;"></div><div class="sw-num-g">500</div><div class="sw-hex-g">#c9c9c9</div></div>
+            <div class="sw"><div class="sw-block" style="background:#a8a8a8;"></div><div class="sw-num-g">600</div><div class="sw-hex-g">#a8a8a8</div></div>
+            <div class="sw"><div class="sw-block" style="background:#8f8f8f;"></div><div class="sw-num-g">700</div><div class="sw-hex-g">#8f8f8f</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#666666;"></div><div class="sw-num-g">900 ★</div><div class="sw-hex-g">#666666</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#171717;"></div><div class="sw-num-g">1000 ★</div><div class="sw-hex-g">#171717</div></div>
+          </div></div>
+          <div class="pal"><div class="pal-name pal-name-g">Blue (Light scale)</div><div class="swatches">
+            <div class="sw"><div class="sw-block" style="background:#f0f7ff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">100</div><div class="sw-hex-g">#f0f7ff</div></div>
+            <div class="sw"><div class="sw-block" style="background:#ebf5ff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">200</div><div class="sw-hex-g">#ebf5ff</div></div>
+            <div class="sw"><div class="sw-block" style="background:#cce6ff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">400</div><div class="sw-hex-g">#cce6ff</div></div>
+            <div class="sw"><div class="sw-block" style="background:#52aeff;"></div><div class="sw-num-g">600</div><div class="sw-hex-g">#52aeff</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#0072f5;"></div><div class="sw-num-g">700 ★</div><div class="sw-hex-g">#0072f5</div></div>
+            <div class="sw"><div class="sw-block" style="background:#0062d1;"></div><div class="sw-num-g">800</div><div class="sw-hex-g">#0062d1</div></div>
+            <div class="sw"><div class="sw-block" style="background:#00254d;"></div><div class="sw-num-g">1000</div><div class="sw-hex-g">#00254d</div></div>
+          </div></div>
+          <div class="pal"><div class="pal-name pal-name-g">Semantic key tones (light — 700)</div><div class="swatches">
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#e5484d;"></div><div class="sw-num-g">red-700</div><div class="sw-hex-g">#e5484d</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#45a557;"></div><div class="sw-num-g">grn-700</div><div class="sw-hex-g">#45a557</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#ffb224;"></div><div class="sw-num-g">amb-700</div><div class="sw-hex-g">#ffb224</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#12a594;"></div><div class="sw-num-g">teal-700</div><div class="sw-hex-g">#12a594</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#8e4ec6;"></div><div class="sw-num-g">pur-700</div><div class="sw-hex-g">#8e4ec6</div></div>
+            <div class="sw"><div class="sw-block sw-star-g" style="background:#ea3e83;"></div><div class="sw-num-g">pink-700</div><div class="sw-hex-g">#ea3e83</div></div>
+          </div></div>
+          <div class="pal"><div class="pal-name pal-name-g">Gray Alpha (light mode — black overlays)</div>
+            <div style="display:flex;gap:3px;flex-wrap:wrap;">
+              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.05);"></div></div><div class="sw-num-g">100/5%</div></div>
+              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.10);"></div></div><div class="sw-num-g">300/10%</div></div>
+              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.21);"></div></div><div class="sw-num-g">500/21%</div></div>
+              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.51);"></div></div><div class="sw-num-g">800/51%</div></div>
+              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.91);"></div></div><div class="sw-num-g">1000/91%</div></div>
+            </div>
+          </div>
+          <div class="info-g">★ Light mode uses black-based rgba overlays (vs dark mode's white-based). Teal &amp; Pink are Geist-only — no Aero equivalent.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="note" style="margin-bottom:20px;"><strong>Geist light mode active.</strong> All Geist panels now show light mode tokens — bg-100=#ffffff, text=#171717, borders=#e2e2e2, component default border=#c9c9c9. Note that dark mode is Vercel's canonical surface; light is the complete alternate theme. Aero panels are unchanged (Aero is light-mode-first).</div>
+<div style="border-top:1px solid #dde0e8;padding-top:20px;margin-top:6px;font-size:11px;color:#9ca3af;line-height:1.9;font-family:'Inter',sans-serif;">
+  <strong style="color:#555;">Aero:</strong> Figma MCP nodes 238-759 · 17-236 · 374-336 · 1306-863 · 5730-45700 · 2239-22154 · 2455-19337/47 &nbsp;·&nbsp;
+  <strong style="color:#555;">Geist light mode:</strong> <code style="background:#f5f5f5;padding:1px 4px;border-radius:2px;">geist-colors</code> npm :root/light scale · vercel.com/geist
+</div>
+
+</div>
+<script>
+function toggle(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
+</script>
+</body>
+</html>
