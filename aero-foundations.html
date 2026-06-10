@@ -37,13 +37,13 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .split-col{display:flex;flex-direction:column;}
 
-.col-hd{display:flex;align-items:center;gap:8px;padding:9px 13px;}
-.col-hd-a{background:#1976d2;border-radius:7px 7px 0 0;}
-.col-hd-s{background:#18181b;border-radius:7px 7px 0 0;}
+.col-hd{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:7px 7px 0 0;border-bottom:1px solid #eaeaea;}
+.col-hd-a{background:#fff;}
+.col-hd-s{background:#fff;border-bottom-color:#e4e4e7;}
 .col-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
-.col-lbl-a{color:#fff;}
-.col-lbl-s{color:#fafafa;}
-.col-meta2{font-size:10px;opacity:.55;margin-left:4px;}
+.col-lbl-a{color:#1976d2;}
+.col-lbl-s{color:#374151;}
+.col-meta2{font-size:10px;opacity:.6;margin-left:4px;color:#555;}
 .col-bd-a{background:#fff;border:1px solid #eaeaea;border-top:none;border-radius:0 0 7px 7px;padding:14px;flex:1;}
 .col-bd-s{background:#fff;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 7px 7px;padding:14px;flex:1;}
 
@@ -323,7 +323,7 @@ code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-fa
     Why Birdeye is evaluating Shadcn/ui
   </div>
   <p style="font-family:var(--af);font-size:14px;color:#292524;line-height:1.7;margin:0 0 14px;">
-    A competitive analysis of <strong>Sierra AI's Agent Studio</strong> (June 2026) surfaced clear design-system markers in their product UI — Inter typeface, monospace for code identifiers, a green brand accent, ~8px corner radius, hairline borders, and a three-panel IDE-style layout. Combined with their confirmed tech stack of <strong>React + Next.js + Tailwind CSS + React Aria</strong>, this points strongly to a <strong>shadcn/ui-adjacent approach</strong> — not necessarily shadcn verbatim, but built on the same philosophy: Tailwind for spacing, CSS variables for theming, a headless accessibility primitive library for components. The visual output is indistinguishable from a well-themed shadcn/ui implementation.
+    Sierra AI is extremely private and there are no public references of their product UI. From a video we could reference for product UI, we could see — Inter typeface, monospace for code identifiers, a green brand accent, ~8px corner radius, hairline borders, and a three-panel IDE-style layout. Combined with their confirmed tech stack of <strong>React + Next.js + Tailwind CSS + React Aria</strong>, this points strongly to a <strong>shadcn/ui-adjacent approach</strong> — not necessarily shadcn verbatim, but built on the same philosophy: Tailwind for spacing, CSS variables for theming, a headless accessibility primitive library for components. The visual output is indistinguishable from a well-themed shadcn/ui implementation.
   </p>
   <p style="font-family:var(--af);font-size:14px;color:#292524;line-height:1.7;margin:0 0 16px;">
     Other modern products sharing the same aesthetic: <span style="color:#57534e;">Linear, Clerk, Resend, Vercel v0, Railway, Neon, Trigger.dev, Cal.com, Supabase (newer surfaces), Liveblocks, Dub.co.</span>
