@@ -3,259 +3,331 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aero ↔ Geist — Design System Foundations</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Aero ↔ Shadcn — Design System Foundations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  /* Aero tokens */
-  --a:#1976d2;--al:#ecf5fd;--at:#212121;--at2:#555;--at3:#8f8f8f;
-  --ab:#fff;--ab2:#f5f5f5;--ab3:#fafafa;--abr:#eaeaea;--abrf:#e5e9f0;
   --af:'Inter',system-ui,sans-serif;
-  /* Geist LIGHT mode tokens (from geist-colors npm, :root / .light) */
-  --gb:#ffffff;      /* bg-100 */
-  --gb2:#fafafa;     /* bg-200 */
-  --gs:#fafafa;      /* surface (was #111 dark) */
-  --gs2:#f2f2f2;     /* hover surface */
-  --gs3:#e6e6e6;     /* active surface */
-  --gbr:#e2e2e2;     /* border default (gray-200/300 range) */
-  --gbr2:#c9c9c9;    /* border hover (gray-500) */
-  --gbr3:#a8a8a8;    /* border active (gray-600) */
-  --gt:#171717;      /* primary text (gray-1000) */
-  --gt2:#666666;     /* secondary text (gray-900) */
-  --gt3:#8f8f8f;     /* tertiary text (gray-700) */
-  --gtm:#171717;     /* mono primary */
-  --gblue:#0072f5;   /* blue-700 */
-  --gred:#e5484d;    /* red-700 */
-  --gf:'Inter',system-ui,sans-serif;
-  --gm:'JetBrains Mono',monospace;
+  --at:#212121;--at2:#555;--at3:#8f8f8f;
+  --sf:'Inter',system-ui,sans-serif;
+  --sm:'JetBrains Mono',monospace;
 }
 body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;line-height:1.5;}
 
-/* NAV */
 .nav{background:#1976d2;padding:0 32px;height:54px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:200;}
 .nav-title{color:#fff;font-size:15px;font-weight:700;letter-spacing:-.02em;}
 .nav-tag{background:rgba(255,255,255,.18);color:#fff;padding:3px 9px;border-radius:20px;font-size:11px;}
-.nav-badge{background:#f5f5f5;color:#555;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
-.nav-meta{color:rgba(255,255,255,.5);font-size:11px;margin-left:auto;font-family:var(--gm);}
+.nav-badge{background:#18181b;color:#fafafa;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.nav-meta{color:rgba(255,255,255,.5);font-size:11px;margin-left:auto;font-family:var(--sm);}
 .page{max-width:1240px;margin:0 auto;padding:24px 32px 80px;}
 
-/* ACCORDION */
 .acc{border:1px solid #dde0e8;border-radius:10px;overflow:hidden;margin-bottom:12px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.04);}
 .acc-trigger{display:flex;align-items:center;gap:10px;padding:14px 20px;cursor:pointer;user-select:none;background:#fff;}
 .acc-trigger:hover{background:#f8f9fc;}
 .acc-trigger.open{background:#fafbfc;border-bottom:1px solid #dde0e8;}
 .acc-icon{font-size:16px;flex-shrink:0;}
 .acc-title{font-size:14px;font-weight:700;letter-spacing:-.02em;font-family:'Inter',sans-serif;flex:1;}
-.acc-meta{font-size:11px;color:#9ca3af;font-family:var(--gm);}
+.acc-meta{font-size:11px;color:#9ca3af;font-family:var(--sm);}
 .acc-chev{margin-left:auto;color:#9ca3af;font-size:12px;transition:transform .2s;flex-shrink:0;}
 .acc-trigger.open .acc-chev{transform:rotate(180deg);}
 .acc-body{display:none;padding:18px;}
 .acc-body.open{display:block;}
 
-/* SPLIT */
 .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .split-col{display:flex;flex-direction:column;}
-.col-hd{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:7px 7px 0 0;}
-.col-hd-a{background:#1976d2;}
-/* Geist light header: white bg, black text, border */
-.col-hd-g{background:#ffffff;border:1px solid #e2e2e2;border-bottom:2px solid #171717;border-radius:7px 7px 0 0;}
-.col-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
-.col-lbl-a{color:#fff;font-family:var(--af);}
-.col-lbl-g{color:#171717;font-family:var(--gf);}
-.col-meta2{font-size:10px;opacity:.6;margin-left:4px;}
-.col-bd-a{background:#fff;border:1px solid #eaeaea;border-radius:0 0 7px 7px;padding:14px;flex:1;}
-/* Geist light body: white bg */
-.col-bd-g{background:#ffffff;border:1px solid #e2e2e2;border-top:none;border-radius:0 0 7px 7px;padding:14px;flex:1;}
 
-/* NOTE */
+.col-hd{display:flex;align-items:center;gap:8px;padding:9px 13px;}
+.col-hd-a{background:#1976d2;border-radius:7px 7px 0 0;}
+.col-hd-s{background:#18181b;border-radius:7px 7px 0 0;}
+.col-lbl{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;}
+.col-lbl-a{color:#fff;}
+.col-lbl-s{color:#fafafa;}
+.col-meta2{font-size:10px;opacity:.55;margin-left:4px;}
+.col-bd-a{background:#fff;border:1px solid #eaeaea;border-top:none;border-radius:0 0 7px 7px;padding:14px;flex:1;}
+.col-bd-s{background:#fff;border:1px solid #e4e4e7;border-top:none;border-radius:0 0 7px 7px;padding:14px;flex:1;}
+
 .note{background:#fffbe6;border:1px solid #ffe066;border-left:4px solid #f59f00;border-radius:5px;padding:10px 14px;font-size:11px;line-height:1.7;margin-bottom:14px;font-family:'Inter',sans-serif;}
 .note strong{color:#7c5900;}
-.src-tag{display:inline-flex;align-items:center;background:#ecf5fd;color:#1976d2;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;font-family:var(--gm);margin-left:5px;}
-.src-tag-g{background:#f2f2f2;color:#444;border:1px solid #e2e2e2;}
+.src-tag{display:inline-flex;align-items:center;background:#ecf5fd;color:#1976d2;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:700;font-family:var(--sm);margin-left:5px;}
+.src-tag-s{background:#f4f4f5;color:#3f3f46;border:1px solid #e4e4e7;}
 
-/* PALETTE */
 .pal{margin-bottom:12px;}
 .pal-name{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9ca3af;margin-bottom:7px;font-family:'Inter',sans-serif;}
-.pal-name-g{color:#8f8f8f;}
+.pal-name-s{color:#71717a;}
 .swatches{display:flex;gap:3px;flex-wrap:wrap;}
 .sw{display:flex;flex-direction:column;gap:3px;width:62px;}
 .sw-block{height:38px;border-radius:4px;border:1px solid rgba(0,0,0,.07);}
-.sw-num{font-size:9px;font-weight:600;font-family:var(--gm);color:#9ca3af;}
-.sw-hex{font-size:9px;font-family:var(--gm);color:#bbb;}
+.sw-num{font-size:9px;font-weight:600;font-family:var(--sm);color:#9ca3af;}
+.sw-hex{font-size:9px;font-family:var(--sm);color:#bbb;}
 .sw-star{outline:2px solid #1976d2;outline-offset:2px;}
-/* Geist light swatch label colours */
-.sw-num-g{font-size:9px;font-weight:600;font-family:var(--gm);color:#8f8f8f;}
-.sw-hex-g{font-size:9px;font-family:var(--gm);color:#a8a8a8;}
-.sw-star-g{outline:2px solid #171717;outline-offset:2px;}
+.sw-num-s{font-size:9px;font-weight:600;font-family:var(--sm);color:#71717a;}
+.sw-hex-s{font-size:9px;font-family:var(--sm);color:#a1a1aa;}
+.sw-star-s{outline:2px solid #18181b;outline-offset:2px;}
+
 .social-row{display:flex;flex-wrap:wrap;gap:7px;}
-.soc{display:flex;align-items:center;gap:6px;padding:5px 10px;background:#fff;border:1px solid #eaeaea;border-radius:20px;font-size:11px;font-weight:500;font-family:var(--af);}
+.soc{display:flex;align-items:center;gap:6px;padding:5px 10px;background:#fff;border:1px solid #eaeaea;border-radius:20px;font-size:11px;font-weight:500;}
 .soc-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
-.soc-hex{font-family:var(--gm);font-size:10px;color:#9ca3af;margin-left:2px;}
+.soc-hex{font-family:var(--sm);font-size:10px;color:#9ca3af;margin-left:2px;}
 .sep{height:1px;background:#f0f0f0;margin:10px 0;}
-.sep-g{background:#e2e2e2;}
 
-/* SECTION HEADER */
 .shd{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px;}
-.shd-a{color:#1976d2;font-family:var(--af);}
-.shd-g{color:#444;font-family:var(--gf);}
+.shd-a{color:#1976d2;}
+.shd-s{color:#3f3f46;}
 
-/* TYPOGRAPHY TABLES */
 .tt{width:100%;border-collapse:collapse;}
 .tt th{padding:8px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid;}
-.tt-a th{background:#f5f5f5;color:#555;border-color:#eaeaea;font-family:var(--af);}
-/* Geist light table header */
-.tt-g th{background:#f2f2f2;color:#666;border-color:#e2e2e2;font-family:var(--gf);}
+.tt-a th{background:#f5f5f5;color:#555;border-color:#eaeaea;}
+.tt-s th{background:#f4f4f5;color:#52525b;border-color:#e4e4e7;}
 .tt td{padding:8px 10px;border-bottom:1px solid;vertical-align:middle;font-size:12px;}
 .tt-a td{border-color:#f0f0f0;color:var(--at);background:#fff;}
-/* Geist light table cell */
-.tt-g td{border-color:#f2f2f2;color:#171717;background:#fff;}
+.tt-s td{border-color:#f4f4f5;color:#09090b;background:#fff;}
 .tt tr:last-child td{border-bottom:none;}
 .tl{display:inline-block;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:600;text-transform:uppercase;}
-.tl-a{background:#ecf5fd;color:#1976d2;font-family:var(--af);}
-.tl-g{background:#f2f2f2;color:#444;border:1px solid #e2e2e2;font-family:var(--gf);}
-.tc{font-family:var(--gm);font-size:11px;color:#555;}
-.tc-g{font-family:var(--gm);font-size:11px;color:#8f8f8f;}
+.tl-a{background:#ecf5fd;color:#1976d2;}
+.tl-s{background:#f4f4f5;color:#3f3f46;border:1px solid #e4e4e7;}
+.tc{font-family:var(--sm);font-size:11px;color:#555;}
+.tc-s{font-family:var(--sm);font-size:11px;color:#71717a;}
 
-/* RADIUS */
 .radius-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 .ri{display:flex;flex-direction:column;align-items:center;gap:7px;}
 .ri-box{width:68px;height:44px;background:#1976d2;}
 .ri-name{font-size:11px;font-weight:700;color:var(--at2);}
-.ri-val{font-size:11px;font-family:var(--gm);color:#1976d2;}
 .ri-note{font-size:10px;color:var(--at3);text-align:center;line-height:1.3;}
-/* Geist light radius boxes */
-.ri-box-g{width:68px;height:44px;background:#171717;}
-.ri-name-g{font-size:11px;font-weight:700;color:#171717;}
-.ri-val-g{font-size:11px;font-family:var(--gm);color:#444;}
-.ri-note-g{font-size:10px;color:#8f8f8f;text-align:center;line-height:1.3;}
+.ri-box-s{width:68px;height:44px;background:#18181b;}
+.ri-name-s{font-size:11px;font-weight:700;color:#18181b;}
+.ri-note-s{font-size:10px;color:#71717a;text-align:center;line-height:1.3;}
 
-/* ICONS */
 .icon-grid{display:flex;flex-wrap:wrap;gap:10px;}
 .icon-item{display:flex;flex-direction:column;align-items:center;gap:4px;width:58px;}
 .icon-box{width:38px;height:38px;border-radius:7px;border:1px solid #eaeaea;display:flex;align-items:center;justify-content:center;background:#fafafa;}
-/* Geist light icon box */
-.icon-box-g{border:1px solid #e2e2e2;background:#f2f2f2;}
-.icon-name{font-size:9px;color:#9ca3af;text-align:center;line-height:1.2;font-family:var(--gm);}
-.icon-name-g{font-size:9px;color:#8f8f8f;text-align:center;line-height:1.2;font-family:var(--gm);}
+.icon-box-s{width:38px;height:38px;border-radius:6px;border:1px solid #e4e4e7;display:flex;align-items:center;justify-content:center;background:#f4f4f5;}
+.icon-name{font-size:9px;color:#9ca3af;text-align:center;line-height:1.2;font-family:var(--sm);}
+.icon-name-s{font-size:9px;color:#71717a;text-align:center;line-height:1.2;font-family:var(--sm);}
 
-/* AVATAR */
 .av-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}
 .av-group{display:flex;flex-direction:column;align-items:center;gap:5px;}
 .av-label{font-size:10px;color:#9ca3af;font-family:'Inter',sans-serif;}
-.av-label-g{font-size:10px;color:#8f8f8f;font-family:'Inter',sans-serif;}
-/* Aero avatar */
+.av-label-s{font-size:10px;color:#71717a;font-family:'Inter',sans-serif;}
 .aav{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--af);flex-shrink:0;position:relative;border:1px solid #eaeaea;}
 .aav-s{width:24px;height:24px;font-size:10px;} .aav-m{width:32px;height:32px;font-size:13px;} .aav-l{width:40px;height:40px;font-size:15px;}
 .aav-1{background:#fafafa;color:#212121;} .aav-2{background:#f1faf0;color:#377e2c;} .aav-3{background:#fff9ea;color:#c69204;}
 .aav-badge{width:12px;height:12px;border-radius:50%;border:2px solid #fff;position:absolute;top:-2px;right:-2px;}
 .aav-on{background:#4cae3d;} .aav-off{background:#eaeaea;}
 .aav-stack{display:flex;} .aav-stack .aav{border:2px solid #fff;margin-left:-7px;} .aav-stack .aav:first-child{margin-left:0;}
-/* Geist LIGHT avatar */
-.gav{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--gf);flex-shrink:0;position:relative;}
-.gav-s{width:24px;height:24px;font-size:9px;border:1px solid #e2e2e2;}
-.gav-m{width:32px;height:32px;font-size:11px;border:1px solid #e2e2e2;}
-.gav-l{width:40px;height:40px;font-size:13px;border:1px solid #e2e2e2;}
-/* Light mode: light gray bg, dark text */
-.gav-1{background:#f2f2f2;color:#444;}
-.gav-stack{display:flex;} .gav-stack .gav{border:2px solid #fff;margin-left:-6px;} .gav-stack .gav:first-child{margin-left:0;}
+.sav{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-family:var(--sf);flex-shrink:0;position:relative;}
+.sav-s{width:24px;height:24px;font-size:9px;border:1px solid #e4e4e7;}
+.sav-m{width:32px;height:32px;font-size:11px;border:1px solid #e4e4e7;}
+.sav-l{width:40px;height:40px;font-size:13px;border:1px solid #e4e4e7;}
+.sav-1{background:#f4f4f5;color:#27272a;}
+.sav-stack{display:flex;} .sav-stack .sav{border:2px solid #fff;margin-left:-6px;} .sav-stack .sav:first-child{margin-left:0;}
 
-/* BUTTONS */
 .ab{display:inline-flex;align-items:center;gap:5px;border:none;cursor:pointer;font-family:var(--af);border-radius:4px;font-size:14px;font-weight:500;padding:6px 16px;height:36px;}
 .ab-primary{background:#1976d2;color:#fff;} .ab-secondary{background:transparent;color:#1976d2;border:1px solid #1976d2;}
 .ab-tertiary{background:transparent;color:#1976d2;border:none;} .ab-danger{background:#de1b0c;color:#fff;}
 .ab-danger-outline{background:transparent;color:#de1b0c;border:1px solid #de1b0c;}
-/* Geist LIGHT buttons */
-.gb{display:inline-flex;align-items:center;gap:5px;border:none;cursor:pointer;font-family:var(--gf);border-radius:6px;font-size:13px;font-weight:500;height:32px;padding:0 12px;}
-/* Light Primary: black bg, white text */
-.gb-p{background:#171717;color:#fff;}
-/* Light Secondary: white bg, dark border */
-.gb-s{background:#fff;color:#171717;border:1px solid #c9c9c9;}
-/* Light Ghost: transparent, muted text */
-.gb-ghost{background:transparent;color:#666666;}
-/* Light Error: light red bg */
-.gb-err{background:#fff0f0;color:#cb2a2f;border:1px solid #fdd8d8;}
+.sb{display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-family:var(--sf);border-radius:6px;font-size:13px;font-weight:500;height:36px;padding:0 16px;border:none;}
 .btn-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
 
-/* TEXT FIELDS */
 .atf-wrap{display:flex;flex-direction:column;gap:4px;max-width:240px;}
 .atf-label{font-size:12px;font-family:var(--af);color:#212121;}
 .atf{height:36px;padding:8px 12px;font-family:var(--af);font-size:14px;color:#8f8f8f;background:#fff;border:1px solid #e5e9f0;border-radius:4px;outline:none;width:100%;letter-spacing:-.28px;}
 .atf-focused{border-color:#1976d2;color:#212121;}
-/* Geist LIGHT text field */
-.gtf-wrap{display:flex;flex-direction:column;gap:4px;max-width:240px;}
-.gtf-label{font-size:11px;font-family:var(--gf);font-weight:500;color:#666;}
-.gtf{height:32px;padding:0 10px;font-family:var(--gf);font-size:12px;color:#8f8f8f;background:#fff;border:1px solid #c9c9c9;border-radius:6px;outline:none;width:100%;}
-.gtf-focused{border-color:#171717;color:#171717;}
+.stf-wrap{display:flex;flex-direction:column;gap:4px;max-width:240px;}
+.stf-label{font-size:12px;font-family:var(--sf);font-weight:500;color:#09090b;}
+.stf{height:36px;padding:0 12px;font-family:var(--sf);font-size:13px;color:#71717a;background:#fff;border:1px solid #e4e4e7;border-radius:6px;outline:none;width:100%;}
+.stf-focused{border-color:#18181b;color:#09090b;box-shadow:0 0 0 2px rgba(24,24,27,.12);}
+.stf-disabled{background:#f4f4f5;color:#a1a1aa;}
 
-/* POPUP / MODAL */
 .apop{background:#fff;border-radius:4px;box-shadow:0 4px 8px rgba(33,33,33,.18);max-width:300px;overflow:hidden;}
 .apop-hd{display:flex;align-items:center;justify-content:space-between;padding:24px 24px 12px;}
-.apop-title{font-family:var(--af);font-size:16px;font-weight:400;color:#212121;line-height:24px;letter-spacing:-.32px;}
+.apop-title{font-family:var(--af);font-size:16px;font-weight:400;color:#212121;line-height:24px;}
 .apop-close{width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;font-size:15px;}
-.apop-body{padding:8px 24px 12px;font-family:var(--af);font-size:14px;color:#1f2328;line-height:20px;letter-spacing:-.28px;}
+.apop-body{padding:8px 24px 12px;font-family:var(--af);font-size:14px;color:#1f2328;line-height:20px;}
 .apop-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:12px 24px 24px;}
-/* Geist LIGHT modal */
-.gpop{background:#fff;border:1px solid #e2e2e2;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.12);max-width:300px;}
-.gpop-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 10px;}
-.gpop-title{font-family:var(--gf);font-size:14px;font-weight:600;color:#171717;}
-.gpop-close{width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#666;background:#f2f2f2;border-radius:4px;font-size:13px;}
-.gpop-body{padding:6px 20px 14px;font-family:var(--gf);font-size:12px;color:#666;line-height:1.6;}
-.gpop-foot{display:flex;align-items:center;justify-content:flex-end;gap:7px;padding:10px 20px 14px;border-top:1px solid #e2e2e2;}
+.spop{background:#fff;border:1px solid #e4e4e7;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,.12);max-width:300px;}
+.spop-hd{padding:20px 20px 0;}
+.spop-title{font-family:var(--sf);font-size:15px;font-weight:600;color:#09090b;margin-bottom:4px;}
+.spop-desc{font-family:var(--sf);font-size:12px;color:#71717a;line-height:1.5;}
+.spop-body{padding:14px 20px 0;}
+.spop-foot{display:flex;justify-content:flex-end;gap:7px;padding:16px 20px 20px;}
 
-/* TABLE */
-.a-table{width:100%;border-collapse:collapse;border:1px solid #eaeaea;overflow:hidden;}
-.a-table th{background:#fff;border-bottom:1px solid #eaeaea;padding:0 4px;height:56px;text-align:left;font-family:var(--af);font-size:12px;font-weight:500;color:#555;letter-spacing:-.24px;}
-.a-table td{border-bottom:1px solid #eaeaea;padding:8px 4px;height:56px;font-family:var(--af);font-size:14px;color:#212121;letter-spacing:-.28px;vertical-align:middle;}
+.a-table{width:100%;border-collapse:collapse;border:1px solid #eaeaea;}
+.a-table th{background:#fff;border-bottom:1px solid #eaeaea;padding:0 4px;height:56px;text-align:left;font-family:var(--af);font-size:12px;font-weight:500;color:#555;}
+.a-table td{border-bottom:1px solid #eaeaea;padding:8px 4px;height:56px;font-family:var(--af);font-size:14px;color:#212121;vertical-align:middle;}
 .a-table tr:last-child td{border-bottom:none;}
-.a-table .td-sub{font-size:12px;color:#757575;letter-spacing:-.24px;display:block;}
+.a-table .td-sub{font-size:12px;color:#757575;display:block;}
 .a-chip{display:inline-flex;align-items:center;padding:4px 8px;border-radius:4px;font-size:12px;font-family:var(--af);}
 .ac-green{background:#f1faf0;color:#377e2c;} .ac-blue{background:#ecf5fd;color:#757575;} .ac-red{background:#fef6f5;color:#de1b0c;} .ac-yellow{background:#fef3d6;color:#c69204;} .ac-gray{background:#eaeaea;color:#555;}
-/* Geist LIGHT table */
-.g-table{width:100%;border-collapse:collapse;border:1px solid #e2e2e2;overflow:hidden;}
-.g-table th{background:#f2f2f2;border-bottom:1px solid #e2e2e2;padding:0 10px;height:40px;text-align:left;font-family:var(--gf);font-size:11px;font-weight:600;color:#666;}
-.g-table td{border-bottom:1px solid #e2e2e2;padding:0 10px;height:48px;font-family:var(--gf);font-size:12px;color:#171717;vertical-align:middle;background:#fff;}
-.g-table tr:last-child td{border-bottom:none;}
-.g-table .td-sub{font-size:10px;color:#8f8f8f;display:block;font-family:var(--gm);}
-/* Geist LIGHT badges (light bg, saturated text, subtle border) */
-.g-badge-sm{display:inline-flex;align-items:center;padding:2px 7px;border-radius:4px;font-size:11px;font-weight:500;font-family:var(--gf);}
-.gb-green{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;}
-.gb-blue{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;}
-.gb-red{background:#fff0f0;color:#cb2a2f;border:1px solid #fdd8d8;}
-.gb-yellow{background:#fffbeb;color:#92400e;border:1px solid #fde68a;}
-.gb-gray{background:#f5f5f5;color:#555;border:1px solid #e2e2e2;}
+.s-table{width:100%;border-collapse:collapse;border:1px solid #e4e4e7;}
+.s-table th{background:#fff;border-bottom:1px solid #e4e4e7;padding:0 12px;height:40px;text-align:left;font-family:var(--sf);font-size:11px;font-weight:500;color:#71717a;}
+.s-table td{border-bottom:1px solid #e4e4e7;padding:0 12px;height:52px;font-family:var(--sf);font-size:13px;color:#09090b;vertical-align:middle;background:#fff;}
+.s-table tr:last-child td{border-bottom:none;}
+.s-table .td-sub{font-size:11px;color:#71717a;display:block;margin-top:1px;}
+.s-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:500;font-family:var(--sf);}
 
-/* ALPHA SWATCHES */
-.alpha-sw{width:48px;display:flex;flex-direction:column;gap:3px;}
-.aw{position:relative;height:32px;border-radius:4px;overflow:hidden;}
-/* Light mode alpha: show on white checkerboard */
-.aw-bg{position:absolute;inset:0;background:repeating-conic-gradient(#e5e5e5 0% 25%,#fff 0% 50%) 0 0/8px 8px;}
-.aw-fill{position:absolute;inset:0;}
+.info-s{margin-top:10px;font-size:11px;color:#52525b;font-family:var(--sf);line-height:1.6;}
+code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-family:var(--sm);}
 
-/* INFO BOX */
-.info-g{margin-top:10px;font-size:11px;color:#666;font-family:var(--gf);line-height:1.6;}
+/* BADGE / CHIP */
+.a-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:500;font-family:var(--af);}
+.ab-blue{background:#ecf5fd;color:#1976d2;} .ab-green{background:#f1faf0;color:#377e2c;} .ab-red{background:#fef6f5;color:#de1b0c;} .ab-yellow{background:#fef3d6;color:#c69204;} .ab-gray{background:#eaeaea;color:#555;} .ab-purple{background:#f3eeff;color:#6834b7;}
+.s-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:12px;font-weight:500;font-family:var(--sf);}
+.sp-default{background:#18181b;color:#fafafa;} .sp-secondary{background:#f4f4f5;color:#18181b;} .sp-destructive{background:#ef4444;color:#fff;} .sp-outline{background:transparent;color:#09090b;border:1px solid #e4e4e7;}
+
+/* ACCORDION */
+.a-acc{border:1px solid #eaeaea;border-radius:4px;overflow:hidden;max-width:320px;}
+.a-acc-item{border-bottom:1px solid #eaeaea;} .a-acc-item:last-child{border-bottom:none;}
+.a-acc-trigger{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;font-family:var(--af);font-size:14px;font-weight:500;color:#212121;cursor:pointer;background:#fff;}
+.a-acc-body{padding:8px 14px 14px;font-family:var(--af);font-size:13px;color:#555;background:#fff;}
+.s-acc{border:1px solid #e4e4e7;border-radius:8px;overflow:hidden;max-width:320px;}
+.s-acc-item{border-bottom:1px solid #e4e4e7;} .s-acc-item:last-child{border-bottom:none;}
+.s-acc-trigger{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-family:var(--sf);font-size:14px;font-weight:500;color:#09090b;cursor:pointer;background:#fff;}
+.s-acc-body{padding:0 16px 14px;font-family:var(--sf);font-size:13px;color:#71717a;background:#fff;}
+
+/* TABS */
+.a-tabs-list{display:flex;border-bottom:2px solid #eaeaea;margin-bottom:12px;}
+.a-tab{padding:8px 14px;font-family:var(--af);font-size:13px;font-weight:500;color:#555;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;}
+.a-tab.active{color:#1976d2;border-bottom-color:#1976d2;}
+.s-tabs-list{display:inline-flex;background:#f4f4f5;border-radius:8px;padding:3px;gap:2px;margin-bottom:12px;}
+.s-tab{padding:6px 14px;font-family:var(--sf);font-size:13px;font-weight:500;color:#71717a;cursor:pointer;border-radius:6px;}
+.s-tab.active{background:#fff;color:#09090b;box-shadow:0 1px 3px rgba(0,0,0,.1);}
+
+/* CHECKBOX & RADIO */
+.check-row{display:flex;flex-direction:column;gap:10px;}
+.check-item{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;}
+.a-checkbox{width:16px;height:16px;border-radius:3px;border:2px solid #1976d2;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.a-checkbox.checked{background:#1976d2;}
+.a-radio-btn{width:16px;height:16px;border-radius:50%;border:2px solid #1976d2;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.a-radio-btn.checked::after{content:'';width:6px;height:6px;border-radius:50%;background:#1976d2;}
+.s-checkbox{width:16px;height:16px;border-radius:4px;border:1px solid #e4e4e7;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.s-checkbox.checked{background:#18181b;border-color:#18181b;}
+.s-radio-btn{width:16px;height:16px;border-radius:50%;border:1px solid #e4e4e7;background:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.s-radio-btn.checked{border-color:#18181b;} .s-radio-btn.checked::after{content:'';width:7px;height:7px;border-radius:50%;background:#18181b;}
+.check-label{font-family:var(--af);font-size:13px;color:#212121;}
+.check-label-s{font-family:var(--sf);font-size:13px;color:#09090b;}
+.check-label-muted{font-family:var(--sf);font-size:11px;color:#71717a;display:block;}
+
+/* SELECT / DROPDOWN */
+.a-select{height:36px;padding:0 10px;font-family:var(--af);font-size:14px;color:#212121;background:#fff;border:1px solid #e5e9f0;border-radius:4px;width:100%;max-width:220px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.a-dropdown-menu{background:#fff;border:1px solid #eaeaea;border-radius:4px;box-shadow:0 4px 8px rgba(0,0,0,.1);overflow:hidden;max-width:220px;margin-top:4px;}
+.a-dropdown-item{padding:10px 14px;font-family:var(--af);font-size:14px;color:#212121;cursor:pointer;}
+.a-dropdown-item:hover{background:#f5f5f5;}
+.a-dropdown-item.selected{color:#1976d2;font-weight:500;}
+.s-select{height:36px;padding:0 12px;font-family:var(--sf);font-size:13px;color:#09090b;background:#fff;border:1px solid #e4e4e7;border-radius:6px;width:100%;max-width:220px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
+.s-dropdown-menu{background:#fff;border:1px solid #e4e4e7;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.1);overflow:hidden;max-width:220px;margin-top:4px;padding:4px;}
+.s-dropdown-item{padding:6px 8px;font-family:var(--sf);font-size:13px;color:#09090b;cursor:pointer;border-radius:4px;}
+.s-dropdown-item:hover{background:#f4f4f5;}
+.s-dropdown-item.selected{background:#f4f4f5;font-weight:500;}
+
+/* TEXTAREA */
+.a-textarea{padding:10px 12px;font-family:var(--af);font-size:14px;color:#8f8f8f;background:#fff;border:1px solid #e5e9f0;border-radius:4px;outline:none;width:100%;resize:none;}
+.a-textarea.focused{border-color:#1976d2;color:#212121;}
+.s-textarea{padding:10px 12px;font-family:var(--sf);font-size:13px;color:#71717a;background:#fff;border:1px solid #e4e4e7;border-radius:6px;outline:none;width:100%;resize:none;}
+.s-textarea.focused{border-color:#18181b;color:#09090b;box-shadow:0 0 0 2px rgba(24,24,27,.12);}
+
+/* ALERT */
+.a-alert{border-radius:4px;padding:12px 14px;display:flex;gap:10px;max-width:320px;margin-bottom:10px;}
+.a-alert-info{background:#ecf5fd;border:1px solid #a4ccf4;}
+.a-alert-success{background:#f1faf0;border:1px solid #b7dfb3;}
+.a-alert-warning{background:#fef3d6;border:1px solid #f4d06f;}
+.a-alert-error{background:#fef6f5;border:1px solid #f4a89e;}
+.a-alert-title{font-family:var(--af);font-size:13px;font-weight:700;color:#212121;}
+.a-alert-body{font-family:var(--af);font-size:12px;color:#555;margin-top:2px;}
+.s-alert{border-radius:8px;padding:14px 16px;border:1px solid #e4e4e7;display:grid;grid-template-columns:16px 1fr;gap:10px;align-items:start;max-width:320px;margin-bottom:10px;}
+.s-alert-default{background:#fff;border-color:#e4e4e7;}
+.s-alert-destructive{background:#fff;border-color:#fecaca;}
+.s-alert-title{font-family:var(--sf);font-size:13px;font-weight:600;color:#09090b;line-height:1;}
+.s-alert-desc{font-family:var(--sf);font-size:12px;color:#71717a;margin-top:4px;line-height:1.5;}
+
+/* PROGRESS */
+.a-progress-wrap{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.a-progress-label{font-family:var(--af);font-size:12px;color:#555;}
+.a-progress-track{height:6px;background:#eaeaea;border-radius:9999px;overflow:hidden;}
+.a-progress-fill{height:100%;background:#1976d2;border-radius:9999px;}
+.s-progress-wrap{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.s-progress-label{font-family:var(--sf);font-size:12px;color:#71717a;}
+.s-progress-track{height:8px;background:#f4f4f5;border-radius:9999px;overflow:hidden;}
+.s-progress-fill{height:100%;background:#18181b;border-radius:9999px;transition:width .3s;}
+
+/* BREADCRUMB */
+.a-breadcrumb{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.a-bc-item{font-family:var(--af);font-size:13px;color:#1976d2;cursor:pointer;}
+.a-bc-sep{color:#9ca3af;font-size:11px;}
+.a-bc-current{font-family:var(--af);font-size:13px;color:#212121;font-weight:500;}
+.s-breadcrumb{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.s-bc-item{font-family:var(--sf);font-size:13px;color:#71717a;cursor:pointer;}
+.s-bc-item:hover{color:#09090b;}
+.s-bc-sep{color:#a1a1aa;font-size:11px;}
+.s-bc-current{font-family:var(--sf);font-size:13px;color:#09090b;font-weight:500;}
+
+/* SEPARATOR */
+.a-sep-h{height:1px;background:#eaeaea;margin:10px 0;}
+.a-sep-v{width:1px;height:40px;background:#eaeaea;display:inline-block;margin:0 10px;vertical-align:middle;}
+.s-sep-h{height:1px;background:#e4e4e7;margin:10px 0;}
+.s-sep-v{width:1px;height:40px;background:#e4e4e7;display:inline-block;margin:0 10px;vertical-align:middle;}
+.sep-demo-row{display:flex;align-items:center;font-size:12px;color:#71717a;font-family:var(--sf);}
+
+/* SHEET / DRAWER */
+.a-sheet{background:#fff;border:1px solid #eaeaea;box-shadow:-4px 0 12px rgba(0,0,0,.1);max-width:240px;border-radius:4px 0 0 4px;padding:20px;}
+.a-sheet-title{font-family:var(--af);font-size:16px;font-weight:500;color:#212121;margin-bottom:8px;}
+.a-sheet-body{font-family:var(--af);font-size:13px;color:#555;line-height:1.6;}
+.s-sheet{background:#fff;border:1px solid #e4e4e7;box-shadow:-8px 0 30px rgba(0,0,0,.1);max-width:240px;border-radius:8px 0 0 8px;padding:20px;}
+.s-sheet-title{font-family:var(--sf);font-size:15px;font-weight:600;color:#09090b;margin-bottom:4px;}
+.s-sheet-desc{font-family:var(--sf);font-size:12px;color:#71717a;margin-bottom:12px;}
+.s-sheet-body{font-family:var(--sf);font-size:13px;color:#3f3f46;line-height:1.6;}
+
+/* CAROUSEL */
+.a-carousel{position:relative;overflow:hidden;border-radius:4px;border:1px solid #eaeaea;max-width:320px;}
+.a-carousel-track{display:flex;}
+.a-carousel-slide{min-width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-family:var(--af);font-size:13px;font-weight:500;}
+.a-carousel-nav{display:flex;justify-content:space-between;padding:8px 12px;background:#f5f5f5;}
+.a-carousel-btn{background:#1976d2;color:#fff;border:none;border-radius:4px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:var(--af);}
+.s-carousel{position:relative;overflow:hidden;border-radius:8px;border:1px solid #e4e4e7;max-width:320px;}
+.s-carousel-slide{min-width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-family:var(--sf);font-size:13px;font-weight:500;}
+.s-carousel-nav{display:flex;justify-content:space-between;padding:8px 12px;background:#f4f4f5;}
+.s-carousel-btn{background:#18181b;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:var(--sf);}
+
+/* CALENDAR / DATE PICKER */
+.a-cal{border:1px solid #eaeaea;border-radius:4px;background:#fff;padding:12px;max-width:220px;}
+.a-cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-family:var(--af);font-size:13px;font-weight:700;color:#212121;}
+.a-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;}
+.a-cal-dow{font-family:var(--af);font-size:10px;font-weight:700;color:#9ca3af;padding:3px 0;text-transform:uppercase;}
+.a-cal-day{font-family:var(--af);font-size:12px;color:#212121;padding:4px 2px;border-radius:3px;cursor:pointer;}
+.a-cal-day.today{background:#1976d2;color:#fff;}
+.a-cal-day.other{color:#ccc;}
+.s-cal{border:1px solid #e4e4e7;border-radius:8px;background:#fff;padding:12px;max-width:220px;}
+.s-cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-family:var(--sf);font-size:13px;font-weight:500;color:#09090b;}
+.s-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;}
+.s-cal-dow{font-family:var(--sf);font-size:10px;font-weight:500;color:#71717a;padding:3px 0;}
+.s-cal-day{font-family:var(--sf);font-size:12px;color:#09090b;padding:4px 2px;border-radius:6px;cursor:pointer;}
+.s-cal-day:hover{background:#f4f4f5;}
+.s-cal-day.today{background:#18181b;color:#fafafa;}
+.s-cal-day.other{color:#a1a1aa;}
+.s-cal-day.range{background:#f4f4f5;}
 </style>
 </head>
 <body>
 <nav class="nav">
-  <div class="nav-title">Aero ↔ Geist</div>
+  <div class="nav-title">Aero ↔ Shadcn</div>
   <span class="nav-tag">Design System Foundations</span>
-  <span class="nav-badge">Geist: Light Mode</span>
-  <span class="nav-meta">Aero: Figma MCP · Geist: geist-colors npm + vercel.com/geist · June 2026</span>
+  <span class="nav-badge">Shadcn/ui · Zinc Theme</span>
+  <span class="nav-meta">Aero: Figma MCP · Shadcn: ui.shadcn.com + zinc default · June 2026</span>
 </nav>
 <div class="page">
+
 <!-- ═══ TYPOGRAPHY ═══ -->
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">✍️</span>
-    <span class="acc-title">Typography <span class="src-tag">Figma 17-236</span><span class="src-tag src-tag-g">vercel.com/geist/typography</span></span>
-    <span class="acc-meta">Aero: Inter 7-step · Geist: Geist Sans 4-category system</span>
+    <span class="acc-title">Typography <span class="src-tag">Figma 17-236</span><span class="src-tag src-tag-s">shadcn/ui · Tailwind text-* utilities</span></span>
+    <span class="acc-meta">Aero: Inter 7-step · Shadcn: Inter — Tailwind utilities, no fixed scale</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
     <div class="split">
       <div class="split-col">
-        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero — Inter</span><span class="col-meta2 col-lbl-a">300/400/500 · Web & Mobile Android</span></div>
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero — Inter</span><span class="col-meta2 col-lbl-a">300/400/500 · Web &amp; Mobile</span></div>
         <div class="col-bd-a" style="padding:0;">
           <table class="tt tt-a"><thead><tr><th>Usage</th><th>Size</th><th>L.H.</th><th>Track</th><th>Light / Reg / Medium</th></tr></thead><tbody>
             <tr><td><span class="tl tl-a">Display</span></td><td class="tc">32px</td><td class="tc">48px</td><td class="tc">-0.64</td><td style="font-size:16px;font-family:'Inter';"><span style="font-weight:300;">Aa</span> Aa <span style="font-weight:500;">Aa</span></td></tr>
@@ -266,23 +338,22 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
             <tr><td><span class="tl tl-a">Body 2/Btn</span></td><td class="tc">14px</td><td class="tc">20px</td><td class="tc">-0.28</td><td style="font-size:12px;font-family:'Inter';"><span style="font-weight:300;">Button</span> Button <span style="font-weight:500;">Button</span></td></tr>
             <tr><td><span class="tl tl-a">Caption/Pill</span></td><td class="tc">12px</td><td class="tc">18px</td><td class="tc">-0.24</td><td style="font-size:11px;font-family:'Inter';"><span style="font-weight:300;">Caption</span> Caption <span style="font-weight:500;">Caption</span></td></tr>
           </tbody></table>
-          <div style="padding:10px;font-size:11px;color:#9ca3af;">Font: Inter · Weights used: 300 Light, 400 Regular, 500 Medium.</div>
+          <div style="padding:10px;font-size:11px;color:#9ca3af;">Font: Inter · Weights: 300 Light, 400 Regular, 500 Medium.</div>
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist — Geist Sans (Light)</span><span class="col-meta2" style="color:#666;">Heading · Button · Label · Copy</span></div>
-        <div class="col-bd-g" style="padding:0;">
-          <table class="tt tt-g"><thead><tr><th>Category</th><th>Class</th><th>Usage</th><th>Preview</th></tr></thead><tbody>
-            <tr><td><span class="tl tl-g">Heading</span></td><td class="tc-g">heading-72</td><td style="font-size:10px;color:#8f8f8f;">Marketing heroes</td><td style="font-size:17px;font-weight:700;font-family:'Inter';color:#171717;letter-spacing:-.04em;">Vercel</td></tr>
-            <tr><td><span class="tl tl-g">Heading</span></td><td class="tc-g">heading-32</td><td style="font-size:10px;color:#8f8f8f;">Dashboard headings</td><td style="font-size:14px;font-weight:700;font-family:'Inter';color:#171717;letter-spacing:-.03em;">Overview</td></tr>
-            <tr><td><span class="tl tl-g">Button</span></td><td class="tc-g">button-14 ★</td><td style="font-size:10px;color:#8f8f8f;">Default button</td><td style="font-size:12px;font-weight:500;font-family:'Inter';color:#171717;">Deploy Now</td></tr>
-            <tr><td><span class="tl tl-g">Label</span></td><td class="tc-g">label-14 ★</td><td style="font-size:10px;color:#8f8f8f;">Most common UI text</td><td style="font-size:12px;font-weight:500;font-family:'Inter';color:#171717;">Settings <strong>Active</strong></td></tr>
-            <tr><td><span class="tl tl-g">Label</span></td><td class="tc-g">label-13</td><td style="font-size:10px;color:#8f8f8f;">Secondary label</td><td style="font-size:11px;font-family:'Inter';color:#666;">Tag <strong style="font-weight:700;color:#171717;">123</strong></td></tr>
-            <tr><td><span class="tl tl-g">Label</span></td><td class="tc-g">label-13-mono</td><td style="font-size:10px;color:#8f8f8f;">Tabular numerics</td><td style="font-size:11px;font-family:'JetBrains Mono';color:#666;">v1.2.4</td></tr>
-            <tr><td><span class="tl tl-g">Copy</span></td><td class="tc-g">copy-14 ★</td><td style="font-size:10px;color:#8f8f8f;">Most common body</td><td style="font-size:12px;font-family:'Inter';color:#444;line-height:1.6;">Body copy text</td></tr>
-            <tr><td><span class="tl tl-g">Copy</span></td><td class="tc-g">copy-13-mono</td><td style="font-size:10px;color:#8f8f8f;">Inline code</td><td style="font-size:11px;font-family:'JetBrains Mono';color:#666;">npm install</td></tr>
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn/ui — Inter</span><span class="col-meta2 col-lbl-s">Tailwind text-* · no fixed scale</span></div>
+        <div class="col-bd-s" style="padding:0;">
+          <table class="tt tt-s"><thead><tr><th>Class</th><th>Size</th><th>Weight</th><th>Usage</th><th>Preview</th></tr></thead><tbody>
+            <tr><td><span class="tl tl-s">text-4xl</span></td><td class="tc-s">36px</td><td class="tc-s">700</td><td style="font-size:10px;color:#71717a;">Page hero / h1</td><td style="font-size:17px;font-weight:700;font-family:'Inter';color:#09090b;letter-spacing:-.04em;">Display</td></tr>
+            <tr><td><span class="tl tl-s">text-2xl</span></td><td class="tc-s">24px</td><td class="tc-s">600</td><td style="font-size:10px;color:#71717a;">Section heading</td><td style="font-size:14px;font-weight:600;font-family:'Inter';color:#09090b;">Heading</td></tr>
+            <tr><td><span class="tl tl-s">text-lg</span></td><td class="tc-s">18px</td><td class="tc-s">600</td><td style="font-size:10px;color:#71717a;">Card title / h3</td><td style="font-size:12px;font-weight:600;font-family:'Inter';color:#09090b;">Card title</td></tr>
+            <tr><td><span class="tl tl-s">text-sm ★</span></td><td class="tc-s">14px</td><td class="tc-s">400</td><td style="font-size:10px;color:#71717a;">Default body text</td><td style="font-size:12px;font-family:'Inter';color:#09090b;">Body copy text</td></tr>
+            <tr><td><span class="tl tl-s">text-sm muted</span></td><td class="tc-s">14px</td><td class="tc-s">400</td><td style="font-size:10px;color:#71717a;">Descriptions</td><td style="font-size:12px;font-family:'Inter';color:#71717a;">Muted secondary</td></tr>
+            <tr><td><span class="tl tl-s">text-xs</span></td><td class="tc-s">12px</td><td class="tc-s">400</td><td style="font-size:10px;color:#71717a;">Labels, captions</td><td style="font-size:11px;font-family:'Inter';color:#52525b;">Caption text</td></tr>
+            <tr><td><span class="tl tl-s">font-mono</span></td><td class="tc-s">13px</td><td class="tc-s">400</td><td style="font-size:10px;color:#71717a;">Code, values</td><td style="font-size:11px;font-family:'JetBrains Mono';color:#52525b;">npm install</td></tr>
           </tbody></table>
-          <div style="padding:10px;font-size:10px;color:#8f8f8f;font-family:var(--gf);">Same type scale in light mode — text shifts from #ededed to #171717, secondary from #888 to #666.</div>
+          <div style="padding:10px;font-size:10px;color:#71717a;font-family:var(--sf);">Shadcn ships no fixed scale — uses Tailwind's text-* utilities with Inter. Minimum weight is 400; no Light (300) usage unlike Aero.</div>
         </div>
       </div>
     </div>
@@ -293,38 +364,39 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">⬛</span>
-    <span class="acc-title">Corner Radius <span class="src-tag">Figma 374-336</span><span class="src-tag src-tag-g">Geist docs</span></span>
-    <span class="acc-meta">Aero: 7-step tokens · Geist: 0 marketing, 6px components</span>
+    <span class="acc-title">Corner Radius <span class="src-tag">Figma 374-336</span><span class="src-tag src-tag-s">shadcn/ui · --radius CSS var</span></span>
+    <span class="acc-meta">Aero: 7-step tokens · Shadcn: single --radius var (0.5rem default) · New York style = 0</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
     <div class="split">
       <div class="split-col">
-        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Radius Tokens</span><span class="col-meta2 col-lbl-a">xs=2 · sm=4★web · md=8★mobile · lg=12 · xl=16 · 2xl=24 · max=9999</span></div>
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Radius Tokens</span><span class="col-meta2 col-lbl-a">xs=2 · sm=4★web · md=8★mob · lg=12 · xl=16 · 2xl=24 · max=9999</span></div>
         <div class="col-bd-a">
           <div class="radius-grid">
             <div class="ri"><div class="ri-box" style="border-radius:0;"></div><div class="ri-name">none / 0px</div><div class="ri-note">Dividers</div></div>
             <div class="ri"><div class="ri-box" style="border-radius:2px;"></div><div class="ri-name">xs / 2px</div><div class="ri-note">Chips</div></div>
-            <div class="ri"><div class="ri-box" style="border-radius:4px;border:2px solid #0b355f;background:#ecf5fd;"></div><div class="ri-name">sm ★web / 4px</div><div class="ri-note">Buttons, inputs, cards</div></div>
-            <div class="ri"><div class="ri-box" style="border-radius:8px;background:#daeafb;border:2px solid #1976d2;"></div><div class="ri-name">md ★mob / 8px</div><div class="ri-note">Mobile cards & modals</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:4px;border:2px solid #0b355f;background:#ecf5fd;"></div><div class="ri-name">sm ★web / 4px</div><div class="ri-note">Buttons, inputs</div></div>
+            <div class="ri"><div class="ri-box" style="border-radius:8px;background:#daeafb;border:2px solid #1976d2;"></div><div class="ri-name">md ★mob / 8px</div><div class="ri-note">Cards &amp; modals</div></div>
             <div class="ri"><div class="ri-box" style="border-radius:12px;"></div><div class="ri-name">lg / 12px</div><div class="ri-note">Large cards</div></div>
             <div class="ri"><div class="ri-box" style="border-radius:16px;"></div><div class="ri-name">xl / 16px</div><div class="ri-note">Panels</div></div>
             <div class="ri"><div class="ri-box" style="border-radius:24px;"></div><div class="ri-name">2xl / 24px</div><div class="ri-note">Large panels</div></div>
-            <div class="ri"><div style="width:68px;height:44px;background:#1976d2;border-radius:9999px;"></div><div class="ri-name">max / 9999px</div><div class="ri-note">Pills, badges</div></div>
+            <div class="ri"><div style="width:68px;height:44px;background:#1976d2;border-radius:9999px;"></div><div class="ri-name">max / pill</div><div class="ri-note">Badges, pills</div></div>
           </div>
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Radius (Light)</span><span class="col-meta2" style="color:#666;">0 marketing · 6px components · 9999 pills</span></div>
-        <div class="col-bd-g">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Radius</span><span class="col-meta2 col-lbl-s">--radius: 0.5rem · one var, all components</span></div>
+        <div class="col-bd-s">
+          <div style="margin-bottom:10px;font-size:11px;color:#52525b;font-family:var(--sf);">One <code>--radius</code> var drives all components via <code>calc(var(--radius) ± Npx)</code> offsets. Swap to <code>0rem</code> for sharp "New York" style globally.</div>
           <div class="radius-grid">
-            <div class="ri"><div class="ri-box-g" style="border-radius:0;background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="ri-name-g">none / 0px</div><div class="ri-note-g">Marketing — sharp brand</div></div>
-            <div class="ri"><div class="ri-box-g" style="border-radius:3px;background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="ri-name-g">~3px</div><div class="ri-note-g">Badges, chips</div></div>
-            <div class="ri"><div class="ri-box-g" style="border-radius:6px;background:#171717;border:2px solid #171717;"></div><div class="ri-name-g" style="font-weight:800;">6px ★ default</div><div class="ri-note-g">Buttons, inputs, modals</div></div>
-            <div class="ri"><div class="ri-box-g" style="border-radius:8px;background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="ri-name-g">8px</div><div class="ri-note-g">Sheets, modals</div></div>
-            <div class="ri" style="grid-column:span 2;"><div style="width:100%;height:40px;background:#171717;border-radius:9999px;"></div><div class="ri-name-g" style="margin-top:5px;">max / 9999px — pills &amp; badges</div></div>
+            <div class="ri"><div class="ri-box-s" style="border-radius:0;background:#f4f4f5;border:1px solid #e4e4e7;"></div><div class="ri-name-s">0 / New York</div><div class="ri-note-s">Sharp alt style</div></div>
+            <div class="ri"><div class="ri-box-s" style="border-radius:4px;background:#f4f4f5;border:1px solid #e4e4e7;"></div><div class="ri-name-s">sm / 4px</div><div class="ri-note-s">Badges, small items</div></div>
+            <div class="ri"><div class="ri-box-s" style="border-radius:6px;border:2px solid #18181b;"></div><div class="ri-name-s" style="font-weight:800;">6px · btn/input</div><div class="ri-note-s">calc(--radius - 2px)</div></div>
+            <div class="ri"><div class="ri-box-s" style="border-radius:8px;border:2px solid #18181b;"></div><div class="ri-name-s" style="font-weight:800;">8px ★ default</div><div class="ri-note-s">Cards, dialogs</div></div>
+            <div class="ri"><div class="ri-box-s" style="border-radius:12px;background:#f4f4f5;border:1px solid #e4e4e7;"></div><div class="ri-name-s">lg / 12px</div><div class="ri-note-s">calc(--radius + 4px)</div></div>
+            <div class="ri" style="grid-column:span 2;"><div style="width:100%;height:40px;background:#18181b;border-radius:9999px;"></div><div class="ri-name-s" style="margin-top:5px;">full / 9999px — pills</div></div>
           </div>
-          <div class="info-g" style="margin-top:12px;">Same radius scale in light mode — boxes just render on white instead of near-black. Zero-radius marketing surfaces are even more prominent in Geist light.</div>
         </div>
       </div>
     </div>
@@ -335,8 +407,8 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">⚙️</span>
-    <span class="acc-title">Icons <span class="src-tag">Figma 1136-3742</span><span class="src-tag src-tag-g">vercel.com/geist/icons</span></span>
-    <span class="acc-meta">Aero: Material-style · Geist: Vercel-proprietary developer icons</span>
+    <span class="acc-title">Icons <span class="src-tag">Figma 1136-3742</span><span class="src-tag src-tag-s">lucide-react · shadcn default</span></span>
+    <span class="acc-meta">Aero: Material-style 2px stroke · Shadcn: Lucide React — refined geometry, round caps</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
@@ -348,34 +420,34 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
           <div class="icon-grid">
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="icon-name">search</div></div>
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="icon-name">email</div></div>
-            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="icon-name">person</div></div>
-            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><div class="icon-name">overview</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="icon-name">person</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><div class="icon-name">grid</div></div>
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="icon-name">analytics</div></div>
-            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="icon-name">check_circle</div></div>
+            <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div class="icon-name">check</div></div>
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="icon-name">warning</div></div>
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2"/></svg></div><div class="icon-name">settings</div></div>
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></div><div class="icon-name">delete</div></div>
             <div class="icon-item"><div class="icon-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="icon-name">info</div></div>
           </div>
-          <div style="margin-top:10px;font-size:11px;color:#9ca3af;">Sizes: 16px (inline), 20px (default), 24px (large) · Stroke: 2px</div>
+          <div style="margin-top:10px;font-size:11px;color:#9ca3af;">Sizes: 16px inline · 20px default · 24px large · Stroke: 2px</div>
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Icons (Light)</span><span class="col-meta2" style="color:#666;">16/24px · 1.5px stroke · #444 on light bg</span></div>
-        <div class="col-bd-g">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn — Lucide React</span><span class="col-meta2 col-lbl-s">16/24px · 2px stroke · round caps · currentColor</span></div>
+        <div class="col-bd-s">
           <div class="icon-grid">
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><line x1="11" y1="11" x2="14" y2="14"/></svg></div><div class="icon-name-g">search</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M8 2L2 14h12L8 2z"/></svg></div><div class="icon-name-g">triangle ▲</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M2 6h12"/></svg></div><div class="icon-name-g">window</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></div><div class="icon-name-g">arrow-right</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg></div><div class="icon-name-g">clock</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M5 6h6M5 8h4"/></svg></div><div class="icon-name-g">file-text</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M8 2v12M2 8h12"/></svg></div><div class="icon-name-g">plus</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M3 8h10"/></svg></div><div class="icon-name-g">minus</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><circle cx="8" cy="5" r="2.5"/><path d="M3 13a5 5 0 0110 0"/></svg></div><div class="icon-name-g">user</div></div>
-            <div class="icon-item"><div class="icon-box icon-box-g"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#444" stroke-width="1.5"><path d="M9 2L4 8h4l-1 6 5-6H8z"/></svg></div><div class="icon-name-g">bolt</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><div class="icon-name-s">Search</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div class="icon-name-s">Mail</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="icon-name-s">User</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></div><div class="icon-name-s">Grid</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="icon-name-s">BarChart</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="icon-name-s">Check</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div><div class="icon-name-s">AlertTriangle</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="icon-name-s">Settings</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></div><div class="icon-name-s">Trash</div></div>
+            <div class="icon-item"><div class="icon-box-s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27272a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div><div class="icon-name-s">Info</div></div>
           </div>
-          <div class="info-g">Light mode: stroke colour shifts from #888 (dark) to #444 (light). Same 1.5px stroke, same minimal geometry — background simply flips from #111 to #f2f2f2.</div>
+          <div class="info-s">Lucide is Shadcn's recommended icon set — a Feather Icons fork. All icons share 2px stroke, rounded caps/joins, 24×24 grid. Aero uses squarer, heavier Material-derived geometry. Lucide paths are more refined and optically consistent at small sizes.</div>
         </div>
       </div>
     </div>
@@ -386,8 +458,8 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">👤</span>
-    <span class="acc-title">Avatar <span class="src-tag">Figma 1306-863</span><span class="src-tag src-tag-g">vercel.com/geist/avatar</span></span>
-    <span class="acc-meta">Aero: S/M/L · 3 color variants · badge · Geist: S/M/L · light gray bg · dark text</span>
+    <span class="acc-title">Avatar <span class="src-tag">Figma 1306-863</span><span class="src-tag src-tag-s">shadcn/ui · Radix Avatar primitive</span></span>
+    <span class="acc-meta">Aero: S/M/L · 3 color variants · badge · Shadcn: AvatarImage + AvatarFallback · Radix</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
@@ -395,7 +467,7 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
       <div class="split-col">
         <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Avatar</span><span class="col-meta2 col-lbl-a">S=24 M=32 L=40 · 3 color variants · Inter Medium</span></div>
         <div class="col-bd-a">
-          <div class="shd shd-a">Sizes &amp; Color Variants</div>
+          <div class="shd shd-a">Sizes &amp; Variants</div>
           <div class="av-row" style="margin-bottom:14px;">
             <div class="av-group"><div class="aav aav-s aav-1">AB</div><div class="av-label">S/neutral</div></div>
             <div class="av-group"><div class="aav aav-m aav-1">AB</div><div class="av-label">M/neutral</div></div>
@@ -418,34 +490,39 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Avatar (Light)</span><span class="col-meta2" style="color:#666;">bg=#f2f2f2 · text=#444 · border=#e2e2e2</span></div>
-        <div class="col-bd-g">
-          <div class="shd shd-g">Sizes</div>
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Avatar</span><span class="col-meta2 col-lbl-s">Radix · AvatarImage + AvatarFallback</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Sizes (via className)</div>
           <div class="av-row" style="margin-bottom:14px;">
-            <div class="av-group"><div class="gav gav-s gav-1">AB</div><div class="av-label-g">Small</div></div>
-            <div class="av-group"><div class="gav gav-m gav-1">AB</div><div class="av-label-g">Medium</div></div>
-            <div class="av-group"><div class="gav gav-l gav-1">AB</div><div class="av-label-g">Large</div></div>
-            <div class="av-group"><div class="gav gav-m" style="background:conic-gradient(at 30% 30%,#a78bfa,#60a5fa,#34d399);color:#fff;font-size:11px;font-weight:700;border-color:#e2e2e2;">AB</div><div class="av-label-g">Gradient bg</div></div>
+            <div class="av-group"><div class="sav sav-s sav-1">AB</div><div class="av-label-s">h-6 w-6</div></div>
+            <div class="av-group"><div class="sav sav-m sav-1">AB</div><div class="av-label-s">h-8 w-8</div></div>
+            <div class="av-group"><div class="sav sav-l sav-1">AB</div><div class="av-label-s">h-10 w-10</div></div>
+            <div class="av-group"><div class="sav sav-m" style="background:linear-gradient(135deg,#e0e7ff,#c7d2fe);color:#4338ca;border:1px solid #e4e4e7;font-size:11px;font-weight:600;">CN</div><div class="av-label-s">Custom bg</div></div>
           </div>
-          <div class="shd shd-g">Status</div>
+          <div class="shd shd-s">Image + fallback</div>
           <div class="av-row" style="margin-bottom:14px;">
             <div class="av-group">
-              <div class="gav gav-m gav-1" style="position:relative;">AB<span style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;position:absolute;top:-1px;right:-1px;background:#16a34a;"></span></div>
-              <div class="av-label-g">Online</div>
+              <div class="sav sav-m sav-1" style="overflow:hidden;">
+                <img src="https://github.com/shadcn.png" width="32" height="32" style="object-fit:cover;border-radius:50%;" onerror="this.style.display='none'">
+              </div>
+              <div class="av-label-s">Image</div>
             </div>
+            <div class="av-group"><div class="sav sav-m sav-1">JD</div><div class="av-label-s">Fallback</div></div>
             <div class="av-group">
-              <div class="gav gav-m gav-1" style="position:relative;">AB<span style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;position:absolute;top:-1px;right:-1px;background:#c9c9c9;"></span></div>
-              <div class="av-label-g">Offline</div>
+              <div class="sav sav-m sav-1" style="position:relative;">AB
+                <span style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;position:absolute;top:-1px;right:-1px;background:#22c55e;"></span>
+              </div>
+              <div class="av-label-s">+ status dot</div>
             </div>
           </div>
-          <div class="shd shd-g">Stacked</div>
-          <div class="gav-stack">
-            <div class="gav gav-m gav-1">AB</div>
-            <div class="gav gav-m" style="background:#f0f7ff;color:#0062d1;border:1px solid #e2e2e2;width:32px;height:32px;font-size:11px;font-weight:500;">CD</div>
-            <div class="gav gav-m" style="background:#f0fdf4;color:#166534;border:1px solid #e2e2e2;width:32px;height:32px;font-size:11px;font-weight:500;">EF</div>
-            <div class="gav gav-m gav-1" style="font-size:9px;">+5</div>
+          <div class="shd shd-s">Stacked</div>
+          <div class="sav-stack">
+            <div class="sav sav-m sav-1">AB</div>
+            <div class="sav sav-m" style="background:#f0fdf4;color:#166534;border:2px solid #fff;width:32px;height:32px;font-size:11px;font-weight:500;">CD</div>
+            <div class="sav sav-m" style="background:#eff6ff;color:#1d4ed8;border:2px solid #fff;width:32px;height:32px;font-size:11px;font-weight:500;">EF</div>
+            <div class="sav sav-m sav-1" style="font-size:9px;">+5</div>
           </div>
-          <div class="info-g" style="margin-top:10px;">Light mode: background flips from #1a1a1a to #f2f2f2, text from #888 to #444, border from #2a2a2a to #e2e2e2. Status badge border matches bg (white in light).</div>
+          <div class="info-s" style="margin-top:10px;"><code>AvatarImage</code> renders the photo; <code>AvatarFallback</code> shows initials on error. No built-in status badge — compose a positioned dot. Aero ships 3 preset color variants; Shadcn ships one zinc neutral, custom via className.</div>
         </div>
       </div>
     </div>
@@ -456,8 +533,8 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">🔘</span>
-    <span class="acc-title">Buttons <span class="src-tag">Aero Figma docs</span><span class="src-tag src-tag-g">vercel.com/geist/button</span></span>
-    <span class="acc-meta">Aero: 4px/36px/Inter · Geist: 6px/32px/Inter — light primary = black fill</span>
+    <span class="acc-title">Buttons <span class="src-tag">Aero Figma docs</span><span class="src-tag src-tag-s">shadcn/ui · Button · 6 variants</span></span>
+    <span class="acc-meta">Aero: 4px/36px/Inter · Shadcn: 6px/36px/Inter — 6 variants incl. ghost &amp; link</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
@@ -477,27 +554,28 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
           <div class="btn-row">
             <button class="ab ab-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Add Location</button>
             <button class="ab ab-secondary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Message</button>
-            <button class="ab ab-tertiary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</button>
           </div>
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Buttons (Light)</span><span class="col-meta2" style="color:#666;">6px · 32px · Inter 500 13px · Primary = black</span></div>
-        <div class="col-bd-g">
-          <div class="shd shd-g">Variants</div>
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Buttons</span><span class="col-meta2 col-lbl-s">6px · 36px · Inter 500 · 6 variants</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Variants</div>
           <div class="btn-row" style="margin-bottom:12px;">
-            <button class="gb gb-p">Primary</button>
-            <button class="gb gb-s">Secondary</button>
-            <button class="gb gb-ghost">Ghost</button>
-            <button class="gb gb-err">Error</button>
+            <button class="sb" style="background:#18181b;color:#fafafa;">Default</button>
+            <button class="sb" style="background:#f4f4f5;color:#18181b;">Secondary</button>
+            <button class="sb" style="background:#fff;color:#18181b;border:1px solid #e4e4e7;">Outline</button>
+            <button class="sb" style="background:transparent;color:#18181b;">Ghost</button>
+            <button class="sb" style="background:#ef4444;color:#fff;">Destructive</button>
+            <button class="sb" style="background:transparent;color:#18181b;text-decoration:underline;text-underline-offset:3px;">Link</button>
           </div>
-          <div class="shd shd-g">With icons</div>
+          <div class="shd shd-s">With icons + sizes</div>
           <div class="btn-row">
-            <button class="gb gb-p"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Deploy</button>
-            <button class="gb gb-s"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Integrations</button>
-            <button class="gb gb-ghost"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Search</button>
+            <button class="sb" style="background:#18181b;color:#fafafa;height:32px;padding:0 12px;font-size:12px;border-radius:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add (sm)</button>
+            <button class="sb" style="background:#18181b;color:#fafafa;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
+            <button class="sb" style="background:#f4f4f5;color:#18181b;border:1px solid #e4e4e7;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Search</button>
           </div>
-          <div class="info-g" style="margin-top:10px;">Key light mode flip: Primary goes from <strong style="background:#fff;padding:1px 4px;border-radius:2px;color:#000;border:1px solid #e2e2e2;">white fill</strong> (dark mode) to <strong style="background:#171717;padding:1px 4px;border-radius:2px;color:#fff;">black fill</strong> (light mode). Secondary flips border/bg accordingly. Error goes from dark red bg to light red bg.</div>
+          <div class="info-s" style="margin-top:10px;">Shadcn adds <strong>Ghost</strong> (hover bg only) and <strong>Link</strong> (underline, no bg) that Aero doesn't have. Default = black fill; Aero primary = blue fill. Destructive uses red-500 (#ef4444) vs Aero's #de1b0c.</div>
         </div>
       </div>
     </div>
@@ -508,14 +586,14 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">📝</span>
-    <span class="acc-title">Text Field <span class="src-tag">Figma 2455-19312</span><span class="src-tag src-tag-g">vercel.com/geist/input</span></span>
-    <span class="acc-meta">Aero: #e5e9f0→#1976d2 · Geist light: #c9c9c9→#171717</span>
+    <span class="acc-title">Text Field <span class="src-tag">Figma 2455-19312</span><span class="src-tag src-tag-s">shadcn/ui · Input + Label</span></span>
+    <span class="acc-meta">Aero: #e5e9f0→#1976d2 border · Shadcn: #e4e4e7 border → ring on focus</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
     <div class="split">
       <div class="split-col">
-        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Text Field</span><span class="col-meta2 col-lbl-a">4px · 36px · Inter · #e5e9f0 default → #1976d2 focus</span></div>
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Text Field</span><span class="col-meta2 col-lbl-a">4px · 36px · Inter · #e5e9f0 → #1976d2 focus</span></div>
         <div class="col-bd-a">
           <div class="shd shd-a">Default</div>
           <div class="atf-wrap" style="margin-bottom:14px;">
@@ -530,41 +608,46 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
               <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:1px;height:18px;background:#212121;"></span>
             </div>
           </div>
-          <div class="shd shd-a">With leading icon</div>
+          <div class="shd shd-a">With icon</div>
           <div class="atf-wrap">
             <div class="atf-label">Search</div>
             <div style="position:relative;max-width:240px;">
               <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#8f8f8f;display:flex;pointer-events:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-              <input class="atf" style="padding-left:30px;" placeholder="Enter input" style="pointer-events:none;">
+              <input class="atf" style="padding-left:30px;" placeholder="Search..." style="pointer-events:none;">
             </div>
           </div>
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Input (Light)</span><span class="col-meta2" style="color:#666;">6px · 32px · #c9c9c9 default → #171717 focus</span></div>
-        <div class="col-bd-g">
-          <div class="shd shd-g">Default</div>
-          <div class="gtf-wrap" style="margin-bottom:14px;">
-            <div class="gtf-label">Label</div>
-            <input class="gtf" placeholder="Enter input" style="pointer-events:none;">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Input</span><span class="col-meta2 col-lbl-s">6px · 36px · #e4e4e7 border → ring focus</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Default</div>
+          <div class="stf-wrap" style="margin-bottom:14px;">
+            <div class="stf-label">Email</div>
+            <input class="stf" placeholder="you@example.com" style="pointer-events:none;">
           </div>
-          <div class="shd shd-g">Focused</div>
-          <div class="gtf-wrap" style="margin-bottom:14px;">
-            <div class="gtf-label">Label</div>
+          <div class="shd shd-s">Focused</div>
+          <div class="stf-wrap" style="margin-bottom:14px;">
+            <div class="stf-label">Email</div>
             <div style="position:relative;max-width:240px;">
-              <input class="gtf gtf-focused" style="pointer-events:none;" placeholder="Enter input">
-              <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:1px;height:14px;background:#171717;"></span>
+              <input class="stf stf-focused" placeholder="you@example.com" style="pointer-events:none;">
+              <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:1px;height:16px;background:#09090b;"></span>
             </div>
           </div>
-          <div class="shd shd-g">With prefix icon</div>
-          <div class="gtf-wrap">
-            <div class="gtf-label">Search</div>
+          <div class="shd shd-s">Disabled</div>
+          <div class="stf-wrap" style="margin-bottom:14px;">
+            <div class="stf-label">Email</div>
+            <input class="stf stf-disabled" placeholder="you@example.com" disabled style="pointer-events:none;">
+          </div>
+          <div class="shd shd-s">With icon</div>
+          <div class="stf-wrap">
+            <div class="stf-label">Search</div>
             <div style="position:relative;max-width:240px;">
-              <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:#8f8f8f;display:flex;pointer-events:none;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-              <input class="gtf" style="padding-left:26px;" placeholder="Enter input" style="pointer-events:none;">
+              <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#71717a;display:flex;pointer-events:none;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+              <input class="stf" style="padding-left:28px;" placeholder="Search..." style="pointer-events:none;">
             </div>
           </div>
-          <div class="info-g" style="margin-top:10px;">Light: border #c9c9c9 (default) → #171717 (focused). Label #666 → #171717. Background stays #fff. Caret is dark. Same 6px radius, 32px height.</div>
+          <div class="info-s" style="margin-top:10px;">Focus uses a <strong>ring</strong> (box-shadow) not a border-color change. Ships a native Disabled state (zinc-100 bg). No built-in label — pair with Shadcn's <code>&lt;Label&gt;</code> component. Aero label is built into the field spec.</div>
         </div>
       </div>
     </div>
@@ -575,18 +658,18 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">🗔</span>
-    <span class="acc-title">Popup / Modal <span class="src-tag">Figma 5730-45700</span><span class="src-tag src-tag-g">vercel.com/geist/modal</span></span>
-    <span class="acc-meta">Aero: 4px/shadow(.18) · Geist light: 8px/border+shadow(.12) white bg</span>
+    <span class="acc-title">Popup / Modal <span class="src-tag">Figma 5730-45700</span><span class="src-tag src-tag-s">shadcn/ui · Dialog · Radix UI</span></span>
+    <span class="acc-meta">Aero: 4px/shadow · Shadcn: 8px/border+shadow · Radix accessibility + backdrop</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
     <div class="split">
       <div class="split-col">
-        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Popup Regular</span><span class="col-meta2 col-lbl-a">4px radius · shadow(0,4,8,rgba(33,33,33,.18))</span></div>
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Popup</span><span class="col-meta2 col-lbl-a">4px · shadow(0,4,8,rgba(33,33,33,.18))</span></div>
         <div class="col-bd-a">
           <div class="apop">
             <div class="apop-hd"><span class="apop-title">Title</span><span class="apop-close">✕</span></div>
-            <div class="apop-body">Use this modal for Error, warning, confirmation popups.<br>Avoid using more than 4 lines of text.<br>Enable Text field if needed & swap it with a component.</div>
+            <div class="apop-body">Use this modal for error, warning, confirmation popups.<br>Avoid using more than 4 lines of text.<br>Enable text field if needed.</div>
             <div class="apop-foot">
               <button class="ab ab-tertiary" style="font-size:13px;height:32px;">Secondary</button>
               <button class="ab ab-primary" style="font-size:13px;height:32px;">Primary</button>
@@ -595,17 +678,29 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Modal (Light)</span><span class="col-meta2" style="color:#666;">8px · border #e2e2e2 · shadow(0,8,40,rgba(0,0,0,.12))</span></div>
-        <div class="col-bd-g">
-          <div class="gpop">
-            <div class="gpop-hd"><span class="gpop-title">Delete project?</span><span class="gpop-close">✕</span></div>
-            <div class="gpop-body">This will permanently remove all deployments, analytics data, and settings. This action cannot be undone.</div>
-            <div class="gpop-foot">
-              <button class="gb gb-s" style="height:28px;font-size:12px;">Cancel</button>
-              <button class="gb gb-err" style="height:28px;font-size:12px;">Delete project</button>
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Dialog</span><span class="col-meta2 col-lbl-s">8px · Radix · DialogTitle + DialogDescription</span></div>
+        <div class="col-bd-s">
+          <div class="spop">
+            <div class="spop-hd">
+              <div class="spop-title">Edit profile</div>
+              <div class="spop-desc">Make changes here. Click save when done.</div>
+            </div>
+            <div class="spop-body">
+              <div class="stf-wrap" style="margin-bottom:10px;max-width:100%;">
+                <div class="stf-label">Name</div>
+                <input class="stf" placeholder="Pedro Duarte" style="pointer-events:none;max-width:100%;width:100%;">
+              </div>
+              <div class="stf-wrap" style="max-width:100%;">
+                <div class="stf-label">Username</div>
+                <input class="stf" placeholder="@peduarte" style="pointer-events:none;max-width:100%;width:100%;">
+              </div>
+            </div>
+            <div class="spop-foot">
+              <button class="sb" style="background:#f4f4f5;color:#18181b;height:32px;padding:0 14px;font-size:13px;border-radius:6px;">Cancel</button>
+              <button class="sb" style="background:#18181b;color:#fafafa;height:32px;padding:0 14px;font-size:13px;border-radius:6px;">Save changes</button>
             </div>
           </div>
-          <div class="info-g" style="margin-top:10px;">Light mode: shadow goes from near-black (0,20,60,rgba(0,0,0,.7)) to a lighter ambient shadow (0,8,40,rgba(0,0,0,.12)) with a visible border #e2e2e2. Close button bg shifts from #1a1a1a to #f2f2f2.</div>
+          <div class="info-s" style="margin-top:10px;">Built on Radix Dialog primitive — ships with <code>DialogTitle</code> and <code>DialogDescription</code> slots (required for screen reader accessibility). Backdrop is <code>bg-black/80</code>. Aero has no description slot and uses a custom shadow only, no visible border.</div>
         </div>
       </div>
     </div>
@@ -616,57 +711,820 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger" onclick="toggle(this)">
     <span class="acc-icon">📊</span>
-    <span class="acc-title">Table — 6+ columns <span class="src-tag">Figma 2239-22154</span><span class="src-tag src-tag-g">vercel.com/geist/table</span></span>
-    <span class="acc-meta">Aero: 56px rows · filled chips · Geist light: 48px rows · bordered badges on white</span>
+    <span class="acc-title">Table <span class="src-tag">Figma 2239-22154</span><span class="src-tag src-tag-s">shadcn/ui · Table · TanStack optional</span></span>
+    <span class="acc-meta">Aero: 56px rows · filled chips · Shadcn: 52px rows · pill badges · semantic HTML</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body">
     <div class="split">
       <div class="split-col">
-        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Table (Double Line)</span><span class="col-meta2 col-lbl-a">56px rows · Inter · #eaeaea borders · status chips 4px</span></div>
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Table</span><span class="col-meta2 col-lbl-a">56px rows · Inter · #eaeaea borders · chips 4px</span></div>
         <div class="col-bd-a" style="padding:0;overflow-x:auto;">
           <table class="a-table">
             <thead><tr>
               <th style="min-width:150px;padding-left:8px;">Location <span style="font-size:10px;color:#9ca3af;">↓</span></th>
-              <th style="min-width:60px;">Rating <span style="font-size:10px;color:#9ca3af;">↑</span></th>
+              <th style="min-width:60px;">Rating</th>
               <th style="min-width:70px;">Reviews</th>
               <th style="min-width:80px;">Status</th>
               <th style="min-width:80px;">Listings</th>
               <th style="min-width:50px;">Actions</th>
             </tr></thead>
             <tbody>
-              <tr><td style="padding-left:8px;">Atlanta, GA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.8</td><td>124</td><td><span class="a-chip ac-green">Label</span></td><td><span class="a-chip ac-blue">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
-              <tr><td style="padding-left:8px;">Stamford, CT<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>3.9</td><td>56</td><td><span class="a-chip ac-blue">Label</span></td><td><span class="a-chip ac-green">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
-              <tr><td style="padding-left:8px;">Los Angeles, CA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.2</td><td>89</td><td><span class="a-chip ac-red">Label</span></td><td><span class="a-chip ac-yellow">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
-              <tr><td style="padding-left:8px;">New York City, NY<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.5</td><td>312</td><td><span class="a-chip ac-yellow">Label</span></td><td><span class="a-chip ac-green">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
-              <tr><td style="padding-left:8px;">San Diego, CA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.1</td><td>67</td><td><span class="a-chip ac-green">Label</span></td><td><span class="a-chip ac-gray">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
-              <tr><td style="padding-left:8px;">Las Vegas, NV<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.7</td><td>201</td><td><span class="a-chip ac-yellow">Label</span></td><td><span class="a-chip ac-green">Label</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Atlanta, GA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.8</td><td>124</td><td><span class="a-chip ac-green">Active</span></td><td><span class="a-chip ac-blue">Synced</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Stamford, CT<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>3.9</td><td>56</td><td><span class="a-chip ac-blue">Pending</span></td><td><span class="a-chip ac-green">Synced</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Los Angeles, CA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.2</td><td>89</td><td><span class="a-chip ac-red">Error</span></td><td><span class="a-chip ac-yellow">Warning</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">New York City, NY<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.5</td><td>312</td><td><span class="a-chip ac-yellow">Building</span></td><td><span class="a-chip ac-green">Synced</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">San Diego, CA<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.1</td><td>67</td><td><span class="a-chip ac-green">Ready</span></td><td><span class="a-chip ac-gray">Unknown</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
+              <tr><td style="padding-left:8px;">Las Vegas, NV<span class="td-sub">Last updated Jun 12 by Adam</span></td><td>4.7</td><td>201</td><td><span class="a-chip ac-yellow">Queued</span></td><td><span class="a-chip ac-green">Synced</span></td><td style="color:#1976d2;cursor:pointer;">···</td></tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist Table (Light)</span><span class="col-meta2" style="color:#666;">48px rows · Inter · #e2e2e2 borders · light badges · mono numerics</span></div>
-        <div class="col-bd-g" style="padding:0;overflow-x:auto;">
-          <table class="g-table">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Table</span><span class="col-meta2 col-lbl-s">52px rows · Inter · #e4e4e7 borders · pill badges</span></div>
+        <div class="col-bd-s" style="padding:0;overflow-x:auto;">
+          <table class="s-table">
             <thead><tr>
               <th style="min-width:150px;">Location</th>
               <th style="min-width:60px;">Rating</th>
               <th style="min-width:70px;">Reviews</th>
               <th style="min-width:80px;">Status</th>
               <th style="min-width:80px;">Listings</th>
-              <th style="min-width:40px;">···</th>
+              <th style="min-width:40px;"></th>
             </tr></thead>
             <tbody>
-              <tr><td>Atlanta, GA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.8</td><td style="font-family:var(--gm);">124</td><td><span class="g-badge-sm gb-green">Active</span></td><td><span class="g-badge-sm gb-blue">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
-              <tr><td>Stamford, CT<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">3.9</td><td style="font-family:var(--gm);">56</td><td><span class="g-badge-sm gb-blue">Pending</span></td><td><span class="g-badge-sm gb-green">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
-              <tr><td>Los Angeles, CA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.2</td><td style="font-family:var(--gm);">89</td><td><span class="g-badge-sm gb-red">Error</span></td><td><span class="g-badge-sm gb-yellow">Warning</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
-              <tr><td>New York City, NY<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.5</td><td style="font-family:var(--gm);">312</td><td><span class="g-badge-sm gb-yellow">Building</span></td><td><span class="g-badge-sm gb-green">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
-              <tr><td>San Diego, CA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.1</td><td style="font-family:var(--gm);">67</td><td><span class="g-badge-sm gb-green">Ready</span></td><td><span class="g-badge-sm gb-gray">Unknown</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
-              <tr><td>Las Vegas, NV<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--gm);">4.7</td><td style="font-family:var(--gm);">201</td><td><span class="g-badge-sm gb-yellow">Queued</span></td><td><span class="g-badge-sm gb-green">Synced</span></td><td style="color:#c9c9c9;cursor:pointer;">···</td></tr>
+              <tr><td>Atlanta, GA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--sm);">4.8</td><td style="font-family:var(--sm);">124</td><td><span class="s-badge" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;">Active</span></td><td><span class="s-badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">Synced</span></td><td style="color:#a1a1aa;cursor:pointer;">···</td></tr>
+              <tr><td>Stamford, CT<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--sm);">3.9</td><td style="font-family:var(--sm);">56</td><td><span class="s-badge" style="background:#f4f4f5;color:#3f3f46;border:1px solid #e4e4e7;">Pending</span></td><td><span class="s-badge" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;">Synced</span></td><td style="color:#a1a1aa;cursor:pointer;">···</td></tr>
+              <tr><td>Los Angeles, CA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--sm);">4.2</td><td style="font-family:var(--sm);">89</td><td><span class="s-badge" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;">Error</span></td><td><span class="s-badge" style="background:#fffbeb;color:#92400e;border:1px solid #fde68a;">Warning</span></td><td style="color:#a1a1aa;cursor:pointer;">···</td></tr>
+              <tr><td>New York City, NY<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--sm);">4.5</td><td style="font-family:var(--sm);">312</td><td><span class="s-badge" style="background:#fffbeb;color:#92400e;border:1px solid #fde68a;">Building</span></td><td><span class="s-badge" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;">Synced</span></td><td style="color:#a1a1aa;cursor:pointer;">···</td></tr>
+              <tr><td>San Diego, CA<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--sm);">4.1</td><td style="font-family:var(--sm);">67</td><td><span class="s-badge" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;">Ready</span></td><td><span class="s-badge" style="background:#f4f4f5;color:#3f3f46;border:1px solid #e4e4e7;">Unknown</span></td><td style="color:#a1a1aa;cursor:pointer;">···</td></tr>
+              <tr><td>Las Vegas, NV<span class="td-sub">Jun 12 · Adam</span></td><td style="font-family:var(--sm);">4.7</td><td style="font-family:var(--sm);">201</td><td><span class="s-badge" style="background:#f4f4f5;color:#3f3f46;border:1px solid #e4e4e7;">Queued</span></td><td><span class="s-badge" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;">Synced</span></td><td style="color:#a1a1aa;cursor:pointer;">···</td></tr>
             </tbody>
           </table>
-          <div class="info-g" style="padding:8px;">Light badges: saturated text on pale tinted backgrounds (green=f0fdf4/166534, blue=eff6ff/1d4ed8, red=fff0f0/cb2a2f, amber=fffbeb/92400e). Tabular monospace numerics unchanged.</div>
+          <div class="info-s" style="padding:8px;">Thin semantic HTML — <code>TableHeader / TableBody / TableRow / TableCell</code>. No built-in sort or pagination; pair with <strong>TanStack Table</strong>. Badge uses <code>rounded-full</code> (pill) vs Aero's 4px chip. Numerics use monospace for column alignment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BADGE / CHIPS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🏷️</span>
+    <span class="acc-title">Badge / Chips / Tags <span class="src-tag">Figma · Badge</span><span class="src-tag src-tag-s">shadcn/ui · Badge</span></span>
+    <span class="acc-meta">Aero: 4px filled chips · Shadcn: pill badges — 4 variants</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Badge / Chip</span><span class="col-meta2 col-lbl-a">4px radius · filled bg · Inter 500 12px</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Status chips</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">
+            <span class="a-badge ab-blue">New</span>
+            <span class="a-badge ab-green">Active</span>
+            <span class="a-badge ab-red">Error</span>
+            <span class="a-badge ab-yellow">Pending</span>
+            <span class="a-badge ab-gray">Inactive</span>
+            <span class="a-badge ab-purple">Beta</span>
+          </div>
+          <div class="shd shd-a">With dot indicator</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">
+            <span class="a-badge ab-green" style="gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:#377e2c;flex-shrink:0;"></span>Online</span>
+            <span class="a-badge ab-gray" style="gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:#555;flex-shrink:0;"></span>Offline</span>
+          </div>
+          <div class="shd shd-a">Dismissible tag</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            <span class="a-badge ab-blue" style="gap:5px;">Marketing <span style="opacity:.6;cursor:pointer;">✕</span></span>
+            <span class="a-badge ab-blue" style="gap:5px;">Social <span style="opacity:.6;cursor:pointer;">✕</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Badge</span><span class="col-meta2 col-lbl-s">pill · 4 variants: default / secondary / destructive / outline</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Variants</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">
+            <span class="s-pill sp-default">Default</span>
+            <span class="s-pill sp-secondary">Secondary</span>
+            <span class="s-pill sp-destructive">Destructive</span>
+            <span class="s-pill sp-outline">Outline</span>
+          </div>
+          <div class="shd shd-s">Semantic usage</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;">
+            <span class="s-pill" style="background:#f0fdf4;color:#166534;border:1px solid #bbf7d0;">Active</span>
+            <span class="s-pill" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;">Error</span>
+            <span class="s-pill" style="background:#fffbeb;color:#92400e;border:1px solid #fde68a;">Pending</span>
+            <span class="s-pill" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;">Info</span>
+          </div>
+          <div class="shd shd-s">With icon</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            <span class="s-pill sp-default"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>
+            <span class="s-pill sp-secondary"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>Beta</span>
+          </div>
+          <div class="info-s">Aero uses square-cornered (4px) filled chips; Shadcn uses <code>rounded-full</code> pills. Both share the same semantic color set. Shadcn has no built-in dismissible chip — compose with an X button.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ACCORDION ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📋</span>
+    <span class="acc-title">Accordion <span class="src-tag">Figma · Accordion</span><span class="src-tag src-tag-s">shadcn/ui · Accordion · Radix</span></span>
+    <span class="acc-meta">Aero: 4px border · Shadcn: 8px · Radix collapsible · animated chevron</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Accordion</span><span class="col-meta2 col-lbl-a">4px · border · Inter 500 14px</span></div>
+        <div class="col-bd-a">
+          <div class="a-acc">
+            <div class="a-acc-item">
+              <div class="a-acc-trigger">What is Aero? <span>▼</span></div>
+            </div>
+            <div class="a-acc-item">
+              <div class="a-acc-trigger">How do I get started? <span>▼</span></div>
+              <div class="a-acc-body">Install the Aero design system via npm and import tokens into your project.</div>
+            </div>
+            <div class="a-acc-item">
+              <div class="a-acc-trigger">Is it accessible? <span>▼</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Accordion</span><span class="col-meta2 col-lbl-s">Radix · animated · type=single|multiple</span></div>
+        <div class="col-bd-s">
+          <div class="s-acc">
+            <div class="s-acc-item">
+              <div class="s-acc-trigger">Is it accessible? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+            </div>
+            <div class="s-acc-item">
+              <div class="s-acc-trigger" style="font-weight:600;">Is it styled? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg></div>
+              <div class="s-acc-body">Yes. It comes with default styles that match the other components' aesthetic.</div>
+            </div>
+            <div class="s-acc-item">
+              <div class="s-acc-trigger">Is it animated? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+            </div>
+          </div>
+          <div class="info-s">Built on Radix <code>Collapsible</code>. Supports <code>type="single"</code> (one open at a time) or <code>type="multiple"</code>. Content animates via <code>data-state</code> + Tailwind. Aero is a custom component with no animation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TABS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🗂️</span>
+    <span class="acc-title">Tabs <span class="src-tag">Figma · Tabs</span><span class="src-tag src-tag-s">shadcn/ui · Tabs · Radix</span></span>
+    <span class="acc-meta">Aero: underline style · Shadcn: pill/segmented list on zinc-100 bg</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Tabs</span><span class="col-meta2 col-lbl-a">underline · blue active · Inter 500 13px</span></div>
+        <div class="col-bd-a">
+          <div class="a-tabs-list">
+            <div class="a-tab active">Overview</div>
+            <div class="a-tab">Reviews</div>
+            <div class="a-tab">Listings</div>
+            <div class="a-tab">Settings</div>
+          </div>
+          <div style="font-family:var(--af);font-size:13px;color:#555;padding:4px 0;">Overview tab content goes here.</div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Tabs</span><span class="col-meta2 col-lbl-s">Radix · segmented bg · active = white card</span></div>
+        <div class="col-bd-s">
+          <div class="s-tabs-list">
+            <div class="s-tab active">Account</div>
+            <div class="s-tab">Password</div>
+            <div class="s-tab">Notifications</div>
+          </div>
+          <div style="font-family:var(--sf);font-size:13px;color:#71717a;padding:4px 0;">Make changes to your account here.</div>
+          <div class="info-s">Shadcn uses a pill/card style (<code>TabsList</code> has zinc-100 bg, active <code>TabsTrigger</code> gets a white card with subtle shadow). Aero uses an underline style. Both are built on Radix Tabs in Shadcn's case, custom in Aero's.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHECKBOX ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">☑️</span>
+    <span class="acc-title">Checkbox <span class="src-tag">Figma · Checkbox</span><span class="src-tag src-tag-s">shadcn/ui · Checkbox · Radix</span></span>
+    <span class="acc-meta">Aero: blue fill · Shadcn: zinc-900 fill · Radix accessible primitive</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Checkbox</span><span class="col-meta2 col-lbl-a">16px · 3px radius · #1976d2 checked</span></div>
+        <div class="col-bd-a">
+          <div class="check-row">
+            <label class="check-item">
+              <div class="a-checkbox"></div>
+              <span class="check-label">Unchecked</span>
+            </label>
+            <label class="check-item">
+              <div class="a-checkbox checked"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <span class="check-label">Checked</span>
+            </label>
+            <label class="check-item" style="opacity:.45;cursor:not-allowed;">
+              <div class="a-checkbox" style="border-color:#ccc;"></div>
+              <span class="check-label">Disabled</span>
+            </label>
+            <label class="check-item">
+              <div class="a-checkbox checked" style="background:#1976d2;"><span style="color:#fff;font-size:11px;font-weight:700;line-height:1;">—</span></div>
+              <span class="check-label">Indeterminate</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Checkbox</span><span class="col-meta2 col-lbl-s">Radix · 4px · zinc-900 checked · ring focus</span></div>
+        <div class="col-bd-s">
+          <div class="check-row">
+            <label class="check-item">
+              <div class="s-checkbox"></div>
+              <div><span class="check-label-s">Accept terms</span><span class="check-label-muted">You agree to our Terms of Service.</span></div>
+            </label>
+            <label class="check-item">
+              <div class="s-checkbox checked"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><polyline points="2,6 5,9 10,3" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div><span class="check-label-s">Email notifications</span><span class="check-label-muted">Receive daily digest emails.</span></div>
+            </label>
+            <label class="check-item" style="opacity:.5;cursor:not-allowed;">
+              <div class="s-checkbox" style="background:#f4f4f5;"></div>
+              <span class="check-label-s">Disabled option</span>
+            </label>
+          </div>
+          <div class="info-s">Built on Radix <code>Checkbox</code>. Supports indeterminate state via <code>checked="indeterminate"</code>. Aero uses blue fill; Shadcn uses zinc-950. Shadcn pairs a <code>&lt;Label&gt;</code> component for the text — supports multi-line descriptions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RADIO BUTTON ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🔵</span>
+    <span class="acc-title">Radio Button <span class="src-tag">Figma · Radio button</span><span class="src-tag src-tag-s">shadcn/ui · RadioGroup · Radix</span></span>
+    <span class="acc-meta">Aero: blue dot · Shadcn: zinc dot · RadioGroup + RadioGroupItem</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Radio Button</span><span class="col-meta2 col-lbl-a">16px circle · #1976d2 selected</span></div>
+        <div class="col-bd-a">
+          <div class="check-row">
+            <label class="check-item">
+              <div class="a-radio-btn"></div>
+              <span class="check-label">Default</span>
+            </label>
+            <label class="check-item">
+              <div class="a-radio-btn checked"></div>
+              <span class="check-label">Selected</span>
+            </label>
+            <label class="check-item">
+              <div class="a-radio-btn"></div>
+              <span class="check-label">Comfortable</span>
+            </label>
+            <label class="check-item" style="opacity:.45;cursor:not-allowed;">
+              <div class="a-radio-btn" style="border-color:#ccc;"></div>
+              <span class="check-label">Disabled</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn RadioGroup</span><span class="col-meta2 col-lbl-s">Radix · RadioGroup + RadioGroupItem</span></div>
+        <div class="col-bd-s">
+          <div class="check-row">
+            <label class="check-item">
+              <div class="s-radio-btn checked"></div>
+              <div><span class="check-label-s">Default</span><span class="check-label-muted">The default system setting.</span></div>
+            </label>
+            <label class="check-item">
+              <div class="s-radio-btn"></div>
+              <div><span class="check-label-s">Comfortable</span><span class="check-label-muted">More spacing between items.</span></div>
+            </label>
+            <label class="check-item">
+              <div class="s-radio-btn"></div>
+              <div><span class="check-label-s">Compact</span><span class="check-label-muted">Tighter layout for dense UIs.</span></div>
+            </label>
+            <label class="check-item" style="opacity:.5;cursor:not-allowed;">
+              <div class="s-radio-btn"></div>
+              <span class="check-label-s">Disabled</span>
+            </label>
+          </div>
+          <div class="info-s">Radix <code>RadioGroup</code> handles keyboard navigation and ARIA automatically. Shadcn pairs with <code>&lt;Label&gt;</code> for description text. Both use a filled dot for the selected state — Aero in blue, Shadcn in zinc-950.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SELECT / DROPDOWN ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">⬇️</span>
+    <span class="acc-title">Dropdown / Select <span class="src-tag">Figma · Dropdown</span><span class="src-tag src-tag-s">shadcn/ui · Select · Radix</span></span>
+    <span class="acc-meta">Aero: 4px · blue selected · Shadcn: 6px · Select primitive + DropdownMenu</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Dropdown</span><span class="col-meta2 col-lbl-a">4px · 36px · #e5e9f0 border · blue selected</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Trigger</div>
+          <div class="a-select" style="margin-bottom:10px;">
+            <span style="font-size:14px;color:#212121;">Atlanta, GA</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="shd shd-a">Open menu</div>
+          <div class="a-dropdown-menu">
+            <div class="a-dropdown-item selected">Atlanta, GA</div>
+            <div class="a-dropdown-item">New York, NY</div>
+            <div class="a-dropdown-item">Los Angeles, CA</div>
+            <div class="a-dropdown-item" style="color:#9ca3af;cursor:not-allowed;">Disabled option</div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Select</span><span class="col-meta2 col-lbl-s">Radix · 6px · SelectTrigger / Content / Item</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Trigger</div>
+          <div class="s-select" style="margin-bottom:10px;">
+            <span style="font-size:13px;color:#09090b;">Select a location…</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="shd shd-s">Open menu</div>
+          <div class="s-dropdown-menu">
+            <div style="padding:4px 8px 6px;font-family:var(--sf);font-size:11px;font-weight:600;color:#71717a;text-transform:uppercase;letter-spacing:.05em;">Locations</div>
+            <div class="s-dropdown-item selected">Atlanta, GA</div>
+            <div class="s-dropdown-item">New York, NY</div>
+            <div class="s-dropdown-item">Los Angeles, CA</div>
+            <div class="s-dropdown-item" style="color:#a1a1aa;cursor:not-allowed;pointer-events:none;">Disabled option</div>
+          </div>
+          <div class="info-s">Shadcn ships two separate components: <code>Select</code> (form-bound, accessible) and <code>DropdownMenu</code> (action menus). Aero has a single dropdown component. Shadcn's <code>SelectContent</code> supports group labels natively.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TEXTAREA ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📄</span>
+    <span class="acc-title">Text Area <span class="src-tag">Figma · Text area</span><span class="src-tag src-tag-s">shadcn/ui · Textarea</span></span>
+    <span class="acc-meta">Aero: 4px · #e5e9f0 border · Shadcn: 6px · ring focus · same Input pattern</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Text Area</span><span class="col-meta2 col-lbl-a">4px · #e5e9f0 default → #1976d2 focus</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Default</div>
+          <div class="atf-wrap" style="max-width:100%;margin-bottom:14px;">
+            <div class="atf-label">Description</div>
+            <textarea class="a-textarea" rows="3" placeholder="Enter description..." style="pointer-events:none;"></textarea>
+          </div>
+          <div class="shd shd-a">Focused</div>
+          <div class="atf-wrap" style="max-width:100%;">
+            <div class="atf-label">Description</div>
+            <textarea class="a-textarea focused" rows="3" placeholder="Enter description..." style="pointer-events:none;">This is the focused state with the blue border active.</textarea>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Textarea</span><span class="col-meta2 col-lbl-s">6px · #e4e4e7 border → ring focus · min-h-[80px]</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Default</div>
+          <div class="stf-wrap" style="max-width:100%;margin-bottom:14px;">
+            <div class="stf-label">Your message</div>
+            <textarea class="s-textarea" rows="3" placeholder="Type your message here." style="pointer-events:none;"></textarea>
+          </div>
+          <div class="shd shd-s">Focused</div>
+          <div class="stf-wrap" style="max-width:100%;margin-bottom:14px;">
+            <div class="stf-label">Your message</div>
+            <textarea class="s-textarea focused" rows="3" style="pointer-events:none;">Shadcn Textarea uses the same ring focus pattern as Input — consistent across all form controls.</textarea>
+          </div>
+          <div class="shd shd-s">Disabled</div>
+          <div class="stf-wrap" style="max-width:100%;">
+            <div class="stf-label">Locked field</div>
+            <textarea class="s-textarea stf-disabled" rows="2" disabled placeholder="Not editable." style="pointer-events:none;"></textarea>
+          </div>
+          <div class="info-s">Shadcn <code>Textarea</code> shares the same token set as <code>Input</code> — identical border, radius, focus ring, disabled state. Aero's textarea and text field share the same border/focus spec too.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ALERT / BANNER ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🔔</span>
+    <span class="acc-title">Alert / Banner <span class="src-tag">Figma · Alerts/Info/Banner</span><span class="src-tag src-tag-s">shadcn/ui · Alert</span></span>
+    <span class="acc-meta">Aero: 4 semantic variants · left border · Shadcn: default + destructive · icon slot</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Alert</span><span class="col-meta2 col-lbl-a">4px · info / success / warning / error</span></div>
+        <div class="col-bd-a">
+          <div class="a-alert a-alert-info">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            <div><div class="a-alert-title">Info</div><div class="a-alert-body">Your data was successfully synced across all locations.</div></div>
+          </div>
+          <div class="a-alert a-alert-success">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#377e2c" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><polyline points="20 6 9 17 4 12"/></svg>
+            <div><div class="a-alert-title">Success</div><div class="a-alert-body">Profile updated successfully.</div></div>
+          </div>
+          <div class="a-alert a-alert-warning">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c69204" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div><div class="a-alert-title">Warning</div><div class="a-alert-body">Your subscription expires in 3 days.</div></div>
+          </div>
+          <div class="a-alert a-alert-error">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#de1b0c" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <div><div class="a-alert-title">Error</div><div class="a-alert-body">Failed to connect. Check your credentials.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Alert</span><span class="col-meta2 col-lbl-s">2 variants: default + destructive · icon slot</span></div>
+        <div class="col-bd-s">
+          <div class="s-alert s-alert-default">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#09090b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:1px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+            <div><div class="s-alert-title">Heads up!</div><div class="s-alert-desc">You can add components and dependencies to your app using the CLI.</div></div>
+          </div>
+          <div class="s-alert s-alert-destructive">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <div><div class="s-alert-title" style="color:#b91c1c;">Error</div><div class="s-alert-desc" style="color:#b91c1c;">Your session has expired. Please log in again.</div></div>
+          </div>
+          <div class="info-s">Shadcn ships only 2 variants (default + destructive). For info/success/warning, extend via <code>className</code> or compose manually. Aero has 4 semantic variants built-in. Both use an icon slot on the left.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROGRESS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">⏳</span>
+    <span class="acc-title">Progress <span class="src-tag">Figma · Progress indicators</span><span class="src-tag src-tag-s">shadcn/ui · Progress · Radix</span></span>
+    <span class="acc-meta">Aero: 6px track · blue fill · Shadcn: 8px track · zinc-900 fill · Radix accessible</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Progress</span><span class="col-meta2 col-lbl-a">6px · #eaeaea track · #1976d2 fill</span></div>
+        <div class="col-bd-a">
+          <div class="a-progress-wrap">
+            <div style="display:flex;justify-content:space-between;"><span class="a-progress-label">Loading data</span><span class="a-progress-label">33%</span></div>
+            <div class="a-progress-track"><div class="a-progress-fill" style="width:33%;"></div></div>
+          </div>
+          <div class="a-progress-wrap">
+            <div style="display:flex;justify-content:space-between;"><span class="a-progress-label">Uploading</span><span class="a-progress-label">67%</span></div>
+            <div class="a-progress-track"><div class="a-progress-fill" style="width:67%;"></div></div>
+          </div>
+          <div class="a-progress-wrap">
+            <div style="display:flex;justify-content:space-between;"><span class="a-progress-label">Complete</span><span class="a-progress-label">100%</span></div>
+            <div class="a-progress-track"><div class="a-progress-fill" style="width:100%;background:#4cae3d;"></div></div>
+          </div>
+          <div class="a-progress-wrap">
+            <div><span class="a-progress-label">Indeterminate</span></div>
+            <div class="a-progress-track" style="overflow:visible;"><div class="a-progress-fill" style="width:40%;animation:none;background:repeating-linear-gradient(90deg,#1976d2 0,#1976d2 60%,#a4ccf4 60%,#a4ccf4 100%);background-size:20px;"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Progress</span><span class="col-meta2 col-lbl-s">Radix · 8px · zinc-100 track · zinc-900 fill</span></div>
+        <div class="col-bd-s">
+          <div class="s-progress-wrap">
+            <div style="display:flex;justify-content:space-between;"><span class="s-progress-label">Loading</span><span class="s-progress-label">33%</span></div>
+            <div class="s-progress-track"><div class="s-progress-fill" style="width:33%;"></div></div>
+          </div>
+          <div class="s-progress-wrap">
+            <div style="display:flex;justify-content:space-between;"><span class="s-progress-label">Uploading</span><span class="s-progress-label">67%</span></div>
+            <div class="s-progress-track"><div class="s-progress-fill" style="width:67%;"></div></div>
+          </div>
+          <div class="s-progress-wrap">
+            <div style="display:flex;justify-content:space-between;"><span class="s-progress-label">Complete</span><span class="s-progress-label">100%</span></div>
+            <div class="s-progress-track"><div class="s-progress-fill" style="width:100%;background:#18181b;"></div></div>
+          </div>
+          <div class="s-progress-wrap">
+            <div><span class="s-progress-label">Indeterminate</span></div>
+            <div class="s-progress-track"><div class="s-progress-fill" style="width:45%;background:linear-gradient(90deg,#f4f4f5 0%,#18181b 40%,#f4f4f5 100%);"></div></div>
+          </div>
+          <div class="info-s">Radix <code>Progress</code> sets <code>role="progressbar"</code> and <code>aria-valuenow</code> automatically. Shadcn's track is zinc-100 (lighter than Aero's #eaeaea) and fill is zinc-900 (vs blue). Both support indeterminate via CSS animation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BREADCRUMB ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🧭</span>
+    <span class="acc-title">Breadcrumb <span class="src-tag">Figma · Breadcrumb</span><span class="src-tag src-tag-s">shadcn/ui · Breadcrumb</span></span>
+    <span class="acc-meta">Aero: blue links · / separator · Shadcn: muted links · chevron separator · ellipsis collapse</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Breadcrumb</span><span class="col-meta2 col-lbl-a">blue links · / separator · Inter 13px</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Default</div>
+          <div class="a-breadcrumb" style="margin-bottom:12px;">
+            <span class="a-bc-item">Home</span>
+            <span class="a-bc-sep">/</span>
+            <span class="a-bc-item">Locations</span>
+            <span class="a-bc-sep">/</span>
+            <span class="a-bc-item">Atlanta</span>
+            <span class="a-bc-sep">/</span>
+            <span class="a-bc-current">Reviews</span>
+          </div>
+          <div class="shd shd-a">With icons</div>
+          <div class="a-breadcrumb">
+            <span class="a-bc-item" style="display:flex;align-items:center;gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</span>
+            <span class="a-bc-sep">/</span>
+            <span class="a-bc-item">Settings</span>
+            <span class="a-bc-sep">/</span>
+            <span class="a-bc-current">Profile</span>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Breadcrumb</span><span class="col-meta2 col-lbl-s">muted links → dark hover · chevron sep · ellipsis</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Default</div>
+          <div class="s-breadcrumb" style="margin-bottom:12px;">
+            <span class="s-bc-item">Home</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            <span class="s-bc-item">Locations</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            <span class="s-bc-current">Atlanta</span>
+          </div>
+          <div class="shd shd-s">With ellipsis collapse</div>
+          <div class="s-breadcrumb" style="margin-bottom:12px;">
+            <span class="s-bc-item">Home</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            <span class="s-bc-item" style="background:#f4f4f5;padding:1px 6px;border-radius:4px;font-size:12px;">···</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            <span class="s-bc-current">Reviews</span>
+          </div>
+          <div class="info-s">Shadcn uses a chevron (›) separator vs Aero's slash (/). Ships a <code>BreadcrumbEllipsis</code> component for collapsing long paths into <code>···</code>. Links are muted zinc-500 by default, darken on hover.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEPARATOR / DIVIDER ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">➖</span>
+    <span class="acc-title">Separator / Divider <span class="src-tag">Figma · Divider</span><span class="src-tag src-tag-s">shadcn/ui · Separator · Radix</span></span>
+    <span class="acc-meta">Aero: 1px #eaeaea · Shadcn: 1px #e4e4e7 · horizontal + vertical · Radix role=separator</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Divider</span><span class="col-meta2 col-lbl-a">1px · #eaeaea · horizontal + vertical</span></div>
+        <div class="col-bd-a">
+          <div class="shd shd-a">Horizontal</div>
+          <div style="font-family:var(--af);font-size:13px;color:#212121;margin-bottom:8px;">Section title</div>
+          <div class="a-sep-h"></div>
+          <div style="font-family:var(--af);font-size:13px;color:#555;margin-top:8px;margin-bottom:16px;">Content below divider</div>
+          <div class="shd shd-a">Vertical (inline)</div>
+          <div style="display:flex;align-items:center;font-family:var(--af);font-size:13px;color:#212121;">
+            Blog<span class="a-sep-v"></span>Docs<span class="a-sep-v"></span>Source
+          </div>
+          <div style="margin-top:14px;" class="shd shd-a">With label</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="a-sep-h" style="flex:1;margin:0;"></div>
+            <span style="font-family:var(--af);font-size:11px;color:#9ca3af;white-space:nowrap;">OR</span>
+            <div class="a-sep-h" style="flex:1;margin:0;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Separator</span><span class="col-meta2 col-lbl-s">Radix · role=separator · aria-orientation</span></div>
+        <div class="col-bd-s">
+          <div class="shd shd-s">Horizontal</div>
+          <div style="font-family:var(--sf);font-size:14px;font-weight:500;color:#09090b;margin-bottom:4px;">Radix Primitives</div>
+          <div style="font-family:var(--sf);font-size:13px;color:#71717a;margin-bottom:8px;">An open-source UI component library.</div>
+          <div class="s-sep-h"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:8px;margin-bottom:16px;font-family:var(--sf);font-size:13px;color:#09090b;">
+            <span>Blog</span><span class="s-sep-v" style="height:16px;margin:0;"></span><span>Docs</span><span class="s-sep-v" style="height:16px;margin:0;"></span><span>Source</span>
+          </div>
+          <div class="shd shd-s">With label</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="s-sep-h" style="flex:1;margin:0;"></div>
+            <span style="font-family:var(--sf);font-size:11px;color:#a1a1aa;white-space:nowrap;">OR CONTINUE WITH</span>
+            <div class="s-sep-h" style="flex:1;margin:0;"></div>
+          </div>
+          <div class="info-s">Radix <code>Separator</code> sets <code>role="separator"</code> and <code>aria-orientation</code>. Near-identical to Aero's Divider visually — zinc-200 (#e4e4e7) vs Aero's #eaeaea, both 1px. Supports <code>orientation="horizontal|vertical"</code> and <code>decorative</code> prop.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHEET / DRAWER ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📤</span>
+    <span class="acc-title">Drawer / Sheet <span class="src-tag">Figma · Drawer</span><span class="src-tag src-tag-s">shadcn/ui · Sheet · side variants</span></span>
+    <span class="acc-meta">Aero: side drawer · Shadcn: Sheet (top/right/bottom/left) + Drawer (mobile bottom)</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Drawer</span><span class="col-meta2 col-lbl-a">right side · shadow · 4px radius</span></div>
+        <div class="col-bd-a">
+          <div style="display:flex;justify-content:flex-end;">
+            <div class="a-sheet">
+              <div class="a-sheet-title">Edit Location</div>
+              <div style="height:1px;background:#eaeaea;margin:10px 0;"></div>
+              <div class="a-sheet-body">
+                <div class="atf-wrap" style="max-width:100%;margin-bottom:10px;">
+                  <div class="atf-label">Name</div>
+                  <input class="atf" placeholder="Location name" style="pointer-events:none;">
+                </div>
+                <div class="atf-wrap" style="max-width:100%;">
+                  <div class="atf-label">Address</div>
+                  <input class="atf" placeholder="123 Main St" style="pointer-events:none;">
+                </div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;">
+                <button class="ab ab-tertiary" style="font-size:12px;height:30px;">Cancel</button>
+                <button class="ab ab-primary" style="font-size:12px;height:30px;">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Sheet</span><span class="col-meta2 col-lbl-s">Radix Dialog · side=right/left/top/bottom</span></div>
+        <div class="col-bd-s">
+          <div style="display:flex;justify-content:flex-end;">
+            <div class="s-sheet">
+              <div class="s-sheet-title">Edit profile</div>
+              <div class="s-sheet-desc">Make changes here. Click save when done.</div>
+              <div style="height:1px;background:#e4e4e7;margin:10px 0;"></div>
+              <div class="s-sheet-body">
+                <div class="stf-wrap" style="max-width:100%;margin-bottom:10px;">
+                  <div class="stf-label">Name</div>
+                  <input class="stf" placeholder="Pedro Duarte" style="pointer-events:none;max-width:100%;width:100%;">
+                </div>
+                <div class="stf-wrap" style="max-width:100%;">
+                  <div class="stf-label">Username</div>
+                  <input class="stf" placeholder="@peduarte" style="pointer-events:none;max-width:100%;width:100%;">
+                </div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:7px;margin-top:14px;">
+                <button class="sb" style="background:#f4f4f5;color:#18181b;height:30px;padding:0 12px;font-size:12px;border-radius:6px;">Cancel</button>
+                <button class="sb" style="background:#18181b;color:#fafafa;height:30px;padding:0 12px;font-size:12px;border-radius:6px;">Save</button>
+              </div>
+            </div>
+          </div>
+          <div class="info-s">Shadcn <code>Sheet</code> is a Dialog variant that slides in from any edge (<code>side="right|left|top|bottom"</code>). A separate <code>Drawer</code> component (Vaul) handles mobile bottom-sheet with drag-to-dismiss. Aero has a single drawer direction.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CAROUSEL ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">🎠</span>
+    <span class="acc-title">Carousel <span class="src-tag">Figma · Carousel</span><span class="src-tag src-tag-s">shadcn/ui · Carousel · Embla</span></span>
+    <span class="acc-meta">Aero: custom slides · Shadcn: Embla-powered · prev/next controls · dot indicators</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Carousel</span><span class="col-meta2 col-lbl-a">custom · blue controls · dot indicators</span></div>
+        <div class="col-bd-a">
+          <div class="a-carousel">
+            <div class="a-carousel-slide" style="background:#ecf5fd;color:#1976d2;">Slide 1 of 3</div>
+            <div class="a-carousel-nav">
+              <button class="a-carousel-btn">← Prev</button>
+              <div style="display:flex;gap:5px;align-items:center;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#1976d2;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#a4ccf4;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#a4ccf4;"></span>
+              </div>
+              <button class="a-carousel-btn">Next →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Carousel</span><span class="col-meta2 col-lbl-s">Embla Carousel · prev/next buttons · dot API</span></div>
+        <div class="col-bd-s">
+          <div class="s-carousel">
+            <div class="s-carousel-slide" style="background:#f4f4f5;color:#09090b;">Slide 1 of 3</div>
+            <div class="s-carousel-nav">
+              <button class="s-carousel-btn" style="display:flex;align-items:center;gap:4px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>Prev</button>
+              <div style="display:flex;gap:5px;align-items:center;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#18181b;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#e4e4e7;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#e4e4e7;"></span>
+              </div>
+              <button class="s-carousel-btn" style="display:flex;align-items:center;gap:4px;">Next<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+          </div>
+          <div class="info-s">Powered by <strong>Embla Carousel</strong>. Ships <code>CarouselPrevious</code> and <code>CarouselNext</code> as arrow buttons, <code>CarouselItem</code> for slides. Supports <code>opts</code> for loop, align, drag. Aero uses a fully custom implementation.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DATE PICKER ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📅</span>
+    <span class="acc-title">Date Picker <span class="src-tag">Figma · Date Picker</span><span class="src-tag src-tag-s">shadcn/ui · Calendar + Popover</span></span>
+    <span class="acc-meta">Aero: built-in picker · Shadcn: Calendar + Popover composed · react-day-picker</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Date Picker</span><span class="col-meta2 col-lbl-a">4px · blue today · #1976d2 selected</span></div>
+        <div class="col-bd-a">
+          <div class="a-select" style="max-width:180px;margin-bottom:10px;">
+            <span style="font-size:13px;color:#212121;display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>June 10, 2026</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="a-cal">
+            <div class="a-cal-header">
+              <span style="cursor:pointer;color:#555;">‹</span>
+              <span>June 2026</span>
+              <span style="cursor:pointer;color:#555;">›</span>
+            </div>
+            <div class="a-cal-grid">
+              <div class="a-cal-dow">Su</div><div class="a-cal-dow">Mo</div><div class="a-cal-dow">Tu</div><div class="a-cal-dow">We</div><div class="a-cal-dow">Th</div><div class="a-cal-dow">Fr</div><div class="a-cal-dow">Sa</div>
+              <div class="a-cal-day other">31</div><div class="a-cal-day">1</div><div class="a-cal-day">2</div><div class="a-cal-day">3</div><div class="a-cal-day">4</div><div class="a-cal-day">5</div><div class="a-cal-day">6</div>
+              <div class="a-cal-day">7</div><div class="a-cal-day">8</div><div class="a-cal-day">9</div><div class="a-cal-day today">10</div><div class="a-cal-day">11</div><div class="a-cal-day">12</div><div class="a-cal-day">13</div>
+              <div class="a-cal-day">14</div><div class="a-cal-day">15</div><div class="a-cal-day">16</div><div class="a-cal-day">17</div><div class="a-cal-day">18</div><div class="a-cal-day">19</div><div class="a-cal-day">20</div>
+              <div class="a-cal-day">21</div><div class="a-cal-day">22</div><div class="a-cal-day">23</div><div class="a-cal-day">24</div><div class="a-cal-day">25</div><div class="a-cal-day">26</div><div class="a-cal-day">27</div>
+              <div class="a-cal-day">28</div><div class="a-cal-day">29</div><div class="a-cal-day">30</div><div class="a-cal-day other">1</div><div class="a-cal-day other">2</div><div class="a-cal-day other">3</div><div class="a-cal-day other">4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Calendar + Popover</span><span class="col-meta2 col-lbl-s">react-day-picker · composed pattern</span></div>
+        <div class="col-bd-s">
+          <div class="s-select" style="max-width:180px;margin-bottom:10px;">
+            <span style="font-size:13px;color:#09090b;display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>June 10, 2026</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="s-cal">
+            <div class="s-cal-header">
+              <button style="background:transparent;border:1px solid #e4e4e7;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#09090b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+              <span style="font-weight:500;">June 2026</span>
+              <button style="background:transparent;border:1px solid #e4e4e7;border-radius:6px;width:24px;height:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#09090b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            <div class="s-cal-grid">
+              <div class="s-cal-dow">Su</div><div class="s-cal-dow">Mo</div><div class="s-cal-dow">Tu</div><div class="s-cal-dow">We</div><div class="s-cal-dow">Th</div><div class="s-cal-dow">Fr</div><div class="s-cal-dow">Sa</div>
+              <div class="s-cal-day other">31</div><div class="s-cal-day">1</div><div class="s-cal-day">2</div><div class="s-cal-day">3</div><div class="s-cal-day">4</div><div class="s-cal-day">5</div><div class="s-cal-day">6</div>
+              <div class="s-cal-day">7</div><div class="s-cal-day">8</div><div class="s-cal-day">9</div><div class="s-cal-day today">10</div><div class="s-cal-day">11</div><div class="s-cal-day">12</div><div class="s-cal-day">13</div>
+              <div class="s-cal-day">14</div><div class="s-cal-day">15</div><div class="s-cal-day">16</div><div class="s-cal-day">17</div><div class="s-cal-day">18</div><div class="s-cal-day">19</div><div class="s-cal-day">20</div>
+              <div class="s-cal-day">21</div><div class="s-cal-day">22</div><div class="s-cal-day">23</div><div class="s-cal-day">24</div><div class="s-cal-day">25</div><div class="s-cal-day">26</div><div class="s-cal-day">27</div>
+              <div class="s-cal-day">28</div><div class="s-cal-day">29</div><div class="s-cal-day">30</div><div class="s-cal-day other">1</div><div class="s-cal-day other">2</div><div class="s-cal-day other">3</div><div class="s-cal-day other">4</div>
+            </div>
+          </div>
+          <div class="info-s">Shadcn's Date Picker is a <strong>composition</strong>: <code>Calendar</code> (react-day-picker) inside a <code>Popover</code>. Supports single, range, and multiple selection modes. Nav chevrons are icon buttons with a bordered style. Today gets zinc-950 bg vs Aero's blue.</div>
         </div>
       </div>
     </div>
@@ -677,13 +1535,12 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
 <div class="acc">
   <div class="acc-trigger open" onclick="toggle(this)">
     <span class="acc-icon">🎨</span>
-    <span class="acc-title">Color Palettes <span class="src-tag">Figma 238-759</span><span class="src-tag src-tag-g">geist-colors npm · light scale</span></span>
-    <span class="acc-meta">Aero: 6 palettes + social · Geist: 10 light scales + backgrounds</span>
+    <span class="acc-title">Color Palettes <span class="src-tag">Figma 238-759</span><span class="src-tag src-tag-s">shadcn/ui · zinc + HSL CSS vars</span></span>
+    <span class="acc-meta">Aero: 6 palettes + social · Shadcn: HSL semantic tokens + zinc Tailwind scale</span>
     <span class="acc-chev">▼</span>
   </div>
   <div class="acc-body open">
     <div class="split">
-      <!-- AERO -->
       <div class="split-col">
         <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero</span><span class="col-meta2 col-lbl-a">Material Blue · #1976d2 primary</span></div>
         <div class="col-bd-a">
@@ -718,61 +1575,48 @@ body{font-family:var(--af);background:#f0f1f4;color:var(--at);font-size:13px;lin
           </div>
         </div>
       </div>
-      <!-- GEIST LIGHT -->
       <div class="split-col">
-        <div class="col-hd col-hd-g"><span class="col-lbl col-lbl-g">Geist — Light Mode</span><span class="col-meta2" style="color:#666;">:root / .light-theme tokens</span></div>
-        <div class="col-bd-g">
-          <div class="pal"><div class="pal-name pal-name-g">Backgrounds</div><div class="swatches">
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#fff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">bg-100</div><div class="sw-hex-g">#ffffff</div></div>
-            <div class="sw"><div class="sw-block" style="background:#fafafa;border:1px solid #e2e2e2;"></div><div class="sw-num-g">bg-200</div><div class="sw-hex-g">#fafafa</div></div>
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn/ui — Zinc Theme</span><span class="col-meta2 col-lbl-s">HSL CSS vars · semantic tokens</span></div>
+        <div class="col-bd-s">
+          <div class="pal"><div class="pal-name pal-name-s">Semantic tokens (HSL → hex)</div><div class="swatches">
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#ffffff;border:1px solid #e4e4e7;"></div><div class="sw-num-s">background</div><div class="sw-hex-s">#ffffff</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#09090b;"></div><div class="sw-num-s">foreground</div><div class="sw-hex-s">#09090b</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#18181b;"></div><div class="sw-num-s">primary</div><div class="sw-hex-s">#18181b</div></div>
+            <div class="sw"><div class="sw-block" style="background:#fafafa;border:1px solid #e4e4e7;"></div><div class="sw-num-s">primary-fg</div><div class="sw-hex-s">#fafafa</div></div>
+            <div class="sw"><div class="sw-block" style="background:#f4f4f5;border:1px solid #e4e4e7;"></div><div class="sw-num-s">secondary</div><div class="sw-hex-s">#f4f4f5</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#ef4444;"></div><div class="sw-num-s">destructive</div><div class="sw-hex-s">#ef4444</div></div>
+            <div class="sw"><div class="sw-block" style="background:#e4e4e7;border:1px solid #ddd;"></div><div class="sw-num-s">border</div><div class="sw-hex-s">#e4e4e7</div></div>
+            <div class="sw"><div class="sw-block" style="background:#71717a;"></div><div class="sw-num-s">muted-fg</div><div class="sw-hex-s">#71717a</div></div>
           </div></div>
-          <div class="pal"><div class="pal-name pal-name-g">Gray (Light scale — 100 to 1000)</div><div class="swatches">
-            <div class="sw"><div class="sw-block" style="background:#f2f2f2;border:1px solid #e2e2e2;"></div><div class="sw-num-g">100</div><div class="sw-hex-g">#f2f2f2</div></div>
-            <div class="sw"><div class="sw-block" style="background:#ebebeb;border:1px solid #e2e2e2;"></div><div class="sw-num-g">200</div><div class="sw-hex-g">#ebebeb</div></div>
-            <div class="sw"><div class="sw-block" style="background:#e6e6e6;border:1px solid #e2e2e2;"></div><div class="sw-num-g">300</div><div class="sw-hex-g">#e6e6e6</div></div>
-            <div class="sw"><div class="sw-block" style="background:#c9c9c9;border:1px solid #e2e2e2;"></div><div class="sw-num-g">500</div><div class="sw-hex-g">#c9c9c9</div></div>
-            <div class="sw"><div class="sw-block" style="background:#a8a8a8;"></div><div class="sw-num-g">600</div><div class="sw-hex-g">#a8a8a8</div></div>
-            <div class="sw"><div class="sw-block" style="background:#8f8f8f;"></div><div class="sw-num-g">700</div><div class="sw-hex-g">#8f8f8f</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#666666;"></div><div class="sw-num-g">900 ★</div><div class="sw-hex-g">#666666</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#171717;"></div><div class="sw-num-g">1000 ★</div><div class="sw-hex-g">#171717</div></div>
+          <div class="pal"><div class="pal-name pal-name-s">Zinc scale (Tailwind)</div><div class="swatches">
+            <div class="sw"><div class="sw-block" style="background:#fafafa;border:1px solid #e4e4e7;"></div><div class="sw-num-s">50</div><div class="sw-hex-s">#fafafa</div></div>
+            <div class="sw"><div class="sw-block" style="background:#f4f4f5;border:1px solid #e4e4e7;"></div><div class="sw-num-s">100</div><div class="sw-hex-s">#f4f4f5</div></div>
+            <div class="sw"><div class="sw-block" style="background:#e4e4e7;border:1px solid #ddd;"></div><div class="sw-num-s">200</div><div class="sw-hex-s">#e4e4e7</div></div>
+            <div class="sw"><div class="sw-block" style="background:#a1a1aa;"></div><div class="sw-num-s">400</div><div class="sw-hex-s">#a1a1aa</div></div>
+            <div class="sw"><div class="sw-block" style="background:#71717a;"></div><div class="sw-num-s">500</div><div class="sw-hex-s">#71717a</div></div>
+            <div class="sw"><div class="sw-block" style="background:#3f3f46;"></div><div class="sw-num-s">700</div><div class="sw-hex-s">#3f3f46</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#18181b;"></div><div class="sw-num-s">900 ★</div><div class="sw-hex-s">#18181b</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#09090b;"></div><div class="sw-num-s">950 ★</div><div class="sw-hex-s">#09090b</div></div>
           </div></div>
-          <div class="pal"><div class="pal-name pal-name-g">Blue (Light scale)</div><div class="swatches">
-            <div class="sw"><div class="sw-block" style="background:#f0f7ff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">100</div><div class="sw-hex-g">#f0f7ff</div></div>
-            <div class="sw"><div class="sw-block" style="background:#ebf5ff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">200</div><div class="sw-hex-g">#ebf5ff</div></div>
-            <div class="sw"><div class="sw-block" style="background:#cce6ff;border:1px solid #e2e2e2;"></div><div class="sw-num-g">400</div><div class="sw-hex-g">#cce6ff</div></div>
-            <div class="sw"><div class="sw-block" style="background:#52aeff;"></div><div class="sw-num-g">600</div><div class="sw-hex-g">#52aeff</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#0072f5;"></div><div class="sw-num-g">700 ★</div><div class="sw-hex-g">#0072f5</div></div>
-            <div class="sw"><div class="sw-block" style="background:#0062d1;"></div><div class="sw-num-g">800</div><div class="sw-hex-g">#0062d1</div></div>
-            <div class="sw"><div class="sw-block" style="background:#00254d;"></div><div class="sw-num-g">1000</div><div class="sw-hex-g">#00254d</div></div>
+          <div class="pal"><div class="pal-name pal-name-s">Status (Tailwind semantic)</div><div class="swatches">
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#ef4444;"></div><div class="sw-num-s">red-500</div><div class="sw-hex-s">#ef4444</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#22c55e;"></div><div class="sw-num-s">green-500</div><div class="sw-hex-s">#22c55e</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#f59e0b;"></div><div class="sw-num-s">amber-500</div><div class="sw-hex-s">#f59e0b</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#3b82f6;"></div><div class="sw-num-s">blue-500</div><div class="sw-hex-s">#3b82f6</div></div>
+            <div class="sw"><div class="sw-block sw-star-s" style="background:#8b5cf6;"></div><div class="sw-num-s">violet-500</div><div class="sw-hex-s">#8b5cf6</div></div>
           </div></div>
-          <div class="pal"><div class="pal-name pal-name-g">Semantic key tones (light — 700)</div><div class="swatches">
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#e5484d;"></div><div class="sw-num-g">red-700</div><div class="sw-hex-g">#e5484d</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#45a557;"></div><div class="sw-num-g">grn-700</div><div class="sw-hex-g">#45a557</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#ffb224;"></div><div class="sw-num-g">amb-700</div><div class="sw-hex-g">#ffb224</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#12a594;"></div><div class="sw-num-g">teal-700</div><div class="sw-hex-g">#12a594</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#8e4ec6;"></div><div class="sw-num-g">pur-700</div><div class="sw-hex-g">#8e4ec6</div></div>
-            <div class="sw"><div class="sw-block sw-star-g" style="background:#ea3e83;"></div><div class="sw-num-g">pink-700</div><div class="sw-hex-g">#ea3e83</div></div>
-          </div></div>
-          <div class="pal"><div class="pal-name pal-name-g">Gray Alpha (light mode — black overlays)</div>
-            <div style="display:flex;gap:3px;flex-wrap:wrap;">
-              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.05);"></div></div><div class="sw-num-g">100/5%</div></div>
-              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.10);"></div></div><div class="sw-num-g">300/10%</div></div>
-              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.21);"></div></div><div class="sw-num-g">500/21%</div></div>
-              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.51);"></div></div><div class="sw-num-g">800/51%</div></div>
-              <div class="alpha-sw"><div class="aw"><div class="aw-bg"></div><div class="aw-fill" style="background:rgba(0,0,0,0.91);"></div></div><div class="sw-num-g">1000/91%</div></div>
-            </div>
-          </div>
-          <div class="info-g">★ Light mode uses black-based rgba overlays (vs dark mode's white-based). Teal &amp; Pink are Geist-only — no Aero equivalent.</div>
+          <div class="info-s">Colors defined as HSL CSS vars (<code>--primary: 240 5.9% 10%</code>) — swap the entire palette by editing the root vars. Aero uses fixed hex tokens. No social brand color set in Shadcn.</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="note" style="margin-bottom:20px;"><strong>Geist light mode active.</strong> All Geist panels now show light mode tokens — bg-100=#ffffff, text=#171717, borders=#e2e2e2, component default border=#c9c9c9. Note that dark mode is Vercel's canonical surface; light is the complete alternate theme. Aero panels are unchanged (Aero is light-mode-first).</div>
+<div class="note" style="margin-bottom:20px;"><strong>Shadcn/ui component library.</strong> Right panels show Shadcn's zinc theme (light mode). Shadcn is copy-paste — no component package to install. Components are copied into your project via the CLI and owned entirely by you. Built on Radix UI primitives + Tailwind CSS.</div>
+
 <div style="border-top:1px solid #dde0e8;padding-top:20px;margin-top:6px;font-size:11px;color:#9ca3af;line-height:1.9;font-family:'Inter',sans-serif;">
   <strong style="color:#555;">Aero:</strong> Figma MCP nodes 238-759 · 17-236 · 374-336 · 1306-863 · 5730-45700 · 2239-22154 · 2455-19337/47 &nbsp;·&nbsp;
-  <strong style="color:#555;">Geist light mode:</strong> <code style="background:#f5f5f5;padding:1px 4px;border-radius:2px;">geist-colors</code> npm :root/light scale · vercel.com/geist
+  <strong style="color:#555;">Shadcn/ui:</strong> <code style="background:#f5f5f5;padding:1px 4px;border-radius:2px;font-family:'JetBrains Mono',monospace;">ui.shadcn.com</code> · zinc default · Radix UI + Tailwind CSS · June 2026
 </div>
 
 </div>
