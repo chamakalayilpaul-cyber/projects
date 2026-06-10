@@ -1536,6 +1536,225 @@ code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-fa
   </div>
 </div>
 
+<!-- ═══ CHARTS / GRAPHS ═══ -->
+<div class="acc">
+  <div class="acc-trigger" onclick="toggle(this)">
+    <span class="acc-icon">📊</span>
+    <span class="acc-title">Charts / Graphs <span class="src-tag">Figma · Vertical bar · Combo · Variable radius</span><span class="src-tag src-tag-s">shadcn/ui · Charts · Recharts</span></span>
+    <span class="acc-meta">Aero: #1976d2 blue bars · Shadcn: zinc-900 · Recharts · 6 chart types</span>
+    <span class="acc-chev">▼</span>
+  </div>
+  <div class="acc-body">
+    <div class="split">
+
+      <!-- LEFT: AERO -->
+      <div class="split-col">
+        <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Charts</span><span class="col-meta2 col-lbl-a">Vertical bar · Combo (bar+line) · Variable radius</span></div>
+        <div class="col-bd-a">
+
+          <!-- Aero Vertical Bar Chart -->
+          <div class="shd shd-a">Vertical bar chart</div>
+          <div style="background:#fff;border:1px solid #eaeaea;border-radius:4px;padding:14px 14px 10px;margin-bottom:14px;">
+            <div style="font-family:var(--af);font-size:12px;font-weight:500;color:#212121;margin-bottom:2px;">Monthly Reviews</div>
+            <div style="font-family:var(--af);font-size:11px;color:#8f8f8f;margin-bottom:12px;">Jan – Jun 2026</div>
+            <svg width="100%" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+              <!-- Y-axis gridlines -->
+              <line x1="36" y1="10" x2="270" y2="10" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="37" x2="270" y2="37" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="64" x2="270" y2="64" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="91" x2="270" y2="91" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="118" x2="270" y2="118" stroke="#eaeaea" stroke-width="1"/>
+              <!-- Y-axis labels -->
+              <text x="30" y="13" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">400</text>
+              <text x="30" y="40" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">300</text>
+              <text x="30" y="67" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">200</text>
+              <text x="30" y="94" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">100</text>
+              <text x="30" y="121" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">0</text>
+              <!-- X-axis baseline -->
+              <line x1="36" y1="118" x2="270" y2="118" stroke="#d0d0d0" stroke-width="1"/>
+              <!-- Bars: Jan=240, Feb=310, Mar=180, Apr=350, May=290, Jun=380 -->
+              <rect x="44"  y="52"  width="26" height="66" rx="2" fill="#1976d2"/>
+              <rect x="82"  y="36"  width="26" height="82" rx="2" fill="#1976d2"/>
+              <rect x="120" y="70"  width="26" height="48" rx="2" fill="#1976d2"/>
+              <rect x="158" y="25"  width="26" height="93" rx="2" fill="#1976d2"/>
+              <rect x="196" y="43"  width="26" height="75" rx="2" fill="#1976d2"/>
+              <rect x="234" y="17"  width="26" height="101" rx="2" fill="#1976d2"/>
+              <!-- X-axis labels -->
+              <text x="57"  y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Jan</text>
+              <text x="95"  y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Feb</text>
+              <text x="133" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Mar</text>
+              <text x="171" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Apr</text>
+              <text x="209" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">May</text>
+              <text x="247" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Jun</text>
+              <!-- Tooltip on hovered bar (Apr) -->
+              <rect x="148" y="4" width="48" height="20" rx="3" fill="#212121"/>
+              <text x="172" y="16" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#fff">Apr: 350</text>
+            </svg>
+          </div>
+
+          <!-- Aero Combo Chart -->
+          <div class="shd shd-a">Combo chart (bar + line)</div>
+          <div style="background:#fff;border:1px solid #eaeaea;border-radius:4px;padding:14px 14px 10px;margin-bottom:14px;">
+            <div style="font-family:var(--af);font-size:12px;font-weight:500;color:#212121;margin-bottom:2px;">Reviews vs Rating</div>
+            <div style="display:flex;gap:12px;margin-bottom:10px;">
+              <span style="font-family:var(--af);font-size:10px;color:#555;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;background:#1976d2;border-radius:2px;display:inline-block;"></span>Reviews</span>
+              <span style="font-family:var(--af);font-size:10px;color:#555;display:flex;align-items:center;gap:4px;"><span style="width:10px;height:2px;background:#4cae3d;display:inline-block;"></span>Rating</span>
+            </div>
+            <svg width="100%" viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+              <line x1="36" y1="10" x2="270" y2="10" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="40" x2="270" y2="40" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="70" x2="270" y2="70" stroke="#eaeaea" stroke-width="1"/>
+              <line x1="36" y1="98" x2="270" y2="98" stroke="#d0d0d0" stroke-width="1"/>
+              <!-- Bars -->
+              <rect x="44"  y="52" width="22" height="46" rx="2" fill="#1976d2" opacity="0.85"/>
+              <rect x="82"  y="38" width="22" height="60" rx="2" fill="#1976d2" opacity="0.85"/>
+              <rect x="120" y="60" width="22" height="38" rx="2" fill="#1976d2" opacity="0.85"/>
+              <rect x="158" y="28" width="22" height="70" rx="2" fill="#1976d2" opacity="0.85"/>
+              <rect x="196" y="44" width="22" height="54" rx="2" fill="#1976d2" opacity="0.85"/>
+              <rect x="234" y="20" width="22" height="78" rx="2" fill="#1976d2" opacity="0.85"/>
+              <!-- Line (rating) -->
+              <polyline points="55,60 93,44 131,52 169,36 207,42 245,30" fill="none" stroke="#4cae3d" stroke-width="2" stroke-linejoin="round"/>
+              <circle cx="55"  cy="60" r="3" fill="#4cae3d"/>
+              <circle cx="93"  cy="44" r="3" fill="#4cae3d"/>
+              <circle cx="131" cy="52" r="3" fill="#4cae3d"/>
+              <circle cx="169" cy="36" r="3" fill="#4cae3d"/>
+              <circle cx="207" cy="42" r="3" fill="#4cae3d"/>
+              <circle cx="245" cy="30" r="3" fill="#4cae3d"/>
+              <!-- X labels -->
+              <text x="57"  y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Jan</text>
+              <text x="95"  y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Feb</text>
+              <text x="133" y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Mar</text>
+              <text x="171" y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Apr</text>
+              <text x="209" y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">May</text>
+              <text x="247" y="110" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8f8f8f">Jun</text>
+            </svg>
+          </div>
+
+          <!-- Aero Variable Radius (Donut) -->
+          <div class="shd shd-a">Variable radius chart</div>
+          <div style="background:#fff;border:1px solid #eaeaea;border-radius:4px;padding:14px;display:flex;align-items:center;gap:18px;">
+            <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <!-- Segments at varying radii -->
+              <path d="M45,45 L45,8 A37,37 0 0,1 80,62 Z" fill="#1976d2"/>
+              <path d="M45,45 L80,62 A37,37 0 0,1 22,78 Z" fill="#42a5f5"/>
+              <path d="M45,45 L22,78 A37,37 0 0,1 11,25 Z" fill="#90caf9"/>
+              <path d="M45,45 L11,25 A37,37 0 0,1 45,8 Z" fill="#bbdefb"/>
+              <circle cx="45" cy="45" r="16" fill="#fff"/>
+              <text x="45" y="49" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="500" fill="#212121">68%</text>
+            </svg>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--af);font-size:11px;color:#212121;"><span style="width:8px;height:8px;border-radius:50%;background:#1976d2;"></span>Google · 42%</div>
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--af);font-size:11px;color:#212121;"><span style="width:8px;height:8px;border-radius:50%;background:#42a5f5;"></span>Yelp · 28%</div>
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--af);font-size:11px;color:#212121;"><span style="width:8px;height:8px;border-radius:50%;background:#90caf9;"></span>FB · 18%</div>
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--af);font-size:11px;color:#212121;"><span style="width:8px;height:8px;border-radius:50%;background:#bbdefb;"></span>Other · 12%</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT: SHADCN -->
+      <div class="split-col">
+        <div class="col-hd col-hd-s"><span class="col-lbl col-lbl-s">Shadcn Charts</span><span class="col-meta2 col-lbl-s">Recharts · ChartContainer · 6 types · zinc theme</span></div>
+        <div class="col-bd-s">
+
+          <!-- Shadcn Bar Chart -->
+          <div class="shd shd-s">Bar chart</div>
+          <div style="background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:14px 14px 10px;margin-bottom:14px;">
+            <div style="font-family:var(--sf);font-size:12px;font-weight:600;color:#09090b;margin-bottom:2px;">Monthly Reviews</div>
+            <div style="font-family:var(--sf);font-size:11px;color:#71717a;margin-bottom:12px;">January - June 2026</div>
+            <svg width="100%" viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+              <line x1="36" y1="10" x2="270" y2="10" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="37" x2="270" y2="37" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="64" x2="270" y2="64" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="91" x2="270" y2="91" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="118" x2="270" y2="118" stroke="#e4e4e7" stroke-width="1"/>
+              <text x="30" y="13" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">400</text>
+              <text x="30" y="40" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">300</text>
+              <text x="30" y="67" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">200</text>
+              <text x="30" y="94" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">100</text>
+              <text x="30" y="121" text-anchor="end" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">0</text>
+              <!-- Bars: zinc-800 fill, 6px radius top -->
+              <rect x="44"  y="52"  width="26" height="66" rx="3" fill="#27272a"/>
+              <rect x="82"  y="36"  width="26" height="82" rx="3" fill="#27272a"/>
+              <rect x="120" y="70"  width="26" height="48" rx="3" fill="#27272a"/>
+              <rect x="158" y="25"  width="26" height="93" rx="3" fill="#27272a"/>
+              <rect x="196" y="43"  width="26" height="75" rx="3" fill="#27272a"/>
+              <rect x="234" y="17"  width="26" height="101" rx="3" fill="#27272a"/>
+              <text x="57"  y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jan</text>
+              <text x="95"  y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Feb</text>
+              <text x="133" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Mar</text>
+              <text x="171" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Apr</text>
+              <text x="209" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May</text>
+              <text x="247" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun</text>
+              <!-- Tooltip (Shadcn style: white card, rounded, shadow) -->
+              <rect x="140" y="2" width="60" height="24" rx="6" fill="#fff" stroke="#e4e4e7" stroke-width="1"/>
+              <text x="170" y="12" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" font-weight="600" fill="#09090b">April</text>
+              <text x="170" y="21" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#71717a">Reviews: 350</text>
+            </svg>
+          </div>
+
+          <!-- Shadcn Line Chart -->
+          <div class="shd shd-s">Line chart (area)</div>
+          <div style="background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:14px 14px 10px;margin-bottom:14px;">
+            <div style="font-family:var(--sf);font-size:12px;font-weight:600;color:#09090b;margin-bottom:2px;">Rating Trend</div>
+            <div style="font-family:var(--sf);font-size:11px;color:#71717a;margin-bottom:12px;">Rolling 6-month average</div>
+            <svg width="100%" viewBox="0 0 280 110" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+              <line x1="36" y1="10" x2="270" y2="10" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="40" x2="270" y2="40" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="70" x2="270" y2="70" stroke="#f4f4f5" stroke-width="1"/>
+              <line x1="36" y1="88" x2="270" y2="88" stroke="#e4e4e7" stroke-width="1"/>
+              <!-- Gradient area fill -->
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#18181b" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#18181b" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path d="M55,62 C70,55 80,48 93,42 C106,36 118,50 131,44 C144,38 157,28 169,24 C181,20 195,30 207,26 C219,22 233,18 245,14 L245,88 L55,88 Z" fill="url(#areaGrad)"/>
+              <polyline points="55,62 93,42 131,44 169,24 207,26 245,14" fill="none" stroke="#18181b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+              <circle cx="55"  cy="62" r="3" fill="#fff" stroke="#18181b" stroke-width="2"/>
+              <circle cx="93"  cy="42" r="3" fill="#fff" stroke="#18181b" stroke-width="2"/>
+              <circle cx="131" cy="44" r="3" fill="#fff" stroke="#18181b" stroke-width="2"/>
+              <circle cx="169" cy="24" r="3" fill="#fff" stroke="#18181b" stroke-width="2"/>
+              <circle cx="207" cy="26" r="3" fill="#fff" stroke="#18181b" stroke-width="2"/>
+              <circle cx="245" cy="14" r="3" fill="#fff" stroke="#18181b" stroke-width="2"/>
+              <text x="57"  y="100" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jan</text>
+              <text x="95"  y="100" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Feb</text>
+              <text x="133" y="100" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Mar</text>
+              <text x="171" y="100" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Apr</text>
+              <text x="209" y="100" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">May</text>
+              <text x="247" y="100" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#a1a1aa">Jun</text>
+            </svg>
+          </div>
+
+          <!-- Shadcn Pie/Donut -->
+          <div class="shd shd-s">Pie / donut chart</div>
+          <div style="background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:14px;display:flex;align-items:center;gap:18px;">
+            <svg width="90" height="90" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+              <path d="M45,45 L45,8 A37,37 0 0,1 80,62 Z" fill="#18181b"/>
+              <path d="M45,45 L80,62 A37,37 0 0,1 22,78 Z" fill="#52525b"/>
+              <path d="M45,45 L22,78 A37,37 0 0,1 11,25 Z" fill="#a1a1aa"/>
+              <path d="M45,45 L11,25 A37,37 0 0,1 45,8 Z" fill="#d4d4d8"/>
+              <circle cx="45" cy="45" r="16" fill="#fff"/>
+              <text x="45" y="49" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#09090b">68%</text>
+            </svg>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--sf);font-size:11px;color:#09090b;"><span style="width:8px;height:8px;border-radius:2px;background:#18181b;"></span>Google · 42%</div>
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--sf);font-size:11px;color:#09090b;"><span style="width:8px;height:8px;border-radius:2px;background:#52525b;"></span>Yelp · 28%</div>
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--sf);font-size:11px;color:#09090b;"><span style="width:8px;height:8px;border-radius:2px;background:#a1a1aa;"></span>FB · 18%</div>
+              <div style="display:flex;align-items:center;gap:6px;font-family:var(--sf);font-size:11px;color:#09090b;"><span style="width:8px;height:8px;border-radius:2px;background:#d4d4d8;"></span>Other · 12%</div>
+            </div>
+          </div>
+
+          <div class="info-s">Shadcn Charts wrap <strong>Recharts</strong> inside a <code>ChartContainer</code> that injects CSS variable–based theming. Ships 6 chart types: Bar, Line, Area, Pie, Radar, Radial. Tooltip uses <code>ChartTooltip</code> + <code>ChartTooltipContent</code>. Legend via <code>ChartLegend</code>. Aero uses a custom chart library with blue (#1976d2) as the primary data color and multi-blue tones for multi-series.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- ═══ COLORS ═══ -->
 <div class="acc">
   <div class="acc-trigger open" onclick="toggle(this)">
