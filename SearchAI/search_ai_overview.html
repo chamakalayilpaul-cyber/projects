@@ -1298,7 +1298,7 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 }
 .acs-table th.acs-site-col{text-align:left}
 .acs-group-row{background:#fff}
-.acs-group-row:hover td{background:rgb(242,244,247)}
+.acs-group-row:hover td{background:inherit}
 .acs-group-row td{padding:12px 24px;font-size:14px;color:rgb(33,33,33);border-bottom:1px solid #eaeaea;font-weight:400}
 .acs-child-row td{padding:10px 24px;font-size:14px;color:rgb(85,85,85);border-bottom:1px solid #f5f5f5;background:#fafafa}
 .acs-child-row:last-child td{border-bottom:none}
@@ -1309,7 +1309,7 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .acs-chips{display:flex;align-items:center;justify-content:flex-start;gap:6px;flex-wrap:wrap}
 .acs-chip{
   display:inline-flex;align-items:center;gap:4px;
-  padding:5px 12px;border-radius:8px;font-size:13px;font-weight:400;white-space:nowrap;
+  padding:5px 12px;border-radius:4px;font-size:13px;font-weight:400;white-space:nowrap;
 }
 .acs-chip.allowed{background:#e8f5e9;color:#2e7d32}
 .acs-chip.blocked{background:#fdecea;color:#c62828}
@@ -1769,6 +1769,7 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .col-cust-handle{color:rgb(143,143,143);cursor:grab;display:flex;align-items:center;flex-shrink:0}
 .col-cust-handle:active{cursor:grabbing}
 .tag-prompt-result{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;font-size:13px;color:rgb(33,33,33);border-bottom:1px solid #f5f5f5}
+.tag-prompt-type{display:block;font-size:11px !important;color:rgb(143,143,143) !important;font-weight:400;line-height:1.4;margin-top:1px}
 .tag-prompt-result:last-child{border-bottom:none}
 .tag-prompt-result:hover{background:rgb(242,244,247)}
 .ap-input.error{border-color:#e53935}
@@ -5502,16 +5503,16 @@ textarea.ap-input{
       <!-- Attached prompts list -->
       <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0">
         <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
-          <span>Best-rated Invisalign providers near me</span>
-          <button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+          <div style="display:flex;flex-direction:column;min-width:0"><span>Best-rated Invisalign providers near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
         </div>
         <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
-          <span>Invisalign cost with insurance</span>
-          <button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+          <div style="display:flex;flex-direction:column;min-width:0"><span>Invisalign cost with insurance</span><span class="tag-prompt-type">Brand prompt</span></div>
+          <button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
         </div>
         <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:14px;color:rgb(33,33,33)">
-          <span>Invisible braces for adults near me</span>
-          <button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+          <div style="display:flex;flex-direction:column;min-width:0"><span>Invisible braces for adults near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
         </div>
       </div>
     </div>
@@ -6258,10 +6259,31 @@ _taActive = true;
 })();
 
 // View switching
-function showView(view) {
+const _viewToSlug = {
+  'overview':          'searchai/overview',
+  'recommendations':   'searchai/actions/recommendations',
+  'content':           'searchai/actions/content',
+  'sentiment':         'searchai/reports/sentiment',
+  'reports-prompts':   'searchai/reports/prompts',
+  'ai-crawler':        'searchai/reports/ai-crawler-status',
+  'explore-themes':    'searchai/reports/explore-themes',
+  'prompts-v2':        'searchai/settings/themes-and-prompts',
+  'prompts-v1':        'searchai/settings/themes-and-prompts-v1',
+  'prompt-brandkit':   'searchai/settings/brand-context',
+  'settings-reports':  'searchai/settings/reports',
+  'tags':              'searchai/settings/tags',
+};
+const _slugToView = Object.fromEntries(Object.entries(_viewToSlug).map(([v,s])=>[s,v]));
+
+function showView(view, skipHash) {
   // hide all views
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
+  // update URL hash
+  if (!skipHash) {
+    const slug = _viewToSlug[view];
+    if (slug) history.pushState(null, '', '#' + slug);
+  }
 
   // article-mode / import-mode: hide sidebar
   const content = document.getElementById('main-content');
@@ -6635,13 +6657,19 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// Resolve hash slug → view ID, falling back to prompts-v2
+function _viewFromHash() {
+  const slug = location.hash.replace('#', '');
+  return _slugToView[slug] || 'prompts-v2';
+}
+
+window.addEventListener('hashchange', () => showView(_viewFromHash(), true));
+
 // On load: navigate to view specified in URL hash; hide top-nav title by default
 (function() {
   const t = document.querySelector('.top-nav-title');
   if (t) t.style.visibility = 'hidden'; // sidebar visible on load
-  const hash = location.hash.replace('#', '');
-  const valid = ['recommendations','content','prompts-v1','prompts-v2','explore-themes','prompt-brandkit','import-prompts'];
-  showView(valid.includes(hash) ? hash : 'prompts-v2');
+  showView(_viewFromHash(), true);
 })();
 
 // Direct entry from Content Hub recommendations — skip all modals
@@ -7403,7 +7431,7 @@ const _acsStatusesRobots = [
 ];
 
 function _acsInProgressCell() {
-  return '<div class="acs-chips"><span class="acs-chip" style="background:#f5f5f5;color:#8f8f8f"><span class="material-symbols-rounded" style="font-size:14px;animation:acs-spin 1s linear infinite">sync</span>In progress</span></div>';
+  return '<div class="acs-chips"><span class="acs-chip" style="background:#f5f5f5;color:#8f8f8f">In progress</span></div>';
 }
 function _acsChips(pair) {
   const labels = ['Responses','Training'];
@@ -7674,26 +7702,29 @@ function toggleTagPromptSearch() {
 }
 
 const _tagPromptPool = [
-  'Best-rated Invisalign providers near me',
-  'Invisalign cost with insurance',
-  'Invisible braces for adults near me',
-  'Best teeth whitening near me',
-  'Dental implants cost near me',
-  'Clear aligner therapy providers',
-  'Best orthodontists for adults near me',
-  'Orthodontic specialists with payment plans',
-  'Fastest Invisalign results near me'
+  {text:'Best-rated Invisalign providers near me', type:'Location prompt'},
+  {text:'Invisalign cost with insurance', type:'Brand prompt'},
+  {text:'Invisible braces for adults near me', type:'Location prompt'},
+  {text:'Best teeth whitening near me', type:'Location prompt'},
+  {text:'Dental implants cost near me', type:'Location prompt'},
+  {text:'Clear aligner therapy providers', type:'Brand prompt'},
+  {text:'Best orthodontists for adults near me', type:'Location prompt'},
+  {text:'Orthodontic specialists with payment plans', type:'Brand prompt'},
+  {text:'Fastest Invisalign results near me', type:'Location prompt'}
 ];
 
 function _renderTagSearchResults(q) {
   const container = document.getElementById('tag-prompt-search-results');
   const lower = q.toLowerCase();
-  const matched = q.trim() ? _tagPromptPool.filter(p => p.toLowerCase().includes(lower)) : _tagPromptPool;
+  const matched = q.trim() ? _tagPromptPool.filter(p => p.text.toLowerCase().includes(lower)) : _tagPromptPool;
   if (!matched.length) { container.style.display = 'none'; return; }
   container.innerHTML = matched.map(p => `
     <div class="tag-prompt-result">
-      <span style="flex:1;font-size:13px;color:rgb(33,33,33)">${p}</span>
-      <button class="tag-action-btn" style="flex-shrink:0" onclick="addTagPrompt('${p.replace(/'/g,'&#39;')}')" title="Add tag to prompt" onmouseenter="showTagAddTip(event)" onmouseleave="hideTagAddTip()">
+      <div style="display:flex;flex-direction:column;min-width:0;flex:1">
+        <span style="font-size:13px;color:rgb(33,33,33)">${p.text}</span>
+        <span class="tag-prompt-type">${p.type}</span>
+      </div>
+      <button class="tag-action-btn" style="flex-shrink:0" onclick="addTagPrompt('${p.text.replace(/'/g,'&#39;')}','${p.type}')" title="Add tag to prompt" onmouseenter="showTagAddTip(event)" onmouseleave="hideTagAddTip()">
         <span class="material-symbols-rounded" style="font-size:18px">add</span>
       </button>
     </div>`).join('');
@@ -7716,14 +7747,15 @@ function showTagAddTip(e) {
 }
 function hideTagAddTip() { document.getElementById('pt-mod-tooltip').style.display = 'none'; }
 
-function addTagPrompt(text) {
+function addTagPrompt(text, type) {
   const list = document.getElementById('tag-prompt-list');
   const exists = [...list.querySelectorAll('.tag-prompt-item span')].some(s => s.textContent === text);
   if (exists) return;
+  const promptType = type || (_tagPromptPool.find(p => p.text === text) || {}).type || '';
   const div = document.createElement('div');
   div.className = 'tag-prompt-item';
   div.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)';
-  div.innerHTML = `<span>${text}</span><button class="tag-action-btn" style="color:#e53935" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
+  div.innerHTML = `<div style="display:flex;flex-direction:column;min-width:0"><span>${text}</span>${promptType ? `<span class="tag-prompt-type">${promptType}</span>` : ''}</div><button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
   list.appendChild(div);
   _fixTagPromptBorders(list);
   document.getElementById('tag-prompt-search-input').value = '';
