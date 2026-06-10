@@ -323,10 +323,29 @@ code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-fa
     Why Birdeye is evaluating Shadcn/ui
   </div>
   <p style="font-family:var(--af);font-size:14px;color:#292524;line-height:1.7;margin:0 0 14px;">
-    Sierra AI is extremely private and there are no public references of their product UI. From a video we could reference for product UI, we could see — Inter typeface, monospace for code identifiers, a green brand accent, ~8px corner radius, hairline borders, and a three-panel IDE-style layout. Combined with their confirmed tech stack of React + Next.js + Tailwind CSS + React Aria, <strong>this points strongly to a shadcn/ui-adjacent approach</strong> — not necessarily shadcn verbatim, but built on the same philosophy: Tailwind for spacing, CSS variables for theming, a headless accessibility primitive library for components. The visual output is indistinguishable from a well-themed shadcn/ui implementation.
+    <strong>Sierra AI is extremely private and there are no public references of their product UI.</strong> From a video we could reference for product UI, we could see — Inter typeface, monospace for code identifiers, a green brand accent, ~8px corner radius, hairline borders, and a three-panel IDE-style layout. Combined with their confirmed tech stack of React + Next.js + Tailwind CSS + React Aria, <strong>this points strongly to a shadcn/ui-adjacent approach</strong> — not necessarily shadcn verbatim, but built on the same philosophy: Tailwind for spacing, CSS variables for theming, a headless accessibility primitive library for components. The visual output is indistinguishable from a well-themed shadcn/ui implementation.
   </p>
+
+  <!-- Summary callout -->
+  <div style="background:#fff;border:1px solid #e7e5e4;border-left:3px solid #1976d2;border-radius:0 6px 6px 0;padding:14px 16px;margin-bottom:16px;">
+    <div style="font-family:var(--af);font-size:13px;font-weight:700;color:#1c1917;margin-bottom:4px;">The single biggest difference: sharpness vs softness</div>
+    <div style="font-family:var(--af);font-size:13px;color:#44403c;line-height:1.65;">Aero reads as sharper and more clinical. shadcn reads as softer and more approachable. That one difference cascades through almost every visual detail.</div>
+  </div>
+
+  <!-- Two observation points -->
+  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:6px;padding:14px 16px;">
+      <div style="font-family:var(--af);font-size:13px;font-weight:700;color:#1c1917;margin-bottom:5px;">Corner radius</div>
+      <div style="font-family:var(--af);font-size:13px;color:#44403c;line-height:1.65;">Aero uses 4px as its web default, shadcn uses 8px. Small number, noticeable difference — Aero components feel crisp and squared-off, shadcn feels softer and rounder. Across a full UI the cumulative effect is significant: Aero reads as traditional enterprise, shadcn reads as modern startup.</div>
+    </div>
+    <div style="background:#fff;border:1px solid #e7e5e4;border-radius:6px;padding:14px 16px;">
+      <div style="font-family:var(--af);font-size:13px;font-weight:700;color:#1c1917;margin-bottom:5px;">Data density</div>
+      <div style="font-family:var(--af);font-size:13px;color:#44403c;line-height:1.65;">Both systems are comfortable at medium density but handle it differently. Aero's table rows are 56px, inputs 36px — designed for users scanning large amounts of enterprise data. shadcn defaults are leaner at 48px rows and 32px inputs. The more meaningful difference is that shadcn has a built-in convention for tabular monospace numerics — numbers in tables render in a fixed-width font so columns of figures align perfectly. Aero has no equivalent. For a product where users scan columns of ratings, counts, or revenue figures, that alignment makes data significantly easier to read at a glance. It's the same reason Stripe's dashboard feels information-dense yet effortlessly readable.</div>
+    </div>
+  </div>
+
   <p style="font-family:var(--af);font-size:14px;color:#292524;line-height:1.7;margin:0 0 16px;">
-    Other modern products sharing the same aesthetic: <span style="color:#57534e;"><strong>Linear</strong>, <strong>Clerk</strong>, <strong>Resend</strong>, <strong>Vercel v0</strong>, <strong>Railway</strong>, <strong>Neon</strong>, <strong>Trigger.dev</strong>, <strong>Cal.com</strong>, <strong>Supabase</strong> (newer surfaces), <strong>Liveblocks</strong>, <strong>Dub.co</strong>.</span>
+    Other modern products sharing the same aesthetic: <span style="color:#57534e;"><strong>Linear</strong>, <strong>Clerk</strong>, <strong>Resend</strong>, <strong>Vercel v0</strong>, <strong>Railway</strong>, <strong>Neon</strong>, <strong>Trigger.dev</strong>, <strong>Cal.com</strong>, <strong>Supabase</strong> (newer surfaces), <strong>Liveblocks</strong>, <strong>Dub.co</strong>, <strong>Stripe</strong>.</span>
   </p>
   <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
     <span style="font-family:var(--af);font-size:11px;font-weight:500;background:#f5f0eb;color:#78716c;border:1px solid #e7e5e4;border-radius:4px;padding:3px 8px;">Sierra AI · Agent Studio · June 2026</span>
