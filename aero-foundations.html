@@ -188,7 +188,7 @@ code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-fa
 /* TABS */
 .a-tabs-list{display:flex;border-bottom:2px solid #eaeaea;margin-bottom:12px;}
 .a-tab{padding:8px 14px;font-family:var(--af);font-size:13px;font-weight:500;color:#555;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;}
-.a-tab.active{color:#1976d2;border-bottom-color:#1976d2;}
+.a-tab.active{color:#212121;border-bottom-color:#1976d2;}
 .s-tabs-list{display:inline-flex;background:#f4f4f5;border-radius:8px;padding:3px;gap:2px;margin-bottom:12px;}
 .s-tab{padding:6px 14px;font-family:var(--sf);font-size:13px;font-weight:500;color:#71717a;cursor:pointer;border-radius:6px;}
 .s-tab.active{background:#fff;color:#09090b;box-shadow:0 1px 3px rgba(0,0,0,.1);}
@@ -1149,21 +1149,25 @@ code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-fa
       <div class="split-col">
         <div class="col-hd col-hd-a"><span class="col-lbl col-lbl-a">Aero Alert</span><span class="col-meta2 col-lbl-a">4px · info / success / warning / error</span></div>
         <div class="col-bd-a">
-          <div class="a-alert a-alert-info">
+          <div class="shd shd-a" style="margin-bottom:6px;">Info</div>
+          <div class="a-alert a-alert-info" style="margin-bottom:14px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-            <div><div class="a-alert-title">Info</div><div class="a-alert-body">Your data was successfully synced across all locations.</div></div>
+            <div class="a-alert-body">Your data was successfully synced across all locations.</div>
           </div>
-          <div class="a-alert a-alert-success">
+          <div class="shd shd-a" style="margin-bottom:6px;">Success</div>
+          <div class="a-alert a-alert-success" style="margin-bottom:14px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#377e2c" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><div class="a-alert-title">Success</div><div class="a-alert-body">Profile updated successfully.</div></div>
+            <div class="a-alert-body">Profile updated successfully.</div>
           </div>
-          <div class="a-alert a-alert-warning">
+          <div class="shd shd-a" style="margin-bottom:6px;">Warning</div>
+          <div class="a-alert a-alert-warning" style="margin-bottom:14px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c69204" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <div><div class="a-alert-title">Warning</div><div class="a-alert-body">Your subscription expires in 3 days.</div></div>
+            <div class="a-alert-body">Your subscription expires in 3 days.</div>
           </div>
+          <div class="shd shd-a" style="margin-bottom:6px;">Error</div>
           <div class="a-alert a-alert-error">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#de1b0c" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-            <div><div class="a-alert-title">Error</div><div class="a-alert-body">Failed to connect. Check your credentials.</div></div>
+            <div class="a-alert-body">Failed to connect. Check your credentials.</div>
           </div>
         </div>
       </div>
@@ -1258,19 +1262,19 @@ code{background:#f4f4f5;padding:1px 5px;border-radius:4px;font-size:10px;font-fa
           <div class="shd shd-a">Default</div>
           <div class="a-breadcrumb" style="margin-bottom:12px;">
             <span class="a-bc-item">Home</span>
-            <span class="a-bc-sep">/</span>
+            <span class="a-bc-sep">›</span>
             <span class="a-bc-item">Locations</span>
-            <span class="a-bc-sep">/</span>
+            <span class="a-bc-sep">›</span>
             <span class="a-bc-item">Atlanta</span>
-            <span class="a-bc-sep">/</span>
+            <span class="a-bc-sep">›</span>
             <span class="a-bc-current">Reviews</span>
           </div>
           <div class="shd shd-a">With icons</div>
           <div class="a-breadcrumb">
             <span class="a-bc-item" style="display:flex;align-items:center;gap:3px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</span>
-            <span class="a-bc-sep">/</span>
+            <span class="a-bc-sep">›</span>
             <span class="a-bc-item">Settings</span>
-            <span class="a-bc-sep">/</span>
+            <span class="a-bc-sep">›</span>
             <span class="a-bc-current">Profile</span>
           </div>
         </div>
