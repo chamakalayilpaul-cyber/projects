@@ -66,6 +66,67 @@
     font-size: 14px !important;
   }
 
+  /* Dense Shadcn — Linear-style data density */
+
+  /* Tighter base font */
+  #root.shadcn p, #root.shadcn div, #root.shadcn span,
+  #root.shadcn label, #root.shadcn li, #root.shadcn td, #root.shadcn th {
+    font-size: 13px !important;
+  }
+
+  /* Compact row heights */
+  #root.shadcn [class*="group/row"],
+  #root.shadcn [class*="h-10"], #root.shadcn [class*="h-9"],
+  #root.shadcn [class*="h-14"] {
+    min-height: 32px !important;
+    height: auto !important;
+  }
+
+  /* Tighter list/nav item padding */
+  #root.shadcn [class*="group/row"] {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+  #root.shadcn [class*="px-2xl"] {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  #root.shadcn [class*="py-lg"], #root.shadcn [class*="py-md"] {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+  #root.shadcn [class*="gap-md"] { gap: 6px !important; }
+  #root.shadcn [class*="gap-lg"] { gap: 8px !important; }
+  #root.shadcn [class*="gap-2xl"] { gap: 12px !important; }
+
+  /* Compact inputs */
+  #root.shadcn input, #root.shadcn select {
+    height: 28px !important;
+    font-size: 13px !important;
+    padding: 0 10px !important;
+  }
+
+  /* Compact buttons */
+  #root.shadcn button {
+    font-size: 13px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* Table rows */
+  #root.shadcn [class*="border-b border-border"] td,
+  #root.shadcn [class*="h-12"] {
+    height: 32px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* Section headers / group labels */
+  #root.shadcn [class*="text-small"],
+  #root.shadcn [class*="text-h3"] {
+    font-size: 11px !important;
+  }
+
   /* L1/L2 nav — regular weight for all items except selected */
   #root.shadcn [class*="group/row"] *,
   #root.shadcn [class*="group/row"] {
