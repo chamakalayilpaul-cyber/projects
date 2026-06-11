@@ -45,9 +45,6 @@
   #root.shadcn [class*="material-symbols"] {
     font-family: 'Material Symbols Outlined' !important;
     letter-spacing: normal !important;
-    font-size: 18px !important;
-    width: 18px !important;
-    height: 18px !important;
   }
 
   /* Border radius */
@@ -78,7 +75,7 @@
   }
 
   /* Compact row heights */
-  #root.shadcn [class*="group\/row"],
+  #root.shadcn [class*="group/row"],
   #root.shadcn [class*="h-10"], #root.shadcn [class*="h-9"],
   #root.shadcn [class*="h-14"] {
     min-height: 32px !important;
@@ -86,7 +83,7 @@
   }
 
   /* Tighter list/nav item padding */
-  #root.shadcn [class*="group\/row"] {
+  #root.shadcn [class*="group/row"] {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
   }
@@ -131,14 +128,14 @@
   }
 
   /* L1/L2 nav — regular weight for all items except selected */
-  #root.shadcn [class*="group\/row"] *,
-  #root.shadcn [class*="group\/row"] {
+  #root.shadcn [class*="group/row"] *,
+  #root.shadcn [class*="group/row"] {
     font-weight: 400 !important;
   }
-  #root.shadcn [class*="group\/row"][class*="selected"] *,
-  #root.shadcn [class*="group\/row"][class*="active"] *,
-  #root.shadcn [class*="group\/row"][class*="selected"],
-  #root.shadcn [class*="group\/row"][class*="active"] {
+  #root.shadcn [class*="group/row"][class*="selected"] *,
+  #root.shadcn [class*="group/row"][class*="active"] *,
+  #root.shadcn [class*="group/row"][class*="selected"],
+  #root.shadcn [class*="group/row"][class*="active"] {
     font-weight: 500 !important;
   }
 
@@ -193,24 +190,6 @@ function setMode(mode) {
     btnShadcn.classList.remove('active');
   }
 }
-
-// Hide Agents from L1 — poll briefly after React mounts then stop
-function hideAgents() {
-  const all = document.querySelectorAll('#root a, #root button, #root div[role="button"]');
-  for (const el of all) {
-    if (el.className && typeof el.className === 'string' && el.className.includes('group/row')) {
-      if (/^Agents\b/.test(el.textContent.trim())) {
-        el.style.cssText += 'display:none!important';
-        return true;
-      }
-    }
-  }
-  return false;
-}
-let attempts = 0;
-const poll = setInterval(() => {
-  if (hideAgents() || ++attempts > 20) clearInterval(poll);
-}, 300);
 </script>
 
 </body>
