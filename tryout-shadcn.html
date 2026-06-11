@@ -78,7 +78,7 @@
   }
 
   /* Compact row heights */
-  #root.shadcn [class*="group/row"],
+  #root.shadcn [class*="group\/row"],
   #root.shadcn [class*="h-10"], #root.shadcn [class*="h-9"],
   #root.shadcn [class*="h-14"] {
     min-height: 32px !important;
@@ -86,7 +86,7 @@
   }
 
   /* Tighter list/nav item padding */
-  #root.shadcn [class*="group/row"] {
+  #root.shadcn [class*="group\/row"] {
     padding-top: 4px !important;
     padding-bottom: 4px !important;
   }
@@ -131,14 +131,14 @@
   }
 
   /* L1/L2 nav — regular weight for all items except selected */
-  #root.shadcn [class*="group/row"] *,
-  #root.shadcn [class*="group/row"] {
+  #root.shadcn [class*="group\/row"] *,
+  #root.shadcn [class*="group\/row"] {
     font-weight: 400 !important;
   }
-  #root.shadcn [class*="group/row"][class*="selected"] *,
-  #root.shadcn [class*="group/row"][class*="active"] *,
-  #root.shadcn [class*="group/row"][class*="selected"],
-  #root.shadcn [class*="group/row"][class*="active"] {
+  #root.shadcn [class*="group\/row"][class*="selected"] *,
+  #root.shadcn [class*="group\/row"][class*="active"] *,
+  #root.shadcn [class*="group\/row"][class*="selected"],
+  #root.shadcn [class*="group\/row"][class*="active"] {
     font-weight: 500 !important;
   }
 
@@ -196,10 +196,14 @@ function setMode(mode) {
 
 // Hide Agents from L1 nav once React mounts
 function hideAgents() {
-  const rows = document.querySelectorAll('#root [class*="group/row"]');
-  rows.forEach(row => {
-    if (row.textContent.trim().startsWith('Agents')) {
-      row.style.setProperty('display', 'none', 'important');
+  // Can't use [class*="group\/row"] — / is invalid in querySelectorAll
+  // Walk all elements and match by class substring manually
+  document.querySelectorAll('#root *').forEach(el => {
+    if (el.className && typeof el.className === 'string' && el.className.includes('group/row')) {
+      const text = el.textContent.trim();
+      if (text.startsWith('Agents')) {
+        el.style.setProperty('display', 'none', 'important');
+      }
     }
   });
 }
