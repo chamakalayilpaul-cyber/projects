@@ -131,16 +131,31 @@
     font-size: 11px !important;
   }
 
-  /* L1/L2 nav — regular weight for all items except selected */
-  #root.shadcn [class*="group/row"] *,
-  #root.shadcn [class*="group/row"] {
+  /* L1/L2 nav — unselected = 400, selected = 500 */
+  #root.shadcn [class*="group/row"],
+  #root.shadcn [class*="group/row"] * {
     font-weight: 400 !important;
   }
-  #root.shadcn [class*="group/row"][class*="selected"] *,
-  #root.shadcn [class*="group/row"][class*="active"] *,
-  #root.shadcn [class*="group/row"][class*="selected"],
-  #root.shadcn [class*="group/row"][class*="active"] {
+  #root.shadcn [class*="group/row"] .text-text-primary,
+  #root.shadcn [class*="group/row"] .font-medium {
     font-weight: 500 !important;
+  }
+
+  /* Tabs — unselected = 400, selected = 500 */
+  #root.shadcn .flex.items-end button {
+    font-weight: 400 !important;
+  }
+  #root.shadcn .flex.items-end button .text-text-primary {
+    font-weight: 500 !important;
+  }
+
+  /* Tab active badge — white on blue; inactive badge — zinc */
+  #root.shadcn .flex.items-end button .bg-primary {
+    background-color: #1976d2 !important;
+    color: #ffffff !important;
+  }
+  #root.shadcn .flex.items-end button .bg-surface-selected {
+    color: #71717a !important;
   }
 
   /* Headings */
