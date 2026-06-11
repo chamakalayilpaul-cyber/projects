@@ -1,0 +1,184 @@
+/*
+ * ds-shadcn.css
+ * Shadcn/ui design system overrides for Birdeye MYNA apps.
+ * All rules scoped under #root.shadcn — zero effect in Aero mode.
+ * Link this on every page alongside ds-aero.css and ds-toggle.js.
+ */
+
+/* ─── Tokens ─────────────────────────────────────────────────────────────── */
+#root.shadcn {
+  --shadcn-font: 'Inter', system-ui, sans-serif;
+  --shadcn-radius: 8px;
+  --shadcn-primary: #1976d2;
+  --shadcn-fg: #09090b;
+  --shadcn-border: #e4e4e7;
+  --shadcn-muted: #71717a;
+  --shadcn-font-size-base: 14px;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+#root.shadcn p, #root.shadcn div, #root.shadcn button, #root.shadcn input,
+#root.shadcn textarea, #root.shadcn select, #root.shadcn label, #root.shadcn a,
+#root.shadcn h1, #root.shadcn h2, #root.shadcn h3, #root.shadcn h4,
+#root.shadcn h5, #root.shadcn h6, #root.shadcn li {
+  font-family: var(--shadcn-font) !important;
+}
+
+/* Preserve icon font — never override with Inter */
+#root.shadcn .material-symbols-outlined,
+#root.shadcn [class*="material-symbols"] {
+  font-family: 'Material Symbols Outlined' !important;
+  letter-spacing: normal !important;
+  font-size: 16px !important;
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Base font size */
+#root.shadcn p, #root.shadcn div, #root.shadcn span,
+#root.shadcn label, #root.shadcn li, #root.shadcn td, #root.shadcn th {
+  font-size: var(--shadcn-font-size-base) !important;
+}
+
+/* Text color */
+#root.shadcn p, #root.shadcn div, #root.shadcn span, #root.shadcn label,
+#root.shadcn h1, #root.shadcn h2, #root.shadcn h3, #root.shadcn h4,
+#root.shadcn h5, #root.shadcn h6, #root.shadcn li {
+  color: var(--shadcn-fg);
+}
+
+/* ─── Border radius ───────────────────────────────────────────────────────── */
+#root.shadcn input, #root.shadcn textarea, #root.shadcn select,
+#root.shadcn button {
+  border-radius: var(--shadcn-radius) !important;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+#root.shadcn button {
+  font-weight: 500 !important;
+  font-size: var(--shadcn-font-size-base) !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+/* ─── Inputs ──────────────────────────────────────────────────────────────── */
+#root.shadcn input, #root.shadcn textarea, #root.shadcn select {
+  border-color: var(--shadcn-border) !important;
+  background: #fff !important;
+  height: 28px !important;
+  padding: 0 10px !important;
+}
+#root.shadcn input:focus, #root.shadcn textarea:focus, #root.shadcn select:focus {
+  border-color: var(--shadcn-primary) !important;
+  box-shadow: 0 0 0 3px rgba(25,118,210,.15) !important;
+  outline: none !important;
+}
+
+/* ─── Headings ────────────────────────────────────────────────────────────── */
+#root.shadcn [class*="text-h1"], #root.shadcn [class*="text-[16px]"],
+#root.shadcn h1 {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+#root.shadcn [class*="text-h2"], #root.shadcn [class*="text-h3"],
+#root.shadcn h2, #root.shadcn h3 {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+/* Section group labels */
+#root.shadcn [class*="text-small"][class*="uppercase"],
+#root.shadcn [class*="text-body"][class*="uppercase"] {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.05em !important;
+  color: var(--shadcn-muted) !important;
+}
+
+/* ─── Dense layout (Linear-style) ────────────────────────────────────────── */
+
+/* Compact row heights */
+#root.shadcn [class*="group/row"],
+#root.shadcn [class*="h-10"], #root.shadcn [class*="h-9"],
+#root.shadcn [class*="h-14"] {
+  min-height: 32px !important;
+  height: auto !important;
+}
+#root.shadcn [class*="group/row"] {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+/* px-2xl → 16px, skip sidebar title rows & centered containers */
+#root.shadcn [class*="px-2xl"]:not([class*="h-\[52px\]"]):not([class*="justify-center"]) {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+#root.shadcn [class*="py-lg"], #root.shadcn [class*="py-md"] {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+#root.shadcn [class*="gap-md"] { gap: 6px !important; }
+#root.shadcn [class*="gap-lg"] { gap: 8px !important; }
+#root.shadcn [class*="gap-2xl"] { gap: 12px !important; }
+
+/* ─── Table ───────────────────────────────────────────────────────────────── */
+#root.shadcn [class*="border-b border-border"] td,
+#root.shadcn [class*="h-12"] {
+  height: 32px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+#root.shadcn td,
+#root.shadcn [class*="align-middle"] {
+  font-weight: 400 !important;
+}
+
+/* Section label size */
+#root.shadcn [class*="text-small"],
+#root.shadcn [class*="text-h3"] {
+  font-size: 11px !important;
+}
+
+/* ─── L1 nav sidebar ──────────────────────────────────────────────────────── */
+/* All items = 400; active item (aria-current=page) = 500 */
+#root.shadcn [class*="inset-y-0"] button,
+#root.shadcn [class*="inset-y-0"] button * {
+  font-weight: 400 !important;
+}
+#root.shadcn [class*="inset-y-0"] button[aria-current="page"],
+#root.shadcn [class*="inset-y-0"] button[aria-current="page"] * {
+  font-weight: 500 !important;
+}
+
+/* ─── L2 nav sidebar ──────────────────────────────────────────────────────── */
+/* Parent accordion headers = 400 */
+#root.shadcn .bg-surface-l2 button {
+  font-weight: 400 !important;
+}
+/* Child items unselected = light 300 (font-light is on inner span) */
+#root.shadcn .bg-surface-l2 button:not([aria-current="page"]) .font-light {
+  font-weight: 300 !important;
+}
+/* Child items selected = regular 400 */
+#root.shadcn .bg-surface-l2 button[aria-current="page"],
+#root.shadcn .bg-surface-l2 button[aria-current="page"] .font-light {
+  font-weight: 400 !important;
+}
+
+/* ─── Tabs ────────────────────────────────────────────────────────────────── */
+/* Unselected tab label = 400; selected = 500 */
+#root.shadcn .flex.items-end button {
+  font-weight: 400 !important;
+}
+#root.shadcn .flex.items-end button .text-text-primary {
+  font-weight: 500 !important;
+}
+/* Active badge: white text on blue; inactive badge: muted */
+#root.shadcn .flex.items-end button .bg-primary {
+  background-color: var(--shadcn-primary) !important;
+  color: #ffffff !important;
+}
+#root.shadcn .flex.items-end button .bg-surface-selected {
+  color: var(--shadcn-muted) !important;
+}

@@ -1,0 +1,20 @@
+/*
+ * ds-aero.css
+ * Aero design system tokens & overrides.
+ * Scope: #root (default / no extra class needed — this IS the base state).
+ * Link this on every page alongside ds-shadcn.css and ds-toggle.js.
+ */
+
+/* Aero uses Roboto */
+#root {
+  font-family: 'Roboto', system-ui, sans-serif;
+}
+
+/* Aero primary blue */
+:root {
+  --aero-primary: #1976d2;
+  --aero-primary-dark: #1565c0;
+  --aero-radius: 4px;
+  --aero-font: 'Roboto', system-ui, sans-serif;
+  --aero-font-size-base: 14px;
+}
