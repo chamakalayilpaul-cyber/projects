@@ -28,43 +28,34 @@
   #root{flex:1;}
 
   /* Change 2: Shadcn typography — Inter replaces Roboto */
-  #root, #root * {
-    font-family: 'Inter', system-ui, sans-serif !important;
-    letter-spacing: -0.01em;
-  }
-
-  /* Change 4: Shadcn surface & border colors — zinc tones */
   #root {
-    background: #fafafa !important;
+    font-family: 'Inter', system-ui, sans-serif;
   }
-  #root [class*="card"], #root [class*="panel"],
-  #root [class*="lhs-drawer__card"], #root [class*="surface"],
-  #root [class*="canvas-node"], #root [class*="modal"] {
-    background: #ffffff !important;
-    border-color: #e4e4e7 !important;
-  }
-  #root [class*="border"], #root input, #root textarea, #root select {
-    border-color: #e4e4e7 !important;
-  }
-  #root [class*="hover"]:hover, #root [class*="item"]:hover,
-  #root [class*="option"]:hover, #root [class*="row"]:hover {
-    background: #f4f4f5 !important;
-  }
-  #root [class*="active"], #root [class*="selected"] {
-    background: #f4f4f5 !important;
+  #root p, #root span, #root div, #root button, #root input,
+  #root textarea, #root select, #root label, #root a, #root h1,
+  #root h2, #root h3, #root h4, #root h5, #root h6, #root li {
+    font-family: 'Inter', system-ui, sans-serif !important;
   }
 
-  /* Change 3: Shadcn border radius — 4px → 8px, 6px → 10px */
-  #root input, #root textarea, #root select,
-  #root button:not([style*="border-radius:50%"]):not([style*="border-radius: 50%"]),
-  #root [class*="rounded-sm"], #root [class*="rounded-md"],
-  #root [class*="dropdown"], #root [class*="menu"],
-  #root [class*="card"], #root [class*="modal"],
-  #root [class*="panel"], #root [class*="drawer"],
-  #root [class*="chip"], #root [class*="badge"],
-  #root [class*="canvas-node"], #root [class*="lhs-drawer__card"],
-  #root [class*="tc-dropdown"], #root [class*="cnh__"] {
+  /* Change 3: Shadcn border radius — 4px → 8px on inputs, buttons, cards */
+  #root input, #root textarea, #root select {
     border-radius: 8px !important;
+  }
+  #root button {
+    border-radius: 8px !important;
+  }
+  #root .canvas-node, #root .lhs-drawer__card,
+  #root .tc-dropdown__menu, #root .cnh__context-menu {
+    border-radius: 8px !important;
+  }
+
+  /* Change 4: Shadcn zinc surface & border colors */
+  #root input, #root textarea, #root select {
+    border-color: #e4e4e7 !important;
+    background: #fff !important;
+  }
+  #root .lhs-drawer__card {
+    border-color: #e4e4e7 !important;
   }
 </style>
 </head>
