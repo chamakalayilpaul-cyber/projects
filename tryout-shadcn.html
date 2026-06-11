@@ -61,6 +61,36 @@
     border-color: #e4e4e7 !important;
   }
 
+  /* Change 7: Shadcn spacing — looser padding on nav items, cards, drawers */
+  #root .lhs-drawer__card,
+  #root .lhs-drawer__trigger-group-header,
+  #root .lhs-entity-group__item,
+  #root .lhs-external-apps__item,
+  #root .lhs-drawer__dropdown-item {
+    padding: 8px 12px !important;
+    height: auto !important;
+    min-height: 40px !important;
+    max-height: none !important;
+  }
+  #root .lhs-drawer {
+    padding: 24px !important;
+    gap: 16px !important;
+  }
+  #root .lhs-entity-group,
+  #root .lhs-external-apps,
+  #root .lhs-drawer__dropdown {
+    padding: 20px 24px !important;
+    gap: 12px !important;
+  }
+  #root .lhs-drawer__body {
+    gap: 12px !important;
+  }
+  #root .tc-dropdown__option,
+  #root .tc-connector__option,
+  #root .cnh__context-menu-item {
+    padding: 8px 12px !important;
+  }
+
   /* Change 6: Shadcn input fields */
   #root input, #root textarea, #root select {
     height: 36px !important;
