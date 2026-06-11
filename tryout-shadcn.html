@@ -61,6 +61,23 @@
     border-color: #e4e4e7 !important;
   }
 
+  /* Change 6: Shadcn input fields */
+  #root input, #root textarea, #root select {
+    height: 36px !important;
+    padding: 0 12px !important;
+    font-size: 14px !important;
+    outline: none !important;
+    transition: box-shadow .15s !important;
+  }
+  #root textarea {
+    height: auto !important;
+    padding: 8px 12px !important;
+  }
+  #root input:focus, #root textarea:focus, #root select:focus {
+    border-color: #1976d2 !important;
+    box-shadow: 0 0 0 3px rgba(25,118,210,.15) !important;
+  }
+
   /* Change 5: Shadcn button style */
   #root button {
     font-weight: 500 !important;
