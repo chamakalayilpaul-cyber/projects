@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Tryout Shadcn for Birdeye — MYNA Automotive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- MYNA Automotive app styles -->
+<link rel="stylesheet" crossorigin href="https://hareshrajamannar-creator.github.io/MYNA-Automotive/assets/index-BL302xn2.css">
+
+<!-- Fix Material Symbols font path — MYNA CSS uses a relative /MYNA-Automotive/ path which breaks on this domain -->
+<style>
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url('https://hareshrajamannar-creator.github.io/MYNA-Automotive/fonts/MaterialSymbolsOutlined.woff2') format('woff2');
+}
+</style>
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',system-ui,sans-serif;display:flex;flex-direction:column;min-height:100vh;background:#f0f2f5;}
+
+  /* Nav bar */
+  .nav{display:flex;align-items:center;gap:10px;padding:0 24px;height:52px;background:linear-gradient(90deg,#1565c0 0%,#1976d2 100%);flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.18);position:sticky;top:0;z-index:999;}
+  .nav-title{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+  .nav-tag{background:rgba(255,255,255,.15);color:#fff;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+  .nav-badge{background:#18181b;color:#fafafa;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+  .nav-divider{width:1px;height:20px;background:rgba(255,255,255,.25);margin:0 4px;}
+  .back-btn{margin-left:auto;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);color:#fff;font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;text-decoration:none;border:1.5px solid rgba(255,255,255,.3);white-space:nowrap;transition:background .15s;}
+  .back-btn:hover{background:rgba(255,255,255,.22);}
+
+  /* App mount */
+  #root{flex:1;}
+</style>
+</head>
+<body>
+
+<!-- Birdeye nav bar -->
+<nav class="nav">
+  <div class="nav-title">Shadcn for Birdeye</div>
+  <span class="nav-tag">Live Prototype</span>
+  <span class="nav-badge">MYNA · Automotive</span>
+  <div class="nav-divider"></div>
+  <a href="aero-foundations.html" class="back-btn">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    Go back to Components
+  </a>
+</nav>
+
+<!-- MYNA Automotive React app -->
+<div id="root"></div>
+
+<!-- MYNA Automotive app bundle -->
+<script type="module" crossorigin src="https://hareshrajamannar-creator.github.io/MYNA-Automotive/assets/index-BqQcQIrc.js"></script>
+
+</body>
+</html>
