@@ -194,21 +194,23 @@ function setMode(mode) {
   }
 }
 
-// Hide Agents from L1 nav once React mounts
+// Hide Agents from L1 — poll briefly after React mounts then stop
 function hideAgents() {
-  // Can't use [class*="group\/row"] — / is invalid in querySelectorAll
-  // Walk all elements and match by class substring manually
-  document.querySelectorAll('#root *').forEach(el => {
+  const all = document.querySelectorAll('#root a, #root button, #root div[role="button"]');
+  for (const el of all) {
     if (el.className && typeof el.className === 'string' && el.className.includes('group/row')) {
-      const text = el.textContent.trim();
-      if (text.startsWith('Agents')) {
-        el.style.setProperty('display', 'none', 'important');
+      if (/^Agents\b/.test(el.textContent.trim())) {
+        el.style.cssText += 'display:none!important';
+        return true;
       }
     }
-  });
+  }
+  return false;
 }
-const observer = new MutationObserver(hideAgents);
-observer.observe(document.getElementById('root'), { childList: true, subtree: true });
+let attempts = 0;
+const poll = setInterval(() => {
+  if (hideAgents() || ++attempts > 20) clearInterval(poll);
+}, 300);
 </script>
 
 </body>
