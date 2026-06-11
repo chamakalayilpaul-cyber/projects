@@ -131,13 +131,29 @@
     font-size: 11px !important;
   }
 
-  /* L1/L2 nav — unselected = 400, selected = 500 */
-  #root.shadcn [class*="group/row"],
-  #root.shadcn [class*="group/row"] * {
+  /* Table cells → 400 */
+  #root.shadcn td,
+  #root.shadcn [class*="align-middle"] {
     font-weight: 400 !important;
   }
-  #root.shadcn [class*="group/row"] .text-text-primary,
-  #root.shadcn [class*="group/row"] .font-medium {
+
+  /* L1 nav — scoped to bg-surface-selected container */
+  #root.shadcn .bg-surface-selected .text-text-secondary,
+  #root.shadcn .bg-surface-selected .text-text-secondary * {
+    font-weight: 400 !important;
+  }
+  #root.shadcn .bg-surface-selected .text-text-primary,
+  #root.shadcn .bg-surface-selected .text-text-primary * {
+    font-weight: 500 !important;
+  }
+
+  /* L2 nav — scoped to bg-surface-l2 container */
+  #root.shadcn .bg-surface-l2 .text-text-secondary,
+  #root.shadcn .bg-surface-l2 .text-text-secondary * {
+    font-weight: 400 !important;
+  }
+  #root.shadcn .bg-surface-l2 .text-text-primary,
+  #root.shadcn .bg-surface-l2 .text-text-primary * {
     font-weight: 500 !important;
   }
 
