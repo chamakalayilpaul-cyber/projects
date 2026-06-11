@@ -195,17 +195,15 @@ function setMode(mode) {
 }
 
 // Hide Agents from L1 nav once React mounts
-const observer = new MutationObserver(() => {
+function hideAgents() {
   const rows = document.querySelectorAll('#root [class*="group/row"]');
   rows.forEach(row => {
-    const icons = row.querySelectorAll('.material-symbols-outlined');
-    icons.forEach(icon => {
-      if (icon.textContent.trim() === 'smart_toy') {
-        row.style.display = 'none';
-      }
-    });
+    if (row.textContent.trim().startsWith('Agents')) {
+      row.style.setProperty('display', 'none', 'important');
+    }
   });
-});
+}
+const observer = new MutationObserver(hideAgents);
 observer.observe(document.getElementById('root'), { childList: true, subtree: true });
 </script>
 
