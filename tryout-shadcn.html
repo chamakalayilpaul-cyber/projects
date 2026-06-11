@@ -24,160 +24,57 @@
   .back-btn{margin-left:auto;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);color:#fff;font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;text-decoration:none;border:1.5px solid rgba(255,255,255,.3);white-space:nowrap;transition:background .15s;}
   .back-btn:hover{background:rgba(255,255,255,.22);}
 
+  /* Toggle */
+  .ds-toggle{display:flex;align-items:center;background:rgba(0,0,0,.2);border-radius:8px;padding:3px;gap:2px;}
+  .ds-toggle-btn{font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:600;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;transition:background .15s,color .15s;background:transparent;color:rgba(255,255,255,.65);}
+  .ds-toggle-btn.active{background:#fff;color:#1565c0;}
+
   /* App mount */
   #root{flex:1;}
 
-  /* Change 2: Shadcn typography — Inter replaces Roboto (excludes icon font) */
-  #root p, #root div, #root button, #root input,
-  #root textarea, #root select, #root label, #root a,
-  #root h1, #root h2, #root h3, #root h4, #root h5, #root h6, #root li {
+  /* ── Shadcn overrides (only active when #root has class "shadcn") ── */
+
+  /* Typography */
+  #root.shadcn p, #root.shadcn div, #root.shadcn button, #root.shadcn input,
+  #root.shadcn textarea, #root.shadcn select, #root.shadcn label, #root.shadcn a,
+  #root.shadcn h1, #root.shadcn h2, #root.shadcn h3, #root.shadcn h4,
+  #root.shadcn h5, #root.shadcn h6, #root.shadcn li {
     font-family: 'Inter', system-ui, sans-serif !important;
   }
-  /* Restore Material Symbols on icon elements */
-  #root .material-symbols-outlined,
-  #root [class*="material-symbols"] {
+  #root.shadcn .material-symbols-outlined,
+  #root.shadcn [class*="material-symbols"] {
     font-family: 'Material Symbols Outlined' !important;
     letter-spacing: normal !important;
   }
 
-  /* Change 3: Shadcn border radius — 4px → 8px on inputs, buttons, cards */
-  #root input, #root textarea, #root select {
-    border-radius: 8px !important;
-  }
-  #root button {
-    border-radius: 8px !important;
-  }
-  #root .canvas-node, #root .lhs-drawer__card,
-  #root .tc-dropdown__menu, #root .cnh__context-menu {
+  /* Border radius */
+  #root.shadcn input, #root.shadcn textarea, #root.shadcn select,
+  #root.shadcn button {
     border-radius: 8px !important;
   }
 
-  /* Change 4: Shadcn zinc surface & border colors */
-  #root input, #root textarea, #root select {
-    border-color: #e4e4e7 !important;
-    background: #fff !important;
-  }
-  #root .lhs-drawer__card {
-    border-color: #e4e4e7 !important;
-  }
-
-  /* L1/L2: no elevation, no stroke, no separators */
-  #root [class*="group/row"] {
-    border: none !important;
-    box-shadow: none !important;
-  }
-  #root .lhs-drawer__card,
-  #root .lhs-entity-group__item,
-  #root .lhs-external-apps__item,
-  #root .lhs-drawer__trigger-group-header,
-  #root .lhs-drawer__dropdown-item {
-    border: none !important;
-    box-shadow: none !important;
-  }
-  #root .lhs-drawer,
-  #root .lhs-entity-group,
-  #root .lhs-external-apps,
-  #root .lhs-drawer__dropdown {
-    box-shadow: none !important;
-  }
-
-  /* Change 9: Shadcn text color — near-black #09090b */
-  #root, #root p, #root div, #root span, #root label,
-  #root h1, #root h2, #root h3, #root h4, #root h5, #root h6, #root li {
+  /* Text color */
+  #root.shadcn p, #root.shadcn div, #root.shadcn span, #root.shadcn label,
+  #root.shadcn h1, #root.shadcn h2, #root.shadcn h3, #root.shadcn h4,
+  #root.shadcn h5, #root.shadcn h6, #root.shadcn li {
     color: #09090b;
   }
 
-  /* Change 10: Shadcn tab active state — crisp 2px underline, no bg fill */
-  #root .lhs-drawer__tab {
-    border-bottom: 2px solid transparent !important;
-    background: transparent !important;
-    color: #71717a !important;
-    border-radius: 0 !important;
-  }
-  #root .lhs-drawer__tab--active,
-  #root .lhs-drawer__tab[data-active="true"] {
-    border-bottom-color: #1976d2 !important;
-    color: #09090b !important;
-    background: transparent !important;
-  }
-  #root .lhs-drawer__tab-underline {
-    display: none !important;
-  }
-
-  /* Change 11: Shadcn badge / chip style */
-  #root [class*="badge"], #root [class*="chip"],
-  #root .ab-view-badge {
-    font-size: 11px !important;
-    font-weight: 600 !important;
-    padding: 2px 8px !important;
-    border-radius: 6px !important;
-    border: 1px solid #e4e4e7 !important;
-    background: #fafafa !important;
-    color: #09090b !important;
-    letter-spacing: 0 !important;
-  }
-  #root .material-symbols-outlined,
-  #root [class*="material-symbols"] {
-    color: inherit;
-  }
-
-  /* Change 7: Shadcn spacing — looser padding on nav items, cards, drawers */
-  #root .lhs-drawer__card,
-  #root .lhs-drawer__trigger-group-header,
-  #root .lhs-entity-group__item,
-  #root .lhs-external-apps__item,
-  #root .lhs-drawer__dropdown-item {
-    padding: 8px 12px !important;
-    height: auto !important;
-    min-height: 40px !important;
-    max-height: none !important;
-  }
-  #root .lhs-drawer {
-    padding: 24px !important;
-    gap: 16px !important;
-  }
-  #root .lhs-entity-group,
-  #root .lhs-external-apps,
-  #root .lhs-drawer__dropdown {
-    padding: 20px 24px !important;
-    gap: 12px !important;
-  }
-  #root .lhs-drawer__body {
-    gap: 12px !important;
-  }
-  #root .tc-dropdown__option,
-  #root .tc-connector__option,
-  #root .cnh__context-menu-item {
-    padding: 8px 12px !important;
-  }
-
-  /* Change 6: Shadcn input fields */
-  #root input, #root textarea, #root select {
-    height: 36px !important;
-    padding: 0 12px !important;
-    font-size: 14px !important;
-    outline: none !important;
-    transition: box-shadow .15s !important;
-  }
-  #root textarea {
-    height: auto !important;
-    padding: 8px 12px !important;
-  }
-  #root input:focus, #root textarea:focus, #root select:focus {
-    border-color: #1976d2 !important;
-    box-shadow: 0 0 0 3px rgba(25,118,210,.15) !important;
-  }
-
-  /* Change 5: Shadcn button style */
-  #root button {
+  /* Button style */
+  #root.shadcn button {
     font-weight: 500 !important;
     font-size: 14px !important;
-    box-shadow: 0 1px 2px rgba(0,0,0,.05) !important;
-    transition: opacity .15s, box-shadow .15s !important;
   }
-  #root button:hover {
-    opacity: 0.9 !important;
-    box-shadow: 0 1px 4px rgba(0,0,0,.1) !important;
+
+  /* Input style */
+  #root.shadcn input, #root.shadcn textarea, #root.shadcn select {
+    border-color: #e4e4e7 !important;
+    background: #fff !important;
+  }
+  #root.shadcn input:focus, #root.shadcn textarea:focus, #root.shadcn select:focus {
+    border-color: #1976d2 !important;
+    box-shadow: 0 0 0 3px rgba(25,118,210,.15) !important;
+    outline: none !important;
   }
 </style>
 </head>
@@ -189,6 +86,10 @@
   <span class="nav-tag">Live Prototype</span>
   <span class="nav-badge">MYNA · Automotive</span>
   <div class="nav-divider"></div>
+  <div class="ds-toggle">
+    <button class="ds-toggle-btn active" id="btn-aero" onclick="setMode('aero')">Aero</button>
+    <button class="ds-toggle-btn" id="btn-shadcn" onclick="setMode('shadcn')">Shadcn</button>
+  </div>
   <a href="aero-foundations.html" class="back-btn">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
     Go back to Components
@@ -200,6 +101,23 @@
 
 <!-- MYNA Automotive app bundle -->
 <script type="module" crossorigin src="https://hareshrajamannar-creator.github.io/MYNA-Automotive/assets/index-BqQcQIrc.js"></script>
+
+<script>
+function setMode(mode) {
+  const root = document.getElementById('root');
+  const btnAero = document.getElementById('btn-aero');
+  const btnShadcn = document.getElementById('btn-shadcn');
+  if (mode === 'shadcn') {
+    root.classList.add('shadcn');
+    btnShadcn.classList.add('active');
+    btnAero.classList.remove('active');
+  } else {
+    root.classList.remove('shadcn');
+    btnAero.classList.add('active');
+    btnShadcn.classList.remove('active');
+  }
+}
+</script>
 
 </body>
 </html>
