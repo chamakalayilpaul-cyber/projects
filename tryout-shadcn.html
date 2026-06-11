@@ -45,6 +45,9 @@
   #root.shadcn [class*="material-symbols"] {
     font-family: 'Material Symbols Outlined' !important;
     letter-spacing: normal !important;
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
   }
 
   /* Border radius */
@@ -190,6 +193,20 @@ function setMode(mode) {
     btnShadcn.classList.remove('active');
   }
 }
+
+// Hide Agents from L1 nav once React mounts
+const observer = new MutationObserver(() => {
+  const rows = document.querySelectorAll('#root [class*="group/row"]');
+  rows.forEach(row => {
+    const icons = row.querySelectorAll('.material-symbols-outlined');
+    icons.forEach(icon => {
+      if (icon.textContent.trim() === 'smart_toy') {
+        row.style.display = 'none';
+      }
+    });
+  });
+});
+observer.observe(document.getElementById('root'), { childList: true, subtree: true });
 </script>
 
 </body>
