@@ -66,6 +66,18 @@
     font-size: 14px !important;
   }
 
+  /* L1/L2 nav — regular weight for all items except selected */
+  #root.shadcn [class*="group/row"] *,
+  #root.shadcn [class*="group/row"] {
+    font-weight: 400 !important;
+  }
+  #root.shadcn [class*="group/row"][class*="selected"] *,
+  #root.shadcn [class*="group/row"][class*="active"] *,
+  #root.shadcn [class*="group/row"][class*="selected"],
+  #root.shadcn [class*="group/row"][class*="active"] {
+    font-weight: 500 !important;
+  }
+
   /* Input style */
   #root.shadcn input, #root.shadcn textarea, #root.shadcn select {
     border-color: #e4e4e7 !important;
