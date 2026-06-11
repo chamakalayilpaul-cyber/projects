@@ -91,9 +91,10 @@
     padding-top: 4px !important;
     padding-bottom: 4px !important;
   }
-  #root.shadcn [class*="px-2xl"] {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+  /* px-2xl only on main content areas, NOT sidebar title (would misalign with nav items) */
+  #root.shadcn [class*="px-2xl"]:not([class*="h-\[52px\]"]):not([class*="justify-center"]) {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
   #root.shadcn [class*="py-lg"], #root.shadcn [class*="py-md"] {
     padding-top: 4px !important;
@@ -137,23 +138,23 @@
     font-weight: 400 !important;
   }
 
-  /* L1 nav — scoped to bg-surface-selected container */
-  #root.shadcn .bg-surface-selected .text-text-secondary,
-  #root.shadcn .bg-surface-selected .text-text-secondary * {
+  /* L1 nav — all items 400, selected (aria-current=page) 500 */
+  #root.shadcn [class*="inset-y-0"] button,
+  #root.shadcn [class*="inset-y-0"] button * {
     font-weight: 400 !important;
   }
-  #root.shadcn .bg-surface-selected .text-text-primary,
-  #root.shadcn .bg-surface-selected .text-text-primary * {
+  #root.shadcn [class*="inset-y-0"] button[aria-current="page"],
+  #root.shadcn [class*="inset-y-0"] button[aria-current="page"] * {
     font-weight: 500 !important;
   }
 
-  /* L2 nav — scoped to bg-surface-l2 container */
-  #root.shadcn .bg-surface-l2 .text-text-secondary,
-  #root.shadcn .bg-surface-l2 .text-text-secondary * {
+  /* L2 nav — all items 400, selected (aria-current=page) 500 */
+  #root.shadcn .bg-surface-l2 button,
+  #root.shadcn .bg-surface-l2 button * {
     font-weight: 400 !important;
   }
-  #root.shadcn .bg-surface-l2 .text-text-primary,
-  #root.shadcn .bg-surface-l2 .text-text-primary * {
+  #root.shadcn .bg-surface-l2 button[aria-current="page"],
+  #root.shadcn .bg-surface-l2 button[aria-current="page"] * {
     font-weight: 500 !important;
   }
 
