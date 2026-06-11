@@ -62,10 +62,10 @@
   }
 
   /* Remove L1/L2 nav item separators */
-  #root [class*="w-14"] .border-b,
-  #root [class*="w-14"] ~ * .border-b,
-  #root [class*="inset-y-0"] .border-b {
+  #root .bg-surface-selected .border-b,
+  #root .bg-surface-selected [class*="border-b"] {
     border-bottom-width: 0 !important;
+    border-bottom: none !important;
   }
 
   /* Change 9: Shadcn text color — near-black #09090b */
