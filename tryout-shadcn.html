@@ -199,6 +199,31 @@
 <script type="module" crossorigin src="https://hareshrajamannar-creator.github.io/MYNA-Automotive/assets/index-DVXT8T56.js"></script>
 
 <script>
+// Hide Agents from L1 — find by text, hide the nav row ancestor
+function hideAgents() {
+  const spans = document.querySelectorAll('#root span, #root a');
+  for (const el of spans) {
+    if (el.childElementCount === 0 && el.textContent.trim() === 'Agents') {
+      // Walk up to find the clickable row (has an onclick or role)
+      let row = el;
+      for (let i = 0; i < 6; i++) {
+        row = row.parentElement;
+        if (!row || row.id === 'root') break;
+        const tag = row.tagName;
+        if (tag === 'A' || tag === 'BUTTON' || row.getAttribute('role') === 'button' || row.tabIndex >= 0) {
+          row.style.cssText += 'display:none!important';
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+let _attempts = 0;
+const _poll = setInterval(() => {
+  if (hideAgents() || ++_attempts > 30) clearInterval(_poll);
+}, 200);
+
 function setMode(mode) {
   const root = document.getElementById('root');
   const btnAero = document.getElementById('btn-aero');
