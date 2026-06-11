@@ -61,9 +61,24 @@
     border-color: #e4e4e7 !important;
   }
 
-  /* Remove L1/L2 nav item separators */
+  /* L1/L2: no elevation, no stroke, no separators */
   #root [class*="group/row"] {
-    border-bottom: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  #root .lhs-drawer__card,
+  #root .lhs-entity-group__item,
+  #root .lhs-external-apps__item,
+  #root .lhs-drawer__trigger-group-header,
+  #root .lhs-drawer__dropdown-item {
+    border: none !important;
+    box-shadow: none !important;
+  }
+  #root .lhs-drawer,
+  #root .lhs-entity-group,
+  #root .lhs-external-apps,
+  #root .lhs-drawer__dropdown {
+    box-shadow: none !important;
   }
 
   /* Change 9: Shadcn text color — near-black #09090b */
