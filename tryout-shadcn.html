@@ -61,6 +61,13 @@
     border-color: #e4e4e7 !important;
   }
 
+  /* Remove L1/L2 nav item separators */
+  #root [class*="w-14"] .border-b,
+  #root [class*="w-14"] ~ * .border-b,
+  #root [class*="inset-y-0"] .border-b {
+    border-bottom-width: 0 !important;
+  }
+
   /* Change 9: Shadcn text color — near-black #09090b */
   #root, #root p, #root div, #root span, #root label,
   #root h1, #root h2, #root h3, #root h4, #root h5, #root h6, #root li {
