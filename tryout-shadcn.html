@@ -27,14 +27,17 @@
   /* App mount */
   #root{flex:1;}
 
-  /* Change 2: Shadcn typography — Inter replaces Roboto */
-  #root {
-    font-family: 'Inter', system-ui, sans-serif;
-  }
-  #root p, #root span, #root div, #root button, #root input,
-  #root textarea, #root select, #root label, #root a, #root h1,
-  #root h2, #root h3, #root h4, #root h5, #root h6, #root li {
+  /* Change 2: Shadcn typography — Inter replaces Roboto (excludes icon font) */
+  #root p, #root div, #root button, #root input,
+  #root textarea, #root select, #root label, #root a,
+  #root h1, #root h2, #root h3, #root h4, #root h5, #root h6, #root li {
     font-family: 'Inter', system-ui, sans-serif !important;
+  }
+  /* Restore Material Symbols on icon elements */
+  #root .material-symbols-outlined,
+  #root [class*="material-symbols"] {
+    font-family: 'Material Symbols Outlined' !important;
+    letter-spacing: normal !important;
   }
 
   /* Change 3: Shadcn border radius — 4px → 8px on inputs, buttons, cards */
