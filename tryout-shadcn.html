@@ -32,6 +32,19 @@
     font-family: 'Inter', system-ui, sans-serif !important;
     letter-spacing: -0.01em;
   }
+
+  /* Change 3: Shadcn border radius — 4px → 8px, 6px → 10px */
+  #root input, #root textarea, #root select,
+  #root button:not([style*="border-radius:50%"]):not([style*="border-radius: 50%"]),
+  #root [class*="rounded-sm"], #root [class*="rounded-md"],
+  #root [class*="dropdown"], #root [class*="menu"],
+  #root [class*="card"], #root [class*="modal"],
+  #root [class*="panel"], #root [class*="drawer"],
+  #root [class*="chip"], #root [class*="badge"],
+  #root [class*="canvas-node"], #root [class*="lhs-drawer__card"],
+  #root [class*="tc-dropdown"], #root [class*="cnh__"] {
+    border-radius: 8px !important;
+  }
 </style>
 </head>
 <body>
