@@ -127,6 +127,12 @@
   padding-top: 4px !important;
   padding-bottom: 4px !important;
 }
+/* Table column headers — 12px/500 */
+#root.shadcn th {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+/* Table cells — 400 */
 #root.shadcn td,
 #root.shadcn [class*="align-middle"] {
   font-weight: 400 !important;
@@ -146,6 +152,12 @@
 #root.shadcn [class*="inset-y-0"] button[aria-current="page"],
 #root.shadcn [class*="inset-y-0"] button[aria-current="page"] * {
   font-weight: 500 !important;
+}
+/* L1 section group labels (Marketing / Operations / Customer experience)
+   keep Aero gray — do NOT override with near-black text color */
+#root.shadcn [class*="inset-y-0"] [class*="text-text-secondary"],
+#root.shadcn [class*="inset-y-0"] [class*="text-secondary"] {
+  color: inherit !important;
 }
 
 /* ─── L2 nav sidebar ──────────────────────────────────────────────────────── */
