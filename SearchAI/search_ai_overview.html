@@ -1,0 +1,2961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Search AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,300,0,0&display=block"/>
+<link rel="stylesheet" href="../ds-tokens.css"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Roboto',sans-serif;
+  background:rgb(242,242,242);
+  height:100vh;
+  overflow:hidden;
+  color:rgb(33,33,33);
+  font-size:14px;
+  font-weight:400;
+  line-height:20px;
+}
+
+/* ── LAYOUT ── */
+.body-wrap{display:flex;height:100vh;overflow:hidden}
+
+/* ── RAIL ── */
+.rail{
+  width:56px;background:#e5e9f0;border-right:1px solid #eaeaea;
+  display:flex;flex-direction:column;align-items:stretch;flex-shrink:0;
+}
+.rail-logo-area{
+  height:52px;background:#e5e9f0;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;text-decoration:none;
+}
+.rail-nav{
+  flex:1;background:#e5e9f0;display:flex;flex-direction:column;
+  align-items:center;padding:8px 14px;gap:8px;overflow:hidden;
+}
+.rail-btn{
+  width:28px;height:28px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;position:relative;border:none;background:transparent;
+}
+.rail-btn:hover{background:rgba(0,0,0,0.06)}
+.rail-btn.active{background:#c7d6f6}
+.rail-btn .material-symbols-rounded{font-size:20px;color:rgb(48,48,48);user-select:none}
+.rail-divider{width:20px;height:1px;background:#c0c8d8;flex-shrink:0;margin:0 auto}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:222px;background:#fff;border-right:1px solid #eaeaea;
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;
+}
+.sb-title{
+  height:52px;background:#fafafa;display:flex;align-items:center;
+  padding:0 24px;font-size:18px;font-weight:400;color:#212121;
+  flex-shrink:0;border-bottom:1px solid #eaeaea;
+}
+.sb-body{flex:1;overflow-y:auto;padding:8px;}
+.sb-body::-webkit-scrollbar{width:4px}
+.sb-body::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.sb-item{
+  display:flex;align-items:center;padding:0 12px;height:32px;cursor:pointer;
+  font-size:14px;color:#212121;border-radius:6px;
+}
+.sb-item:hover{background:rgb(242,244,247)}
+.sb-item.active{background:#e5e9f1}
+.sb-group-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 12px;height:32px;cursor:pointer;font-size:14px;color:#212121;border-radius:6px;
+}
+.sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
+.sb-group-hdr svg{color:#555;flex-shrink:0}
+.sb-sub-item{
+  display:flex;align-items:center;padding:0 12px;height:32px;
+  cursor:pointer;font-size:14px;color:#555;border-radius:6px;
+}
+.sb-sub-item:hover{background:rgb(242,244,247)}
+.sb-sub-item.active{color:#212121;background:#e5e9f1}
+
+/* ── TOP NAV ── */
+.top-nav{
+  height:52px;background:#fff;border-bottom:1px solid #e9e9eb;
+  display:flex;align-items:center;justify-content:flex-end;
+  padding:0 24px;gap:4px;flex-shrink:0;
+}
+.top-nav-btn{
+  width:28px;height:28px;border-radius:4px;border:none;background:transparent;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.top-nav-btn:hover{background:rgba(0,0,0,0.06)}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── PAGE HEADER ── */
+.page-hdr{
+  height:52px;background:#fff;border-bottom:1px solid #eaeaea;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;flex-shrink:0;
+}
+.page-title{font-size:18px;font-weight:400;color:#212121}
+.page-hdr-right{display:flex;align-items:center;gap:4px}
+.icon-btn{
+  width:28px;height:28px;border-radius:4px;border:none;background:transparent;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;
+}
+.icon-btn:hover{background:rgb(242,244,247)}
+.icon-btn .material-symbols-rounded{font-size:20px}
+
+/* ══ PROJECTS PAGE ══ */
+.proj-page-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.proj-page-title{font-size:18px;font-weight:400;color:#212121}
+.proj-hdr-actions{display:flex;align-items:center;gap:6px}
+.proj-icon-btn{
+  width:32px;height:32px;border:none;background:transparent;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;color:#555;
+}
+.proj-icon-btn:hover{background:rgb(242,244,247)}
+.proj-icon-btn .material-symbols-rounded{font-size:20px}
+.proj-icon-btn.active{background:rgb(229,233,240);color:#212121}
+.proj-view-sep{width:1px;height:20px;background:#eaeaea;margin:0 2px}
+
+/* Saved tab */
+.proj-tabs{display:flex;border-bottom:1px solid #eaeaea;margin-bottom:20px}
+.proj-tab{
+  padding:8px 2px;margin-right:20px;font-size:14px;color:#8f8f8f;
+  border-bottom:2px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+}
+.proj-tab.active{color:#212121;border-bottom-color:#1976d2}
+.proj-tab-count{
+  font-size:12px;font-weight:500;background:#e8f0fe;color:#1976d2;
+  padding:1px 6px;border-radius:100px;
+}
+
+/* Card grid */
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:16px;
+}
+.proj-card{
+  position:relative;cursor:pointer;border-radius:6px;overflow:visible;
+}
+.proj-card-thumb{
+  width:100%;aspect-ratio:4/3;border-radius:6px;overflow:hidden;
+  background:#f0f2f5;border:1px solid #eaeaea;
+  display:flex;align-items:center;justify-content:center;margin-bottom:8px;
+  position:relative;
+}
+.proj-card-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.proj-card-placeholder{
+  display:flex;align-items:center;justify-content:center;width:100%;height:100%;
+}
+.proj-card-placeholder .material-symbols-rounded{font-size:32px;color:#c8cdd6}
+/* Text-preview cards */
+.proj-card-preview{
+  width:100%;height:100%;padding:10px;background:#fff;overflow:hidden;
+  font-size:8px;line-height:1.4;color:#444;
+}
+.proj-card-preview-title{font-size:9px;font-weight:600;color:#212121;margin-bottom:4px;line-height:1.3}
+.proj-card-name{font-size:13px;color:#212121;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Hover info panel */
+.proj-card:hover .proj-hover-panel{opacity:1;pointer-events:all}
+.proj-hover-panel{
+  position:absolute;top:0;left:calc(100% + 8px);z-index:100;
+  width:200px;background:#2d2d2d;border-radius:8px;padding:16px;
+  opacity:0;pointer-events:none;transition:opacity 0.15s;
+  box-shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+/* flip panel to left if near right edge — handled via JS class */
+.proj-card.flip-left .proj-hover-panel{left:auto;right:calc(100% + 8px)}
+.proj-hover-name{font-size:14px;font-weight:500;color:#fff;margin-bottom:14px;line-height:1.4}
+.proj-hover-btns{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.proj-hover-preview{
+  flex:1;padding:5px 10px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:13px;cursor:pointer;font-family:'Roboto',sans-serif;
+}
+.proj-hover-preview:hover{background:#1565c0}
+.proj-hover-edit{
+  flex:1;padding:5px 10px;border-radius:4px;
+  border:1px solid #1976d2;background:transparent;color:#90caf9;
+  font-size:13px;cursor:pointer;font-family:'Roboto',sans-serif;
+}
+.proj-hover-edit:hover{background:rgba(25,118,210,0.15)}
+.proj-hover-more{
+  width:28px;height:28px;border:none;background:rgba(255,255,255,0.1);
+  border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.proj-hover-more .material-symbols-rounded{font-size:18px;color:#fff}
+.proj-hover-more:hover{background:rgba(255,255,255,0.2)}
+.proj-hover-author{font-size:12px;color:#9ca3af}
+
+/* ── STATE CHIPS ── */
+.state-chips{
+  display:none;align-items:center;gap:2px;
+  background:rgb(229,233,240);border-radius:6px;padding:2px;
+  margin-right:auto;margin-left:16px;
+}
+.state-chips.visible{display:flex}
+.state-chip{
+  padding:4px 12px;border-radius:4px;font-size:12px;font-weight:500;
+  color:rgb(85,85,85);cursor:pointer;border:none;background:transparent;
+  white-space:nowrap;line-height:20px;transition:background 0.15s,color 0.15s;
+}
+.state-chip.active{background:#fff;color:rgb(33,33,33);box-shadow:0 1px 3px rgba(0,0,0,0.12)}
+
+/* ── CONTENT TABLE (filled state) ── */
+.content-table{width:100%;border-collapse:collapse;background:#fff}
+.content-table th{
+  padding:10px 20px;font-size:13px;font-weight:400;color:#8f8f8f;
+  text-align:left;border-bottom:1px solid #eaeaea;white-space:nowrap;
+  background:#fff;user-select:none;
+}
+.ct-th-inner{display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.ct-th-inner:hover{color:#212121}
+.ct-sort-icon{font-size:14px;color:#bbb}
+.content-table td{
+  padding:13px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6;
+  vertical-align:middle;
+}
+.content-table tr:last-child td{border-bottom:none}
+.content-table tbody tr:hover td{background:rgb(242,244,247)}
+.ct-title{color:#212121;line-height:1.4}
+/* Type */
+.ct-type{font-size:14px;color:#555}
+/* AEO score */
+.ct-score{display:inline-flex;align-items:center;gap:6px}
+.ct-score-num{font-size:14px;font-weight:500}
+.ct-score-num.high{color:#16a34a}
+.ct-score-num.mid{color:#e53935}
+.ct-score-denom{font-size:14px;color:#8f8f8f;font-weight:400}
+/* Status pills */
+.ct-status-pill{
+  display:inline-block;padding:2px 10px;border-radius:100px;font-size:13px;font-weight:400;
+  white-space:nowrap;
+}
+.ct-status-pill.published{background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac}
+.ct-status-pill.draft{background:#f5f5f5;color:#555;border:1px solid #e0e0e0}
+.ct-date{font-size:13px;color:#555;white-space:nowrap}
+
+/* ── CONTENT SCROLL ── */
+.content{flex:1;overflow-y:auto;padding:20px 24px 32px}
+.content::-webkit-scrollbar{width:6px}
+.content::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+
+/* ── VIEW PANELS ── */
+.view{display:none}
+.view.active{display:block}
+
+/* ══ OVERVIEW VIEW ══ */
+.ai-coach-banner{
+  border:1px solid #c4b5fd;border-radius:8px;background:#faf5ff;
+  padding:16px 20px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px;
+}
+.ai-coach-star{
+  width:28px;height:28px;background:#7c3aed;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.ai-coach-title{font-size:14px;font-weight:500;color:#5b21b6;margin-bottom:4px}
+.ai-coach-desc{font-size:13px;color:#212121;line-height:1.5;margin-bottom:8px}
+.ai-coach-link{
+  font-size:13px;color:#5b21b6;font-weight:500;cursor:pointer;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.ai-coach-link:hover{text-decoration:underline}
+
+.score-card{
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;
+  display:flex;margin-bottom:16px;
+}
+.score-donut-panel{
+  padding:24px 20px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;min-width:160px;
+  border-right:1px solid #eaeaea;gap:8px;
+}
+.donut-wrap{position:relative;width:100px;height:100px}
+.donut-wrap canvas{position:absolute;top:0;left:0}
+.donut-center{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;line-height:1.2;
+}
+.donut-val{font-size:26px;font-weight:400;color:#f97316}
+.donut-denom{font-size:11px;color:#8f8f8f}
+.score-label-main{font-size:13px;font-weight:500;color:#212121;text-align:center}
+.score-delta{font-size:12px;color:#16a34a;text-align:center}
+.score-metrics-panel{
+  flex:1;padding:20px 24px;border-right:1px solid #eaeaea;
+  display:flex;flex-direction:column;gap:16px;
+}
+.metrics-panel-title{font-size:13px;font-weight:500;color:#212121}
+.metric-bar-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.metric-bar-name{font-size:13px;color:#212121}
+.metric-bar-val{font-size:13px;font-weight:500;color:#212121}
+.metric-bar-track{height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-bottom:4px}
+.metric-bar-fill{height:100%;border-radius:3px}
+.metric-bar-desc{font-size:11px;color:#8f8f8f}
+.score-glance-panel{padding:20px 24px;min-width:160px;display:flex;flex-direction:column;gap:16px}
+.glance-title{font-size:13px;font-weight:500;color:#212121}
+.glance-row{display:flex;align-items:center;gap:10px}
+.glance-val{font-size:20px;font-weight:400;color:#212121;min-width:24px}
+.glance-lbl{font-size:12px;color:#8f8f8f}
+
+.summary-card{
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px;margin-bottom:16px;
+}
+.summary-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.summary-title{font-size:14px;font-weight:500;color:#212121}
+.view-all-link{
+  font-size:13px;color:#1976d2;cursor:pointer;
+  display:flex;align-items:center;gap:3px;background:none;border:none;
+}
+.view-all-link:hover{text-decoration:underline}
+.rec-stats-row{display:flex;gap:12px}
+.rec-stat-box{flex:1;border-radius:6px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.rec-stat-box.pending{background:#f3f4f6}
+.rec-stat-box.in-progress{background:#fff7ed}
+.rec-stat-box.completed{background:#f0fdf4}
+.rec-stat-num{font-size:28px;font-weight:400}
+.rec-stat-box.pending .rec-stat-num{color:#212121}
+.rec-stat-box.in-progress .rec-stat-num{color:#d97706}
+.rec-stat-box.completed .rec-stat-num{color:#16a34a}
+.rec-stat-lbl{font-size:13px;color:#555}
+
+.competitors-card{
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px;margin-bottom:16px;
+}
+.competitors-title{font-size:14px;font-weight:500;color:#212121;margin-bottom:12px}
+.competitor-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid #f3f4f6;
+}
+.competitor-row:last-child{border-bottom:none;padding-bottom:0}
+.competitor-left{display:flex;align-items:center;gap:10px}
+.competitor-avatar{
+  width:28px;height:28px;border-radius:50%;background:#dbeafe;color:#1976d2;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0;
+}
+.competitor-name{font-size:14px;color:#212121}
+.competitor-rank{font-size:13px;color:#8f8f8f}
+
+/* ══ RECOMMENDATIONS VIEW ══ */
+.status-bar{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;margin-bottom:16px;overflow:hidden;
+}
+.stat-card{
+  padding:12px 20px;display:flex;flex-direction:column;gap:6px;
+  cursor:pointer;border-right:1px solid #eaeaea;
+}
+.stat-card:last-child{border-right:none}
+.stat-card.active{background:rgb(232,240,254)}
+.stat-num{font-size:26px;font-weight:400;line-height:1}
+.stat-lbl{display:flex;align-items:center;gap:5px;font-size:13px;color:#555}
+
+.rec-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;margin-bottom:10px}
+.rec-top{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px}
+.rec-badges{display:flex;align-items:center;gap:8px}
+.tag{
+  display:inline-flex;align-items:center;padding:2px 9px;border-radius:4px;
+  font-size:12px;border:1px solid #e5e7eb;color:#555;background:#fff;white-space:nowrap;
+}
+.priority{display:inline-flex;align-items:center;gap:4px;font-size:12px;white-space:nowrap}
+.priority.quick{color:#16a34a}
+.priority.bigger{color:#d97706}
+.rec-locs{font-size:12px;color:#8f8f8f;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.rec-body{padding:0 16px 14px}
+.rec-title{font-size:14px;font-weight:500;margin-bottom:5px;color:#212121}
+.rec-desc{font-size:13px;color:#555;line-height:1.55;margin-bottom:10px}
+.rec-impact{
+  display:flex;align-items:flex-start;gap:6px;
+  background:#f9fafb;padding:8px 12px;border-radius:4px;
+  font-size:12px;color:#555;line-height:1.4;
+}
+.rec-impact svg{flex-shrink:0;margin-top:1px}
+
+/* ══ CONTENT VIEW — EMPTY STATE ══ */
+.content-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:calc(100vh - 52px - 52px - 60px);gap:20px;text-align:center;padding:50px 20px;
+}
+.content-empty-title{font-size:18px;font-weight:400;color:#212121}
+.content-empty-sub{font-size:14px;color:#555;max-width:360px;line-height:1.6}
+.content-empty-actions{display:flex;gap:12px;margin-top:4px}
+.btn-outlined{
+  padding:7px 18px;border-radius:4px;border:1px solid #1976d2;
+  background:#fff;color:#1976d2;font-size:14px;font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.btn-outlined:hover{background:#e3f2fd}
+.btn-filled{
+  padding:7px 18px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:14px;font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.btn-filled:hover{background:#1565c0}
+
+/* ══ MODAL ══ */
+/* ── TYPE SELECTION MODAL ── */
+.type-modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(33,33,33,0.4);
+  z-index:1000;align-items:center;justify-content:center;
+}
+.type-modal-overlay.open{display:flex}
+.type-modal{
+  background:#fff;border-radius:8px;width:560px;max-width:95vw;
+  padding:24px;display:flex;flex-direction:column;
+  box-shadow:0 10px 24px rgba(33,33,33,0.2);
+}
+.type-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.type-modal-title{font-size:16px;font-weight:400;color:#212121}
+.type-modal-subtitle{font-size:14px;color:#555;margin-bottom:20px;line-height:1.5}
+.type-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px;
+}
+.type-card{
+  border:1.5px solid #e5e9f0;border-radius:6px;padding:16px 12px;
+  cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+  background:#fff;transition:border-color 0.15s,background 0.15s;
+}
+.type-card:hover{border-color:#bbc8e0;background:rgb(242,244,247)}
+.type-card.selected{border-color:#1976d2;background:#e8f0fe}
+.type-card-icon{
+  width:32px;height:32px;border-radius:6px;background:#f0f4ff;
+  display:flex;align-items:center;justify-content:center;
+}
+.type-card.selected .type-card-icon{background:#c7d6f6}
+.type-card-icon .material-symbols-rounded{font-size:18px;color:#1976d2}
+.type-card-label{font-size:13px;font-weight:500;color:#212121;line-height:1.3}
+.type-modal-footer{
+  display:flex;align-items:center;justify-content:flex-end;gap:8px;
+  padding-top:16px;border-top:1px solid #eaeaea;
+}
+
+/* ── CONFIG MODAL ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(33,33,33,0.4);
+  z-index:1000;align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:#fff;border-radius:8px;width:825px;max-width:95vw;
+  max-height:90vh;overflow-y:auto;padding:24px;
+  display:flex;flex-direction:column;gap:0;
+  box-shadow:0 10px 24px rgba(33,33,33,0.2);
+}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.modal-title{font-size:16px;font-weight:400;color:#212121}
+.modal-close{width:24px;height:24px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:4px;color:#555;font-size:18px;}
+.modal-close:hover{background:rgb(242,244,247)}
+.modal-subtitle{font-size:14px;color:#212121;margin-bottom:24px;line-height:1.5}
+.modal-section-title{font-size:16px;font-weight:400;color:#212121;margin-bottom:4px}
+.modal-section-sub{font-size:14px;color:#212121;margin-bottom:12px;line-height:1.5}
+.modal-fields{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+.dropdown-field{
+  border:1px solid #e5e9f0;border-radius:4px;padding:4px 8px 4px 12px;
+  height:56px;display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;background:#fff;position:relative;
+}
+.dropdown-field:hover{border-color:#bbc8e0}
+.dropdown-field.open{border-color:#1976d2}
+.df-inner{display:flex;flex-direction:column;flex:1;justify-content:center}
+.df-label{font-size:12px;color:#8f8f8f;line-height:1.5}
+.df-value{font-size:14px;color:#212121;line-height:20px}
+.df-chevron{color:#555;flex-shrink:0}
+.dropdown-options{
+  display:none;position:absolute;top:100%;left:0;right:0;z-index:10;
+  background:#fff;border:1px solid #e5e9f0;border-radius:4px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.1);margin-top:2px;
+}
+.dropdown-field.open .dropdown-options{display:block}
+.dropdown-option{padding:10px 12px;font-size:14px;color:#212121;cursor:pointer}
+.dropdown-option:hover{background:rgb(242,244,247)}
+.dropdown-option.selected{background:#e8f0fe;color:#1976d2}
+.article-title-input{
+  width:100%;border:1px solid #e5e9f0;border-radius:4px;
+  padding:8px 12px;font-size:14px;color:#212121;font-family:'Roboto',sans-serif;
+  outline:none;line-height:20px;margin-bottom:8px;
+}
+.article-title-input:focus{border-color:#1976d2}
+.supporting-url-field{
+  border:1px solid #e5e9f0;border-radius:4px;padding:8px 12px;
+  cursor:text;background:#fff;transition:border-color 0.15s;
+}
+.supporting-url-field:focus-within{border-color:#1976d2}
+.supporting-url-input{
+  width:100%;border:none;outline:none;font-size:14px;color:#212121;
+  font-family:'Roboto',sans-serif;line-height:20px;background:transparent;
+}
+.supporting-url-input::placeholder{color:#bbb}
+.ai-recs-header{
+  display:flex;align-items:center;gap:6px;font-size:12px;color:#212121;
+  margin-bottom:4px;
+}
+.ai-recs-header .ai-icon{
+  width:12px;height:12px;background:#7c3aed;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.rec-suggestion{
+  padding:8px;font-size:14px;color:#212121;cursor:pointer;border-radius:4px;
+  line-height:1.5;border:1px solid transparent;margin-bottom:2px;
+}
+.rec-suggestion:hover{background:rgb(242,244,247)}
+.rec-suggestion.selected{border-color:#1976d2;background:#e8f0fe}
+.modal-footer{
+  display:flex;align-items:center;justify-content:flex-end;gap:8px;
+  padding-top:16px;border-top:1px solid #eaeaea;margin-top:8px;
+}
+/* Pages multi-select panel */
+.pages-panel{padding:0;min-width:100%}
+.pages-table-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 16px;font-size:12px;color:#8f8f8f;font-weight:400;
+  border-bottom:1px solid #eaeaea;
+}
+.pages-rows{display:flex;flex-direction:column}
+.pages-row{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;
+}
+.pages-row:last-child{border-bottom:none}
+.pages-row:hover{background:rgb(242,244,247)}
+.pages-row.checked{background:#f5f5f5}
+.pages-cb{
+  width:18px;height:18px;border-radius:4px;border:1.5px solid #bbbfc8;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:#fff;transition:background 0.1s,border-color 0.1s;
+}
+.pages-row.checked .pages-cb{background:#1976d2;border-color:#1976d2}
+.pages-cb-check{display:none;color:#fff;font-size:13px;font-weight:700}
+.pages-row.checked .pages-cb-check{display:block}
+.pages-url{flex:1;font-size:14px;color:#212121;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pages-tag{
+  display:inline-flex;align-items:center;gap:4px;padding:2px 8px;
+  border-radius:20px;background:#f3f4f6;font-size:12px;color:#555;white-space:nowrap;flex-shrink:0;
+}
+.pages-tag-dot{width:14px;height:14px;border-radius:50%;background:#bbbfc8;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pages-count{font-size:14px;color:#212121;font-weight:400;min-width:24px;text-align:right;flex-shrink:0}
+.pages-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;border-top:1px solid #eaeaea;
+}
+.pages-reset{font-size:14px;color:#212121;cursor:pointer;font-weight:400}
+.pages-reset:hover{text-decoration:underline}
+.pages-pagination{display:flex;align-items:center;gap:8px;font-size:14px;color:#212121}
+.pages-nav{
+  width:28px;height:28px;border:1px solid #e5e9f0;border-radius:4px;
+  background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:#212121;
+}
+.pages-nav:hover{background:rgb(242,244,247)}
+.pages-nav:disabled{opacity:0.4;cursor:default}
+
+/* Platform checkbox options */
+.platform-option{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;
+}
+.platform-option:hover{background:rgb(242,244,247)}
+.platform-label{font-size:14px;color:#212121}
+.platform-option.checked .pages-cb{background:#1976d2;border-color:#1976d2}
+.platform-option.checked .pages-cb-check{display:block}
+
+.btn-cancel{
+  padding:8px 12px;border-radius:4px;border:none;background:transparent;
+  color:#1976d2;font-size:16px;font-family:'Roboto',sans-serif;cursor:pointer;
+  min-width:136px;text-align:center;
+}
+.btn-cancel:hover{background:#e8f0fe}
+.btn-generate{
+  padding:8px 12px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:16px;font-family:'Roboto',sans-serif;
+  cursor:pointer;min-width:154px;text-align:center;
+}
+.btn-generate:hover{background:#1565c0}
+
+/* ══ ARTICLE VIEW ══ */
+.sidebar.hidden{display:none}
+.content.article-mode{padding:0;overflow:hidden;display:flex;flex:1;min-height:0}
+#view-article{display:none;flex:1;min-height:0}
+#view-article.active{display:flex}
+
+/* Left panel */
+.art-left{
+  width:280px;background:#fff;border-right:1px solid #eaeaea;
+  display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;min-height:0;
+}
+.art-tabs{display:flex;border-bottom:1px solid #eaeaea;padding:0 8px;flex-shrink:0}
+.art-tab{
+  padding:0 12px;height:40px;font-size:14px;color:rgb(85,85,85);
+  cursor:pointer;border-bottom:2px solid transparent;
+  display:flex;align-items:center;white-space:nowrap;gap:5px;
+}
+.art-tab.active{color:rgb(33,33,33);border-bottom-color:rgb(25,118,210)}
+.art-tab-ai-badge{
+  font-size:10px;font-weight:600;color:#7c3aed;
+  background:#ede9fe;padding:1px 5px;border-radius:10px;
+}
+.art-search{padding:10px 12px;flex-shrink:0}
+.art-search-inp{
+  width:100%;border:1px solid #e5e9f0;border-radius:4px;
+  padding:6px 10px;font-size:14px;font-family:'Roboto',sans-serif;
+  outline:none;color:rgb(33,33,33);
+}
+.art-search-inp:focus{border-color:#1976d2}
+.art-blocks{flex:1;overflow-y:auto;padding:12px;display:none}
+.art-blocks.active{display:block}
+.art-blocks::-webkit-scrollbar{width:4px}
+.art-blocks::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.art-blocks-label{
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:rgb(143,143,143);text-transform:uppercase;margin-bottom:8px;
+}
+.art-blocks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.art-block-item{
+  border:1px solid #eaeaea;border-radius:6px;padding:10px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:grab;font-size:12px;color:rgb(33,33,33);text-align:center;background:#fff;
+}
+.art-block-item:hover{background:rgb(242,244,247)}
+.art-block-item .material-symbols-rounded{font-size:20px;color:rgb(85,85,85)}
+
+/* Create with AI panel */
+.art-ai-panel{flex:1;min-height:0;display:none;flex-direction:column}
+.art-ai-panel.active{display:flex}
+.art-ai-chat{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:12px}
+.art-ai-chat::-webkit-scrollbar{width:4px}
+.art-ai-chat::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.art-ai-msg{display:flex;align-items:flex-start;gap:8px}
+.art-ai-avatar{
+  width:24px;height:24px;border-radius:50%;background:#ede9fe;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+}
+.art-ai-avatar .material-symbols-rounded{font-size:14px;color:#7c3aed}
+.art-ai-bubble{
+  background:#f9fafb;border:1px solid #eaeaea;border-radius:0 8px 8px 8px;
+  padding:10px 12px;font-size:13px;color:rgb(33,33,33);line-height:1.5;flex:1;
+}
+.art-ai-prompts{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.art-ai-prompt-btn{
+  border:1px solid #e5e9f0;border-radius:6px;padding:8px 12px;
+  font-size:13px;color:rgb(33,33,33);background:#fff;cursor:pointer;text-align:left;
+  font-family:'Roboto',sans-serif;
+}
+.art-ai-prompt-btn:hover{background:rgb(242,244,247)}
+.art-user-msg{display:flex;align-items:flex-start;gap:8px}
+.art-user-avatar{
+  width:24px;height:24px;border-radius:50%;background:#dbeafe;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:11px;font-weight:600;color:#1976d2;
+}
+.art-user-bubble{
+  background:#e8f0fe;border-radius:0 8px 8px 8px;
+  padding:10px 12px;font-size:13px;color:rgb(33,33,33);line-height:1.5;
+}
+.art-ai-working{
+  display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(143,143,143);
+}
+.art-ai-working .material-symbols-rounded{font-size:18px;color:#7c3aed}
+/* AI input */
+.art-ai-input-wrap{
+  border-top:1px solid #eaeaea;padding:10px 12px;flex-shrink:0;
+}
+.art-ai-textarea{
+  width:100%;border:1px solid #c7d6f6;border-radius:6px;
+  padding:10px 12px;font-size:13px;font-family:'Roboto',sans-serif;
+  color:rgb(33,33,33);outline:none;resize:none;line-height:1.5;
+  min-height:72px;
+}
+.art-ai-textarea:focus{border-color:#1976d2}
+.art-ai-toolbar{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.art-ai-tool-left{display:flex;align-items:center;gap:8px}
+.art-ai-tool-btn{
+  width:28px;height:28px;border:none;background:transparent;cursor:pointer;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;color:rgb(85,85,85);
+}
+.art-ai-tool-btn:hover{background:rgb(242,244,247)}
+.art-ai-tool-btn .material-symbols-rounded{font-size:18px}
+.art-ai-send{
+  width:28px;height:28px;border:none;background:#1976d2;cursor:pointer;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;
+}
+.art-ai-send:hover{background:#1565c0}
+.art-ai-send .material-symbols-rounded{font-size:16px}
+
+/* Main editor area */
+.art-main{
+  flex:1;min-height:0;overflow-y:auto;padding:24px;
+  background:rgb(242,242,242);display:flex;flex-direction:column;gap:16px;
+}
+.art-main::-webkit-scrollbar{width:6px}
+.art-main::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
+
+/* Article card */
+.art-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;overflow:hidden;flex-shrink:0}
+.art-card-body{padding:28px 32px}
+.art-article-title{
+  font-size:22px;font-weight:500;color:rgb(33,33,33);
+  line-height:1.4;margin-bottom:20px;outline:none;
+}
+.art-hero-img{
+  width:100%;height:200px;
+  background:linear-gradient(135deg,#dbeafe 0%,#c7d6f6 100%);
+  border-radius:6px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.art-hero-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;color:rgb(143,143,143)}
+.art-hero-placeholder .material-symbols-rounded{font-size:40px;color:#a5b4fc}
+.art-article-text{font-size:14px;color:rgb(85,85,85);line-height:1.75;outline:none}
+.art-article-text p{margin-bottom:14px}
+.art-article-text p:last-child{margin-bottom:0}
+.art-section-heading{
+  font-size:16px;font-weight:500;color:rgb(33,33,33);
+  margin:20px 0 8px;outline:none;
+}
+.art-hero-img{position:relative}
+.art-hero-overlay{
+  position:absolute;top:16px;left:16px;
+  font-size:28px;font-weight:700;color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,0.5);
+  letter-spacing:1px;z-index:1;
+}
+
+/* SEO card */
+.art-seo-card{background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px;flex-shrink:0}
+.art-seo-title{font-size:14px;font-weight:500;color:rgb(33,33,33);margin-bottom:16px}
+.art-seo-field{margin-bottom:14px}
+.art-seo-field:last-child{margin-bottom:0}
+.art-seo-label{
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:rgb(143,143,143);text-transform:uppercase;margin-bottom:6px;
+}
+.art-seo-value-row{
+  display:flex;align-items:flex-start;gap:8px;
+  background:#fafafa;border:1px solid #eaeaea;border-radius:4px;padding:8px 12px;
+}
+.art-seo-value{flex:1;font-size:14px;color:rgb(33,33,33);line-height:1.5;outline:none;min-width:0}
+.art-copy-btn{
+  width:24px;height:24px;border:none;background:transparent;cursor:pointer;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  color:rgb(85,85,85);flex-shrink:0;
+}
+.art-copy-btn:hover{background:rgb(242,244,247)}
+.art-copy-btn .material-symbols-rounded{font-size:16px}
+
+/* ── Stats widgets ── */
+.art-stats-card{
+  background:#fff;border:1px solid #eaeaea;border-radius:8px;
+  padding:20px 24px;flex-shrink:0;
+}
+.art-stats-card-title{font-size:14px;font-weight:600;color:rgb(33,33,33);margin-bottom:16px}
+.art-stats-total{font-size:13px;color:rgb(143,143,143);font-weight:400}
+/* Headings list */
+.art-heading-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;border:1px solid #eaeaea;border-radius:6px;margin-bottom:8px;
+}
+.art-heading-row:last-child{margin-bottom:0}
+.art-heading-tag{
+  font-size:12px;font-weight:500;color:rgb(143,143,143);
+  min-width:24px;flex-shrink:0;padding-top:1px;
+}
+.art-heading-text{font-size:14px;color:rgb(33,33,33);line-height:1.4}
+.art-heading-divider{border:none;border-top:1px solid #eaeaea;margin:12px 0}
+.art-hcount-row{display:flex;justify-content:space-around;text-align:center;padding-top:4px}
+.art-hcount-lbl{font-size:14px;font-weight:600;color:rgb(33,33,33);margin-bottom:2px}
+.art-hcount-sub{font-size:12px;color:rgb(143,143,143)}
+/* Paragraphs widget */
+.art-para-num{font-size:40px;font-weight:500;color:rgb(33,33,33);line-height:1;margin-bottom:6px}
+.art-para-sub{font-size:13px;color:rgb(143,143,143)}
+/* Content structure */
+.art-struct-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid #f3f4f6;
+}
+.art-struct-row:last-child{border-bottom:none;padding-bottom:0}
+.art-struct-lbl{font-size:14px;color:rgb(33,33,33)}
+.art-struct-val{font-size:14px;font-weight:500;color:rgb(33,33,33)}
+
+/* Article page header overrides */
+.page-hdr-left{display:flex;align-items:center;gap:6px}
+#hdr-back-btn{display:none}
+.art-score{font-size:14px;display:flex;align-items:center;gap:5px}
+.btn-export{
+  padding:5px 14px;border-radius:4px;border:1px solid #d1d5db;
+  background:#fff;color:rgb(33,33,33);font-size:14px;
+  font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.btn-export:hover{background:rgb(242,244,247)}
+.btn-save{
+  padding:5px 14px;border-radius:4px 0 0 4px;border:none;
+  background:#1976d2;color:#fff;font-size:14px;
+  font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.btn-save:hover{background:#1565c0}
+.btn-save-caret{
+  padding:5px 8px;border-radius:0 4px 4px 0;border:none;
+  border-left:1px solid rgba(255,255,255,0.3);
+  background:#1976d2;color:#fff;cursor:pointer;
+  display:flex;align-items:center;
+}
+.btn-save-caret:hover{background:#1565c0}
+
+/* ── CH Recommendations table ── */
+.ch-rec-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.ch-rec-title{font-size:18px;font-weight:400;color:rgb(33,33,33)}
+.ch-rec-table-wrap{
+  background:#fff;border-radius:8px;
+  border:1px solid #eaeaea;overflow:hidden;
+}
+.ch-rec-table{width:100%;border-collapse:collapse;font-size:14px}
+.ch-rec-table thead tr{
+  background:#fafafa;border-bottom:1px solid #eaeaea;
+}
+.ch-rec-table th{
+  padding:10px 16px;text-align:left;
+  font-size:11px;font-weight:600;letter-spacing:0.5px;
+  color:rgb(143,143,143);text-transform:uppercase;white-space:nowrap;
+}
+.ch-rec-table td{
+  padding:14px 16px;border-bottom:1px solid #f3f4f6;
+  color:rgb(33,33,33);vertical-align:middle;
+}
+.ch-rec-table tbody tr:last-child td{border-bottom:none}
+.ch-rec-table tbody tr:hover td{background:rgb(242,244,247)}
+/* Recommendation cell */
+.rec-cell-title{font-size:14px;color:rgb(33,33,33);margin-bottom:2px;font-weight:500}
+.rec-cell-sub{font-size:12px;color:rgb(143,143,143);line-height:1.4}
+/* Content type chip */
+.ct-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;
+  border:1px solid #e5e9f0;background:#fafafa;color:rgb(85,85,85);
+  white-space:nowrap;
+}
+/* AEO impact badge */
+.aeo-impact{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:13px;font-weight:600;color:#16a34a;
+}
+.aeo-impact.high{color:#16a34a}
+.aeo-impact.med{color:#d97706}
+/* Status pills */
+.status-pill{
+  display:inline-flex;align-items:center;
+  padding:3px 10px;border-radius:12px;font-size:12px;font-weight:500;
+}
+.status-pill.draft{background:#f3f4f6;color:rgb(85,85,85)}
+.status-pill.published{background:#dcfce7;color:#16a34a}
+.status-pill.in-review{background:#fef9c3;color:#a16207}
+
+/* ── AEO Score Panel (optimize mode) ── */
+#art-optimize-tabs{display:none}
+.art-aeo-panel{
+  display:none;flex:1;overflow-y:auto;
+  padding:16px 12px 24px;flex-direction:column;gap:0;
+}
+.art-aeo-panel::-webkit-scrollbar{width:4px}
+.art-aeo-panel::-webkit-scrollbar-thumb{background:#c7d6f6;border-radius:4px}
+.art-aeo-panel.active{display:flex}
+.art-rec-panel{
+  display:none;flex:1;overflow-y:auto;
+  padding:16px 12px 24px;flex-direction:column;gap:10px;
+}
+.art-rec-panel.active{display:flex}
+/* Score section */
+.aeo-score-hdr{
+  display:flex;align-items:center;gap:4px;
+  font-size:13px;color:rgb(85,85,85);margin-bottom:6px;
+}
+.aeo-score-hdr .material-symbols-rounded{font-size:16px;color:rgb(143,143,143)}
+.aeo-zone-chip{
+  display:inline-flex;align-items:center;
+  background:#eaf7e8;border-radius:4px;
+  padding:2px 8px;font-size:12px;color:rgb(85,85,85);
+  margin-bottom:6px;
+}
+.aeo-big-num{font-size:32px;color:#4cae3d;font-weight:400;line-height:1.1}
+.aeo-big-denom{font-size:14px;color:rgb(143,143,143)}
+/* Progress bar — green band from 82% to 87% via gradient */
+.aeo-progress-wrap{
+  position:relative;
+  padding-top:32px; /* room for the You pill above */
+  margin:4px 0 4px;
+}
+.aeo-track{
+  position:relative;height:6px;border-radius:8px;
+  background:linear-gradient(to right,
+    #e5e5e5 0%,#e5e5e5 82%,
+    #7ed321 82%,#7ed321 87%,
+    #e5e5e5 87%,#e5e5e5 100%);
+}
+/* "You" pill+tick, absolutely positioned relative to .aeo-progress-wrap */
+.aeo-you-anchor{
+  position:absolute;
+  top:0;           /* sits at the top of the padding area */
+  left:85%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;
+}
+.aeo-you-pill{
+  background:linear-gradient(180deg,#0f7195 0%,#094459 60%);
+  color:#fff;font-size:11px;padding:2px 8px;border-radius:9999px;
+  border:1.5px solid #fff;white-space:nowrap;line-height:1.6;
+}
+.aeo-you-tick{width:1px;flex:1;background:#094459}
+/* Metrics list */
+.aeo-metrics{display:flex;flex-direction:column;margin-top:8px}
+.aeo-metric-row{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  padding:9px 0;border-bottom:1px solid #f3f4f6;
+}
+.aeo-metric-row:last-child{border-bottom:none;padding-bottom:0}
+.aeo-metric-left{display:flex;flex-direction:column;gap:1px}
+.aeo-metric-name{font-size:14px;color:rgb(33,33,33);line-height:1.4}
+.aeo-metric-wt{font-size:12px;color:rgb(143,143,143)}
+.aeo-metric-score{font-size:14px;color:rgb(33,33,33);padding-top:2px;white-space:nowrap}
+.aeo-metric-score span{font-size:12px;color:rgb(143,143,143)}
+/* Recommendation cards */
+.rec-card{
+  background:#fff;border:1px solid #eaeaea;
+  border-radius:8px;padding:16px;margin-bottom:12px;
+}
+.rec-card:last-child{margin-bottom:0}
+.rec-card-title{font-size:16px;color:#252525;line-height:1.4;margin-bottom:4px}
+.rec-card-impact{font-size:14px;color:rgb(143,143,143);margin-bottom:10px}
+.rec-card-body{font-size:14px;color:#252525;line-height:1.5;margin-bottom:10px}
+.rec-card-ai{display:flex;gap:4px;align-items:flex-start;margin-bottom:14px}
+.rec-card-ai .material-symbols-rounded{font-size:14px;color:#7c3aed;flex-shrink:0;margin-top:2px}
+.rec-card-ai-text{font-size:14px;color:#252525;line-height:1.5}
+.rec-accept-btn{
+  padding:4px 14px;border-radius:4px;border:none;
+  background:#1976d2;color:#fff;font-size:13px;
+  font-family:'Roboto',sans-serif;cursor:pointer;
+}
+.rec-accept-btn:hover{background:#1565c0}
+/* Badge on recommendation tab */
+.art-tab-num-badge{
+  font-size:10px;font-weight:600;color:#7c3aed;
+  background:#f0ebfc;padding:1px 5px;border-radius:10px;
+}
+</style>
+</head>
+<body>
+<div class="body-wrap">
+
+<!-- SVG symbol defs for rec icons -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+  <defs>
+    <symbol id="s-bolt" viewBox="0 0 16 16">
+      <path d="M7.437 9.433L3.814 8.853c-.223-.04-.367-.169-.43-.386-.064-.218-.008-.4.168-.55L9.972 2.039c.043-.043.09-.072.143-.087.053-.016.126-.024.218-.024.149 0 .264.065.346.194.082.13.09.261.022.396L8.543 6.573l3.636.58c.223.04.367.168.433.383.066.215.011.398-.165.548L6.028 13.968c-.043.043-.09.071-.143.085-.053.013-.126.02-.218.02-.149 0-.262-.065-.34-.194-.078-.13-.07-.26-.007-.39L7.437 9.433Z" fill="#16a34a"/>
+    </symbol>
+    <symbol id="s-flame" viewBox="0 0 16 16">
+      <path d="M8 2c0 0-3 3.2-3 6.3C5 10.5 6.3 12.2 8 12.2s3-1.7 3-3.9c0-1.5-1-3-1-3s-.5 1.6-1.5 1.6S7 5.8 7 4.8C7 3.8 7.5 2.8 8 2Z" fill="#d97706"/>
+      <path d="M8 9.5c-.6 0-1-.5-1-1.1C7 7.8 7.6 7 8 6.5c.4.5 1 1.3 1 1.9C9 9 8.6 9.5 8 9.5Z" fill="#fbbf24"/>
+    </symbol>
+    <symbol id="s-trend" viewBox="0 0 14 10">
+      <path d="M1 9L5.5 4L8.5 7L13 1.5" stroke="#1976D2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M9.5 1.5H13V5" stroke="#1976D2" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </symbol>
+    <symbol id="s-pin" viewBox="0 0 16 16">
+      <path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5Zm0 6A1.5 1.5 0 1 1 8 4a1.5 1.5 0 0 1 0 3Z" fill="#8f8f8f"/>
+    </symbol>
+    <symbol id="s-clock" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M8 14.4A6.4 6.4 0 1 0 8 1.6a6.4 6.4 0 0 0 0 12.8Zm.26-6.09V4.97a.47.47 0 0 0-.92 0v3.5c0 .08.016.16.047.22a.47.47 0 0 0 .129.182l2.468 2.47a.38.38 0 0 0 .666-.346.38.38 0 0 0-.103-.246L8.261 8.31Z" fill="#1976D2"/>
+    </symbol>
+    <symbol id="s-check" viewBox="0 0 16 16">
+      <path d="M7.137 8.93L6.022 7.832a.37.37 0 0 0-.602.478l1.346 1.346c.11.11.234.165.372.165.139 0 .263-.055.372-.165l3.059-3.059a.36.36 0 0 0-.606-.607L7.137 8.93ZM8 14.067A6.067 6.067 0 1 1 8 1.933a6.067 6.067 0 0 1 0 12.134ZM8 13.2A5.2 5.2 0 1 0 8 2.8a5.2 5.2 0 0 0 0 10.4Z" fill="#16a34a"/>
+    </symbol>
+    <symbol id="s-done" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="5.5" stroke="#16a34a" stroke-width="1.3" fill="none"/>
+      <path d="M5.3 8.1l2 2L10.7 6" stroke="#16a34a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </symbol>
+    <symbol id="s-reject" viewBox="0 0 16 16">
+      <circle cx="8" cy="8" r="5.5" stroke="#ef4444" stroke-width="1.3" fill="none"/>
+      <path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" stroke="#ef4444" stroke-width="1.3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- RAIL -->
+<div class="rail">
+  <a href="../index.html" class="rail-logo-area">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
+    </svg>
+  </a>
+  <div class="rail-nav">
+    <button class="rail-btn" title="Overview"><span class="material-symbols-rounded">home</span></button>
+    <button class="rail-btn" title="Inbox" style="position:relative">
+      <span class="material-symbols-rounded">sms</span>
+      <div style="position:absolute;top:3px;right:3px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid #e5e9f0"></div>
+    </button>
+    <button class="rail-btn" title="Listings"><span class="material-symbols-rounded">location_on</span></button>
+    <button class="rail-btn" title="Reviews"><span class="material-symbols-rounded">grade</span></button>
+    <button class="rail-btn" title="Referrals"><span class="material-symbols-rounded">card_giftcard</span></button>
+    <button class="rail-btn" title="Payments"><span class="material-symbols-rounded">monetization_on</span></button>
+    <button class="rail-btn" title="Appointments"><span class="material-symbols-rounded">calendar_month</span></button>
+    <button class="rail-btn" title="Social"><span class="material-symbols-rounded">workspaces</span></button>
+    <button class="rail-btn" title="Surveys"><span class="material-symbols-rounded">assignment_turned_in</span></button>
+    <button class="rail-btn" title="Ticketing"><span class="material-symbols-rounded">shapes</span></button>
+    <button class="rail-btn" title="Contacts"><span class="material-symbols-rounded">group</span></button>
+    <button class="rail-btn" title="Campaigns"><span class="material-symbols-rounded">campaign</span></button>
+    <button class="rail-btn" title="Marketing Automation"><span class="material-symbols-rounded">bar_chart</span></button>
+    <button class="rail-btn" title="Reports"><span class="material-symbols-rounded">monitoring</span></button>
+    <button class="rail-btn active" id="rail-searchai" title="Search AI" onclick="switchRailModule('searchai')"><span class="material-symbols-rounded">travel_explore</span></button>
+    <button class="rail-btn" id="rail-contenthub" title="Content Hub" onclick="switchRailModule('contenthub')"><span class="material-symbols-rounded">animated_images</span></button>
+    <button class="rail-btn" title="Competitors"><span class="material-symbols-rounded">leaderboard</span></button>
+    <div style="flex:1"></div>
+    <div class="rail-divider"></div>
+    <button class="rail-btn" title="Settings"><span class="material-symbols-rounded">settings</span></button>
+  </div>
+</div>
+
+<!-- SIDEBAR — Search AI -->
+<div class="sidebar" id="sidebar-searchai">
+  <div class="sb-title">Search AI</div>
+  <div class="sb-body">
+    <div class="sb-item active" id="nav-overview" onclick="showView('overview')">Overview</div>
+    <div class="sb-group-hdr" onclick="toggleSbGroup('actions',this)">
+      <span>Actions</span>
+      <svg id="sb-chev-actions" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg);transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-actions">
+      <div class="sb-sub-item" id="nav-recommendations" onclick="showView('recommendations')">Recommendations</div>
+      <div class="sb-sub-item" id="nav-content" onclick="showView('content')">Content</div>
+    </div>
+    <div class="sb-group-hdr" onclick="toggleSbGroup('reports',this)">
+      <span>Reports</span>
+      <svg id="sb-chev-reports" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-reports" style="display:none"></div>
+    <div class="sb-group-hdr" onclick="toggleSbGroup('agents',this)">
+      <span>Agents</span>
+      <svg id="sb-chev-agents" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-agents" style="display:none"></div>
+    <div class="sb-group-hdr" onclick="toggleSbGroup('settings',this)">
+      <span>Settings</span>
+      <svg id="sb-chev-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-settings" style="display:none"></div>
+  </div>
+</div>
+
+<!-- SIDEBAR — Content Hub -->
+<div class="sidebar" id="sidebar-contenthub" style="display:none">
+  <div class="sb-title">Content hub</div>
+  <div class="sb-body">
+
+    <!-- Create project -->
+    <div class="sb-group-hdr" style="justify-content:space-between">
+      <span style="font-size:14px;font-weight:400;color:#212121">Create project</span>
+      <div style="width:20px;height:20px;background:#1976d2;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer">
+        <span class="material-symbols-rounded" style="font-size:14px;color:#fff">add</span>
+      </div>
+    </div>
+
+    <!-- Content group -->
+    <div class="sb-group-hdr" onclick="toggleSbGroup('ch-content',this)">
+      <span>Content</span>
+      <svg id="sb-chev-ch-content" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg);transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-ch-content">
+      <div class="sb-sub-item active" id="ch-nav-projects" onclick="showChView('projects')">Projects</div>
+      <div class="sb-sub-item" onclick="showChView('calendar')">Calendar</div>
+    </div>
+
+    <!-- Standalone items -->
+    <div class="sb-item" onclick="showChView('ch-rec')" id="ch-nav-ch-rec" style="cursor:pointer">Recommendations</div>
+    <div class="sb-item">Assigned to me</div>
+    <div class="sb-item">Approve content</div>
+    <div class="sb-item">Fix rejected content</div>
+
+    <!-- Settings group -->
+    <div class="sb-group-hdr" onclick="toggleSbGroup('ch-settings',this)">
+      <span>Settings</span>
+      <svg id="sb-chev-ch-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transform:rotate(180deg);transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div id="sb-group-ch-settings">
+      <div class="sb-sub-item">Uploaded files</div>
+      <div class="sb-sub-item">Approvals</div>
+      <div class="sb-sub-item">General</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOP NAV -->
+  <div class="top-nav">
+    <!-- State chips — visible only on Content view -->
+    <div class="state-chips" id="state-chips">
+      <button class="state-chip active" id="chip-zero" onclick="switchContentState('zero')">Zero state</button>
+      <button class="state-chip" id="chip-filled" onclick="switchContentState('filled')">Filled state</button>
+    </div>
+    <button class="top-nav-btn" title="Add">
+      <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.04167 8.12496V10.8333C7.04167 10.9868 7.09318 11.1154 7.19621 11.2192C7.29924 11.323 7.4269 11.375 7.57921 11.375C7.73151 11.375 7.86055 11.323 7.96631 11.2192C8.07208 11.1154 8.12496 10.9868 8.12496 10.8333V8.12496H10.8333C10.9868 8.12496 11.1154 8.07344 11.2192 7.97042C11.323 7.86739 11.375 7.73972 11.375 7.58742C11.375 7.43511 11.323 7.30608 11.2192 7.20031C11.1154 7.09455 10.9868 7.04167 10.8333 7.04167H8.12496V4.33331C8.12496 4.17984 8.07344 4.0512 7.97042 3.9474C7.86739 3.84358 7.73972 3.79167 7.58742 3.79167C7.43511 3.79167 7.30608 3.84358 7.20031 3.9474C7.09455 4.0512 7.04167 4.17984 7.04167 4.33331V7.04167H4.33331C4.17984 7.04167 4.0512 7.09318 3.9474 7.19621C3.84358 7.29924 3.79167 7.4269 3.79167 7.57921C3.79167 7.73151 3.84358 7.86055 3.9474 7.96631C4.0512 8.07208 4.17984 8.12496 4.33331 8.12496H7.04167ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666Z" fill="#1976D2"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Help">
+      <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.61348 12.2628C7.83909 12.2628 8.03042 12.1849 8.18748 12.0291C8.34452 11.8733 8.42304 11.6826 8.42304 11.457C8.42304 11.2314 8.34515 11.04 8.18937 10.883C8.03358 10.7259 7.84288 10.6474 7.61727 10.6474C7.39165 10.6474 7.20031 10.7253 7.04327 10.8811C6.88622 11.0369 6.80769 11.2276 6.80769 11.4532C6.80769 11.6788 6.88558 11.8702 7.04138 12.0272C7.19715 12.1843 7.38785 12.2628 7.61348 12.2628ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666ZM7.58331 14.0833C9.38887 14.0833 10.9236 13.4514 12.1875 12.1875C13.4514 10.9236 14.0833 9.38887 14.0833 7.58331C14.0833 5.77776 13.4514 4.24304 12.1875 2.97915C10.9236 1.71526 9.38887 1.08331 7.58331 1.08331C5.77776 1.08331 4.24303 1.71526 2.97915 2.97915C1.71526 4.24304 1.08331 5.77776 1.08331 7.58331C1.08331 9.38887 1.71526 10.9236 2.97915 12.1875C4.24303 13.4514 5.77776 14.0833 7.58331 14.0833ZM7.63467 4.016C8.0235 4.016 8.36001 4.13846 8.64421 4.38338C8.9284 4.62829 9.0705 4.93444 9.0705 5.30181C9.0705 5.61128 8.98423 5.88674 8.81169 6.12819C8.63915 6.36965 8.43749 6.5876 8.20673 6.78204C7.90423 7.05039 7.63442 7.35252 7.39731 7.68844C7.16021 8.02434 7.0406 8.39689 7.03846 8.80608C7.03311 8.95778 7.08361 9.07797 7.18996 9.16665C7.29631 9.25531 7.42037 9.29965 7.56217 9.29965C7.71408 9.29965 7.84213 9.25665 7.94629 9.17065C8.05044 9.08465 8.11801 8.97113 8.149 8.8301C8.21844 8.5299 8.34372 8.26549 8.52481 8.0369C8.7059 7.8083 8.90207 7.59091 9.11333 7.38473C9.41703 7.0887 9.66823 6.75898 9.86694 6.39556C10.0657 6.03213 10.165 5.64226 10.165 5.22596C10.165 4.56571 9.91876 4.0163 9.42625 3.57773C8.93374 3.13916 8.34436 2.91988 7.65812 2.91988C7.16808 2.91988 6.71046 3.03313 6.28525 3.25963C5.86004 3.48611 5.5101 3.80474 5.23544 4.2155C5.14792 4.34106 5.12469 4.47874 5.16573 4.62854C5.20677 4.77833 5.30092 4.88333 5.44817 4.94352C5.60024 5.01428 5.74945 5.02456 5.89581 4.97433C6.04217 4.92413 6.1645 4.84668 6.26279 4.74198C6.4316 4.53684 6.63245 4.36456 6.86535 4.22515C7.09826 4.08572 7.35469 4.016 7.63467 4.016Z" fill="#303030"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Account">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="#D8D8D8" stroke-width="1.4" fill="#F4F6F7"/><circle cx="10" cy="8" r="2.8" fill="#D0D0D0"/><path d="M4 17c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" stroke="#D0D0D0" stroke-width="1.4" fill="none"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Menu">
+      <svg width="20" height="14" viewBox="0 0 13.1666 8.391" fill="none"><path d="M0.542 8.391a.54.54 0 0 1-.542-.538c0-.152.052-.282.156-.387a.54.54 0 0 1 .386-.156H12.625c.153 0 .283.052.386.156a.54.54 0 0 1 0 .77.54.54 0 0 1-.386.155H0.542ZM0.542 4.737a.54.54 0 0 1-.542-.537c0-.153.052-.282.156-.387a.54.54 0 0 1 .386-.156H12.625c.153 0 .283.052.386.157a.54.54 0 0 1 0 .773.54.54 0 0 1-.386.15H0.542ZM0.542 1.083A.54.54 0 0 1 0 .546C0 .393.052.264.156.159A.54.54 0 0 1 .542 0H12.625c.153 0 .283.051.386.155a.54.54 0 0 1 0 .774.54.54 0 0 1-.386.154H0.542Z" fill="#303030"/></svg>
+    </button>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-hdr">
+    <div class="page-hdr-left">
+      <button class="icon-btn" id="hdr-back-btn" onclick="showView('content')" title="Back">
+        <span class="material-symbols-rounded">arrow_back</span>
+      </button>
+      <span class="page-title" id="page-title">Overview</span>
+    </div>
+    <div class="page-hdr-right" id="hdr-overview-btns">
+      <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-rec-btns" style="display:none">
+      <button class="icon-btn"><span class="material-symbols-rounded">search</span></button>
+      <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-content-btns" style="display:none">
+      <button class="icon-btn"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn"><span class="material-symbols-rounded">filter_list</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-article-btns" style="display:none;gap:8px;align-items:center">
+      <div class="art-score">
+        <!-- Thin green ring: r=9, circumference≈56.5, 93%≈52.6 -->
+        <svg width="22" height="22" viewBox="0 0 22 22">
+          <circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/>
+          <circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5"
+            stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round"
+            transform="rotate(-90 11 11)"/>
+        </svg>
+        <span style="color:#16a34a;font-weight:500">93</span><span style="color:#8f8f8f;font-weight:400">/100</span>
+      </div>
+      <button class="btn-export">Export</button>
+      <div style="display:flex">
+        <button class="btn-save">Save</button>
+        <button class="btn-save-caret">
+          <span class="material-symbols-rounded" style="font-size:16px">expand_more</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content" id="main-content">
+
+    <!-- ══ OVERVIEW VIEW ══ -->
+    <div class="view active" id="view-overview">
+
+      <div class="ai-coach-banner">
+        <div class="ai-coach-star">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div class="ai-coach-title">AI Coach — 8 actions waiting</div>
+          <div class="ai-coach-desc">Your top priority: <strong>Win More Searches with Local Market Content</strong>. Completing it could move your score from 54 → 62.</div>
+          <button class="ai-coach-link" onclick="showView('recommendations')">Start now
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="score-card">
+        <div class="score-donut-panel">
+          <div class="donut-wrap">
+            <canvas id="donutChart" width="100" height="100"></canvas>
+            <div class="donut-center">
+              <div class="donut-val">54</div>
+              <div class="donut-denom">/100</div>
+            </div>
+          </div>
+          <div class="score-label-main">Search AI Score</div>
+          <div class="score-delta">↗ +2 this week</div>
+        </div>
+        <div class="score-metrics-panel">
+          <div class="metrics-panel-title">Visibility metrics</div>
+          <div>
+            <div class="metric-bar-hdr"><span class="metric-bar-name">AI Visibility</span><span class="metric-bar-val">48</span></div>
+            <div class="metric-bar-track"><div class="metric-bar-fill" style="width:48%;background:#1976d2"></div></div>
+            <div class="metric-bar-desc">How often AI surfaces your business</div>
+          </div>
+          <div>
+            <div class="metric-bar-hdr"><span class="metric-bar-name">Citation Share</span><span class="metric-bar-val">62%</span></div>
+            <div class="metric-bar-track"><div class="metric-bar-fill" style="width:62%;background:#7c3aed"></div></div>
+            <div class="metric-bar-desc">% of relevant AI answers citing you</div>
+          </div>
+          <div>
+            <div class="metric-bar-hdr"><span class="metric-bar-name">Sentiment Score</span><span class="metric-bar-val">71</span></div>
+            <div class="metric-bar-track"><div class="metric-bar-fill" style="width:71%;background:#16a34a"></div></div>
+            <div class="metric-bar-desc">Positive tone in AI descriptions</div>
+          </div>
+        </div>
+        <div class="score-glance-panel">
+          <div class="glance-title">At a glance</div>
+          <div class="glance-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <div><div class="glance-val">3</div><div class="glance-lbl">AI rank</div></div>
+          </div>
+          <div class="glance-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <div><div class="glance-val">8</div><div class="glance-lbl">pending tasks</div></div>
+          </div>
+          <div class="glance-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div><div class="glance-val">0</div><div class="glance-lbl">completed</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-hdr">
+          <span class="summary-title">Recommendations summary</span>
+          <button class="view-all-link" onclick="showView('recommendations')">View all
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+        <div class="rec-stats-row">
+          <div class="rec-stat-box pending" onclick="showView('recommendations')">
+            <span class="rec-stat-num">8</span><span class="rec-stat-lbl">Pending</span>
+          </div>
+          <div class="rec-stat-box in-progress" onclick="showView('recommendations')">
+            <span class="rec-stat-num">0</span><span class="rec-stat-lbl">In progress</span>
+          </div>
+          <div class="rec-stat-box completed" onclick="showView('recommendations')">
+            <span class="rec-stat-num">0</span><span class="rec-stat-lbl">Completed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="competitors-card">
+        <div class="competitors-title">Competitors outranking you in AI</div>
+        <div class="competitor-row">
+          <div class="competitor-left"><div class="competitor-avatar">A</div><span class="competitor-name">Austin Family Dentistry</span></div>
+          <span class="competitor-rank">#1 in AI results</span>
+        </div>
+        <div class="competitor-row">
+          <div class="competitor-left"><div class="competitor-avatar">C</div><span class="competitor-name">Capitol Dental Care</span></div>
+          <span class="competitor-rank">#2 in AI results</span>
+        </div>
+        <div class="competitor-row">
+          <div class="competitor-left"><div class="competitor-avatar">L</div><span class="competitor-name">Lakeway Modern Dentistry</span></div>
+          <span class="competitor-rank">#3 in AI results</span>
+        </div>
+      </div>
+
+    </div><!-- /view-overview -->
+
+    <!-- ══ RECOMMENDATIONS VIEW ══ -->
+    <div class="view" id="view-recommendations">
+
+      <div class="status-bar">
+        <div class="stat-card active">
+          <div class="stat-num">8</div>
+          <div class="stat-lbl"><svg width="16" height="16"><use href="#s-clock"/></svg>Pending</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0</div>
+          <div class="stat-lbl"><svg width="16" height="16"><use href="#s-check"/></svg>Accepted</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0</div>
+          <div class="stat-lbl"><svg width="16" height="16"><use href="#s-done"/></svg>Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0</div>
+          <div class="stat-lbl"><svg width="16" height="16"><use href="#s-reject"/></svg>Rejected</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Local SEO</span><span class="priority quick"><svg width="16" height="16"><use href="#s-bolt"/></svg>Quick wins</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>5 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Claim LocalSearch and API Profiles for Dubbo Appraisals</div>
+          <div class="rec-desc">Your business lacks consistent presence on key local directories where Dubbo residents search for property appraisals. LocalSearch and Australian Property Institute (API) profiles are missing or incomplete, limiting your visibility in local searches and AI-powered answers.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Claim and optimize local directory profiles could move your Visibility for Property Appraisals</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Conversion</span><span class="priority quick"><svg width="16" height="16"><use href="#s-bolt"/></svg>Quick wins</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>4 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Add Quick Appraisal Form with 1-Hour Callback Promise</div>
+          <div class="rec-desc">Your website needs a prominent appraisal request form with a 1-hour callback guarantee and mobile-optimized call button. Competitors like Ray White Dubbo capture more leads with simple, fast-response forms that make it easy for property sellers to request valuations.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Add appraisal form with callback promise could move your Visibility for Property Appraisals</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Conversion</span><span class="priority bigger"><svg width="16" height="16"><use href="#s-flame"/></svg>Bigger lift</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>8 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Transform Dubbo Property Management Page Into Lead Machine</div>
+          <div class="rec-desc">Your Dubbo property management page needs critical optimization to convert more landlord visitors into enquiries. By adding clear processes, response time guarantees, and prominent contact forms, you'll address current administration concerns while showcasing your specialized team's expertise.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Optimize PM page with processes and CTAs could move your Visibility for Residential Property Leasing</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Content</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>20 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Win More Dubbo Searches with Local Market Content</div>
+          <div class="rec-desc">Your perfect 5.0 rating from 457 reviews shows buyers and sellers trust you, but you're missing opportunities to capture local search traffic. Publishing regular Dubbo market updates and suburb guides will help more people researching property in your area. This positions your 40+ years of local expertise front and center, turning searches into enquiries.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Publish monthly market updates and guides could move your Citation share for Residential Property Sales</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Trust &amp; Reputation</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>20 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Create Dubbo Client Success Stories Hub</div>
+          <div class="rec-desc">Despite perfect 5.0 ratings from 457 reviews, your testimonials aren't visible enough online. Creating a dedicated Dubbo testimonials hub will showcase real client success stories, case studies, and third-party reviews in one powerful location.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Build Dubbo testimonials hub could move your Sentiment for Residential Property Sales</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Content</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>12 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Create Dubbo Property Appraisal Hub Page</div>
+          <div class="rec-desc">Your competitors are capturing valuable appraisal leads with dedicated local pages while your site lacks this critical conversion tool. Creating a comprehensive Dubbo property appraisal hub with online forms and clear value propositions will help you rank for high-intent searches.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Add appraisal hub page could move your Citation share for Property Appraisals</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Content</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>15 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Create Dubbo Suburb Service Pages for Sales &amp; Rentals</div>
+          <div class="rec-desc">Your Dubbo office lacks dedicated suburb-specific service pages, limiting your visibility in local property searches. Creating targeted pages for each suburb will capture more local searches and convert your established market presence into digital leads.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Build suburb pages could move your Citation share for Residential Property Sales</div>
+        </div>
+      </div>
+
+      <div class="rec-card">
+        <div class="rec-top">
+          <div class="rec-badges"><span class="tag">Content</span></div>
+          <span class="rec-locs"><svg width="16" height="16"><use href="#s-pin"/></svg>10 locations</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Showcase Dubbo Success Stories to Drive More Enquiries</div>
+          <div class="rec-desc">Your agency has earned perfect 5.0 ratings and high client satisfaction, but this powerful proof isn't visible online. By publishing local case studies and testimonials, you'll convert more website visitors into enquiries by showing real results from real Dubbo clients.</div>
+          <div class="rec-impact"><svg width="14" height="10"><use href="#s-trend"/></svg>Publish case studies with outcomes could move your Citation share for Residential Property Sales</div>
+        </div>
+      </div>
+
+    </div><!-- /view-recommendations -->
+
+    <!-- ══ CONTENT VIEW ══ -->
+    <div class="view" id="view-content">
+
+      <!-- Zero state -->
+      <div id="content-zero-state">
+        <div class="content-empty">
+          <img src="./empty-state.svg" width="278" height="225" alt="Empty state illustration" style="flex-shrink:0"/>
+          <div class="content-empty-title">Create your first AEO content</div>
+          <div class="content-empty-sub">Streamline collaboration in one place for all stakeholders, by assigning them tasks and receiving updates</div>
+          <div class="content-empty-actions">
+            <button class="btn-outlined" onclick="openOptimizeModal()">Optimize content</button>
+            <button class="btn-filled" onclick="openContentModal()">Create content</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filled state -->
+      <div id="content-filled-state" style="display:none">
+        <table class="content-table">
+          <thead>
+            <tr>
+              <th style="width:45%">
+                <span class="ct-th-inner">Title <span class="material-symbols-rounded ct-sort-icon">expand_less</span></span>
+              </th>
+              <th>
+                <span class="ct-th-inner">Type <span class="material-symbols-rounded ct-sort-icon">unfold_more</span></span>
+              </th>
+              <th>
+                <span class="ct-th-inner">AEO score <span class="material-symbols-rounded ct-sort-icon">unfold_more</span></span>
+              </th>
+              <th>
+                <span class="ct-th-inner">Status <span class="material-symbols-rounded ct-sort-icon">unfold_more</span></span>
+              </th>
+              <th>
+                <span class="ct-th-inner">Last Updated on <span class="material-symbols-rounded ct-sort-icon">unfold_more</span></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- score ring macro: r=9 → circumference=56.55; high=93%→52.6, mid=75%→42.4 -->
+            <tr>
+              <td><div class="ct-title">Why Fast Food Is Changing Faster Than Ever in 2026</div></td>
+              <td><span class="ct-type">Generated</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num high">93</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill published">Published</span></td>
+              <td><span class="ct-date">Apr 24, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">The Hidden Trends Shaping the Future of Fast Food</div></td>
+              <td><span class="ct-type">Optimized</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#e53935" stroke-width="2.5" stroke-dasharray="42.4 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num mid">75</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill draft">Draft</span></td>
+              <td><span class="ct-date">Apr 23, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">How Fast Food Chains Are Winning Over Modern Customers</div></td>
+              <td><span class="ct-type">Generated</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num high">93</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill draft">Draft</span></td>
+              <td><span class="ct-date">Apr 22, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">Inside the Fast Food Industry's Biggest Menu Innovations</div></td>
+              <td><span class="ct-type">Optimized</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#e53935" stroke-width="2.5" stroke-dasharray="42.4 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num mid">75</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill published">Published</span></td>
+              <td><span class="ct-date">Apr 21, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">What Makes a Fast Food Brand Go Viral Today?</div></td>
+              <td><span class="ct-type">Optimized</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#e53935" stroke-width="2.5" stroke-dasharray="42.4 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num mid">75</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill published">Published</span></td>
+              <td><span class="ct-date">Apr 20, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">The Rise of Healthier Choices in the Fast Food World</div></td>
+              <td><span class="ct-type">Optimized</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num high">93</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill draft">Draft</span></td>
+              <td><span class="ct-date">Apr 19, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">How Packaging and Branding Are Transforming Fast Food</div></td>
+              <td><span class="ct-type">Optimized</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num high">93</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill published">Published</span></td>
+              <td><span class="ct-date">Apr 18, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">The Secret Strategies Behind Fast Food Success</div></td>
+              <td><span class="ct-type">Optimized</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num high">93</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill draft">Draft</span></td>
+              <td><span class="ct-date">Apr 17, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">Why Fast Food Is Still One of the Most Powerful Industries</div></td>
+              <td><span class="ct-type">Generated</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#e53935" stroke-width="2.5" stroke-dasharray="42.4 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num mid">75</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill draft">Draft</span></td>
+              <td><span class="ct-date">Apr 16, 2026</span></td>
+            </tr>
+            <tr>
+              <td><div class="ct-title">The Future of Fast Food: What Customers Will Crave Next</div></td>
+              <td><span class="ct-type">Generated</span></td>
+              <td><span class="ct-score">
+                <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#e5e7eb" stroke-width="2.5"/><circle cx="11" cy="11" r="9" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="52.6 56.55" stroke-dashoffset="14.14" stroke-linecap="round" transform="rotate(-90 11 11)"/></svg>
+                <span class="ct-score-num high">93</span><span class="ct-score-denom">/100</span>
+              </span></td>
+              <td><span class="ct-status-pill published">Published</span></td>
+              <td><span class="ct-date">Apr 15, 2026</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div><!-- /view-content -->
+
+    <!-- ══ ARTICLE VIEW ══ -->
+    <div class="view" id="view-article">
+
+      <!-- Left panel -->
+      <div class="art-left">
+        <!-- Create mode tabs -->
+        <div class="art-tabs" id="art-create-tabs">
+          <div class="art-tab active" data-tab="ai" onclick="switchArtTab(this)">Create with <span class="art-tab-ai-badge">AI</span></div>
+          <div class="art-tab" data-tab="manual" onclick="switchArtTab(this)">Create manually</div>
+        </div>
+        <!-- Optimize mode tabs -->
+        <div class="art-tabs" id="art-optimize-tabs">
+          <div class="art-tab active" data-tab="aeo" onclick="switchOptArtTab(this)">AEO score</div>
+          <div class="art-tab" data-tab="rec" onclick="switchOptArtTab(this)">
+            <span class="material-symbols-rounded" style="font-size:16px;color:#7c3aed">auto_awesome</span>
+            Recommendations
+            <span class="art-tab-num-badge">2</span>
+          </div>
+        </div>
+
+        <!-- Create with AI panel -->
+        <div class="art-ai-panel active" id="art-ai-panel">
+          <div class="art-ai-chat" id="art-ai-chat">
+            <div class="art-ai-msg">
+              <div class="art-ai-avatar"><span class="material-symbols-rounded">auto_awesome</span></div>
+              <div>
+                <div class="art-ai-bubble">Hello! I'm your AI content assistant. I can help you refine, expand, or restructure this article about Gold Coast Marina's secret burger.</div>
+                <div class="art-ai-prompts">
+                  <button class="art-ai-prompt-btn" onclick="sendAiPrompt(this)">Add a section about the burger menu</button>
+                  <button class="art-ai-prompt-btn" onclick="sendAiPrompt(this)">Make the tone more casual and fun</button>
+                  <button class="art-ai-prompt-btn" onclick="sendAiPrompt(this)">Add a call-to-action at the end</button>
+                </div>
+              </div>
+            </div>
+            <div class="art-user-msg">
+              <div class="art-user-avatar">P</div>
+              <div class="art-user-bubble">Add a call-to-action at the end</div>
+            </div>
+            <div class="art-ai-working">
+              <span class="material-symbols-rounded">auto_awesome</span>
+              Working on it...
+            </div>
+          </div>
+          <div class="art-ai-input-wrap">
+            <textarea class="art-ai-textarea" placeholder="What do you want to build? e.g. a section about the marina views, or a punchier intro. Share your goal and we'll tailor it."></textarea>
+            <div class="art-ai-toolbar">
+              <div class="art-ai-tool-left">
+                <button class="art-ai-tool-btn"><span class="material-symbols-rounded">add</span></button>
+                <button class="art-ai-tool-btn"><span class="material-symbols-rounded">auto_fix_high</span></button>
+                <button class="art-ai-tool-btn"><span class="material-symbols-rounded">more_horiz</span></button>
+              </div>
+              <button class="art-ai-send"><span class="material-symbols-rounded">send</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Create manually panel -->
+        <div class="art-search" id="art-manual-search" style="display:none">
+          <input class="art-search-inp" type="text" placeholder="Search blocks…"/>
+        </div>
+        <div class="art-blocks" id="art-manual-blocks" style="display:none">
+          <div class="art-blocks-label">Content blocks</div>
+          <div class="art-blocks-grid">
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">title</span>Header</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">text_fields</span>Title</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">subject</span>Text</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">smart_button</span>Button</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">image</span>Image</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">videocam</span>Video</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">horizontal_rule</span>Divider</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">space_bar</span>Spacer</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">share</span>Social links</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">format_quote</span>Review quote</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">web</span>Footer</div>
+            <div class="art-block-item" draggable="true"><span class="material-symbols-rounded">contacts</span>Contact us</div>
+            <div class="art-block-item" draggable="true" style="grid-column:1/-1"><span class="material-symbols-rounded">code</span>Code blocks</div>
+          </div>
+        </div>
+
+        <!-- ── AEO Score panel (optimize mode) ── -->
+        <div class="art-aeo-panel" id="art-aeo-panel">
+          <!-- Score header -->
+          <div class="aeo-score-hdr">
+            AEO Content score
+            <span class="material-symbols-rounded">help_outline</span>
+          </div>
+          <!-- Zone chip -->
+          <div class="aeo-zone-chip">Target zone : 82 – 87</div>
+          <!-- Big number -->
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px">
+            <span class="aeo-big-num">85</span>
+            <span class="aeo-big-denom">/ 100</span>
+          </div>
+          <!-- Progress bar: green band from 82–87%, You pill at 85% -->
+          <div class="aeo-progress-wrap">
+            <!-- You pill anchored at 85% -->
+            <div class="aeo-you-anchor" style="height:100%">
+              <div class="aeo-you-pill">You</div>
+              <div class="aeo-you-tick"></div>
+            </div>
+            <div class="aeo-track"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:rgb(143,143,143);margin-bottom:4px">
+            <span>0</span><span>100</span>
+          </div>
+          <!-- Metrics -->
+          <div class="aeo-metrics">
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Readability</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Content freshness</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Content structure</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Answerability signals</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Information density</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+            <div class="aeo-metric-row">
+              <div class="aeo-metric-left">
+                <div class="aeo-metric-name">Machine readability</div>
+                <div class="aeo-metric-wt">Weights: 10.2</div>
+              </div>
+              <div class="aeo-metric-score">96<span>/100</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Recommendation panel (optimize mode) ── -->
+        <div class="art-rec-panel" id="art-rec-panel">
+          <!-- Score upgrade intro -->
+          <p style="font-size:14px;color:rgb(33,33,33);line-height:1.5;margin-bottom:16px">
+            Your AEO score can improve to <strong>91</strong> following the below recommendations.
+          </p>
+          <!-- 85 → 91 display -->
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:20px">
+            <span style="font-size:32px;color:#4cae3d;font-weight:400;line-height:1">85</span>
+            <span style="font-size:14px;color:rgb(143,143,143);margin-bottom:2px">/100</span>
+            <span class="material-symbols-rounded" style="font-size:22px;color:rgb(143,143,143);margin:0 2px">arrow_right_alt</span>
+            <span style="font-size:32px;color:#4cae3d;font-weight:400;line-height:1">91</span>
+            <span style="font-size:14px;color:rgb(143,143,143);margin-bottom:2px">/100</span>
+          </div>
+          <!-- Section label -->
+          <div style="font-size:16px;color:rgb(33,33,33);margin-bottom:12px">Recommendations</div>
+          <!-- Card 1 -->
+          <div class="rec-card">
+            <div class="rec-card-title">Refine the Title for Better Alignment</div>
+            <div class="rec-card-impact">Answerability Signals (+3)</div>
+            <div class="rec-card-body">Modify the title to better reflect user intent. Change 'Best reputation management platforms for multi-location brands in 2026' to 'Top Agentic Marketing Platforms for Franchises with 100+ Locations in 2026'. This change will directly address the user prompt and enhance search relevance.</div>
+            <div class="rec-card-ai">
+              <span class="material-symbols-rounded">auto_awesome</span>
+              <span class="rec-card-ai-text">A title that closely matches user queries increases the likelihood of being selected by AI systems as a relevant answer, thereby improving visibility and engagement.</span>
+            </div>
+            <button class="rec-accept-btn">Accept</button>
+          </div>
+          <!-- Card 2 -->
+          <div class="rec-card">
+            <div class="rec-card-title">Enhance Heading Relevance</div>
+            <div class="rec-card-impact">Answerability Signals (+1.1)</div>
+            <div class="rec-card-body">Consider refining the subheadings to better align with user queries. For example, change 'What to look for in a reputation management platform in 2026' to 'Key Features to Consider in 2026 for Multi-Location Reputation Management'. This adjustment will enhance the relevance of your headings.</div>
+            <div class="rec-card-ai">
+              <span class="material-symbols-rounded">auto_awesome</span>
+              <span class="rec-card-ai-text">Improving the semantic similarity of headings helps AI models better understand the content structure, leading to improved retrieval and ranking for relevant queries.</span>
+            </div>
+            <button class="rec-accept-btn">Accept</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: article editor -->
+      <div class="art-main">
+        <div class="art-card">
+          <div class="art-card-body">
+            <div class="art-article-title" contenteditable="true">Gold Coast Marina's Secret Burger That'll Blow Your Mind!</div>
+            <div class="art-article-text" contenteditable="true">
+              <p>Picture this: you're strolling along the shimmering docks of Goldcoast Marina, yachts bobbing gently in the harbor, when a tantalizing aroma hits you—smoky, juicy, utterly irresistible. Tucked away in a no-frills shack locals whisper about, one burger reigns supreme. It's not just food; it's a flavor explosion that locals guard like buried treasure.</p>
+            </div>
+            <div class="art-section-heading" contenteditable="true">The Hidden Gem Spot</div>
+            <div class="art-article-text" contenteditable="true">
+              <p>Goldcoast Marina isn't known for gourmet scenes, but this unnamed burger joint changes everything. Open only evenings, it draws fishermen, yacht owners, and savvy foodies who know to ask for "The Secret." No menus, no fuss—just pure, unadulterated burger bliss served on wax paper. Lines form at dusk, but trust us, the wait is worth it.</p>
+            </div>
+            <div class="art-hero-img">
+              <div class="art-hero-overlay">#1 IN THE WORLD</div>
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80" alt="Smash burger" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:6px"/>
+            </div>
+            <div class="art-section-heading" contenteditable="true">What Makes It Legendary</div>
+            <div class="art-article-text" contenteditable="true">
+              <p>At the heart is a smash-style patty: 80/20 beef smashed thin on a scorching flat-top, caramelizing edges to crispy perfection. The "secret"? A brush of bone marrow butter mid-cook for insane richness, plus grated red onion smashed right in for bite. Double patties ooze American cheese, layered with tangy house sauce (mayo, ketchup, pickle juice, mustard—whipped silky).</p>
+              <p>Toppings elevate it: shredded lettuce for crunch, thick tomato slices, and quick-pickled cukes in rice vinegar and turmeric. All on a buttery brioche bun toasted golden. One bite, and juices flood your mouth—salty, sweet, umami overload.</p>
+            </div>
+            <div class="art-section-heading" contenteditable="true">Why You'll Be Obsessed</div>
+            <div class="art-article-text" contenteditable="true">
+              <p>Reviewers rave it's better than Burleigh Heads' famed spots like Ze Pickle or Chaddies Patties. "Mind blown—worth the drive from Surfers Paradise," says one fan. At under $20, it's a steal. Pro tip: pair with marina views and a cold beer.</p>
+              <p>Rush there before the secret's out. Your taste buds will thank you. 🤤😎</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="art-seo-card">
+          <div class="art-seo-title">SEO metadata</div>
+          <div class="art-seo-field">
+            <div class="art-seo-label">Meta Title</div>
+            <div class="art-seo-value-row">
+              <div class="art-seo-value" contenteditable="true">Gold Coast Marina's Secret Burger — Must-Try Hidden Gem</div>
+              <button class="art-copy-btn" onclick="copyField(this)" title="Copy">
+                <span class="material-symbols-rounded">content_copy</span>
+              </button>
+            </div>
+          </div>
+          <div class="art-seo-field">
+            <div class="art-seo-label">Meta Description</div>
+            <div class="art-seo-value-row">
+              <div class="art-seo-value" contenteditable="true">Discover the best-kept burger secret at Gold Coast Marina. A premium grass-fed patty with smoked aioli, crispy pancetta and pickled jalapeños — locals' favourite since 2019.</div>
+              <button class="art-copy-btn" onclick="copyField(this)" title="Copy">
+                <span class="material-symbols-rounded">content_copy</span>
+              </button>
+            </div>
+          </div>
+          <div class="art-seo-field">
+            <div class="art-seo-label">Slug</div>
+            <div class="art-seo-value-row">
+              <div class="art-seo-value" contenteditable="true">gold-coast-marina-secret-burger</div>
+              <button class="art-copy-btn" onclick="copyField(this)" title="Copy">
+                <span class="material-symbols-rounded">content_copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Headings widget -->
+        <div class="art-stats-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <span class="art-stats-card-title" style="margin-bottom:0">Headings</span>
+            <span class="art-stats-total" id="stats-heading-total">— total</span>
+          </div>
+          <div id="stats-heading-list"></div>
+          <hr class="art-heading-divider"/>
+          <div class="art-hcount-row">
+            <div><div class="art-hcount-lbl">H1</div><div class="art-hcount-sub" id="stats-h1-count">—</div></div>
+            <div><div class="art-hcount-lbl">H2</div><div class="art-hcount-sub" id="stats-h2-count">—</div></div>
+            <div><div class="art-hcount-lbl">H3</div><div class="art-hcount-sub" id="stats-h3-count">—</div></div>
+          </div>
+        </div>
+
+        <!-- Paragraphs widget -->
+        <div class="art-stats-card">
+          <div class="art-stats-card-title">Paragraphs</div>
+          <div class="art-para-num" id="stats-para-count">—</div>
+          <div class="art-para-sub">Total paragraphs in content</div>
+        </div>
+
+        <!-- Content structure widget -->
+        <div class="art-stats-card">
+          <div class="art-stats-card-title">Content Structure</div>
+          <div class="art-struct-row">
+            <span class="art-struct-lbl">Average words per paragraph</span>
+            <span class="art-struct-val" id="stats-avg-words">—</span>
+          </div>
+          <div class="art-struct-row">
+            <span class="art-struct-lbl">Heading to paragraph ratio</span>
+            <span class="art-struct-val" id="stats-ratio">—</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /view-article -->
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /body-wrap -->
+
+<!-- ══ CONTENT HUB SHELL (hidden until L1 activated) ══ -->
+<div id="ch-shell" style="display:none;position:fixed;inset:0;background:rgb(242,242,242);z-index:50;display:none">
+  <!-- Top Nav -->
+  <div style="position:fixed;top:0;left:278px;right:0;height:52px;background:#fff;border-bottom:1px solid #eaeaea;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;gap:4px;z-index:60">
+    <button class="top-nav-btn" title="Help">
+      <svg width="20" height="20" viewBox="0 0 15.1666 15.1666" fill="none"><path d="M7.61348 12.2628C7.83909 12.2628 8.03042 12.1849 8.18748 12.0291C8.34452 11.8733 8.42304 11.6826 8.42304 11.457C8.42304 11.2314 8.34515 11.04 8.18937 10.883C8.03358 10.7259 7.84288 10.6474 7.61727 10.6474C7.39165 10.6474 7.20031 10.7253 7.04327 10.8811C6.88622 11.0369 6.80769 11.2276 6.80769 11.4532C6.80769 11.6788 6.88558 11.8702 7.04138 12.0272C7.19715 12.1843 7.38785 12.2628 7.61348 12.2628ZM7.59046 15.1666C6.54724 15.1666 5.56474 14.9693 4.64296 14.5745C3.72117 14.1798 2.91435 13.6367 2.2225 12.9452C1.53064 12.2536 0.987257 11.4475 0.592354 10.5267C0.197452 9.60591 0 8.62207 0 7.57517C0 6.52825 0.197361 5.54737 0.592083 4.63254C0.986806 3.71769 1.52993 2.91435 2.22146 2.2225C2.913 1.53064 3.71916 0.987258 4.63994 0.592355C5.56072 0.197452 6.54456 0 7.59146 0C8.63838 0 9.61925 0.197362 10.5341 0.592084C11.4489 0.986807 12.2523 1.52993 12.9441 2.22146C13.636 2.913 14.1794 3.71754 14.5743 4.63506C14.9692 5.55259 15.1666 6.53296 15.1666 7.57617C15.1666 8.61939 14.9693 9.60189 14.5745 10.5237C14.1798 11.4455 13.6367 12.2523 12.9452 12.9441C12.2536 13.636 11.4491 14.1794 10.5316 14.5743C9.61404 14.9692 8.63367 15.1666 7.59046 15.1666Z" fill="#303030"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Settings"><span class="material-symbols-rounded" style="font-size:20px;color:#303030">settings</span></button>
+    <button class="top-nav-btn" title="Account">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8.5" stroke="#D8D8D8" stroke-width="1.4" fill="#F4F6F7"/><circle cx="10" cy="8" r="2.8" fill="#D0D0D0"/><path d="M4 17c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" stroke="#D0D0D0" stroke-width="1.4" fill="none"/></svg>
+    </button>
+    <button class="top-nav-btn" title="Menu">
+      <svg width="20" height="14" viewBox="0 0 13.1666 8.391" fill="none"><path d="M0.542 8.391a.54.54 0 0 1-.542-.538c0-.152.052-.282.156-.387a.54.54 0 0 1 .386-.156H12.625c.153 0 .283.052.386.156a.54.54 0 0 1 0 .77.54.54 0 0 1-.386.155H0.542ZM0.542 4.737a.54.54 0 0 1-.542-.537c0-.153.052-.282.156-.387a.54.54 0 0 1 .386-.156H12.625c.153 0 .283.052.386.157a.54.54 0 0 1 0 .773.54.54 0 0 1-.386.15H0.542ZM0.542 1.083A.54.54 0 0 1 0 .546C0 .393.052.264.156.159A.54.54 0 0 1 .542 0H12.625c.153 0 .283.051.386.155a.54.54 0 0 1 0 .774.54.54 0 0 1-.386.154H0.542Z" fill="#303030"/></svg>
+    </button>
+  </div>
+  <!-- Content area -->
+  <div style="position:fixed;left:278px;top:52px;right:0;bottom:0;overflow-y:auto;padding:24px" id="ch-content-area">
+    <!-- Projects view -->
+    <div id="ch-view-projects">
+      <div class="proj-page-hdr">
+        <span class="proj-page-title">Projects</span>
+        <div class="proj-hdr-actions">
+          <button class="proj-icon-btn"><span class="material-symbols-rounded">search</span></button>
+          <div class="proj-view-sep"></div>
+          <button class="proj-icon-btn active" id="proj-view-grid" onclick="setProjView('grid')" title="Grid view"><span class="material-symbols-rounded">grid_view</span></button>
+          <button class="proj-icon-btn" id="proj-view-list" onclick="setProjView('list')" title="List view"><span class="material-symbols-rounded">format_list_bulleted</span></button>
+          <div class="proj-view-sep"></div>
+          <button class="proj-icon-btn"><span class="material-symbols-rounded">tune</span></button>
+        </div>
+      </div>
+      <div class="proj-tabs">
+        <span class="proj-tab active">Saved <span class="proj-tab-count">92</span></span>
+      </div>
+      <div class="proj-grid" id="proj-grid">
+
+        <!-- Card: text preview (Preventive Care article) -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Preventive Care: How Annual Health Checkups Enable Early Disease Detection</div>
+              <div>Regular health checkups are essential preventive measures. In our ever-evolving healthcare landscape...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Test project rajul</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Test project rajul</div>
+            <div class="proj-hover-btns">
+              <button class="proj-hover-preview">Preview</button>
+              <button class="proj-hover-edit">Edit</button>
+              <button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button>
+            </div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: image -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb" style="background:#1a1a2e">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffbb69e7f7f?w=300&q=60" alt="Dental"/>
+          </div>
+          <div class="proj-card-name">Dental blogs</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Dental blogs</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: image -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=300&q=60" alt="Dental unit"/>
+          </div>
+          <div class="proj-card-name">DD Dental unit</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">DD Dental unit</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: placeholder -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">DD Dental Care</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">DD Dental Care</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: placeholder -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Content_hub -DD test</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Content_hub -DD test</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: text preview -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">iPhone 17: Features, Impact, and the Future of Smartphones</div>
+              <div>The arrival of iPhone 17 is poised to establish a new benchmark in the tech world, with sleek updates to its...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Test blog</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Test blog</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Card: text preview (active hover in screenshot) -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">iPhone 17: Features, Impact, and the Future of Smartphones</div>
+              <div>The article explores the state-of-the-art design and features to create devices that are both aesthetically...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Content Hub DD</div>
+          <div class="proj-hover-panel">
+            <div class="proj-hover-name">Content Hub DD</div>
+            <div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div>
+            <div class="proj-hover-author">Created by Custom User</div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Dental Campaign</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Dental Campaign</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=300&q=60" alt="Apple iphones"/>
+          </div>
+          <div class="proj-card-name">Apple iphones</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple iphones</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=300&q=60" alt="Conflict"/>
+          </div>
+          <div class="proj-card-name">usa iran conflict</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">usa iran conflict</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=300&q=60" alt="iPhone"/>
+          </div>
+          <div class="proj-card-name">Apple iPhones</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple iPhones</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Apple phones</div>
+              <div>Discover the latest Apple phones with cutting-edge features...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Apple phones</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple phones</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Apple</div>
+              <div>Apple Inc. designs and sells consumer electronics, software, and services worldwide...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Apple</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Apple</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Common Bone Issues in India: Public Health Implications</div>
+              <div>Key Takeaways · Bone issues in India, including osteoporosis and arthritis, affect millions...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Bone issues in india</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Bone issues in india</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=300&q=60" alt="Dental health"/>
+          </div>
+          <div class="proj-card-name">Dental Health(1)</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Dental Health(1)</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=300&q=60" alt="Mumbai"/>
+          </div>
+          <div class="proj-card-name">Mumbai</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Mumbai</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb" style="background:#000">
+            <img src="https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=300&q=60" alt="Video"/>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+              <div style="width:32px;height:32px;background:rgba(0,0,0,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center">
+                <span class="material-symbols-rounded" style="font-size:18px;color:#fff">play_arrow</span>
+              </div>
+            </div>
+          </div>
+          <div class="proj-card-name">TestP</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">TestP</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-preview">
+              <div class="proj-card-preview-title">Skin Health India: The Overlooked Link with Dental Hygiene</div>
+              <div>Key Takeaways · In India, the problem of oral health often focuses on visible aspects of teeth...</div>
+            </div>
+          </div>
+          <div class="proj-card-name">Derma Healthcare</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Derma Healthcare</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb" style="background:#111">
+            <img src="https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=300&q=60" alt="Testing"/>
+          </div>
+          <div class="proj-card-name">Testing content</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Testing content</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Test1234</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Test1234</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+        <div class="proj-card" onmouseenter="checkFlip(this)">
+          <div class="proj-card-thumb">
+            <div class="proj-card-placeholder"><span class="material-symbols-rounded">image</span></div>
+          </div>
+          <div class="proj-card-name">Test123</div>
+          <div class="proj-hover-panel"><div class="proj-hover-name">Test123</div><div class="proj-hover-btns"><button class="proj-hover-preview">Preview</button><button class="proj-hover-edit">Edit</button><button class="proj-hover-more"><span class="material-symbols-rounded">more_horiz</span></button></div><div class="proj-hover-author">Created by Custom User</div></div>
+        </div>
+
+      </div><!-- /proj-grid -->
+    </div><!-- /ch-view-projects -->
+
+    <!-- ══ Recommendations view ══ -->
+    <div id="ch-view-ch-rec" style="display:none">
+      <div class="ch-rec-hdr">
+        <span class="ch-rec-title">Recommendations</span>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div style="display:flex;align-items:center;gap:6px;border:1px solid #e5e9f0;border-radius:4px;padding:5px 10px;font-size:13px;color:rgb(85,85,85);background:#fff;cursor:pointer">
+            <span class="material-symbols-rounded" style="font-size:16px">filter_list</span>Filter
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;border:1px solid #e5e9f0;border-radius:4px;padding:5px 10px;font-size:13px;color:rgb(85,85,85);background:#fff;cursor:pointer">
+            <span class="material-symbols-rounded" style="font-size:16px">sort</span>Sort
+          </div>
+        </div>
+      </div>
+
+      <div class="ch-rec-table-wrap">
+        <table class="ch-rec-table">
+          <thead>
+            <tr>
+              <th style="width:38%">Recommendation</th>
+              <th style="width:16%">Content type</th>
+              <th style="width:14%">AEO score impact</th>
+              <th style="width:14%">Status</th>
+              <th style="width:18%">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Create a blog on "How AI is transforming local business reviews"</div>
+                <div class="rec-cell-sub">High keyword opportunity · Matches 3 trending queries</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">edit_note</span>Blog</span></td>
+              <td><span class="aeo-impact high"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+6</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openEditorFromRec('create')" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Write a FAQ page about reputation management for dentists</div>
+                <div class="rec-cell-sub">Low competition · Answerability signal gap detected</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">language</span>Website content</span></td>
+              <td><span class="aeo-impact high"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+5</span></td>
+              <td><span class="status-pill published">Published</span></td>
+              <td>
+                <button onclick="openEditorFromRec('optimize')" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Add a location landing page for "Dental clinics in Austin, TX"</div>
+                <div class="rec-cell-sub">Local SEO gap · 1,200 monthly searches</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">location_on</span>Location landing page</span></td>
+              <td><span class="aeo-impact high"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+4</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openEditorFromRec('create')" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Create a competitor comparison page: Birdeye vs. Podium</div>
+                <div class="rec-cell-sub">High intent query · Users comparing solutions</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">compare_arrows</span>Competitor comparison</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+4</span></td>
+              <td><span class="status-pill in-review">In review</span></td>
+              <td>
+                <button onclick="openEditorFromRec('optimize')" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Publish an "About us" page highlighting AI-powered review management</div>
+                <div class="rec-cell-sub">Brand authority signal · Missing from current sitemap</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">info</span>About us</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+3</span></td>
+              <td><span class="status-pill published">Published</span></td>
+              <td>
+                <button onclick="openEditorFromRec('optimize')" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Write a blog: "5 ways to respond to negative reviews professionally"</div>
+                <div class="rec-cell-sub">Top cited topic · 3 AI models reference this content gap</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">edit_note</span>Blog</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+3</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openEditorFromRec('create')" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Create a product page for "Birdeye Messaging" with feature breakdown</div>
+                <div class="rec-cell-sub">Product discovery query · Missing structured FAQ</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">storefront</span>Product/service page</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+2</span></td>
+              <td><span class="status-pill published">Published</span></td>
+              <td>
+                <button onclick="openEditorFromRec('optimize')" style="padding:4px 12px;border-radius:4px;border:1px solid #d1d5db;background:#fff;color:rgb(33,33,33);font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Optimize</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="rec-cell-title">Add a general FAQ section on how online reviews affect local SEO</div>
+                <div class="rec-cell-sub">Informational intent · Broad audience reach</div>
+              </td>
+              <td><span class="ct-chip"><span class="material-symbols-rounded" style="font-size:14px">quiz</span>General</span></td>
+              <td><span class="aeo-impact med"><span class="material-symbols-rounded" style="font-size:14px">trending_up</span>+2</span></td>
+              <td><span class="status-pill draft">Draft</span></td>
+              <td>
+                <button onclick="openEditorFromRec('create')" style="padding:4px 12px;border-radius:4px;border:none;background:#1976d2;color:#fff;font-size:13px;font-family:'Roboto',sans-serif;cursor:pointer">Create content</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /ch-view-ch-rec -->
+
+  </div><!-- /ch-content-area -->
+</div><!-- /ch-shell -->
+
+<!-- ══ OPTIMIZE CONTENT MODAL ══ -->
+<div class="modal-overlay" id="optimizeModal" onclick="handleOptimizeOverlayClick(event)">
+  <div class="modal" style="width:560px" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Content configuration</span>
+      <button class="modal-close" onclick="closeOptimizeModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div class="modal-subtitle">Write long-form AEO content based on an analysis of the current top-cited pages.</div>
+
+    <div class="modal-fields">
+      <!-- Content URL -->
+      <div class="dropdown-field" id="dd-opt-url" onclick="toggleOptDropdown('url')">
+        <div class="df-inner">
+          <div class="df-label">Content URL</div>
+          <div class="df-value" id="dd-opt-url-val" style="font-size:13px;color:#212121;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">https://birdeye.com/blog/blog-birdeye-vs-soci-comparison/</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOptOption('url','https://birdeye.com/blog/blog-birdeye-vs-soci-comparison/',this)">birdeye.com/blog/blog-birdeye-vs-soci-comparison/</div>
+          <div class="dropdown-option" onclick="selectOptOption('url','https://birdeye.com/blog/online-reviews-guide/',this)">birdeye.com/blog/online-reviews-guide/</div>
+          <div class="dropdown-option" onclick="selectOptOption('url','https://birdeye.com/blog/reputation-management/',this)">birdeye.com/blog/reputation-management/</div>
+        </div>
+      </div>
+
+      <!-- Topic -->
+      <div class="dropdown-field" id="dd-opt-topic" onclick="toggleOptDropdown('topic')">
+        <div class="df-inner">
+          <div class="df-label">Topic</div>
+          <div class="df-value" id="dd-opt-topic-val">Fastfood</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOptOption('topic','Fastfood',this)">Fastfood</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Local Dining',this)">Local Dining</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Healthcare',this)">Healthcare</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Real Estate',this)">Real Estate</div>
+          <div class="dropdown-option" onclick="selectOptOption('topic','Automotive',this)">Automotive</div>
+        </div>
+      </div>
+
+      <!-- Prompts -->
+      <div class="dropdown-field" id="dd-opt-prompts" onclick="toggleOptDropdown('prompts')">
+        <div class="df-inner">
+          <div class="df-label">Prompts</div>
+          <div class="df-value" id="dd-opt-prompts-val">4 prompts</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option" onclick="selectOptOption('prompts','2 prompts',this)">2 prompts</div>
+          <div class="dropdown-option" onclick="selectOptOption('prompts','3 prompts',this)">3 prompts</div>
+          <div class="dropdown-option selected" onclick="selectOptOption('prompts','4 prompts',this)">4 prompts</div>
+          <div class="dropdown-option" onclick="selectOptOption('prompts','5 prompts',this)">5 prompts</div>
+          <div class="dropdown-option" onclick="selectOptOption('prompts','6 prompts',this)">6 prompts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeOptimizeModal()">Cancel</button>
+      <button class="btn-generate" onclick="generateOptimizeResult()">Optimize content</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTENT TYPE SELECTION MODAL ══ -->
+<div class="type-modal-overlay" id="typeModal" onclick="handleTypeOverlayClick(event)">
+  <div class="type-modal" onclick="event.stopPropagation()">
+    <div class="type-modal-header">
+      <span class="type-modal-title">Select content type</span>
+      <button class="modal-close" onclick="closeTypeModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div class="type-modal-subtitle">Choose the type of page you'd like to create.</div>
+    <div class="type-grid">
+      <div class="type-card" onclick="selectContentType(this,'Blog')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">edit_note</span></div>
+        <div class="type-card-label">Blog</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'Product/service page')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">storefront</span></div>
+        <div class="type-card-label">Product / service page</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'Location landing page')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">location_on</span></div>
+        <div class="type-card-label">Location landing page</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'FAQs')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">quiz</span></div>
+        <div class="type-card-label">FAQs</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'About us')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">groups</span></div>
+        <div class="type-card-label">About us</div>
+      </div>
+      <div class="type-card" onclick="selectContentType(this,'Competitor comparison')">
+        <div class="type-card-icon"><span class="material-symbols-rounded">compare_arrows</span></div>
+        <div class="type-card-label">Competitor comparison</div>
+      </div>
+    </div>
+    <div class="type-modal-footer">
+      <button class="btn-cancel" onclick="closeTypeModal()">Cancel</button>
+      <button class="btn-generate" id="typeNextBtn" onclick="proceedToConfig()" disabled style="opacity:0.45;cursor:not-allowed">Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONTENT CONFIGURATION MODAL ══ -->
+<div class="modal-overlay" id="contentModal" onclick="handleOverlayClick(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <span class="modal-title">Content configuration</span>
+      <button class="modal-close" onclick="closeContentModal()" title="Close">
+        <span class="material-symbols-rounded" style="font-size:20px">close</span>
+      </button>
+    </div>
+    <div class="modal-subtitle">Write long-form AEO content based on an analysis of the current top-cited pages.</div>
+
+    <div class="modal-fields">
+      <!-- Topic -->
+      <div class="dropdown-field" id="dd-topic" onclick="toggleDropdown('topic')">
+        <div class="df-inner">
+          <div class="df-label">Topic</div>
+          <div class="df-value" id="dd-topic-val">Fastfood</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('topic','Fastfood',this)">Fastfood</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Local Dining',this)">Local Dining</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Healthcare',this)">Healthcare</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Real Estate',this)">Real Estate</div>
+          <div class="dropdown-option" onclick="selectOption('topic','Automotive',this)">Automotive</div>
+        </div>
+      </div>
+
+      <!-- Prompts -->
+      <div class="dropdown-field" id="dd-prompts" onclick="toggleDropdown('prompts')">
+        <div class="df-inner">
+          <div class="df-label">Prompts</div>
+          <div class="df-value" id="dd-prompts-val">4 prompts</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option" onclick="selectOption('prompts','2 prompts',this)">2 prompts</div>
+          <div class="dropdown-option" onclick="selectOption('prompts','3 prompts',this)">3 prompts</div>
+          <div class="dropdown-option selected" onclick="selectOption('prompts','4 prompts',this)">4 prompts</div>
+          <div class="dropdown-option" onclick="selectOption('prompts','5 prompts',this)">5 prompts</div>
+          <div class="dropdown-option" onclick="selectOption('prompts','6 prompts',this)">6 prompts</div>
+        </div>
+      </div>
+
+      <!-- Platforms -->
+      <div class="dropdown-field" id="dd-platforms" onclick="toggleDropdown('platforms')">
+        <div class="df-inner">
+          <div class="df-label">Platforms</div>
+          <div class="df-value" id="dd-platforms-val">4 platforms selected</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()" style="padding:4px 0">
+          <div class="platform-option checked" onclick="togglePlatform(this,'google')">
+            <div class="pages-cb"><span class="pages-cb-check">&#10003;</span></div>
+            <span class="platform-label">Google</span>
+          </div>
+          <div class="platform-option checked" onclick="togglePlatform(this,'bing')">
+            <div class="pages-cb"><span class="pages-cb-check">&#10003;</span></div>
+            <span class="platform-label">Bing</span>
+          </div>
+          <div class="platform-option checked" onclick="togglePlatform(this,'perplexity')">
+            <div class="pages-cb"><span class="pages-cb-check">&#10003;</span></div>
+            <span class="platform-label">Perplexity</span>
+          </div>
+          <div class="platform-option checked" onclick="togglePlatform(this,'chatgpt')">
+            <div class="pages-cb"><span class="pages-cb-check">&#10003;</span></div>
+            <span class="platform-label">ChatGPT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top cited pages -->
+      <div class="dropdown-field" id="dd-pages" onclick="toggleDropdown('pages')">
+        <div class="df-inner">
+          <div class="df-label">Top cited pages</div>
+          <div class="df-value" id="dd-pages-val">10 pages selected</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options pages-panel" onclick="event.stopPropagation()">
+          <div class="pages-table-header">
+            <span>Citations</span>
+            <span>Count</span>
+          </div>
+          <div class="pages-rows" id="pages-rows"></div>
+          <div class="pages-footer">
+            <span class="pages-reset" onclick="resetPageSelection()">Reset selection</span>
+            <div class="pages-pagination">
+              <span id="pages-page-label">Page <strong>1</strong> of 21</span>
+              <button class="pages-nav" onclick="changePage(-1)" id="pages-prev">&#8592;</button>
+              <button class="pages-nav" onclick="changePage(1)" id="pages-next">&#8594;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brandkit -->
+      <div class="dropdown-field" id="dd-brandkit" onclick="toggleDropdown('brandkit')">
+        <div class="df-inner">
+          <div class="df-label">Brandkit</div>
+          <div class="df-value" id="dd-brandkit-val">Popeyes brand kit</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('brandkit','Popeyes brand kit',this)">Popeyes brand kit</div>
+          <div class="dropdown-option" onclick="selectOption('brandkit','Default brand kit',this)">Default brand kit</div>
+          <div class="dropdown-option" onclick="selectOption('brandkit','Custom brand kit',this)">Custom brand kit</div>
+        </div>
+      </div>
+
+      <!-- Audience -->
+      <div class="dropdown-field" id="dd-audience" onclick="toggleDropdown('audience')">
+        <div class="df-inner">
+          <div class="df-label">Audience</div>
+          <div class="df-value" id="dd-audience-val">US customers</div>
+        </div>
+        <span class="df-chevron material-symbols-rounded" style="font-size:20px">expand_more</span>
+        <div class="dropdown-options" onclick="event.stopPropagation()">
+          <div class="dropdown-option selected" onclick="selectOption('audience','US customers',this)">US customers</div>
+          <div class="dropdown-option" onclick="selectOption('audience','Global audience',this)">Global audience</div>
+          <div class="dropdown-option" onclick="selectOption('audience','Local community',this)">Local community</div>
+          <div class="dropdown-option" onclick="selectOption('audience','Business owners',this)">Business owners</div>
+        </div>
+      </div>
+
+      <!-- Supporting URL -->
+      <div class="supporting-url-field" onclick="document.getElementById('supporting-url-input').focus()">
+        <div class="df-label" style="margin-bottom:4px">Supporting URL <span style="color:#bbb;font-weight:400;font-size:11px;margin-left:4px">Optional</span></div>
+        <input
+          id="supporting-url-input"
+          class="supporting-url-input"
+          type="url"
+          placeholder="https://example.com/reference-page"
+          onclick="event.stopPropagation()"
+        />
+      </div>
+    </div>
+
+    <!-- Article title section -->
+    <div style="margin-bottom:16px">
+      <div class="modal-section-title">Article title</div>
+      <div class="modal-section-sub">Select a title recommendation, inspired by the top-cited pages for your prompts, or create your own.</div>
+      <input class="article-title-input" id="article-title-input" type="text" value="Best burgers in Goldcoast Marina" placeholder="Enter article title…"/>
+      <div class="ai-recs-header">
+        <div class="ai-icon">
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span>Article title recommendations</span>
+      </div>
+      <div class="rec-suggestion" onclick="pickSuggestion(this)">Goldcoast Marina's Secret Burger That'll Blow Your Mind! 😱🍔</div>
+      <div class="rec-suggestion" onclick="pickSuggestion(this)">You Haven't Lived Until You've Tried THIS Goldcoast Marina Burger! 🔥</div>
+      <div class="rec-suggestion" onclick="pickSuggestion(this)">The #1 Burger in Goldcoast Marina – Locals Don't Want You to Know! 🤫</div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeContentModal()">Cancel</button>
+      <button class="btn-generate" onclick="generateArticle()">Generate article</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Donut chart
+(function(){
+  const ctx = document.getElementById('donutChart').getContext('2d');
+  new Chart(ctx, {
+    type:'doughnut',
+    data:{datasets:[{data:[54,46],backgroundColor:['#f97316','#e5e7eb'],borderWidth:0,borderRadius:4}]},
+    options:{responsive:false,cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:false}},animation:false}
+  });
+})();
+
+// View switching
+function showView(view) {
+  // hide all views
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+
+  // article-mode on content wrapper + hide sidebar
+  const content = document.getElementById('main-content');
+  const sidebar = document.querySelector('.sidebar');
+  if (view === 'article') {
+    content.classList.add('article-mode');
+    sidebar.classList.add('hidden');
+  } else {
+    content.classList.remove('article-mode');
+    sidebar.classList.remove('hidden');
+  }
+
+  // show/hide state chips — only on content view
+  const chips = document.getElementById('state-chips');
+  chips.classList.toggle('visible', view === 'content');
+  if (view === 'content') switchContentState('zero'); // always reset to zero on nav
+
+  // update page title + header buttons
+  const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content'};
+  document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
+  document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
+  document.getElementById('hdr-overview-btns').style.display = view === 'overview' ? 'flex' : 'none';
+  document.getElementById('hdr-rec-btns').style.display = view === 'recommendations' ? 'flex' : 'none';
+  document.getElementById('hdr-content-btns').style.display = view === 'content' ? 'flex' : 'none';
+  document.getElementById('hdr-article-btns').style.display = view === 'article' ? 'flex' : 'none';
+
+  // Switch left-panel mode: create tabs vs optimize (AEO) tabs
+  if (view === 'article') {
+    const isOpt = window._articleMode === 'optimize';
+    document.getElementById('art-create-tabs').style.display = isOpt ? 'none' : 'flex';
+    document.getElementById('art-optimize-tabs').style.display = isOpt ? 'flex' : 'none';
+    // hide all opt panels, show correct one
+    document.getElementById('art-aeo-panel').classList.toggle('active', isOpt);
+    document.getElementById('art-rec-panel').classList.remove('active');
+    // hide all create panels when in opt mode
+    document.getElementById('art-ai-panel').classList.toggle('active', !isOpt);
+    document.getElementById('art-manual-search').style.display = 'none';
+    document.getElementById('art-manual-blocks').style.display = 'none';
+    // reset optimize tabs highlight
+    if (isOpt) {
+      document.querySelectorAll('#art-optimize-tabs .art-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+    }
+  }
+
+  // update sidebar active states
+  document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + view) || document.getElementById('nav-content');
+  if (navEl) navEl.classList.add('active');
+}
+
+// Sidebar group toggle
+function toggleSbGroup(id, hdr) {
+  const group = document.getElementById('sb-group-' + id);
+  const chev = document.getElementById('sb-chev-' + id);
+  const isOpen = group.style.display !== 'none';
+  group.style.display = isOpen ? 'none' : 'block';
+  chev.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+// L1 Rail module switcher
+function switchRailModule(module) {
+  document.getElementById('rail-searchai').classList.toggle('active', module === 'searchai');
+  document.getElementById('rail-contenthub').classList.toggle('active', module === 'contenthub');
+  document.getElementById('sidebar-searchai').style.display = module === 'searchai' ? '' : 'none';
+  document.getElementById('sidebar-contenthub').style.display = module === 'contenthub' ? '' : 'none';
+  // show/hide content hub full-page shell
+  const shell = document.getElementById('ch-shell');
+  if (module === 'contenthub') {
+    shell.style.display = 'block';
+    // position shell to sit beside the rail
+    shell.style.left = '278px';
+    showChView('projects');
+  } else {
+    shell.style.display = 'none';
+  }
+}
+
+// Content Hub view switcher
+function showChView(view) {
+  document.querySelectorAll('#ch-content-area > div').forEach(v => v.style.display = 'none');
+  const el = document.getElementById('ch-view-' + view);
+  if (el) el.style.display = '';
+  // update sidebar active (covers both sb-sub-item and sb-item)
+  document.querySelectorAll('#sidebar-contenthub .sb-sub-item, #sidebar-contenthub .sb-item').forEach(i => i.classList.remove('active'));
+  const navEl = document.getElementById('ch-nav-' + view);
+  if (navEl) navEl.classList.add('active');
+}
+
+// Projects view helpers
+function setProjView(mode) {
+  document.getElementById('proj-view-grid').classList.toggle('active', mode === 'grid');
+  document.getElementById('proj-view-list').classList.toggle('active', mode === 'list');
+}
+function checkFlip(card) {
+  const rect = card.getBoundingClientRect();
+  const panelW = 208; // hover panel width + gap
+  card.classList.toggle('flip-left', rect.right + panelW > window.innerWidth);
+}
+
+// Content state switcher
+function switchContentState(state) {
+  const isZero = state === 'zero';
+  document.getElementById('content-zero-state').style.display = isZero ? '' : 'none';
+  document.getElementById('content-filled-state').style.display = isZero ? 'none' : '';
+  document.getElementById('chip-zero').classList.toggle('active', isZero);
+  document.getElementById('chip-filled').classList.toggle('active', !isZero);
+}
+
+// Optimize modal
+function openOptimizeModal() {
+  document.getElementById('optimizeModal').classList.add('open');
+}
+function closeOptimizeModal() {
+  document.getElementById('optimizeModal').classList.remove('open');
+  closeAllOptDropdowns();
+}
+function handleOptimizeOverlayClick(e) {
+  if (e.target === document.getElementById('optimizeModal')) closeOptimizeModal();
+}
+function closeAllOptDropdowns() {
+  ['url','topic','prompts'].forEach(id => {
+    document.getElementById('dd-opt-' + id).classList.remove('open');
+  });
+}
+function toggleOptDropdown(id) {
+  const el = document.getElementById('dd-opt-' + id);
+  const wasOpen = el.classList.contains('open');
+  closeAllOptDropdowns();
+  if (!wasOpen) el.classList.add('open');
+}
+function selectOptOption(ddId, value, optEl) {
+  document.getElementById('dd-opt-' + ddId + '-val').textContent = value;
+  optEl.closest('.dropdown-options').querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+  optEl.classList.add('selected');
+  document.getElementById('dd-opt-' + ddId).classList.remove('open');
+}
+
+// Type selection modal
+let selectedContentType = null;
+function openContentModal() {
+  selectedContentType = null;
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  const btn = document.getElementById('typeNextBtn');
+  btn.disabled = true;
+  btn.style.opacity = '0.45';
+  btn.style.cursor = 'not-allowed';
+  document.getElementById('typeModal').classList.add('open');
+}
+function closeTypeModal() {
+  document.getElementById('typeModal').classList.remove('open');
+}
+function handleTypeOverlayClick(e) {
+  if (e.target === document.getElementById('typeModal')) closeTypeModal();
+}
+function selectContentType(card, type) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedContentType = type;
+  const btn = document.getElementById('typeNextBtn');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  btn.style.cursor = 'pointer';
+}
+function proceedToConfig() {
+  if (!selectedContentType) return;
+  closeTypeModal();
+  openConfigModal();
+}
+
+// Config modal
+function openConfigModal() {
+  document.getElementById('contentModal').classList.add('open');
+  const n = document.querySelectorAll('#dd-platforms .platform-option.checked').length;
+  document.getElementById('dd-platforms-val').textContent = n
+    ? n + ' platform' + (n > 1 ? 's' : '') + ' selected'
+    : 'None selected';
+}
+function closeContentModal() {
+  document.getElementById('contentModal').classList.remove('open');
+  closeAllDropdowns();
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('contentModal')) closeContentModal();
+}
+
+// Dropdowns inside modal
+function closeAllDropdowns() {
+  document.querySelectorAll('.dropdown-field.open').forEach(el => el.classList.remove('open'));
+}
+function toggleDropdown(id) {
+  const el = document.getElementById('dd-' + id);
+  const wasOpen = el.classList.contains('open');
+  closeAllDropdowns();
+  if (!wasOpen) {
+    el.classList.add('open');
+    if (id === 'pages') renderPagesPanel();
+  }
+}
+function selectOption(ddId, value, optEl) {
+  document.getElementById('dd-' + ddId + '-val').textContent = value;
+  optEl.closest('.dropdown-options').querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+  optEl.classList.add('selected');
+  document.getElementById('dd-' + ddId).classList.remove('open');
+}
+
+// ── Top cited pages panel ──
+const ALL_PAGES = [
+  {url:'repreply.vercel.app/blog/revi...', count:2},
+  {url:'opineko.com/blog/review-ma...', count:2},
+  {url:'reviewscout.ai/blog/review-...', count:11},
+  {url:'expertreputation.com/review...', count:8},
+  {url:'birdeye.com/blog/online-reviews...', count:14},
+  {url:'trustpilot.com/reviews/guide...', count:6},
+  {url:'podium.com/article/review-res...', count:9},
+  {url:'grade.us/blog/responding-to-re...', count:3},
+  {url:'brightlocal.com/research/loca...', count:17},
+  {url:'reviewtrackers.com/guides/re...', count:5},
+  {url:'spiegel.com/blog/online-review...', count:21},
+  {url:'semrush.com/blog/reputation-m...', count:4},
+  {url:'yext.com/blog/review-generatio...', count:7},
+  {url:'hootsuite.com/blog/how-to-get-...', count:12},
+  {url:'socialmediaexaminer.com/revie...', count:3},
+  {url:'hubspot.com/marketing/online-re...', count:8},
+  {url:'forbes.com/advisor/business/on...', count:16},
+  {url:'searchengineland.com/local-seo...', count:5},
+  {url:'moz.com/blog/local-reviews-seo...', count:19},
+  {url:'neilpatel.com/blog/online-revie...', count:10},
+  {url:'smartinsights.com/reputation-m...', count:6},
+];
+const PAGES_PER_PAGE = 4;
+let pagesCurrentPage = 1;
+let pagesSelected = new Set([0,1,2,3,4,5,6,7,8,9]); // first 10 selected
+
+function renderPagesPanel() {
+  const start = (pagesCurrentPage - 1) * PAGES_PER_PAGE;
+  const slice = ALL_PAGES.slice(start, start + PAGES_PER_PAGE);
+  const totalPages = Math.ceil(ALL_PAGES.length / PAGES_PER_PAGE);
+  const container = document.getElementById('pages-rows');
+  container.innerHTML = slice.map((p, i) => {
+    const globalIdx = start + i;
+    const checked = pagesSelected.has(globalIdx);
+    return `<div class="pages-row${checked?' checked':''}" onclick="togglePageRow(${globalIdx},this)">
+      <div class="pages-cb"><span class="pages-cb-check">&#10003;</span></div>
+      <span class="pages-url" title="${p.url}">${p.url}</span>
+      <span class="pages-tag"><span class="pages-tag-dot"></span>Other</span>
+      <span class="pages-count">${p.count}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('pages-page-label').innerHTML = `Page <strong>${pagesCurrentPage}</strong> of ${totalPages}`;
+  document.getElementById('pages-prev').disabled = pagesCurrentPage === 1;
+  document.getElementById('pages-next').disabled = pagesCurrentPage === totalPages;
+  document.getElementById('dd-pages-val').textContent = pagesSelected.size + ' pages selected';
+}
+
+function togglePageRow(idx, rowEl) {
+  if (pagesSelected.has(idx)) {
+    pagesSelected.delete(idx);
+    rowEl.classList.remove('checked');
+    rowEl.querySelector('.pages-cb').style.background = '';
+    rowEl.querySelector('.pages-cb').style.borderColor = '';
+  } else {
+    pagesSelected.add(idx);
+    rowEl.classList.add('checked');
+  }
+  document.getElementById('dd-pages-val').textContent = pagesSelected.size + ' pages selected';
+}
+
+function changePage(dir) {
+  const totalPages = Math.ceil(ALL_PAGES.length / PAGES_PER_PAGE);
+  pagesCurrentPage = Math.max(1, Math.min(totalPages, pagesCurrentPage + dir));
+  renderPagesPanel();
+}
+
+function resetPageSelection() {
+  pagesSelected.clear();
+  renderPagesPanel();
+}
+
+// Platform multi-select
+function togglePlatform(rowEl, id) {
+  rowEl.classList.toggle('checked');
+  const checked = document.querySelectorAll('#dd-platforms .platform-option.checked');
+  const names = Array.from(checked).map(el => el.querySelector('.platform-label').textContent);
+  document.getElementById('dd-platforms-val').textContent = names.length
+    ? names.length + ' platform' + (names.length > 1 ? 's' : '') + ' selected'
+    : 'None selected';
+}
+
+// Article title suggestions
+function pickSuggestion(el) {
+  document.querySelectorAll('.rec-suggestion').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('article-title-input').value = el.textContent.trim();
+}
+
+// Close dropdowns when clicking outside any dropdown-field
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown-field') && !e.target.closest('.pages-footer')) {
+    closeAllDropdowns();
+  }
+});
+
+// Direct entry from Content Hub recommendations — skip all modals
+function openEditorFromRec(mode) {
+  window._articleMode = mode;
+  switchRailModule('searchai');
+  showView('article');
+  setTimeout(renderArticleStats, 80);
+}
+
+// Generate article (create mode) — close modal, navigate to article view, compute stats
+function generateArticle() {
+  window._articleMode = 'create';
+  closeContentModal();
+  // If coming from Content Hub, collapse shell and restore Search AI context
+  switchRailModule('searchai');
+  showView('article');
+  setTimeout(renderArticleStats, 80);
+}
+
+// Generate optimize result — close optimize modal, navigate to article view in optimize mode
+function generateOptimizeResult() {
+  window._articleMode = 'optimize';
+  closeOptimizeModal();
+  // If coming from Content Hub, collapse shell and restore Search AI context
+  switchRailModule('searchai');
+  showView('article');
+  setTimeout(renderArticleStats, 80);
+}
+
+// Optimize mode tab switcher
+function switchOptArtTab(el) {
+  el.closest('.art-tabs').querySelectorAll('.art-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const tab = el.dataset.tab;
+  document.getElementById('art-aeo-panel').classList.toggle('active', tab === 'aeo');
+  document.getElementById('art-rec-panel').classList.toggle('active', tab === 'rec');
+}
+
+function renderArticleStats() {
+  const body = document.querySelector('.art-card-body');
+  if (!body) return;
+
+  // --- Headings ---
+  const h1s = Array.from(body.querySelectorAll('h1, [data-h="h1"]'));
+  const h2s = Array.from(body.querySelectorAll('h2, [data-h="h2"]'));
+  // section headings are our h2-level; article title is h1
+  const titleEl = body.querySelector('.art-article-title');
+  const sectionEls = Array.from(body.querySelectorAll('.art-section-heading'));
+
+  const allHeadings = [];
+  if (titleEl) allHeadings.push({level:'H1', text: titleEl.textContent.trim()});
+  sectionEls.forEach(el => allHeadings.push({level:'H2', text: el.textContent.trim()}));
+
+  const h1Count = allHeadings.filter(h=>h.level==='H1').length;
+  const h2Count = allHeadings.filter(h=>h.level==='H2').length;
+  const h3Count = 0;
+  const total = allHeadings.length;
+
+  document.getElementById('stats-heading-total').textContent = total + ' total';
+  document.getElementById('stats-h1-count').textContent = h1Count;
+  document.getElementById('stats-h2-count').textContent = h2Count;
+  document.getElementById('stats-h3-count').textContent = h3Count;
+
+  // Show last 5 headings
+  const listEl = document.getElementById('stats-heading-list');
+  listEl.innerHTML = allHeadings.slice(-5).map(h =>
+    `<div class="art-heading-row">
+      <span class="art-heading-tag">${h.level}</span>
+      <span class="art-heading-text">${h.text}</span>
+    </div>`
+  ).join('');
+
+  // --- Paragraphs ---
+  const paras = Array.from(body.querySelectorAll('.art-article-text p'));
+  const paraCount = paras.length;
+  document.getElementById('stats-para-count').textContent = paraCount;
+
+  // --- Content structure ---
+  const totalWords = paras.reduce((sum, p) => {
+    return sum + p.textContent.trim().split(/\s+/).filter(Boolean).length;
+  }, 0);
+  const avgWords = paraCount > 0 ? Math.round(totalWords / paraCount) : 0;
+  document.getElementById('stats-avg-words').textContent = avgWords;
+
+  const headingCount = total;
+  let ratio = '—';
+  if (headingCount > 0 && paraCount > 0) {
+    const r = paraCount / headingCount;
+    ratio = Math.round(r) + ':1';
+  }
+  document.getElementById('stats-ratio').textContent = ratio;
+}
+
+// Article tab switcher
+function switchArtTab(el) {
+  el.closest('.art-tabs').querySelectorAll('.art-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const tab = el.dataset.tab;
+  // Toggle AI vs manual panels
+  document.getElementById('art-ai-panel').classList.toggle('active', tab === 'ai');
+  document.getElementById('art-manual-search').style.display = tab === 'manual' ? 'block' : 'none';
+  document.getElementById('art-manual-blocks').style.display = tab === 'manual' ? 'block' : 'none';
+}
+
+function sendAiPrompt(btn) {
+  const chat = document.getElementById('art-ai-chat');
+  const text = btn.textContent.trim();
+  // Remove prompt buttons row
+  btn.closest('.art-ai-prompts').remove();
+  // Add user message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'art-user-msg';
+  userMsg.innerHTML = `<div class="art-user-avatar">P</div><div class="art-user-bubble">${text}</div>`;
+  chat.appendChild(userMsg);
+  // Add working state
+  const working = document.createElement('div');
+  working.className = 'art-ai-working';
+  working.innerHTML = `<span class="material-symbols-rounded">auto_awesome</span> Working on it...`;
+  chat.appendChild(working);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+// Copy field content to clipboard
+function copyField(btn) {
+  const valueEl = btn.closest('.art-seo-value-row').querySelector('.art-seo-value');
+  if (!valueEl) return;
+  const text = valueEl.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const icon = btn.querySelector('.material-symbols-rounded');
+    icon.textContent = 'check';
+    setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>

@@ -139,8 +139,8 @@ body{
   color:#212121;
   border-radius:4px;
 }
-.sb-item:hover{background:rgba(0,0,0,0.04)}
-.sb-item.active{background:#c7d6f6}
+.sb-item:hover{background:#F3F4F7}
+.sb-item.active{background:#E5E9F1}
 
 /* ── TOP NAV ── */
 .top-nav{
@@ -149,11 +149,13 @@ body{
   border-bottom:1px solid #e9e9eb;
   display:flex;
   align-items:center;
-  justify-content:flex-end;
+  justify-content:space-between;
   padding:12px 24px;
   gap:4px;
   flex-shrink:0;
 }
+.top-nav-left{display:flex;align-items:center;gap:4px}
+.top-nav-right{display:flex;align-items:center;gap:4px}
 .top-nav-btn{
   width:28px;
   height:28px;
@@ -174,8 +176,6 @@ body{
 /* ── BREADCRUMB BAR ── */
 .breadcrumb-bar{
   height:52px;
-  background:#ffffff;
-  border-bottom:1px solid #e9e9eb;
   display:flex;
   align-items:center;
   padding:0 24px;
@@ -247,20 +247,15 @@ body{
   border-radius:10px;
   overflow:hidden;
 }
-table{width:100%;border-collapse:collapse;table-layout:fixed}
-col.col-product{width:235px}
-col.col-purchased{width:120px}
-col.col-used{width:120px}
-col.col-usage{width:260px}
-col.col-resets{width:auto}
+table{width:100%;border-collapse:collapse;table-layout:auto}
 
 thead tr{border-bottom:1px solid #eaeaea}
 th{
   padding:10px 16px;
-  font-size:14px;
+  font-size:12px;
   font-weight:400;
-  line-height:20px;
-  letter-spacing:-0.28px;
+  line-height:16px;
+  letter-spacing:0;
   color:#555555;
   text-align:left;
   white-space:nowrap;
@@ -298,7 +293,9 @@ td{
   line-height:20px;
   letter-spacing:-0.28px;
   color:#212121;
+  cursor:pointer;
 }
+tr:hover .td-product-name{color:rgb(25,118,210)}
 .td-product-sub{
   font-size:12px;
   line-height:16px;
@@ -340,18 +337,204 @@ td{
   color:#555555;
 }
 .resets-cell.na{color:#8f8f8f}
+
+/* ── SUMMARY CARDS ── */
+.cards-row{display:flex;gap:12px;margin-bottom:20px}
+
+.summary-card{
+  flex:1;
+  background:#ffffff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.card-big-number{display:flex;align-items:baseline;gap:2px}
+.card-big-primary{font-size:32px;font-weight:400;line-height:1;color:#212121;letter-spacing:-0.5px}
+.card-big-secondary{font-size:16px;font-weight:400;color:#8f8f8f;letter-spacing:-0.28px}
+.card-bar-pct{font-size:12px;color:#555555;margin-top:4px}
+
+.summary-card-label{
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  color:#555555;
+}
+.summary-card-bar-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.summary-card-bar-label{font-size:14px;color:#212121;white-space:nowrap}
+.summary-card-bar-amount{font-size:14px;color:#212121;white-space:nowrap}
+.summary-bar-track{
+  height:8px;
+  background:#e5e9f0;
+  border-radius:4px;
+  overflow:hidden;
+}
+.summary-bar-fill{
+  height:100%;
+  border-radius:4px;
+  background:#1976d2;
+}
+.summary-card-stats{display:flex;gap:32px}
+.summary-stat-label{font-size:12px;color:#555555;margin-bottom:2px}
+.summary-stat-value{font-size:18px;font-weight:500;color:#212121;letter-spacing:-0.36px}
+
+.forecast-card{
+  flex:1;
+  background:#ffffff;
+  border:1px solid #eaeaea;
+  border-radius:8px;
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.forecast-card-label{
+  font-size:12px;
+  font-weight:400;
+  letter-spacing:0;
+  text-transform:none;
+  color:#555555;
+}
+.forecast-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+.forecast-period{font-size:14px;color:#212121}
+.forecast-amount{font-size:14px;font-weight:500;color:#212121;text-align:right}
+.forecast-note{font-size:12px;color:#8f8f8f;margin-top:2px;text-align:right}
+.forecast-divider{height:1px;background:#eaeaea}
+.forecast-footer{display:flex;align-items:center;justify-content:space-between}
+.forecast-footer-label{font-size:12px;color:#8f8f8f}
+.forecast-trend{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:12px;
+  color:#16a34a;
+}
+.forecast-trend.up{color:#dc2626}
+.usecase-btn{
+  font-family:'Roboto',sans-serif;
+  font-size:14px;
+  font-weight:400;
+  color:rgb(85,85,85);
+  background:transparent;
+  border:1px solid rgb(234,234,234);
+  border-radius:4px;
+  padding:5px 14px;
+  cursor:pointer;
+  line-height:1.4;
+}
+.usecase-btn:hover{background:rgb(242,244,247)}
+.usecase-btn.active{
+  background:rgb(199,214,246);
+  color:rgb(33,33,33);
+  border-color:rgb(199,214,246);
+}
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  // Restore view from URL param (?view=products)
+  const urlParams = new URLSearchParams(window.location.search);
+  if(urlParams.get('view') === 'products'){
+    const productsItem = document.querySelector('.sb-item');
+    showView('products', productsItem);
+  }
+  // Agent rows → agent_detail.html
+  document.querySelectorAll('#view-usage .td-product-name').forEach(function(el){
+    el.addEventListener('click', function(){
+      const name = this.textContent.trim();
+      window.location.href = 'agent_detail.html?agent=' + encodeURIComponent(name);
+    });
+  });
+  // Product rows → product_detail.html
+  document.querySelectorAll('#view-products .td-product-name').forEach(function(el){
+    el.addEventListener('click', function(){
+      const name = this.textContent.trim();
+      window.location.href = 'product_detail.html?product=' + encodeURIComponent(name);
+    });
+  });
+});
+function showView(view, item){
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  item.classList.add('active');
+  document.getElementById('view-usage').style.display = view === 'usage' ? '' : 'none';
+  document.getElementById('view-products').style.display = view === 'products' ? '' : 'none';
+  document.getElementById('bc-current').textContent = view === 'products' ? 'Products' : 'Agents';
+}
+function setUsecase(btn){
+  document.querySelectorAll('.usecase-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const label = btn.textContent.trim();
+  const bar = document.getElementById('card1-bar');
+  const pct = document.getElementById('card1-pct');
+  const primary = document.getElementById('card1-primary');
+
+  const bar2 = document.getElementById('card2-bar');
+  const pct2 = document.getElementById('card2-pct');
+  const primary2 = document.getElementById('card2-primary');
+
+  if(label === 'Exhausted limit'){
+    primary.textContent = '225,000';
+    bar.style.width = '100%';
+    bar.style.background = '#dc2626';
+    pct.textContent = '100% used';
+    pct.style.color = '#dc2626';
+
+    primary2.textContent = '281,250';
+    bar2.style.width = '100%';
+    bar2.style.background = '#dc2626';
+    pct2.textContent = '125% usage estimated';
+    pct2.style.color = '#dc2626';
+  } else if(label === 'Potential overage'){
+    primary.textContent = '200,000';
+    bar.style.width = '88.9%';
+    bar.style.background = '#1976d2';
+    pct.textContent = '88.9% used';
+    pct.style.color = '#555555';
+
+    primary2.textContent = '281,250';
+    bar2.style.width = '100%';
+    bar2.style.background = '#dc2626';
+    pct2.textContent = '125% usage estimated';
+    pct2.style.color = '#dc2626';
+  } else {
+    primary.textContent = '141,196';
+    bar.style.width = '62.8%';
+    bar.style.background = '#1976d2';
+    pct.textContent = '62.8% used';
+    pct.style.color = '#555555';
+
+    primary2.textContent = '158,940';
+    bar2.style.width = '70.6%';
+    bar2.style.background = '#1976d2';
+    pct2.textContent = '70.6% usage estimated';
+    pct2.style.color = '#555555';
+  }
+}
+</script>
 </head>
 <body>
 <div class="body-wrap">
 
   <!-- RAIL (L1) — DS node 2575:51954 -->
   <div class="rail">
-    <div class="rail-logo-area">
+    <a href="../index.html" class="rail-logo-area" style="text-decoration:none">
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6417 15.8029L17.6417 15.8027L17.6384 15.8014C17.5927 15.7816 17.5463 15.7632 17.4992 15.7463L12.7315 13.8611L12.7311 13.8618C12.6006 13.804 12.4564 13.7713 12.3044 13.7713C11.7231 13.7713 11.2518 14.2403 11.2518 14.8187C11.2518 15.0578 11.3332 15.2774 11.4688 15.4537L11.4681 15.4544L11.4764 15.4638C11.5005 15.4944 11.5259 15.524 11.5532 15.5517L14.9714 19.459L14.9715 19.4589C15.3977 19.9372 16.0196 20.2391 16.7125 20.2391C17.9972 20.2391 19.0387 19.2029 19.0387 17.9247C19.0387 16.9752 18.4638 16.1598 17.6417 15.8029M16.0713 7.92504C17.1523 7.58657 18.3171 8.14557 18.673 9.17345C19.0289 10.2013 18.4411 11.3088 17.36 11.6473C16.2791 11.9856 15.1142 11.4266 14.7583 10.3989C14.4025 9.37094 14.9903 8.26336 16.0713 7.92504M23.5537 9.17994C23.3965 8.95849 23.168 8.81665 22.9198 8.75419L22.9196 8.75053L21.9876 8.50627C21.9741 8.46262 21.9653 8.41842 21.9506 8.37481C20.9828 5.51383 17.8153 3.95809 14.8755 4.89999C13.3526 5.38783 12.1944 6.45242 11.5617 7.76098L9.87757 10.4368L5.88029 8.85972L5.87765 8.86265C5.62588 8.76042 5.33869 8.73796 5.05933 8.82742C4.44192 9.02534 4.10609 9.67275 4.30931 10.2738C4.33911 10.3616 4.38134 10.4416 4.42915 10.5168L4.4222 10.5248L8.59266 16.045C8.59643 16.05 8.59829 16.0555 8.60205 16.0603C8.60577 16.0655 8.61067 16.0695 8.61463 16.0746L11.5983 20.2565C12.9021 22.5847 15.7227 23.9859 18.4456 23.1135C21.3852 22.1718 22.984 19.089 22.0161 16.228C21.7148 15.3376 21.2002 14.5738 20.5458 13.9722C21.3708 13.1844 21.9306 12.1679 22.1398 11.0647L23.0412 10.8043L23.0406 10.7945C23.1205 10.7643 23.1987 10.7278 23.2723 10.6784C23.7751 10.3402 23.9012 9.66943 23.5537 9.17994" fill="#1976D2"/>
       </svg>
-    </div>
+    </a>
     <div class="rail-nav">
       <!-- Overview / Home -->
       <div class="rail-btn" title="Overview">
@@ -437,11 +620,8 @@ td{
         <span>Billing</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
-      <div class="sb-group-hdr">
-        <span>Licenses</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
-      <div class="sb-item active">Usage</div>
+      <div class="sb-item" onclick="showView('products', this)">Products</div>
+      <div class="sb-item active" onclick="showView('usage', this)">Agents</div>
     </div>
   </div>
 
@@ -450,17 +630,24 @@ td{
 
     <!-- TOP NAV — DS node 2575:18658 -->
     <div class="top-nav">
-      <div class="top-nav-btn" title="Add">
-        <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+      <div class="top-nav-left">
+        <button class="usecase-btn active" onclick="setUsecase(this)">In limit</button>
+        <button class="usecase-btn" onclick="setUsecase(this)">Exhausted limit</button>
+        <button class="usecase-btn" onclick="setUsecase(this)">Potential overage</button>
       </div>
-      <div class="top-nav-btn" title="Help">
-        <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
-      </div>
-      <div class="top-nav-btn" title="Account">
-        <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
-      </div>
-      <div class="top-nav-btn" title="Menu">
-        <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+      <div class="top-nav-right">
+        <div class="top-nav-btn" title="Add">
+          <img src="https://www.figma.com/api/mcp/asset/2c66bc22-133a-4695-9295-ee6c2d3c62f0" alt="Add"/>
+        </div>
+        <div class="top-nav-btn" title="Help">
+          <img src="https://www.figma.com/api/mcp/asset/af65ad88-96ff-429a-a91e-a835fe5b118f" alt="Help"/>
+        </div>
+        <div class="top-nav-btn" title="Account">
+          <img src="https://www.figma.com/api/mcp/asset/32f9b9a3-d9c3-43e9-bbce-950c4c7638e9" alt="Avatar"/>
+        </div>
+        <div class="top-nav-btn" title="Menu">
+          <img src="https://www.figma.com/api/mcp/asset/c9c881e2-006c-43a3-89ce-5d7a5acff1e6" alt="Menu"/>
+        </div>
       </div>
     </div>
 
@@ -475,62 +662,138 @@ td{
         <span class="breadcrumb-sep">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
         </span>
-        <span class="breadcrumb-current">Usage</span>
+        <span class="breadcrumb-link">Billing and usage</span>
+        <span class="breadcrumb-sep">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </span>
+        <span class="breadcrumb-current" id="bc-current">Agents</span>
       </nav>
     </div>
 
     <!-- SCROLLABLE CONTENT -->
     <div class="content">
+      <div id="view-products" style="display:none">
+        <div class="page-header">
+          <h1 class="page-title">Products</h1>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th><span class="th-inner">Products<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></span></th>
+                <th><span class="th-inner">Purchased<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></span></th>
+                <th><span class="th-inner">Used<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></span></th>
+                <th><span class="th-inner">Resets on<span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="td-product-name">Contacts</div><div class="td-product-sub">Marketing automation</div></td>
+                <td>50,000</td>
+                <td>31,420</td>
+                <td class="resets-cell">May 1, 2026</td>
+              </tr>
+              <tr>
+                <td><div class="td-product-name">Texts</div><div class="td-product-sub">Mass texting</div></td>
+                <td>10,000</td>
+                <td>7,840</td>
+                <td class="resets-cell">May 1, 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="view-usage">
 
       <div class="page-header">
-        <h1 class="page-title">Usage</h1>
-        <div class="col-view-btn" title="Column view">
-          <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
-            <rect x="6.25" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
-            <rect x="12" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
-          </svg>
+        <h1 class="page-title">Agents</h1>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:12px;color:#8f8f8f">Apr 1–30, 2026</span>
+          <span style="font-size:12px;color:#8f8f8f">·</span>
+          <span style="font-size:12px;color:#8f8f8f">Resets on May 1, 2025</span>
+          <div class="col-view-btn" title="Column view">
+            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+              <rect x="6.25" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+              <rect x="12" y="0.5" width="3.5" height="13" rx="0.5" stroke="#555" stroke-width="1"/>
+            </svg>
+          </div>
         </div>
       </div>
 
+      <!-- CARDS ROW -->
+      <div class="cards-row">
+
+        <!-- Card 1: Current period usage -->
+        <div class="summary-card">
+          <div class="summary-card-label">Credits used</div>
+          <div class="card-big-number">
+            <span id="card1-primary" class="card-big-primary">141,196</span><span class="card-big-secondary">/225,000</span>
+          </div>
+          <div class="summary-bar-track">
+            <div id="card1-bar" class="summary-bar-fill" style="width:62.8%"></div>
+          </div>
+          <div id="card1-pct" class="card-bar-pct">62.8% used</div>
+        </div>
+
+        <!-- Card 2: Forecast -->
+        <div class="forecast-card">
+          <div class="forecast-card-label">Projected credit usage</div>
+          <div class="card-big-number">
+            <span id="card2-primary" class="card-big-primary">158,940</span><span class="card-big-secondary">/225,000</span>
+          </div>
+          <div class="summary-bar-track">
+            <div id="card2-bar" class="summary-bar-fill" style="width:70.6%"></div>
+          </div>
+          <div id="card2-pct" class="card-bar-pct">70.6% usage estimated</div>
+        </div>
+
+        <!-- Card 3: Active agents -->
+        <div class="forecast-card">
+          <div class="forecast-card-label">Active agents</div>
+          <div class="card-big-number">
+            <span class="card-big-primary">11</span><span class="card-big-secondary">/24</span>
+          </div>
+          <div class="summary-bar-track">
+            <div class="summary-bar-fill" style="width:45.8%"></div>
+          </div>
+          <div class="card-bar-pct">398 instances run</div>
+        </div>
+
+      </div><!-- /cards-row -->
+
       <div class="table-wrap">
         <table>
-          <colgroup>
-            <col class="col-product"/>
-            <col class="col-purchased"/>
-            <col class="col-used"/>
-            <col class="col-usage"/>
-            <col class="col-resets"/>
-          </colgroup>
+
           <thead>
             <tr>
               <th>
                 <span class="th-inner">
-                  Product outcomes
+                  Agent
                   <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
                 </span>
               </th>
               <th>
                 <span class="th-inner">
-                  Purchased
+                  Credits per outcome
                   <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
                 </span>
               </th>
               <th>
                 <span class="th-inner">
-                  Used
+                  Credits used
                   <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
                 </span>
               </th>
               <th class="sorted">
                 <span class="th-inner">
-                  Usage %
+                  Credits used
                   <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></span>
                 </span>
               </th>
               <th>
                 <span class="th-inner">
-                  Resets on
+                  Usage change
                   <span class="sort-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
                 </span>
               </th>
@@ -539,126 +802,90 @@ td{
           <tbody>
 
             <tr>
-              <td><div class="td-product-name">User actions</div><div class="td-product-sub">Listing</div></td>
-              <td>25,000</td>
-              <td>31,250</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill over" style="width:100%"></div></div>
-                  <span class="usage-pct over">112%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Review Generation Agent</div><div class="td-product-sub">Reviews</div></td>
+              <td>50</td>
+              <td>2 Reviews</td>
+              <td>100</td>
+              <td>+12.4%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Reviews collected</div><div class="td-product-sub">Reviews</div></td>
-              <td>25,000</td>
-              <td>22,111</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:88.4%"></div></div>
-                  <span class="usage-pct">88.4%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Review Response Agent</div><div class="td-product-sub">Reviews</div></td>
+              <td>75</td>
+              <td>8 Review Response</td>
+              <td>600</td>
+              <td>-2.8%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Survey responses</div><div class="td-product-sub">Surveys</div></td>
-              <td>25,000</td>
-              <td>19,876</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:79.4%"></div></div>
-                  <span class="usage-pct">79.4%</span>
-                </div>
-              </td>
-              <td class="resets-cell na">NA</td>
+              <td><div class="td-product-name">Social Publishing Agent</div><div class="td-product-sub">Social</div></td>
+              <td>50</td>
+              <td>8 Posts</td>
+              <td>400</td>
+              <td>+7.1%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Tickets resolved</div><div class="td-product-sub">Ticketing</div></td>
-              <td>25,000</td>
-              <td>12,345</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:66.6%"></div></div>
-                  <span class="usage-pct">66.6%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 5, 2026</td>
+              <td><div class="td-product-name">Social Engagement Agent</div><div class="td-product-sub">Social</div></td>
+              <td>75</td>
+              <td>20 Responses</td>
+              <td>1500</td>
+              <td>+18.3%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Reachable contacts added</div><div class="td-product-sub">Marketing automation</div></td>
-              <td>25,000</td>
-              <td>15,678</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:62.7%"></div></div>
-                  <span class="usage-pct">62.7%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Listings Optimization Agent</div><div class="td-product-sub">Listing</div></td>
+              <td>75</td>
+              <td>1 agent run</td>
+              <td>75</td>
+              <td>-5.2%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Prompts used</div><div class="td-product-sub">Marketing automation</div></td>
-              <td>25,000</td>
-              <td>10,234</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
-                  <span class="usage-pct">59.6%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Search Optimization Agent</div><div class="td-product-sub">Search AI</div></td>
+              <td>10</td>
+              <td>15 Prompts, 1 LLM, 1 Scan</td>
+              <td>150</td>
+              <td>+3.6%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Interactions used</div><div class="td-product-sub">Competitors</div></td>
-              <td>25,000</td>
-              <td>10,234</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
-                  <span class="usage-pct">59.6%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Segmentation Agent</div><div class="td-product-sub">Marketing automation</div></td>
+              <td>50</td>
+              <td>10 Segments</td>
+              <td>500</td>
+              <td>-9.4%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Interactions used</div><div class="td-product-sub">Insights</div></td>
-              <td>25,000</td>
-              <td>10,234</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
-                  <span class="usage-pct">59.6%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Template Agent</div><div class="td-product-sub">Marketing automation</div></td>
+              <td>350</td>
+              <td>3 Templates</td>
+              <td>1000</td>
+              <td>+21.7%</td>
             </tr>
 
             <tr>
-              <td><div class="td-product-name">Texts sent</div><div class="td-product-sub">Mass texting</div></td>
-              <td>25,000</td>
-              <td>10,234</td>
-              <td>
-                <div class="usage-bar-row">
-                  <div class="usage-bar-track"><div class="usage-bar-fill" style="width:59.6%"></div></div>
-                  <span class="usage-pct">59.6%</span>
-                </div>
-              </td>
-              <td class="resets-cell">Apr 11, 2026</td>
+              <td><div class="td-product-name">Reporting Agent</div><div class="td-product-sub">Reports</div></td>
+              <td>50</td>
+              <td>10 Insights</td>
+              <td>500</td>
+              <td>+1.9%</td>
+            </tr>
+
+            <tr>
+              <td><div class="td-product-name">Lead Generation Agent</div><div class="td-product-sub">Marketing automation</div></td>
+              <td>15</td>
+              <td>50 Messages</td>
+              <td>750</td>
+              <td>-6.3%</td>
             </tr>
 
           </tbody>
         </table>
       </div>
 
+      </div><!-- /view-usage -->
     </div><!-- /content -->
   </div><!-- /main -->
 
