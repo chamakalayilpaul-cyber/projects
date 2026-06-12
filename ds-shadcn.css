@@ -176,6 +176,8 @@
   background-color: var(--shadcn-primary) !important;
   color: #ffffff !important;
 }
+/* Tab inactive badge — zinc-100 pill with muted text */
 #root.shadcn .flex.items-end button .bg-surface-selected {
-  color: var(--shadcn-muted) !important;
+  background-color: #f4f4f5 !important;
+  color: #52525b !important;
 }
