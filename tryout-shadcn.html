@@ -65,72 +65,29 @@
 <script src="ds-toggle.js" data-root="root" data-default="aero"></script>
 
 <script>
-// Find the nearest clickable ancestor of a text node
-function nearestClickable(el, maxDepth) {
-  let node = el;
-  for (let i = 0; i < maxDepth; i++) {
-    node = node.parentElement;
-    if (!node || node.id === 'root') break;
-    const tag = node.tagName;
-    if (tag === 'A' || tag === 'BUTTON' || node.getAttribute('role') === 'button' || node.tabIndex >= 0) return node;
-  }
-  return null;
-}
-
-// Hide Agents from L1
+// Hide Agents from L1 — find by text, hide the nav row ancestor
 function hideAgents() {
   const spans = document.querySelectorAll('#root span, #root a');
   for (const el of spans) {
     if (el.childElementCount === 0 && el.textContent.trim() === 'Agents') {
-      const row = nearestClickable(el, 6);
-      if (row) { row.style.cssText += 'display:none!important'; return true; }
-    }
-  }
-  return false;
-}
-
-// Rename "Patients" → "Contacts" in L1 and wire click to contacts.html
-function patchContactsNav() {
-  const allText = document.querySelectorAll('#root span, #root div, #root a');
-  for (const el of allText) {
-    if (el.childElementCount === 0 && el.textContent.trim() === 'Patients') {
-      el.textContent = 'Contacts';
-      if (el.hasAttribute('title')) el.setAttribute('title', 'Contacts');
-      if (el.hasAttribute('aria-label')) el.setAttribute('aria-label', 'Contacts');
-      const btn = nearestClickable(el, 6);
-      if (btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault(); e.stopPropagation();
-          window.location.href = 'contacts.html';
-        }, true);
+      let row = el;
+      for (let i = 0; i < 6; i++) {
+        row = row.parentElement;
+        if (!row || row.id === 'root') break;
+        const tag = row.tagName;
+        if (tag === 'A' || tag === 'BUTTON' || row.getAttribute('role') === 'button' || row.tabIndex >= 0) {
+          row.style.cssText += 'display:none!important';
+          return true;
+        }
       }
-      return true;
-    }
-  }
-  // Fallback: patch by aria-label/title containing "Patients"
-  const allBtns = document.querySelectorAll('#root button, #root a');
-  for (const btn of allBtns) {
-    const lbl = (btn.getAttribute('aria-label') || btn.getAttribute('title') || '').trim();
-    if (lbl === 'Patients') {
-      btn.setAttribute('aria-label', 'Contacts');
-      btn.setAttribute('title', 'Contacts');
-      btn.addEventListener('click', function(e) {
-        e.preventDefault(); e.stopPropagation();
-        window.location.href = 'contacts.html';
-      }, true);
-      return true;
     }
   }
   return false;
 }
 
 let _attempts = 0;
-let _contactsPatched = false;
 const _poll = setInterval(() => {
-  const agentsDone = hideAgents();
-  if (!_contactsPatched) _contactsPatched = patchContactsNav();
-  if ((agentsDone || _attempts > 10) && (_contactsPatched || _attempts > 30)) clearInterval(_poll);
-  _attempts++;
+  if (hideAgents() || ++_attempts > 30) clearInterval(_poll);
 }, 200);
 </script>
 
