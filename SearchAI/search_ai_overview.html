@@ -1845,6 +1845,10 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .ap-input::placeholder{color:#bbb}
 .tag-action-btn{width:36px;height:36px;border:1px solid #eaeaea;border-radius:6px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:rgb(85,85,85)}
 .tag-action-btn:hover{background:rgb(242,244,247)}
+.tag-avail-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.tag-avail-item:last-child{border-bottom:none}
+.tag-prompt-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)}
+.tag-prompt-item:last-child{border-bottom:none}
 .col-cust-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0;cursor:default;user-select:none}
 .col-cust-row:last-child{border-bottom:none}
 .col-cust-row.dragging{opacity:0.4}
@@ -2402,7 +2406,7 @@ textarea.ap-input{
     <div class="page-hdr-right" id="hdr-tags-btns" style="display:none;gap:6px;padding-right:8px">
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
       <button class="btn-filled" onclick="openAddTagPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
-        <span class="material-symbols-rounded" style="font-size:16px">add</span>Add tag
+        Create tag
       </button>
     </div>
     <div class="page-hdr-right" id="hdr-ai-crawler-btns" style="display:none;gap:6px;padding-right:8px">
@@ -6101,47 +6105,52 @@ textarea.ap-input{
       <label class="ap-label">Tag name <span class="ap-req">*</span></label>
       <input class="ap-input" type="text" id="tag-name-input" placeholder="Enter tag name"/>
     </div>
-    <div class="ap-field" style="margin-top:4px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <label id="tag-prompts-header-label" style="flex:1;font-size:14px;font-weight:400;color:#212121">Tagged prompts</label>
-        <!-- Collapsed state: icon button -->
-        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
-          <span class="material-symbols-rounded" style="font-size:18px">search</span>
-        </button>
-        <!-- Expanded state: inline search bar replaces the button -->
-        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1">
-          <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);flex-shrink:0">search</span>
-          <input type="text" id="tag-prompt-search-input" style="flex:1;border:none;outline:none;font-size:13px;color:rgb(33,33,33);background:transparent;min-width:0" placeholder="Search prompts to add…" oninput="filterTagPromptSearch(this.value)" autocomplete="off"/>
-          <button onclick="toggleTagPromptSearch()" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;flex-shrink:0">
-            <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143)">close</span>
-          </button>
+
+    <!-- Tagged prompts section (populated when + is clicked) -->
+    <div id="tag-tagged-section" style="display:none;margin-top:16px">
+      <label style="font-size:14px;font-weight:500;color:#212121;display:block;margin-bottom:8px">Tagged prompts</label>
+      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0"></div>
+    </div>
+
+    <!-- Prompts list with + button -->
+    <div class="ap-field" style="margin-top:16px">
+      <label style="font-size:14px;font-weight:500;color:#212121;display:block;margin-bottom:8px">Prompts</label>
+      <div id="tag-all-prompts" style="display:flex;flex-direction:column;gap:0">
+        <div class="tag-avail-item" data-prompt="Best-rated Invisalign providers near me" data-type="Location prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Best-rated Invisalign providers near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
         </div>
-      </div>
-      <!-- Search suggestions (shown while typing) -->
-      <div id="tag-prompt-search-results" style="display:none;margin-bottom:8px">
-        <div class="tag-prompt-result" data-prompt="Best-rated Invisalign providers near me"></div>
-        <div class="tag-prompt-result" data-prompt="Invisalign cost with insurance"></div>
-        <div class="tag-prompt-result" data-prompt="Invisible braces for adults near me"></div>
-        <div class="tag-prompt-result" data-prompt="Best teeth whitening near me"></div>
-        <div class="tag-prompt-result" data-prompt="Dental implants cost near me"></div>
-        <div class="tag-prompt-result" data-prompt="Clear aligner therapy providers"></div>
-        <div class="tag-prompt-result" data-prompt="Best orthodontists for adults near me"></div>
-        <div class="tag-prompt-result" data-prompt="Orthodontic specialists with payment plans"></div>
-        <div class="tag-prompt-result" data-prompt="Fastest Invisalign results near me"></div>
-      </div>
-      <!-- Attached prompts list -->
-      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0">
-        <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
-          <div style="display:flex;flex-direction:column;min-width:0"><span>Best-rated Invisalign providers near me</span><span class="tag-prompt-type">Location prompt</span></div>
-          <button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+        <div class="tag-avail-item" data-prompt="Invisalign cost with insurance" data-type="Brand prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Invisalign cost with insurance</span><span class="tag-prompt-type">Brand prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
         </div>
-        <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:rgb(33,33,33)">
-          <div style="display:flex;flex-direction:column;min-width:0"><span>Invisalign cost with insurance</span><span class="tag-prompt-type">Brand prompt</span></div>
-          <button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+        <div class="tag-avail-item" data-prompt="Invisible braces for adults near me" data-type="Location prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Invisible braces for adults near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
         </div>
-        <div class="tag-prompt-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;font-size:14px;color:rgb(33,33,33)">
-          <div style="display:flex;flex-direction:column;min-width:0"><span>Invisible braces for adults near me</span><span class="tag-prompt-type">Location prompt</span></div>
-          <button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="removeTagPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>
+        <div class="tag-avail-item" data-prompt="Best teeth whitening near me" data-type="Location prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Best teeth whitening near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
+        </div>
+        <div class="tag-avail-item" data-prompt="Dental implants cost near me" data-type="Location prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Dental implants cost near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
+        </div>
+        <div class="tag-avail-item" data-prompt="Clear aligner therapy providers" data-type="Brand prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Clear aligner therapy providers</span><span class="tag-prompt-type">Brand prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
+        </div>
+        <div class="tag-avail-item" data-prompt="Best orthodontists for adults near me" data-type="Location prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Best orthodontists for adults near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
+        </div>
+        <div class="tag-avail-item" data-prompt="Orthodontic specialists with payment plans" data-type="Brand prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Orthodontic specialists with payment plans</span><span class="tag-prompt-type">Brand prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
+        </div>
+        <div class="tag-avail-item" data-prompt="Fastest Invisalign results near me" data-type="Location prompt">
+          <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Fastest Invisalign results near me</span><span class="tag-prompt-type">Location prompt</span></div>
+          <button class="tag-action-btn" onclick="tagAddPrompt(this)"><span class="material-symbols-rounded" style="font-size:16px">add</span></button>
         </div>
       </div>
     </div>
@@ -8251,23 +8260,49 @@ function executeDeleteTag() {
 
 function openAddTagPanel() {
   _tagEditRow = null;
-  document.querySelector('#tag-panel .ap-header-title').textContent = 'Add tag';
-  document.getElementById('tag-save-btn').textContent = 'Add';
+  document.querySelector('#tag-panel .ap-header-title').textContent = 'Create tag';
+  document.getElementById('tag-save-btn').textContent = 'Create';
   document.getElementById('tag-name-input').value = '';
-  // New tag has no attached prompts — clear the list
+  // Reset tagged section
   document.getElementById('tag-prompt-list').innerHTML = '';
-  // Reset search state
-  const expanded = document.getElementById('tag-search-expanded');
-  const btn = document.getElementById('tag-prompt-search-btn');
-  const results = document.getElementById('tag-prompt-search-results');
-  const headerLabel = document.getElementById('tag-prompts-header-label');
-  if (expanded) expanded.style.display = 'none';
-  if (btn) btn.style.display = '';
-  if (results) results.style.display = 'none';
-  if (headerLabel) headerLabel.textContent = 'Tagged prompts';
+  document.getElementById('tag-tagged-section').style.display = 'none';
+  // Restore all available prompt rows
+  document.querySelectorAll('.tag-avail-item').forEach(el => el.style.display = '');
   document.getElementById('tag-overlay').classList.add('open');
   document.getElementById('tag-panel').classList.add('open');
   document.getElementById('tag-name-input').focus();
+}
+
+function tagAddPrompt(btn) {
+  const item = btn.closest('.tag-avail-item');
+  const prompt = item.dataset.prompt;
+  const type = item.dataset.type;
+  // Hide from Prompts list
+  item.style.display = 'none';
+  // Show Tagged prompts section
+  const section = document.getElementById('tag-tagged-section');
+  section.style.display = '';
+  // Add to tagged list
+  const list = document.getElementById('tag-prompt-list');
+  const div = document.createElement('div');
+  div.className = 'tag-prompt-item';
+  div.dataset.prompt = prompt;
+  div.innerHTML = `<div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">${prompt}</span><span class="tag-prompt-type">${type}</span></div><button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="tagRemoveTagged(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
+  list.appendChild(div);
+}
+
+function tagRemoveTagged(btn) {
+  const item = btn.closest('.tag-prompt-item');
+  const prompt = item.dataset.prompt;
+  // Remove from tagged list
+  item.remove();
+  // Hide section if empty
+  if (!document.getElementById('tag-prompt-list').children.length) {
+    document.getElementById('tag-tagged-section').style.display = 'none';
+  }
+  // Restore in Prompts list
+  const avail = document.querySelector(`.tag-avail-item[data-prompt="${prompt}"]`);
+  if (avail) avail.style.display = '';
 }
 
 function openTagEditPanel(btn) {
