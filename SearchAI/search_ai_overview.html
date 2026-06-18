@@ -4560,25 +4560,19 @@ textarea.ap-input{
           <div style="font-size:13px;color:rgb(143,143,143)">How AI models compare your brand against competitors across positive and negative sentiment signals</div>
         </div>
         <div style="overflow-x:auto">
-          <table class="pt-table" id="comp-snt-table" style="min-width:860px;table-layout:fixed">
+          <table class="pt-table" id="comp-snt-table" style="table-layout:fixed">
             <colgroup>
-              <col style="width:220px">
-              <col style="width:110px">
-              <col style="width:110px">
-              <col style="min-width:280px">
-              <col style="width:150px">
+              <col style="width:280px">
+              <col style="width:160px">
             </colgroup>
             <thead>
               <tr>
                 <th style="padding-left:20px"><span class="pt-th-inner">Competitor</span></th>
                 <th><span class="pt-th-inner">Positive Sentiment</span></th>
-                <th><span class="pt-th-inner">Negative Sentiment</span></th>
-                <th><span class="pt-th-inner">Top Negative Claim</span></th>
-                <th style="text-align:right;padding-right:24px"><span class="pt-th-inner" style="justify-content:flex-end">Claim Occurrence</span></th>
               </tr>
             </thead>
             <tbody>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('podium')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=podium.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4586,17 +4580,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">71%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">29%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Limited Feature Depth</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Podium lacks advanced analytics and multi-location management compared to alternatives..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">1.2%</span>
-                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.2%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('reputation')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=reputation.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4604,17 +4589,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">68%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">32%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Steep Pricing</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Enterprise pricing is not accessible for small businesses; cited as cost-prohibitive..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">1.0%</span>
-                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.1%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('yext')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=yext.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4622,17 +4598,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">74%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">26%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Complex Onboarding</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Onboarding requires significant IT involvement; setup timelines are often cited as lengthy..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">0.9%</span>
-                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.3%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('vendasta')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=vendasta.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4640,17 +4607,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">65%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">35%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Reseller Complexity</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"White-label reseller model adds layers of complexity that frustrate end-users..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">0.8%</span>
-                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.1%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('gradeus')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=grade.us&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4658,17 +4616,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">59%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">41%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Narrow Feature Set</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Focused primarily on review generation; lacks the breadth of a full reputation platform..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">0.6%</span>
-                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('soci')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=soci.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4676,17 +4625,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">63%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">37%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Support Quality</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Customer support response times are inconsistent; resolution often requires escalation..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">0.5%</span>
-                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.2%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('reviewtrackers')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=reviewtrackers.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4694,17 +4634,8 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">66%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">34%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Integration Gaps</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Limited native integrations; connecting to CRM and marketing tools requires third-party workarounds..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">0.5%</span>
-                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.1%</span>
-                </td>
               </tr>
-              <tr class="pt-data-row">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('medallia')" style="cursor:pointer">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=medallia.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
@@ -4712,15 +4643,6 @@ textarea.ap-input{
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">77%</td>
-                <td style="font-size:13px;color:#c62828;font-weight:500">23%</td>
-                <td style="padding-right:16px">
-                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Enterprise-Only Pricing</div>
-                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Medallia is positioned for large enterprises; mid-market buyers find it out of reach financially..."</div>
-                </td>
-                <td style="text-align:right;padding-right:24px;white-space:nowrap">
-                  <span style="font-size:13px;color:rgb(33,33,33)">0.4%</span>
-                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -10655,6 +10577,50 @@ function closeCitationPanel() {
   document.getElementById('cit-overlay').classList.remove('open');
 }
 
+const COMP_DATA = {
+  podium:         { name:'Podium',         domain:'podium.com',         pos:71, neg:29, posTopics:['Ease of use','Review generation','SMS outreach','Mobile-friendly','Quick setup'], negTopics:['Limited analytics','No multi-location mgmt','Weak integrations','Slow support'] },
+  reputation:     { name:'Reputation.com', domain:'reputation.com',     pos:68, neg:32, posTopics:['Enterprise features','Comprehensive dashboard','Strong reporting','Data depth'], negTopics:['Steep pricing','Complex UI','Long onboarding','SMB unfriendly'] },
+  yext:           { name:'Yext',           domain:'yext.com',           pos:74, neg:26, posTopics:['Listings accuracy','Brand consistency','Wide platform reach','Directory sync'], negTopics:['Complex onboarding','IT-heavy setup','Lengthy timelines','Rigid templates'] },
+  vendasta:       { name:'Vendasta',       domain:'vendasta.com',       pos:65, neg:35, posTopics:['White-label options','Reseller flexibility','Partner ecosystem','Billing tools'], negTopics:['Reseller complexity','End-user confusion','Slow UI','Limited customisation'] },
+  gradeus:        { name:'Grade.us',       domain:'grade.us',           pos:59, neg:41, posTopics:['Simple review funnels','Affordable pricing','Easy setup','Email campaigns'], negTopics:['Narrow feature set','No reputation analytics','Limited integrations','Basic reporting'] },
+  soci:           { name:'SOCi',           domain:'soci.com',           pos:63, neg:37, posTopics:['Social publishing','Multi-location scale','Content calendar','Brand compliance'], negTopics:['Inconsistent support','Slow resolution','Clunky editor','Steep learning curve'] },
+  reviewtrackers: { name:'ReviewTrackers', domain:'reviewtrackers.com', pos:66, neg:34, posTopics:['Review monitoring','Sentiment analysis','Competitor benchmarking','Alert system'], negTopics:['Integration gaps','CRM workarounds','Limited native connectors','Slow updates'] },
+  medallia:       { name:'Medallia',       domain:'medallia.com',       pos:77, neg:23, posTopics:['Deep CX insights','Enterprise NPS','Real-time feedback','Journey mapping'], negTopics:['Enterprise-only pricing','Out of reach for SMBs','Complex rollout','High TCO'] },
+};
+
+function openCompetitorPanel(key) {
+  const d = COMP_DATA[key];
+  if (!d) return;
+  const posList = d.posTopics.map(t => `<div class="cit-claim-chip pos"><span class="cit-claim-icon">+</span><span>${t}</span></div>`).join('');
+  const negList = d.negTopics.map(t => `<div class="cit-claim-chip neg"><span class="cit-claim-icon">−</span><span>${t}</span></div>`).join('');
+  document.getElementById('comp-panel-body').innerHTML = `
+    <div class="cit-site-block">
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="https://www.google.com/s2/favicons?domain=${d.domain}&sz=24" width="24" height="24" style="border-radius:4px" onerror="this.style.display='none'"/>
+        <div class="cit-site-name">${d.name}</div>
+      </div>
+    </div>
+    <div class="cit-claims-row">
+      <div class="cit-claim-card">
+        <div class="cit-claim-count pos">${d.posTopics.length}</div>
+        <div class="cit-claim-label">Positive topics</div>
+      </div>
+      <div class="cit-claim-card">
+        <div class="cit-claim-count neg">${d.negTopics.length}</div>
+        <div class="cit-claim-label">Negative topics</div>
+      </div>
+    </div>
+    <div class="cit-claim-list">${posList}${negList}</div>
+  `;
+  document.getElementById('cit-overlay').classList.add('open');
+  document.getElementById('comp-panel').classList.add('open');
+}
+
+function closeCompetitorPanel() {
+  document.getElementById('comp-panel').classList.remove('open');
+  document.getElementById('cit-overlay').classList.remove('open');
+}
+
 function toggleCitTopicDrop(btn) {
   const drop = document.getElementById('cit-topic-drop');
   drop.classList.toggle('open');
@@ -10791,6 +10757,17 @@ document.addEventListener('click', function(e) {
 </div>
 <!-- Citation Analysis side panel -->
 <div class="cit-overlay" id="cit-overlay" onclick="closeCitationPanel()"></div>
+<div class="cit-panel" id="comp-panel">
+  <div class="cit-header">
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="icon-btn" onclick="closeCompetitorPanel()"><span class="material-symbols-rounded">arrow_back</span></button>
+      <span class="cit-header-title">Competitor Analysis</span>
+    </div>
+    <button class="icon-btn" onclick="closeCompetitorPanel()"><span class="material-symbols-rounded">close</span></button>
+  </div>
+  <div class="cit-body" id="comp-panel-body" style="flex:1;overflow-y:auto;display:flex;flex-direction:column"></div>
+</div>
+
 <div class="cit-panel" id="cit-panel">
   <div class="cit-header">
     <div style="display:flex;align-items:center;gap:8px">
