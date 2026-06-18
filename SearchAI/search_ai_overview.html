@@ -6107,21 +6107,21 @@ textarea.ap-input{
     </div>
 
     <!-- Tagged prompts section (populated when + is clicked) -->
-    <div id="tag-tagged-section" style="display:none;margin-top:16px">
+    <div id="tag-tagged-section" style="margin-top:24px">
       <div onclick="toggleTaggedAccordion()" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eaeaea;cursor:pointer;user-select:none">
         <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:14px;font-weight:600;color:#212121">Tagged prompts</span>
+          <span style="font-size:14px;font-weight:400;color:#212121">Tagged prompts</span>
           <span id="tag-tagged-count" style="background:#1976d2;color:#fff;font-size:11px;font-weight:600;border-radius:10px;padding:1px 7px">0</span>
         </div>
-        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:20px;color:rgb(85,85,85);transition:transform 0.2s">expand_more</span>
+        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:20px;color:rgb(85,85,85);transition:transform 0.2s;transform:rotate(-90deg)">expand_more</span>
       </div>
-      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0"></div>
+      <div id="tag-prompt-list" style="display:none;flex-direction:column;gap:0"></div>
     </div>
 
     <!-- Prompts list with + button -->
-    <div class="ap-field" style="margin-top:16px">
+    <div class="ap-field" style="margin-top:24px">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eaeaea;margin-bottom:0">
-        <label style="font-size:14px;font-weight:600;color:#212121;cursor:default">Prompts</label>
+        <label style="font-size:14px;font-weight:400;color:#212121;cursor:default">Prompts</label>
         <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts" style="border:none;background:none">
           <span class="material-symbols-rounded" style="font-size:18px">search</span>
         </button>
@@ -8281,9 +8281,11 @@ function openAddTagPanel() {
   document.querySelector('#tag-panel .ap-header-title').textContent = 'Create tag';
   document.getElementById('tag-save-btn').textContent = 'Create';
   document.getElementById('tag-name-input').value = '';
-  // Reset tagged section
+  // Reset tagged section — visible but closed
   document.getElementById('tag-prompt-list').innerHTML = '';
-  document.getElementById('tag-tagged-section').style.display = 'none';
+  document.getElementById('tag-prompt-list').style.display = 'none';
+  document.getElementById('tag-tagged-chev').style.transform = 'rotate(-90deg)';
+  document.getElementById('tag-tagged-section').style.display = '';
   // Restore all available prompt rows and reset search
   document.querySelectorAll('.tag-avail-item').forEach(el => el.style.display = '');
   const exp = document.getElementById('tag-search-expanded');
@@ -8315,9 +8317,7 @@ function tagAddPrompt(btn) {
   const prompt = item.dataset.prompt;
   const type = item.dataset.type;
   item.style.display = 'none';
-  const section = document.getElementById('tag-tagged-section');
-  section.style.display = '';
-  // Ensure accordion is open when adding
+  // Ensure accordion is open when a prompt is added
   document.getElementById('tag-prompt-list').style.display = 'flex';
   document.getElementById('tag-tagged-chev').style.transform = '';
   const list = document.getElementById('tag-prompt-list');
@@ -8333,9 +8333,6 @@ function tagRemoveTagged(btn) {
   const item = btn.closest('.tag-prompt-item');
   const prompt = item.dataset.prompt;
   item.remove();
-  if (!document.getElementById('tag-prompt-list').children.length) {
-    document.getElementById('tag-tagged-section').style.display = 'none';
-  }
   _updateTaggedCount();
   const avail = document.querySelector(`.tag-avail-item[data-prompt="${prompt}"]`);
   if (avail) avail.style.display = '';
@@ -8347,6 +8344,10 @@ function openTagEditPanel(btn) {
   document.querySelector('#tag-panel .ap-header-title').textContent = 'Edit tag';
   document.getElementById('tag-save-btn').textContent = 'Save';
   document.getElementById('tag-name-input').value = name;
+  // Tagged prompts: visible and open
+  document.getElementById('tag-tagged-section').style.display = '';
+  document.getElementById('tag-prompt-list').style.display = 'flex';
+  document.getElementById('tag-tagged-chev').style.transform = '';
   document.getElementById('tag-overlay').classList.add('open');
   document.getElementById('tag-panel').classList.add('open');
   document.getElementById('tag-name-input').focus();
