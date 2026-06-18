@@ -6107,25 +6107,25 @@ textarea.ap-input{
     </div>
 
     <!-- Tagged prompts section (populated when + is clicked) -->
-    <div id="tag-tagged-section" style="display:none;margin-top:16px;border:1px solid #eaeaea;border-radius:8px;overflow:hidden">
-      <div onclick="toggleTaggedAccordion()" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;user-select:none;background:#fafafa">
+    <div id="tag-tagged-section" style="display:none;margin-top:16px">
+      <div onclick="toggleTaggedAccordion()" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eaeaea;cursor:pointer;user-select:none">
         <div style="display:flex;align-items:center;gap:8px">
-          <span style="font-size:14px;font-weight:500;color:#212121">Tagged prompts</span>
+          <span style="font-size:14px;font-weight:600;color:#212121">Tagged prompts</span>
           <span id="tag-tagged-count" style="background:#1976d2;color:#fff;font-size:11px;font-weight:600;border-radius:10px;padding:1px 7px">0</span>
         </div>
-        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:18px;color:rgb(143,143,143);transition:transform 0.2s">expand_more</span>
+        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:20px;color:rgb(85,85,85);transition:transform 0.2s">expand_more</span>
       </div>
-      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0;padding:0 14px"></div>
+      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0"></div>
     </div>
 
     <!-- Prompts list with + button -->
     <div class="ap-field" style="margin-top:16px">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-        <label style="flex:1;font-size:14px;font-weight:500;color:#212121">Prompts</label>
-        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eaeaea;margin-bottom:0">
+        <label style="font-size:14px;font-weight:600;color:#212121;cursor:default">Prompts</label>
+        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts" style="border:none;background:none">
           <span class="material-symbols-rounded" style="font-size:18px">search</span>
         </button>
-        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1">
+        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1;position:absolute;right:20px;left:20px;background:#fff;z-index:10">
           <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);flex-shrink:0">search</span>
           <input type="text" id="tag-prompt-search-input" style="flex:1;border:none;outline:none;font-size:13px;color:rgb(33,33,33);background:transparent;min-width:0" placeholder="Search prompts…" oninput="filterTagAvailSearch(this.value)" autocomplete="off"/>
           <button onclick="toggleTagPromptSearch()" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;flex-shrink:0">
