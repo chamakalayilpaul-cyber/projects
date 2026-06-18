@@ -2405,7 +2405,7 @@ textarea.ap-input{
         <div class="page-hdr-right" id="hdr-settings-reports-btns" style="display:none;gap:6px;padding-right:8px"><button class="btn-filled" style="padding:0 20px;font-size:13px;height:36px;border-radius:6px" onclick="saveReportSettings()">Save</button></div>
     <div class="page-hdr-right" id="hdr-tags-btns" style="display:none;gap:6px;padding-right:8px">
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
-      <button class="btn-filled" onclick="openAddTagPanel()" style="gap:4px;padding:0 12px 0 8px;font-size:13px;white-space:nowrap;height:36px">
+      <button class="btn-filled" onclick="openAddTagPanel()" style="padding:0 12px;font-size:13px;white-space:nowrap;height:36px">
         Create tag
       </button>
     </div>
@@ -6114,7 +6114,19 @@ textarea.ap-input{
 
     <!-- Prompts list with + button -->
     <div class="ap-field" style="margin-top:16px">
-      <label style="font-size:14px;font-weight:500;color:#212121;display:block;margin-bottom:8px">Prompts</label>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <label style="flex:1;font-size:14px;font-weight:500;color:#212121">Prompts</label>
+        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
+          <span class="material-symbols-rounded" style="font-size:18px">search</span>
+        </button>
+        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1">
+          <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);flex-shrink:0">search</span>
+          <input type="text" id="tag-prompt-search-input" style="flex:1;border:none;outline:none;font-size:13px;color:rgb(33,33,33);background:transparent;min-width:0" placeholder="Search prompts…" oninput="filterTagAvailSearch(this.value)" autocomplete="off"/>
+          <button onclick="toggleTagPromptSearch()" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;flex-shrink:0">
+            <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143)">close</span>
+          </button>
+        </div>
+      </div>
       <div id="tag-all-prompts" style="display:flex;flex-direction:column;gap:0">
         <div class="tag-avail-item" data-prompt="Best-rated Invisalign providers near me" data-type="Location prompt">
           <div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">Best-rated Invisalign providers near me</span><span class="tag-prompt-type">Location prompt</span></div>
@@ -8266,8 +8278,14 @@ function openAddTagPanel() {
   // Reset tagged section
   document.getElementById('tag-prompt-list').innerHTML = '';
   document.getElementById('tag-tagged-section').style.display = 'none';
-  // Restore all available prompt rows
+  // Restore all available prompt rows and reset search
   document.querySelectorAll('.tag-avail-item').forEach(el => el.style.display = '');
+  const exp = document.getElementById('tag-search-expanded');
+  const srchBtn = document.getElementById('tag-prompt-search-btn');
+  const srchInp = document.getElementById('tag-prompt-search-input');
+  if (exp) { exp.style.display = 'none'; }
+  if (srchBtn) { srchBtn.style.display = ''; }
+  if (srchInp) { srchInp.value = ''; }
   document.getElementById('tag-overlay').classList.add('open');
   document.getElementById('tag-panel').classList.add('open');
   document.getElementById('tag-name-input').focus();
@@ -8348,22 +8366,26 @@ function toggleTagPromptSearch() {
   const btn = document.getElementById('tag-prompt-search-btn');
   const expanded = document.getElementById('tag-search-expanded');
   const inp = document.getElementById('tag-prompt-search-input');
-  const results = document.getElementById('tag-prompt-search-results');
-  const headerLabel = document.getElementById('tag-prompts-header-label');
   const isOpen = expanded.style.display === 'flex';
   if (isOpen) {
     expanded.style.display = 'none';
     btn.style.display = '';
-    results.style.display = 'none';
     inp.value = '';
-    if (headerLabel) headerLabel.textContent = 'Tagged prompts';
+    filterTagAvailSearch('');
   } else {
     btn.style.display = 'none';
     expanded.style.display = 'flex';
-    if (headerLabel) headerLabel.textContent = 'Search prompts';
-    _renderTagSearchResults('');
     setTimeout(() => inp.focus(), 50);
   }
+}
+
+function filterTagAvailSearch(q) {
+  const lower = q.trim().toLowerCase();
+  document.querySelectorAll('.tag-avail-item').forEach(el => {
+    const alreadyTagged = el.style.display === 'none' && document.querySelector(`#tag-prompt-list .tag-prompt-item[data-prompt="${el.dataset.prompt}"]`);
+    if (alreadyTagged) return;
+    el.style.display = (!lower || el.dataset.prompt.toLowerCase().includes(lower)) ? '' : 'none';
+  });
 }
 
 const _tagPromptPool = [
