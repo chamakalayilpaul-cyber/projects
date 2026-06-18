@@ -6107,9 +6107,15 @@ textarea.ap-input{
     </div>
 
     <!-- Tagged prompts section (populated when + is clicked) -->
-    <div id="tag-tagged-section" style="display:none;margin-top:16px">
-      <label style="font-size:14px;font-weight:500;color:#212121;display:block;margin-bottom:8px">Tagged prompts</label>
-      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0"></div>
+    <div id="tag-tagged-section" style="display:none;margin-top:16px;border:1px solid #eaeaea;border-radius:8px;overflow:hidden">
+      <div onclick="toggleTaggedAccordion()" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;user-select:none;background:#fafafa">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:14px;font-weight:500;color:#212121">Tagged prompts</span>
+          <span id="tag-tagged-count" style="background:#1976d2;color:#fff;font-size:11px;font-weight:600;border-radius:10px;padding:1px 7px">0</span>
+        </div>
+        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:18px;color:rgb(143,143,143);transition:transform 0.2s">expand_more</span>
+      </div>
+      <div id="tag-prompt-list" style="display:flex;flex-direction:column;gap:0;padding:0 14px"></div>
     </div>
 
     <!-- Prompts list with + button -->
@@ -8291,34 +8297,46 @@ function openAddTagPanel() {
   document.getElementById('tag-name-input').focus();
 }
 
+function _updateTaggedCount() {
+  const count = document.getElementById('tag-prompt-list').children.length;
+  document.getElementById('tag-tagged-count').textContent = count;
+}
+
+function toggleTaggedAccordion() {
+  const list = document.getElementById('tag-prompt-list');
+  const chev = document.getElementById('tag-tagged-chev');
+  const open = list.style.display !== 'none';
+  list.style.display = open ? 'none' : 'flex';
+  chev.style.transform = open ? 'rotate(-90deg)' : '';
+}
+
 function tagAddPrompt(btn) {
   const item = btn.closest('.tag-avail-item');
   const prompt = item.dataset.prompt;
   const type = item.dataset.type;
-  // Hide from Prompts list
   item.style.display = 'none';
-  // Show Tagged prompts section
   const section = document.getElementById('tag-tagged-section');
   section.style.display = '';
-  // Add to tagged list
+  // Ensure accordion is open when adding
+  document.getElementById('tag-prompt-list').style.display = 'flex';
+  document.getElementById('tag-tagged-chev').style.transform = '';
   const list = document.getElementById('tag-prompt-list');
   const div = document.createElement('div');
   div.className = 'tag-prompt-item';
   div.dataset.prompt = prompt;
   div.innerHTML = `<div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:14px;color:rgb(33,33,33)">${prompt}</span><span class="tag-prompt-type">${type}</span></div><button class="tag-action-btn" style="color:#e53935;flex-shrink:0" onclick="tagRemoveTagged(this)"><span class="material-symbols-rounded" style="font-size:16px">delete</span></button>`;
   list.appendChild(div);
+  _updateTaggedCount();
 }
 
 function tagRemoveTagged(btn) {
   const item = btn.closest('.tag-prompt-item');
   const prompt = item.dataset.prompt;
-  // Remove from tagged list
   item.remove();
-  // Hide section if empty
   if (!document.getElementById('tag-prompt-list').children.length) {
     document.getElementById('tag-tagged-section').style.display = 'none';
   }
-  // Restore in Prompts list
+  _updateTaggedCount();
   const avail = document.querySelector(`.tag-avail-item[data-prompt="${prompt}"]`);
   if (avail) avail.style.display = '';
 }
