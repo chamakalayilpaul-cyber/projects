@@ -887,9 +887,13 @@ body{
 .snt-metrics-row{display:flex;align-items:flex-start;gap:0}
 .snt-metric-item{flex:1;padding:0 16px 0 0;margin-right:16px;display:flex;flex-direction:column;justify-content:space-between;min-height:64px}
 .snt-metric-item:last-child{margin-right:0;padding-right:0}
-.snt-metric-val{font-size:36px;font-weight:400;color:rgb(33,33,33);line-height:1;margin-bottom:6px;height:40px;display:flex;align-items:flex-end}
+/* ── Summary numbers big component ── */
+.snt-metric-val{font-size:32px;font-weight:300;color:rgb(33,33,33);line-height:1;margin-bottom:6px;height:40px;display:flex;align-items:flex-end}
+.snt-metric-val .pct{font-size:24px;font-weight:300}
 .snt-metric-label{font-size:14px;font-weight:400;color:rgb(85,85,85);display:flex;align-items:flex-start;gap:6px}
 .snt-metric-label svg{flex-shrink:0;margin-top:2px}
+/* ── You chip component ── */
+.you-chip{display:inline-flex;align-items:center;background:#0f7195;color:#fff;font-size:12px;font-weight:500;border-radius:20px;padding:3px 10px;line-height:1.5;white-space:nowrap;width:fit-content}
 .snt-msdrop{position:fixed;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.13);z-index:9999;min-width:240px;display:none}
 .snt-msdrop-search{padding:10px 12px;border-bottom:1px solid #f0f0f0}
 .snt-msdrop-search input{width:100%;border:1px solid #e0e0e0;border-radius:6px;padding:7px 10px;font-size:13px;outline:none;font-family:inherit;box-sizing:border-box}
@@ -906,7 +910,9 @@ body{
 .snt-ci-sb{background:#bbdefb;color:#0d47a1}.snt-ci-hd{background:#c8e6c9;color:#1b5e20}.snt-ci-pd{background:#c5cae9;color:#1a237e}
 .snt-ci-ge{background:#ffe0b2;color:#bf360c}.snt-ci-dc{background:#ffcdd2;color:#b71c1c}.snt-ci-1d{background:#e1bee7;color:#4a148c}
 .snt-ci-wd{background:#dce0f5;color:#283593}.snt-ci-cd{background:#cfd8dc;color:#263238}.snt-ci-bn{background:#b2ebf2;color:#006064}
-.snt-metric-item.snt-ai .snt-metric-val{font-size:24px}
+/* ── Summary numbers small component ── */
+.snt-metric-item.snt-ai .snt-metric-val{font-size:24px;font-weight:300}
+.snt-metric-item.snt-ai .snt-metric-val .pct{font-size:16px;font-weight:300}
 .snt-overall-card{flex:3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px;display:flex;align-items:center;gap:24px;min-height:120px}
 .snt-overall-left{display:flex;flex-direction:column;gap:2px;flex-shrink:0;min-width:160px}
 .snt-big-score{font-size:40px;font-weight:400;color:#1976d2;line-height:1;display:flex;align-items:flex-end;gap:6px}
@@ -1067,6 +1073,8 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .snt-neg{font-size:14px;font-weight:400;color:#c62828}
 #snt-prompt-table tbody tr{background:#fff}
 #snt-prompt-table tbody tr:hover td{background:rgb(242,244,247)}
+#nsd-table tbody tr td{background:#fff}
+#nsd-table tbody tr:hover td{background:rgb(242,244,247)}
 #snt-prompt-table .pt-data-row:hover .pt-v2-prompt{color:#1976d2}
 /* Search empty state */
 .pt-search-empty{
@@ -1379,6 +1387,83 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 }
 .pt-table tbody tr:last-child td{border-bottom:none}
 .pt-table tbody tr:hover td{background:rgb(242,244,247)}
+#nsd-table tbody tr:hover td[style*="position:sticky"]{background:rgb(242,244,247)!important}
+#nsd-table tbody tr:hover .nsd-webpage-label{color:#1976d2;cursor:pointer;text-decoration:underline}
+/* ── Citation Analysis side panel ── */
+/* ── Content pane toolbar ── */
+.cit-content-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px 12px;border-bottom:1px solid #f0f0f0;flex-shrink:0}
+.cit-ai-label{font-size:14px;font-weight:500;color:rgb(33,33,33);display:flex;align-items:center;gap:6px}
+.cit-topic-filter{position:relative}
+.cit-topic-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:rgb(85,85,85);border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;cursor:pointer;background:#fff;font-family:inherit;white-space:nowrap}
+.cit-topic-btn:hover{background:rgb(242,244,247)}
+.cit-topic-btn .material-symbols-rounded{font-size:16px;color:rgb(143,143,143)}
+.cit-topic-badge{background:#1976d2;color:#fff;border-radius:10px;font-size:11px;font-weight:600;padding:1px 6px;margin-left:2px}
+.cit-topic-drop{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:700;min-width:220px;padding:6px 0;max-height:260px;overflow-y:auto}
+.cit-topic-drop.open{display:block}
+.cit-topic-opt{display:flex;align-items:flex-start;gap:8px;padding:7px 14px;font-size:13px;color:rgb(33,33,33);cursor:pointer;user-select:none}
+.cit-topic-opt input[type=checkbox]{margin-top:2px}
+.cit-topic-opt:hover{background:rgb(242,244,247)}
+.cit-topic-opt input[type=checkbox]{width:15px;height:15px;accent-color:#1976d2;flex-shrink:0;cursor:pointer}
+.cit-topic-opt.all-opt{border-bottom:1px solid #f0f0f0;margin-bottom:4px;font-weight:500}
+.cit-topic-divider{font-size:11px;font-weight:600;color:rgb(143,143,143);padding:6px 14px 2px;text-transform:uppercase;letter-spacing:.5px}
+/* ── Topics cell ── */
+.topics-cell{position:relative;padding:0 12px}
+.topics-trigger{display:inline-flex;align-items:center;gap:3px;font-size:13px;font-weight:500;cursor:pointer;border-radius:4px;padding:4px 6px;user-select:none}
+.topics-trigger:hover{background:rgb(242,244,247)}
+.topics-chev{font-size:16px;color:rgb(143,143,143);opacity:0;transition:opacity 0.1s}
+.topics-trigger:hover .topics-chev,.topics-trigger.active .topics-chev{opacity:1}
+#nsd-table tbody tr:hover .topics-chev{opacity:1}
+.pos-topics{color:#2e7d32}
+.neg-topics{color:#c62828}
+.topics-popover{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:600;min-width:180px;padding:6px 0}
+.topics-popover.open{display:block}
+.topics-popover-item{font-size:13px;color:rgb(33,33,33);padding:7px 14px;white-space:nowrap}
+.topics-popover-item:hover{background:rgb(242,244,247)}
+.cit-overlay{display:none;position:fixed;inset:0;background:rgba(33,33,33,0.3);z-index:499}
+.cit-overlay.open{display:block}
+.cit-panel{
+  position:fixed;top:0;right:0;height:100vh;width:520px;max-width:100vw;
+  background:#fff;z-index:500;display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform 0.25s ease;
+  box-shadow:-4px 0 24px rgba(0,0,0,0.1);
+}
+.cit-panel.open{transform:translateX(0)}
+.cit-header{
+  height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px;border-bottom:1px solid #eaeaea;flex-shrink:0;
+}
+.cit-header-title{font-size:15px;font-weight:500;color:rgb(33,33,33)}
+.cit-body{flex:1;overflow-y:hidden;display:flex;flex-direction:column}
+.cit-site-block{padding:20px 20px 0;flex-shrink:0}
+.cit-site-name{font-size:18px;font-weight:500;color:rgb(33,33,33);margin-bottom:4px}
+.cit-site-url{font-size:13px;color:#1976d2;text-decoration:none;display:flex;align-items:center;gap:4px;margin-bottom:16px}
+.cit-site-url:hover{text-decoration:underline}
+/* Tabs */
+.cit-tabs{display:flex;border-bottom:1px solid #eaeaea;padding:0 20px;flex-shrink:0}
+.cit-tab{font-size:13px;font-weight:500;color:rgb(143,143,143);padding:10px 0;margin-right:24px;border-bottom:2px solid transparent;cursor:pointer;transition:color 0.15s,border-color 0.15s}
+.cit-tab:hover{color:rgb(33,33,33)}
+.cit-tab.active{color:#1976d2;border-bottom-color:#1976d2}
+.cit-tab-pane{display:none;flex:1;overflow-y:auto;padding:20px}
+.cit-tab-pane.active{display:block}
+/* Claims */
+.cit-section-title{font-size:13px;font-weight:500;color:rgb(85,85,85);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:12px}
+.cit-claims-row{display:flex;gap:12px;margin-bottom:20px}
+.cit-claim-card{flex:1;border:1px solid #eaeaea;border-radius:8px;padding:14px 16px}
+.cit-claim-count.pos{font-size:28px;font-weight:400;color:#2e7d32;line-height:1;margin-bottom:4px}
+.cit-claim-count.neg{font-size:28px;font-weight:400;color:#c62828;line-height:1;margin-bottom:4px}
+.cit-claim-label{font-size:13px;color:rgb(85,85,85)}
+.cit-claim-list{display:flex;flex-direction:column;gap:8px}
+.cit-claim-chip{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-radius:0;font-size:13px;background:none}
+.cit-claim-chip.pos{color:#1b5e20}
+.cit-claim-chip.neg{color:#b71c1c}
+.cit-claim-icon{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:13px;font-weight:600;line-height:1}
+/* Content tab */
+.cit-content-body{font-size:13px;color:rgb(33,33,33);line-height:1.8}
+.cit-content-body h3{font-size:15px;font-weight:600;color:rgb(33,33,33);margin:20px 0 8px}
+.cit-content-body h3:first-child{margin-top:0}
+.cit-content-body p{margin:0 0 12px}
+.cit-hl-pos{background:rgba(46,125,50,0.13);border-radius:3px;padding:1px 0}
+.cit-hl-neg{background:rgba(198,40,40,0.1);border-radius:3px;padding:1px 0}
 .pt-ai-cell{overflow:visible;min-width:110px;white-space:nowrap;position:relative}
 .pt-modified-icon{
   display:inline-block;vertical-align:middle;margin-left:4px;flex-shrink:0;
@@ -2190,6 +2275,7 @@ textarea.ap-input{
       <div class="sb-sub-item">Ranking</div>
       <div class="sb-sub-item">Accuracy</div>
       <div class="sb-sub-item" id="nav-sentiment" onclick="showView('sentiment')">Sentiment</div>
+      <div class="sb-sub-item" id="nav-sentiment-v2" onclick="showView('sentiment-v2')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">New</span></div>
       <div class="sb-sub-item" id="nav-reports-prompts" onclick="showView('reports-prompts')">Prompts</div>
       <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-ai-crawler" onclick="showView('ai-crawler')">AI crawler status</div>
@@ -3581,27 +3667,27 @@ textarea.ap-input{
             <div class="snt-metric-label">Sentiment score</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">82%</div>
+            <div class="snt-metric-val">82<span class="pct">%</span></div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-chatgpt"/></svg>ChatGPT</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">80.5%</div>
+            <div class="snt-metric-val">80.5<span class="pct">%</span></div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-gemini"/></svg>Gemini</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">89.3%</div>
+            <div class="snt-metric-val">89.3<span class="pct">%</span></div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-perplexity"/></svg>Perplexity</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">78%</div>
+            <div class="snt-metric-val">78<span class="pct">%</span></div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-google-aim"/></svg>Google AI Mode</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">71%</div>
+            <div class="snt-metric-val">71<span class="pct">%</span></div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-grok"/></svg>Grok</div>
           </div>
           <div class="snt-metric-item snt-ai">
-            <div class="snt-metric-val">85%</div>
+            <div class="snt-metric-val">85<span class="pct">%</span></div>
             <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-claude"/></svg>Claude</div>
           </div>
         </div>
@@ -4089,6 +4175,549 @@ textarea.ap-input{
       </div>
 
     </div><!-- /view-sentiment -->
+
+    <!-- ══ SENTIMENT V2 VIEW ══ -->
+    <div class="view" id="view-sentiment-v2">
+
+      <!-- Top summary cards row -->
+      <div style="display:flex;gap:16px;align-items:stretch">
+
+        <!-- Left: Sentiment score -->
+        <div class="snt-summary-card" style="flex:0 0 220px;min-width:0">
+          <div class="snt-summary-hdr">
+            <div class="snt-summary-title">Sentiment score</div>
+          </div>
+          <div style="margin-top:16px">
+            <div class="snt-metric-val" style="height:auto">82.3<span class="pct">%</span> <span style="font-size:14px;font-weight:400;color:#4cae3d;margin-left:4px">+4.2%</span></div>
+            <div class="snt-metric-label" style="margin-top:8px">Your sentiment score</div>
+          </div>
+        </div>
+
+        <!-- Right: Sentiment score by AI site -->
+        <div class="snt-summary-card" style="flex:1;min-width:0">
+          <div class="snt-summary-hdr">
+            <div class="snt-summary-title">Sentiment score by AI site</div>
+          </div>
+          <div class="snt-metrics-row" style="margin-top:16px">
+            <div class="snt-metric-item">
+              <div class="snt-metric-val">82<span class="pct">%</span> <span style="font-size:13px;font-weight:400;color:#4cae3d;margin-left:4px">+2%</span></div>
+              <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-chatgpt"/></svg>ChatGPT</div>
+            </div>
+            <div class="snt-metric-item">
+              <div class="snt-metric-val">80.5<span class="pct">%</span> <span style="font-size:13px;font-weight:400;color:#4cae3d;margin-left:4px">+1.5%</span></div>
+              <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-gemini"/></svg>Gemini</div>
+            </div>
+            <div class="snt-metric-item">
+              <div class="snt-metric-val">89.3<span class="pct">%</span> <span style="font-size:13px;font-weight:400;color:#4cae3d;margin-left:4px">+3.1%</span></div>
+              <div class="snt-metric-label"><svg width="16" height="16"><use href="#s-perplexity"/></svg>Perplexity</div>
+            </div>
+            <div class="snt-metric-item">
+              <div class="snt-metric-val">76<span class="pct">%</span> <span style="font-size:13px;font-weight:400;color:#e53935;margin-left:4px">-1.2%</span></div>
+              <div class="snt-metric-label">Others</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sentiment across competitors -->
+      <div class="snt-summary-card">
+        <div class="snt-summary-hdr">
+          <div class="snt-summary-title">Sentiment across competitors</div>
+        </div>
+        <div class="snt-metrics-row" style="align-items:flex-start">
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">82.3<span class="pct">%</span></div>
+            <span class="you-chip">You</span>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">71<span class="pct">%</span></div>
+            <div class="snt-metric-label">Podium</div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">68<span class="pct">%</span></div>
+            <div class="snt-metric-label">Reputation.com</div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">74<span class="pct">%</span></div>
+            <div class="snt-metric-label">Yext</div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">65<span class="pct">%</span></div>
+            <div class="snt-metric-label">Vendasta</div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Sentiment score over time -->
+      <div class="snt-card" style="display:flex;flex-direction:column">
+        <div class="snt-card-hdr">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="snt-card-title">Sentiment score over time</span>
+            <span class="material-symbols-rounded" style="font-size:16px;color:#9e9e9e">info</span>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto;height:32px">Last 6 months<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+          </div>
+        </div>
+        <!-- KPI values -->
+        <div style="display:flex;gap:32px;margin-bottom:20px">
+          <div>
+            <div style="font-size:18px;font-weight:400;color:#212121;line-height:1">82.3</div>
+            <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">Sentiment score</div>
+          </div>
+          <div>
+            <div style="font-size:18px;font-weight:400;color:#212121;line-height:1">76.4</div>
+            <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">Avg competitor sentiment</div>
+          </div>
+        </div>
+        <!-- Chart -->
+        <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+          <div style="flex:1;position:relative;padding-left:40px;min-height:0">
+            <span style="position:absolute;left:0;top:0%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">90%</span>
+            <span style="position:absolute;left:0;top:25%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">85%</span>
+            <span style="position:absolute;left:0;top:50%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">80%</span>
+            <span style="position:absolute;left:0;top:75%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">75%</span>
+            <span style="position:absolute;left:0;top:100%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">70%</span>
+            <svg width="100%" height="100%" viewBox="0 0 860 160" preserveAspectRatio="none" style="display:block;overflow:visible;position:absolute;top:0;left:40px;right:0;width:calc(100% - 40px)">
+              <line x1="0" y1="0" x2="860" y2="0" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="40" x2="860" y2="40" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="80" x2="860" y2="80" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="120" x2="860" y2="120" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="0" y1="160" x2="860" y2="160" stroke="#f0f0f0" stroke-width="1"/>
+              <!-- Avg competitor sentiment (gray) -->
+              <path d="M0,128 C57,128 115,136 172,136 C229,136 287,120 344,120 C401,120 459,112 516,112 C573,112 631,120 688,120 C745,120 803,109 860,109" stroke="#bdbdbd" stroke-width="1" fill="none"/>
+              <!-- Sentiment score (blue) -->
+              <path d="M0,112 C57,112 115,96 172,96 C229,96 287,80 344,80 C401,80 459,72 516,72 C573,72 631,56 688,56 C745,56 803,62 860,62" stroke="#1976d2" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding-left:40px;margin-top:8px;font-size:11px;color:#9e9e9e">
+            <span>Dec 2025</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May 2026</span>
+          </div>
+        </div>
+        <!-- Legend -->
+        <div style="display:flex;gap:20px;margin-top:16px">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgb(85,85,85)"><div style="width:20px;height:1px;background:#1976d2;flex-shrink:0"></div>Sentiment score</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgb(85,85,85)"><div style="width:20px;height:1px;background:#bdbdbd;flex-shrink:0"></div>Avg competitor sentiment</div>
+        </div>
+      </div>
+
+      <!-- Sentiment breakdown by citation -->
+      <div class="pt-table-wrap" style="margin:0;overflow:visible">
+        <div style="padding:20px 20px 16px">
+          <div style="font-size:16px;font-weight:500;color:rgb(33,33,33);margin-bottom:4px">Sentiment breakdown by citation</div>
+          <div style="font-size:13px;color:rgb(143,143,143)">Web pages cited for positive and negative sentiment about your brand</div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="pt-table" id="nsd-table" style="min-width:860px;table-layout:fixed">
+            <colgroup>
+              <col style="width:240px">
+              <col style="width:100px">
+              <col style="width:110px">
+              <col style="width:130px">
+              <col style="width:130px">
+              <col style="width:150px">
+              <col style="width:0;display:none">
+            </colgroup>
+            <thead>
+              <tr>
+                <th style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:2"><span class="pt-th-inner">Web Page</span></th>
+                <th><span class="pt-th-inner">Category</span></th>
+                <th><span class="pt-th-inner">Positive Sentiment</span></th>
+                <th><span class="pt-th-inner">Positive topics</span></th>
+                <th><span class="pt-th-inner">Negative topics</span></th>
+                <th style="text-align:right;padding-right:24px"><span class="pt-th-inner" style="justify-content:flex-end">Claim Occurrence</span></th>
+                <th style="display:none"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pt-data-row" onclick="openCitationPanel('salesgroup')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=salesgroup.ai&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">salesgroup.ai/birdeye-review/</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Other</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">78%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Review collection", "Easy onboarding", "Multi-location support", "Customer loyalty", "Response automation"],event)">5<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Overkill for small biz", "High pricing", "Complex setup"],event)">3<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.7%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.3%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('g2')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=g2.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">g2.com/products/birdeye/reviews?qs=pro...</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Social</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">65%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Review management", "Inbox messaging", "Automation workflows", "Reporting dashboard"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Steep learning curve", "Onboarding friction"],event)">2<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.6%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.1%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('checkthat')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=checkthat.ai&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">checkthat.ai/brands/birdeye/reviews</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Other</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">71%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Brand mentions tracking", "Sentiment alerts", "Competitive benchmarking"],event)">3<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Inconsistent support", "Slow resolution", "Limited self-serve help"],event)">3<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.5%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('socialpilot')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=socialpilot.co&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">socialpilot.co/reviews/blogs/birdeye-pricing</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Other</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">54%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Social scheduling", "Review responses", "Reputation score", "Analytics reports"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Integration problems", "Limited platforms", "API restrictions", "Sync delays"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.5%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('brightlocal')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=brightlocal.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">brightlocal.com/resources/listings-manag...</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Other</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">62%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Citation management", "Local SEO insights", "Listings accuracy"],event)">3<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Weak enterprise focus", "No white-label"],event)">2<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.4%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.3%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('capterra')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=capterra.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">capterra.com/reviews/birdeye-comparison</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Review Site</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">83%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Ease of use", "Customer support quality", "Review volume growth", "NPS tracking", "ROI visibility"],event)">5<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Pricing transparency", "Unclear tiers", "Hidden fees"],event)">3<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.4%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.1%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('trustpilot')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=trustpilot.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">trustpilot.com/review/birdeye.com</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Review Site</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">69%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Authentic reviews", "Business responses", "Trust badges", "Profile completeness"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Mobile app limitations", "Desktop-only features"],event)">2<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.3%</span>
+                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.1%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openCitationPanel('getapp')" style="cursor:pointer">
+                <td style="padding-left:20px;position:sticky;left:0;background:#fff;z-index:1">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=getapp.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    <span class="nsd-webpage-label" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">getapp.com/reputation-management/birdeye</span>
+                  </div>
+                </td>
+                <td style="font-size:13px;color:rgb(85,85,85)">Other</td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">76%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Software comparison", "User review depth", "Category rankings", "Integration listings"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Reporting gaps", "Limited custom reports", "Export restrictions"],event)">3<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.3%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
+                </td>
+                <td style="display:none"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Sentiment breakdown by competitors -->
+      <div class="pt-table-wrap" style="margin:0;overflow:visible">
+        <div style="padding:20px 20px 16px">
+          <div style="font-size:16px;font-weight:500;color:rgb(33,33,33);margin-bottom:4px">Sentiment breakdown by competitors</div>
+          <div style="font-size:13px;color:rgb(143,143,143)">How AI models compare your brand against competitors across positive and negative sentiment signals</div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="pt-table" id="comp-snt-table" style="min-width:860px;table-layout:fixed">
+            <colgroup>
+              <col style="width:220px">
+              <col style="width:110px">
+              <col style="width:110px">
+              <col style="min-width:280px">
+              <col style="width:150px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th style="padding-left:20px"><span class="pt-th-inner">Competitor</span></th>
+                <th><span class="pt-th-inner">Positive Sentiment</span></th>
+                <th><span class="pt-th-inner">Negative Sentiment</span></th>
+                <th><span class="pt-th-inner">Top Negative Claim</span></th>
+                <th style="text-align:right;padding-right:24px"><span class="pt-th-inner" style="justify-content:flex-end">Claim Occurrence</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=podium.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    Podium
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">71%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">29%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Limited Feature Depth</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Podium lacks advanced analytics and multi-location management compared to alternatives..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">1.2%</span>
+                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.2%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=reputation.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    Reputation.com
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">68%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">32%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Steep Pricing</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Enterprise pricing is not accessible for small businesses; cited as cost-prohibitive..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">1.0%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.1%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=yext.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    Yext
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">74%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">26%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Complex Onboarding</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Onboarding requires significant IT involvement; setup timelines are often cited as lengthy..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.9%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.3%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=vendasta.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    Vendasta
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">65%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">35%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Reseller Complexity</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"White-label reseller model adds layers of complexity that frustrate end-users..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.8%</span>
+                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.1%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=grade.us&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    Grade.us
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">59%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">41%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Narrow Feature Set</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Focused primarily on review generation; lacks the breadth of a full reputation platform..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.6%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=soci.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    SOCi
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">63%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">37%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Support Quality</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Customer support response times are inconsistent; resolution often requires escalation..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.5%</span>
+                  <span style="font-size:13px;color:#c62828;margin-left:6px">-0.2%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=reviewtrackers.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    ReviewTrackers
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">66%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">34%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Integration Gaps</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Limited native integrations; connecting to CRM and marketing tools requires third-party workarounds..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.5%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.1%</span>
+                </td>
+              </tr>
+              <tr class="pt-data-row">
+                <td style="padding-left:20px">
+                  <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
+                    <img src="https://www.google.com/s2/favicons?domain=medallia.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
+                    Medallia
+                  </div>
+                </td>
+                <td style="font-size:13px;color:#2e7d32;font-weight:500">77%</td>
+                <td style="font-size:13px;color:#c62828;font-weight:500">23%</td>
+                <td style="padding-right:16px">
+                  <div style="font-size:13px;font-weight:500;color:rgb(33,33,33)">Enterprise-Only Pricing</div>
+                  <div style="font-size:12px;color:rgb(143,143,143);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">"Medallia is positioned for large enterprises; mid-market buyers find it out of reach financially..."</div>
+                </td>
+                <td style="text-align:right;padding-right:24px;white-space:nowrap">
+                  <span style="font-size:13px;color:rgb(33,33,33)">0.4%</span>
+                  <span style="font-size:13px;color:#2e7d32;margin-left:6px">+0.2%</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /view-sentiment-v2 -->
 
     <!-- ══ REPORTS PROMPTS VIEW ══ -->
     <div class="view" id="view-reports-prompts">
@@ -6264,6 +6893,7 @@ const _viewToSlug = {
   'recommendations':   'searchai/actions/recommendations',
   'content':           'searchai/actions/content',
   'sentiment':         'searchai/reports/sentiment',
+  'sentiment-v2':      'searchai/reports/sentiment-new',
   'reports-prompts':   'searchai/reports/prompts',
   'ai-crawler':        'searchai/reports/ai-crawler-status',
   'explore-themes':    'searchai/reports/explore-themes',
@@ -6307,7 +6937,7 @@ function showView(view, skipHash) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts'};
   document.getElementById('page-title').textContent = baseTitle || titles[view] || view;
   document.getElementById('page-info-icon').style.display = (view === 'prompt-brandkit' || view === 'ai-crawler' || view === 'reports-prompts') ? 'inline-flex' : 'none';
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
@@ -6334,7 +6964,7 @@ function showView(view, skipHash) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment' || view === 'ai-crawler' || view === 'reports-prompts') {
+  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'ai-crawler' || view === 'reports-prompts') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
@@ -9655,6 +10285,363 @@ function toggleSntDropAll(chk, type) {
   const drop = document.getElementById('snt-drop-' + type);
   drop.querySelectorAll('input.snt-drop-item-cb').forEach(cb => cb.checked = chk.checked);
 }
+
+/* ── Citation Analysis panel ── */
+const CIT_DATA = {
+  salesgroup: {
+    siteName: 'Salesgroup.ai',
+    url: 'https://salesgroup.ai/birdeye-review/',
+    posCount: 4,
+    negCount: 2,
+    posClaims: [
+      'SMB-trusted review management',
+      'AI-powered review response automation',
+      'Google, Facebook & 200+ platform integrations',
+      'Onboarding & customer success support',
+    ],
+    negClaims: [
+      'High pricing for small businesses',
+      'Feature overload for review-only users',
+    ],
+    content: `<h4>Overview</h4>
+<p>Salesgroup.ai's review of Birdeye positions the platform as an enterprise-grade reputation management solution. The article surfaces consistently across AI queries about online reputation tools for mid-market businesses.</p>
+<h4>Key findings in this citation</h4>
+<ul>
+  <li>Birdeye is cited as a top-3 recommendation for businesses managing 10+ locations</li>
+  <li>The review highlights AI-powered review responses as a standout differentiator</li>
+  <li>Pricing is flagged as a concern — the article notes plans start around $299/month, which is cited by AI models as a reason to suggest alternatives for solo operators</li>
+  <li>The "overkill" framing appears in 6 out of 12 AI responses that reference this page</li>
+</ul>
+<h4>Why AI models cite this page</h4>
+<p>This page ranks well for queries like "best reputation management software for small business" and "Birdeye review." Its structured comparison table and explicit pros/cons format make it highly extractable for AI citation engines.</p>`,
+  },
+  g2: {
+    siteName: 'G2.com',
+    url: 'https://g2.com/products/birdeye/reviews',
+    posCount: 6,
+    negCount: 3,
+    posClaims: [
+      '4.7/5 rating across 3,200+ verified reviews',
+      'Ease of use & fast setup',
+      'NPS and customer satisfaction tracking',
+      'Multi-location management',
+      'Responsive customer support',
+      'Reporting & analytics dashboards',
+    ],
+    negClaims: [
+      'Learning curve for new users',
+      'Mobile app vs desktop feature gap',
+      'Third-party integration sync delays',
+    ],
+    content: `<h4>Overview</h4>
+<p>G2 is one of the highest-authority software review platforms and a primary source for AI models when surfacing social proof about SaaS tools. Birdeye's G2 profile is cited in a significant share of AI responses about reputation management.</p>
+<h4>Key findings in this citation</h4>
+<ul>
+  <li>The "steep learning curve" claim originates from a cluster of 38 reviews using similar language — AI models have latched onto this as a recurring theme</li>
+  <li>Positive signals around ease of setup and multi-location management appear in the majority of reviews but are outweighed in AI citation frequency by the negative cluster</li>
+  <li>G2 review snippets are directly quoted by ChatGPT and Perplexity in responses about Birdeye's weaknesses</li>
+</ul>
+<h4>Why AI models cite this page</h4>
+<p>G2 pages carry high domain authority and structured schema markup, making them among the most reliably extracted sources for AI citation engines across all platforms.</p>`,
+  },
+  checkthat: {
+    siteName: 'Checkthat.ai',
+    url: 'https://checkthat.ai/brands/birdeye/reviews',
+    posCount: 3,
+    negCount: 2,
+    posClaims: [
+      'Top-3 brand visibility in AI responses',
+      'Majority-positive citation sentiment',
+      'Multi-location reputation management leadership',
+    ],
+    negClaims: [
+      'Inconsistent support response times',
+      'Slow escalation resolution',
+    ],
+    content: `<h4>Overview</h4>
+<p>Checkthat.ai tracks brand mentions and sentiment across AI-generated content. Their Birdeye profile page is an aggregated signal source that AI models use when asked about brand reputation in the martech space.</p>
+<h4>Key findings in this citation</h4>
+<ul>
+  <li>The "inconsistent customer support" claim is sourced from a pattern of support-related complaints aggregated across review platforms</li>
+  <li>Checkthat flags 2 open complaint threads that have not received a public brand response — these are being surfaced by AI models as evidence of unresolved issues</li>
+  <li>The page's structured data format makes it easy for AI crawlers to extract specific claim snippets</li>
+</ul>
+<h4>Why AI models cite this page</h4>
+<p>Checkthat.ai is increasingly indexed as a trust signal aggregator. Its structured complaint data is particularly appealing to AI citation engines that prioritize factual, evidence-backed sources.</p>`,
+  },
+  socialpilot: {
+    siteName: 'SocialPilot',
+    url: 'https://socialpilot.co/reviews/blogs/birdeye-pricing',
+    posCount: 3,
+    negCount: 3,
+    posClaims: [
+      'AI-powered reputation management leadership',
+      'Multi-brand agency feature depth',
+      'Broad platform integrations',
+    ],
+    negClaims: [
+      'Complex integration setup for non-technical users',
+      'Limited native social publishing',
+      'API rate limits at high volume',
+    ],
+    content: `<h4>Overview</h4>
+<p>SocialPilot's pricing comparison blog is a high-traffic article that benchmarks Birdeye against competitors including Reputation.com, Podium, and Yext. It is frequently cited in AI responses about "Birdeye pricing" and "Birdeye alternatives."</p>
+<h4>Key findings in this citation</h4>
+<ul>
+  <li>The integration problems framing stems from a section comparing API flexibility — Birdeye is noted as having fewer native connectors than some alternatives for specific verticals</li>
+  <li>This page is cited in 14 AI responses tracked this month, primarily for the pricing comparison table</li>
+  <li>The article recommends Birdeye for enterprises but steers SMBs toward lower-cost alternatives — this framing is being reproduced by AI models verbatim</li>
+</ul>
+<h4>Why AI models cite this page</h4>
+<p>Pricing-focused content with explicit comparison tables is among the most cited content category in AI responses about SaaS tools. This page's structured format and high organic traffic make it a frequent AI source.</p>`,
+  },
+  brightlocal: {
+    siteName: 'BrightLocal',
+    url: 'https://brightlocal.com/resources/listings-management/',
+    posCount: 4,
+    negCount: 2,
+    posClaims: [
+      'Top-tier listings management accuracy',
+      'Consistent citations across Google, Bing & Apple Maps',
+      'Automated sync for franchise-scale operations',
+      'White-label reseller program',
+    ],
+    negClaims: [
+      'Limited white-label customisation depth',
+      'Basic audit reporting for enterprise needs',
+    ],
+    content: `<h4>Overview</h4>
+<p>BrightLocal is a leading authority on local SEO and listings management. Their resource hub is widely cited by AI models when answering questions about managing business listings at scale.</p>
+<h4>Key findings in this citation</h4>
+<ul>
+  <li>The "weak enterprise focus" claim originates from a comparison noting that Birdeye's white-label offering has fewer customization options than agency-first platforms like Vendasta</li>
+  <li>BrightLocal's editorial team explicitly calls out the absence of advanced audit trail features as a gap for compliance-heavy industries</li>
+  <li>Despite the negative framing, Birdeye scores in the top tier overall on BrightLocal's listings accuracy benchmark</li>
+</ul>
+<h4>Why AI models cite this page</h4>
+<p>BrightLocal holds high topical authority for local SEO queries. AI models consistently prioritize its content when answering questions about listings management tools, making it a critical citation to monitor and respond to.</p>`,
+  },
+};
+
+const CIT_PAGE_CONTENT = {
+  salesgroup: `
+    <h3>Birdeye Review: Is It Worth It for Your Business?</h3>
+    <p>Birdeye is a comprehensive reputation management platform used by thousands of businesses across North America. It consolidates reviews, messaging, surveys, and customer insights into a single dashboard.</p>
+    <h3>Core Features</h3>
+    <p><span class="cit-hl-pos">Birdeye's review automation is one of the strongest on the market — businesses report a 3x increase in review volume within the first 60 days of using the platform.</span> The system sends automated review requests via SMS and email, routes responses through a central inbox, and integrates natively with Google and Facebook.</p>
+    <p><span class="cit-hl-pos">The AI-powered response assistant drafts contextual replies to reviews in seconds, saving customer success teams significant manual effort.</span> For multi-location businesses, location-level dashboards allow regional managers to monitor their own performance without accessing enterprise-wide data.</p>
+    <h3>Who Should Use Birdeye?</h3>
+    <p><span class="cit-hl-pos">Birdeye truly shines for businesses managing multiple locations. Franchise operations and multi-location retailers can implement standardized reputation strategies while still allowing for local customization.</span></p>
+    <p><span class="cit-hl-neg">For small businesses or solo operators primarily focused on review collection, Birdeye's full feature set can feel like overkill. The platform includes messaging, surveys, competitive benchmarking, and AI insights — capabilities that smaller teams rarely use, yet pay for.</span></p>
+    <h3>Pricing Considerations</h3>
+    <p>Birdeye does not publish pricing publicly. Quotes are generated based on number of locations and selected modules. <span class="cit-hl-neg">Based on user-reported data, plans for single-location businesses typically start around $299–$399/month, which is significantly higher than point solutions focused only on review management.</span></p>
+    <h3>Verdict</h3>
+    <p><span class="cit-hl-pos">For businesses with 3+ locations looking for a unified reputation and customer experience platform, Birdeye delivers strong ROI.</span> For lean teams with a single location, a more focused tool may offer better value per dollar.</p>`,
+
+  g2: `
+    <h3>Birdeye Reviews on G2 — What Real Users Say</h3>
+    <p>G2 hosts over 3,200 verified reviews for Birdeye, making it one of the most reviewed reputation management platforms on the site. The aggregate score sits at 4.7/5 as of the most recent update.</p>
+    <h3>What Users Love</h3>
+    <p><span class="cit-hl-pos">Users consistently praise Birdeye for its ease of use and ability to centralize reviews and customer communication in one platform. This streamlined approach saves time and enhances engagement with customers.</span></p>
+    <p><span class="cit-hl-pos">One user noted that Birdeye made automating reviews effortless, removing the need to reach out to clients individually. Another highlighted how it boosted their Google review ratings significantly.</span></p>
+    <p><span class="cit-hl-pos">The onboarding process and customer success support are frequently mentioned as highlights — users note that the implementation team is responsive and proactive during the first 90 days.</span></p>
+    <h3>Common Criticisms</h3>
+    <p>That said, there are fair criticisms worth noting. <span class="cit-hl-neg">Some users note that the platform can feel expensive for smaller teams. According to negative reviews, new features cost extra and are not bundled in with existing plans, listings are difficult to set up and maintain, and the solution, as a whole, is expensive.</span></p>
+    <p><span class="cit-hl-neg">A recurring theme in 1–3 star reviews is the learning curve — users unfamiliar with reputation management platforms report that it takes several weeks to feel proficient, particularly when configuring automation workflows and custom templates.</span></p>
+    <h3>G2 Category Rankings</h3>
+    <p><span class="cit-hl-pos">Birdeye holds a #1 or #2 position across multiple G2 categories including Online Reputation Management, Multi-Location Marketing, and Customer Communications Management — a signal of broad category leadership that AI models surface frequently.</span></p>`,
+
+  checkthat: `
+    <h3>Birdeye Brand Intelligence Report — Checkthat.ai</h3>
+    <p>Checkthat.ai tracks how brands appear across AI-generated responses, review platforms, and online citations. This profile aggregates Birdeye's mention data across monitored sources.</p>
+    <h3>Brand Visibility in AI Responses</h3>
+    <p><span class="cit-hl-pos">Birdeye ranks in the top 3 most-cited reputation management platforms across all major AI models. ChatGPT, Perplexity, and Google AI Mode all reference Birdeye in responses to queries about review management, customer experience software, and local business tools.</span></p>
+    <p><span class="cit-hl-pos">Overall sentiment in tracked AI citations skews positive — approximately 68% of citations frame Birdeye favorably, citing its feature depth, enterprise focus, and integration breadth.</span></p>
+    <h3>Areas of Concern Surfaced in Citations</h3>
+    <p><span class="cit-hl-neg">The most common negative signal across AI-cited sources relates to customer support consistency. Multiple review threads and third-party comparisons note that support quality varies depending on account tier, with enterprise clients receiving more dedicated assistance than standard plan customers.</span></p>
+    <p><span class="cit-hl-neg">Two unresolved complaint threads identified in this report have been escalated to Birdeye's public-facing support channels without receiving a brand response. These threads are being surfaced by AI models as evidence of support gaps and represent an opportunity for proactive response.</span></p>
+    <h3>Recommendation</h3>
+    <p><span class="cit-hl-pos">Birdeye's overall AI citation profile is strong. Addressing the open support threads and adding structured FAQ content around pricing and onboarding timelines would further improve how AI models position the brand.</span></p>`,
+
+  socialpilot: `
+    <h3>Birdeye Pricing: What You Actually Pay in 2025</h3>
+    <p>This article breaks down Birdeye's pricing structure, compares it to key alternatives, and helps buyers determine whether the platform fits their budget and use case.</p>
+    <h3>Birdeye Pricing Overview</h3>
+    <p>Birdeye does not list prices on its website. All plans are custom-quoted based on number of locations, selected features, and contract length. <span class="cit-hl-neg">Based on aggregated user reports, single-location plans typically run $299–$399/month. Multi-location packages scale proportionally and can reach $1,500+/month for businesses with 20+ locations.</span></p>
+    <h3>What's Included</h3>
+    <p><span class="cit-hl-pos">Core plans include automated review requests, a unified inbox, basic reporting, and Google/Facebook integrations. Higher tiers add AI-powered insights, competitive benchmarking, surveys, and custom integrations.</span></p>
+    <h3>Integration Landscape</h3>
+    <p><span class="cit-hl-pos">Birdeye integrates with over 3,000 applications including Salesforce, HubSpot, Zoho, and most major PMS and EHR systems — making it one of the most integration-rich reputation platforms available.</span></p>
+    <p><span class="cit-hl-neg">However, some enterprise buyers have flagged that certain integrations require custom API configuration that is not supported out-of-the-box, adding implementation time and cost for non-technical teams.</span></p>
+    <h3>How It Compares</h3>
+    <p>Compared to Podium and Yext, Birdeye is positioned as the more feature-complete option at a higher price point. <span class="cit-hl-neg">For businesses primarily focused on social media management or publishing rather than reputation, dedicated tools typically offer more depth at a lower cost.</span></p>
+    <p><span class="cit-hl-pos">For multi-location businesses that need a single platform for reviews, messaging, listings, and AI insights, Birdeye remains the most comprehensive option in its class.</span></p>`,
+
+  brightlocal: `
+    <h3>Best Listings Management Software: 2025 Buyer's Guide</h3>
+    <p>BrightLocal's annual listings management benchmark evaluates platforms across accuracy, sync speed, data coverage, and enterprise features. This guide covers the top 8 platforms based on structured testing across 500 business locations.</p>
+    <h3>How Birdeye Performed</h3>
+    <p><span class="cit-hl-pos">Birdeye ranked #2 overall in listing accuracy across Google, Bing, Apple Maps, and Facebook — achieving 97.3% accuracy in our controlled test across 50 locations. This is above the category average of 93.1%.</span></p>
+    <p><span class="cit-hl-pos">Automated sync features performed well for franchise-scale operations. Changes pushed from the Birdeye dashboard propagated to Google within 24 hours in 94% of test cases, and to secondary directories within 72 hours.</span></p>
+    <h3>Listings Management and Integrations</h3>
+    <p><span class="cit-hl-pos">Birdeye also offers a Listings AI feature that builds accurate business profiles to improve visibility in local search results. It integrates with over 3,000 applications, including CRM solutions like Salesforce and HubSpot, enhancing its functionality within existing workflows.</span></p>
+    <h3>Enterprise and Agency Features</h3>
+    <p>For agencies managing multiple brands under a white-label program, Birdeye offers a reseller tier. <span class="cit-hl-neg">However, the depth of white-label customization is limited compared to agency-first platforms. Resellers cannot fully rebrand the client-facing dashboard, and custom domain support requires an additional setup fee.</span></p>
+    <p><span class="cit-hl-neg">Audit trail and reporting features are functional but basic. Compliance-heavy industries such as healthcare and financial services may find the reporting depth insufficient for internal governance requirements — a gap that enterprise-focused competitors like Yext address more thoroughly.</span></p>
+    <h3>Overall Verdict</h3>
+    <p><span class="cit-hl-pos">Birdeye is a top-tier choice for multi-location businesses that want listings accuracy combined with reviews and messaging in one platform. For pure-play agency resellers requiring deep white-label control, evaluate platform-specific alternatives before committing.</span></p>`,
+};
+
+function openCitationPanel(key) {
+  const d = CIT_DATA[key];
+  if (!d) return;
+
+  const hostname = new URL(d.url).hostname;
+  const posList = d.posClaims.map(c =>
+    `<div class="cit-claim-chip pos"><span class="cit-claim-icon">+</span><span>${c}</span></div>`
+  ).join('');
+  const negList = d.negClaims.map(c =>
+    `<div class="cit-claim-chip neg"><span class="cit-claim-icon">−</span><span>${c}</span></div>`
+  ).join('');
+
+  document.getElementById('cit-body').innerHTML = `
+    <div class="cit-site-block">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <img src="https://www.google.com/s2/favicons?domain=${hostname}&sz=24" width="24" height="24" style="border-radius:4px" onerror="this.style.display='none'"/>
+        <div class="cit-site-name">${d.siteName}</div>
+      </div>
+      <a class="cit-site-url" href="${d.url}" target="_blank" rel="noopener">
+        <span>${d.url}</span>
+        <span class="material-symbols-rounded" style="font-size:14px">open_in_new</span>
+      </a>
+    </div>
+    <div class="cit-tabs">
+      <div class="cit-tab active" onclick="switchCitTab(this,'cit-pane-analysis')">Topics</div>
+      <div class="cit-tab" onclick="switchCitTab(this,'cit-pane-content')">Content</div>
+    </div>
+    <div class="cit-tab-pane active" id="cit-pane-analysis">
+      <div class="cit-claims-row">
+        <div class="cit-claim-card">
+          <div class="cit-claim-count pos">${d.posCount}</div>
+          <div class="cit-claim-label">Positive topics</div>
+        </div>
+        <div class="cit-claim-card">
+          <div class="cit-claim-count neg">${d.negCount}</div>
+          <div class="cit-claim-label">Negative topics</div>
+        </div>
+      </div>
+      <div class="cit-claim-list">${posList}${negList}</div>
+    </div>
+    <div class="cit-tab-pane" id="cit-pane-content" style="padding:0">
+      <div class="cit-content-toolbar" style="position:sticky;top:0;background:#fff;z-index:10">
+        <div class="cit-ai-label">
+          <svg width="16" height="16"><use href="#s-chatgpt"/></svg>
+          ChatGPT
+        </div>
+        <div class="cit-topic-filter">
+          <button class="cit-topic-btn" onclick="toggleCitTopicDrop(this)">
+            Filter by topic
+            <span class="material-symbols-rounded">expand_more</span>
+          </button>
+          <div class="cit-topic-drop" id="cit-topic-drop">
+            <div class="cit-topic-opt all-opt" onclick="citTopicToggleAll(this)">
+              <input type="checkbox" id="cit-chk-all" checked onchange="citTopicToggleAll(this.closest('.cit-topic-opt'))">
+              <label for="cit-chk-all" style="cursor:pointer">All</label>
+            </div>
+            <div class="cit-topic-divider">Positive</div>
+            ${d.posClaims.map((t,i) => `<div class="cit-topic-opt" onclick="citTopicToggleOne(this)"><input type="checkbox" id="cit-chk-p${i}" data-topic="${t}" checked onchange="citTopicToggleOne(this.closest('.cit-topic-opt'))"><label for="cit-chk-p${i}" style="cursor:pointer">${t}</label></div>`).join('')}
+            <div class="cit-topic-divider">Negative</div>
+            ${d.negClaims.map((t,i) => `<div class="cit-topic-opt" onclick="citTopicToggleOne(this)"><input type="checkbox" id="cit-chk-n${i}" data-topic="${t}" checked onchange="citTopicToggleOne(this.closest('.cit-topic-opt'))"><label for="cit-chk-n${i}" style="cursor:pointer">${t}</label></div>`).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="cit-content-body" id="cit-content-body" style="padding:20px">${CIT_PAGE_CONTENT[key] || ''}</div>
+    </div>
+  `;
+
+  document.getElementById('cit-overlay').classList.add('open');
+  document.getElementById('cit-panel').classList.add('open');
+}
+
+function switchCitTab(tabEl, paneId) {
+  document.querySelectorAll('.cit-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.cit-tab-pane').forEach(p => p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+function closeCitationPanel() {
+  document.getElementById('cit-panel').classList.remove('open');
+  document.getElementById('cit-overlay').classList.remove('open');
+}
+
+function toggleCitTopicDrop(btn) {
+  const drop = document.getElementById('cit-topic-drop');
+  drop.classList.toggle('open');
+  event.stopPropagation();
+}
+
+function citTopicToggleAll(optEl) {
+  const drop = optEl.closest('.cit-topic-drop');
+  const allChk = drop.querySelector('#cit-chk-all');
+  const checked = allChk.checked;
+  drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input[type=checkbox]').forEach(c => c.checked = checked);
+  updateCitTopicBadge();
+}
+
+function citTopicToggleOne(optEl) {
+  const chk = optEl.querySelector('input[type=checkbox]');
+  chk.checked = !chk.checked;
+  const drop = optEl.closest('.cit-topic-drop');
+  const total = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input').length;
+  const checked = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input:checked').length;
+  drop.querySelector('#cit-chk-all').checked = (checked === total);
+  updateCitTopicBadge();
+}
+
+function updateCitTopicBadge() {
+  const drop = document.getElementById('cit-topic-drop');
+  if (!drop) return;
+  const total = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input').length;
+  const checked = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input:checked').length;
+  const btn = drop.previousElementSibling;
+  let badge = btn.querySelector('.cit-topic-badge');
+  if (checked < total) {
+    if (!badge) { badge = document.createElement('span'); badge.className = 'cit-topic-badge'; btn.insertBefore(badge, btn.querySelector('.material-symbols-rounded')); }
+    badge.textContent = checked;
+  } else {
+    if (badge) badge.remove();
+  }
+}
+
+document.addEventListener('click', function(e) {
+  const drop = document.getElementById('cit-topic-drop');
+  if (drop && !e.target.closest('.cit-topic-filter')) drop.classList.remove('open');
+});
+
+function toggleTopicsPopover(triggerEl, topics, e) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  const popover = triggerEl.nextElementSibling;
+  const isOpen = popover.classList.contains('open');
+  document.querySelectorAll('.topics-popover.open').forEach(p => {
+    p.classList.remove('open');
+    p.previousElementSibling.classList.remove('active');
+  });
+  if (!isOpen) {
+    popover.innerHTML = topics.map(t => `<div class="topics-popover-item">${t}</div>`).join('');
+    popover.classList.add('open');
+    triggerEl.classList.add('active');
+  }
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.topics-cell')) {
+    document.querySelectorAll('.topics-popover.open').forEach(p => {
+      p.classList.remove('open');
+      p.previousElementSibling.classList.remove('active');
+    });
+  }
+});
 </script>
 
 <!-- Sentiment multi-select dropdown: Locations -->
@@ -9722,5 +10709,18 @@ function toggleSntDropAll(chk, type) {
     <button class="snt-msdrop-apply" onclick="applySntDrop('prompts')">Apply</button>
   </div>
 </div>
+<!-- Citation Analysis side panel -->
+<div class="cit-overlay" id="cit-overlay" onclick="closeCitationPanel()"></div>
+<div class="cit-panel" id="cit-panel">
+  <div class="cit-header">
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="icon-btn" onclick="closeCitationPanel()"><span class="material-symbols-rounded">arrow_back</span></button>
+      <span class="cit-header-title">Citation Analysis</span>
+    </div>
+    <button class="icon-btn" onclick="closeCitationPanel()"><span class="material-symbols-rounded">close</span></button>
+  </div>
+  <div class="cit-body" id="cit-body" style="flex:1;overflow-y:hidden;display:flex;flex-direction:column"></div>
+</div>
+
 </body>
 </html>
