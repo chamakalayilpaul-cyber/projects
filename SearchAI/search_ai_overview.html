@@ -6120,18 +6120,18 @@ textarea.ap-input{
 
     <!-- Prompts list with + button -->
     <div class="ap-field" style="margin-top:0">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0 12px;border-bottom:1px solid #eaeaea;margin-bottom:0">
-        <label style="font-size:14px;font-weight:400;color:#212121;cursor:default">Prompts</label>
-        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts" style="border:none;background:none">
-          <span class="material-symbols-rounded" style="font-size:18px">search</span>
-        </button>
-        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1;position:absolute;right:20px;left:20px;background:#fff;z-index:10">
+      <div style="display:flex;align-items:center;gap:8px;padding:16px 0 12px;border-bottom:1px solid #eaeaea;margin-bottom:0">
+        <label id="tag-prompts-label" style="font-size:14px;font-weight:400;color:#212121;cursor:default;flex:1">Prompts</label>
+        <div id="tag-search-expanded" style="display:none;align-items:center;gap:6px;border:1px solid #1976d2;border-radius:6px;padding:0 10px;height:36px;min-width:0;flex:1">
           <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143);flex-shrink:0">search</span>
           <input type="text" id="tag-prompt-search-input" style="flex:1;border:none;outline:none;font-size:13px;color:rgb(33,33,33);background:transparent;min-width:0" placeholder="Search prompts…" oninput="filterTagAvailSearch(this.value)" autocomplete="off"/>
           <button onclick="toggleTagPromptSearch()" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;flex-shrink:0">
             <span class="material-symbols-rounded" style="font-size:16px;color:rgb(143,143,143)">close</span>
           </button>
         </div>
+        <button class="tag-action-btn" id="tag-prompt-search-btn" onclick="toggleTagPromptSearch()" title="Search prompts">
+          <span class="material-symbols-rounded" style="font-size:18px">search</span>
+        </button>
       </div>
       <div id="tag-all-prompts" style="display:flex;flex-direction:column;gap:0">
         <div class="tag-avail-item" data-prompt="Best-rated Invisalign providers near me" data-type="Location prompt">
@@ -8294,6 +8294,8 @@ function openAddTagPanel() {
   if (exp) { exp.style.display = 'none'; }
   if (srchBtn) { srchBtn.style.display = ''; }
   if (srchInp) { srchInp.value = ''; }
+  const lbl = document.getElementById('tag-prompts-label');
+  if (lbl) lbl.style.display = '';
   document.getElementById('tag-overlay').classList.add('open');
   document.getElementById('tag-panel').classList.add('open');
   document.getElementById('tag-name-input').focus();
@@ -8382,13 +8384,16 @@ function toggleTagPromptSearch() {
   const btn = document.getElementById('tag-prompt-search-btn');
   const expanded = document.getElementById('tag-search-expanded');
   const inp = document.getElementById('tag-prompt-search-input');
+  const label = document.getElementById('tag-prompts-label');
   const isOpen = expanded.style.display === 'flex';
   if (isOpen) {
     expanded.style.display = 'none';
     btn.style.display = '';
+    label.style.display = '';
     inp.value = '';
     filterTagAvailSearch('');
   } else {
+    label.style.display = 'none';
     btn.style.display = 'none';
     expanded.style.display = 'flex';
     setTimeout(() => inp.focus(), 50);
