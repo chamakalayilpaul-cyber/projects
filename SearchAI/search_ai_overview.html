@@ -1457,6 +1457,10 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .cit-claim-chip.pos{color:#1b5e20}
 .cit-claim-chip.neg{color:#b71c1c}
 .cit-claim-icon{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:13px;font-weight:600;line-height:1}
+#comp-snt-table{background:#fff}
+#comp-snt-table tbody tr{background:#fff}
+#comp-snt-table tbody tr:hover td{background:rgb(242,244,247)}
+#comp-snt-table tbody tr:hover .comp-name-label{color:#1976d2}
 /* Content tab */
 .cit-content-body{font-size:13px;color:rgb(33,33,33);line-height:1.8}
 .cit-content-body h3{font-size:15px;font-weight:600;color:rgb(33,33,33);margin:20px 0 8px}
@@ -4560,89 +4564,157 @@ textarea.ap-input{
           <div style="font-size:13px;color:rgb(143,143,143)">How AI models compare your brand against competitors across positive and negative sentiment signals</div>
         </div>
         <div style="overflow-x:auto">
-          <table class="pt-table" id="comp-snt-table" style="table-layout:fixed">
+          <table class="pt-table" id="comp-snt-table" style="table-layout:fixed;background:#fff">
             <colgroup>
-              <col style="width:280px">
-              <col style="width:160px">
+              <col style="width:240px">
+              <col style="width:140px">
+              <col style="width:130px">
+              <col style="width:130px">
             </colgroup>
             <thead>
               <tr>
                 <th style="padding-left:20px"><span class="pt-th-inner">Competitor</span></th>
                 <th><span class="pt-th-inner">Positive Sentiment</span></th>
+                <th><span class="pt-th-inner">Positive topics</span></th>
+                <th><span class="pt-th-inner">Negative topics</span></th>
               </tr>
             </thead>
             <tbody>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('podium')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('podium')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=podium.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    Podium
+                    <span class="comp-name-label">Podium</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">71%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Ease of use", "Review generation", "SMS outreach", "Mobile-friendly", "Quick setup"],event)">5<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Limited analytics", "No multi-location mgmt", "Weak integrations", "Slow support"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('reputation')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('reputation')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=reputation.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    Reputation.com
+                    <span class="comp-name-label">Reputation.com</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">68%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Enterprise features", "Comprehensive dashboard", "Strong reporting", "Data depth"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Steep pricing", "Complex UI", "Long onboarding", "SMB unfriendly"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('yext')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('yext')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=yext.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    Yext
+                    <span class="comp-name-label">Yext</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">74%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Listings accuracy", "Brand consistency", "Wide platform reach", "Directory sync"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Complex onboarding", "IT-heavy setup", "Lengthy timelines", "Rigid templates"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('vendasta')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('vendasta')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=vendasta.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    Vendasta
+                    <span class="comp-name-label">Vendasta</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">65%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["White-label options", "Reseller flexibility", "Partner ecosystem", "Billing tools"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Reseller complexity", "End-user confusion", "Slow UI", "Limited customisation"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('gradeus')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('gradeus')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=grade.us&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    Grade.us
+                    <span class="comp-name-label">Grade.us</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">59%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Simple review funnels", "Affordable pricing", "Easy setup", "Email campaigns"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Narrow feature set", "No reputation analytics", "Limited integrations", "Basic reporting"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('soci')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('soci')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=soci.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    SOCi
+                    <span class="comp-name-label">SOCi</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">63%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Social publishing", "Multi-location scale", "Content calendar", "Brand compliance"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Inconsistent support", "Slow resolution", "Clunky editor", "Steep learning curve"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('reviewtrackers')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('reviewtrackers')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=reviewtrackers.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    ReviewTrackers
+                    <span class="comp-name-label">ReviewTrackers</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">66%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Review monitoring", "Sentiment analysis", "Competitor benchmarking", "Alert system"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Integration gaps", "CRM workarounds", "Limited native connectors", "Slow updates"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
-              <tr class="pt-data-row" onclick="openCompetitorPanel('medallia')" style="cursor:pointer">
+              <tr class="pt-data-row" onclick="openCompetitorPanel('medallia')" style="cursor:pointer;background:#fff">
                 <td style="padding-left:20px">
                   <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:rgb(33,33,33)">
                     <img src="https://www.google.com/s2/favicons?domain=medallia.com&sz=16" width="16" height="16" style="border-radius:2px;flex-shrink:0" onerror="this.style.display='none'"/>
-                    Medallia
+                    <span class="comp-name-label">Medallia</span>
                   </div>
                 </td>
                 <td style="font-size:13px;color:#2e7d32;font-weight:500">77%</td>
+                <td class="topics-cell">
+                  <span class="topics-trigger pos-topics" onclick="toggleTopicsPopover(this,["Deep CX insights", "Enterprise NPS", "Real-time feedback", "Journey mapping"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
+                <td class="topics-cell">
+                  <span class="topics-trigger neg-topics" onclick="toggleTopicsPopover(this,["Enterprise-only pricing", "Out of reach for SMBs", "Complex rollout", "High TCO"],event)">4<span class="topics-chev material-symbols-rounded">expand_more</span></span>
+                  <div class="topics-popover"></div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -10595,25 +10667,41 @@ function openCompetitorPanel(key) {
   const negList = d.negTopics.map(t => `<div class="cit-claim-chip neg"><span class="cit-claim-icon">−</span><span>${t}</span></div>`).join('');
   document.getElementById('comp-panel-body').innerHTML = `
     <div class="cit-site-block">
-      <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
         <img src="https://www.google.com/s2/favicons?domain=${d.domain}&sz=24" width="24" height="24" style="border-radius:4px" onerror="this.style.display='none'"/>
-        <div class="cit-site-name">${d.name}</div>
+        <div class="cit-site-name" style="margin-bottom:0">${d.name}</div>
       </div>
     </div>
-    <div class="cit-claims-row">
-      <div class="cit-claim-card">
-        <div class="cit-claim-count pos">${d.posTopics.length}</div>
-        <div class="cit-claim-label">Positive topics</div>
-      </div>
-      <div class="cit-claim-card">
-        <div class="cit-claim-count neg">${d.negTopics.length}</div>
-        <div class="cit-claim-label">Negative topics</div>
-      </div>
+    <div class="cit-tabs">
+      <div class="cit-tab active" onclick="switchCompTab(this,'comp-pane-topics')">Topics</div>
+      <div class="cit-tab" onclick="switchCompTab(this,'comp-pane-content')">Content</div>
     </div>
-    <div class="cit-claim-list">${posList}${negList}</div>
+    <div class="cit-tab-pane active" id="comp-pane-topics">
+      <div class="cit-claims-row">
+        <div class="cit-claim-card">
+          <div class="cit-claim-count pos">${d.posTopics.length}</div>
+          <div class="cit-claim-label">Positive topics</div>
+        </div>
+        <div class="cit-claim-card">
+          <div class="cit-claim-count neg">${d.negTopics.length}</div>
+          <div class="cit-claim-label">Negative topics</div>
+        </div>
+      </div>
+      <div class="cit-claim-list">${posList}${negList}</div>
+    </div>
+    <div class="cit-tab-pane" id="comp-pane-content">
+      <div style="font-size:13px;color:rgb(143,143,143);padding-top:8px">No content available for this competitor.</div>
+    </div>
   `;
   document.getElementById('cit-overlay').classList.add('open');
   document.getElementById('comp-panel').classList.add('open');
+}
+
+function switchCompTab(tabEl, paneId) {
+  tabEl.closest('.cit-body').querySelectorAll('.cit-tab').forEach(t => t.classList.remove('active'));
+  tabEl.closest('.cit-body').querySelectorAll('.cit-tab-pane').forEach(p => p.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
 }
 
 function closeCompetitorPanel() {
