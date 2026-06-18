@@ -6113,7 +6113,7 @@ textarea.ap-input{
           <span style="font-size:14px;font-weight:400;color:#212121">Tagged prompts</span>
           <span id="tag-tagged-count" style="background:#e8e8e8;color:rgb(85,85,85);font-size:11px;font-weight:400;border-radius:10px;padding:1px 6px">0</span>
         </div>
-        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:20px;color:rgb(85,85,85);transition:transform 0.2s;transform:rotate(-90deg)">expand_more</span>
+        <span class="material-symbols-rounded" id="tag-tagged-chev" style="font-size:20px;color:rgb(85,85,85);transition:transform 0.2s">expand_more</span>
       </div>
       <div id="tag-prompt-list" style="display:none;flex-direction:column;gap:0"></div>
     </div>
@@ -8284,7 +8284,7 @@ function openAddTagPanel() {
   // Reset tagged section — visible but closed
   document.getElementById('tag-prompt-list').innerHTML = '';
   document.getElementById('tag-prompt-list').style.display = 'none';
-  document.getElementById('tag-tagged-chev').style.transform = 'rotate(-90deg)';
+  document.getElementById('tag-tagged-chev').style.transform = '';
   document.getElementById('tag-tagged-section').style.display = '';
   // Restore all available prompt rows and reset search
   document.querySelectorAll('.tag-avail-item').forEach(el => el.style.display = '');
@@ -8311,7 +8311,7 @@ function toggleTaggedAccordion() {
   const chev = document.getElementById('tag-tagged-chev');
   const open = list.style.display !== 'none';
   list.style.display = open ? 'none' : 'flex';
-  chev.style.transform = open ? 'rotate(-90deg)' : '';
+  chev.style.transform = open ? '' : 'rotate(-180deg)';
 }
 
 function tagAddPrompt(btn) {
@@ -8346,7 +8346,7 @@ function openTagEditPanel(btn) {
   // Tagged prompts: visible and open
   document.getElementById('tag-tagged-section').style.display = '';
   document.getElementById('tag-prompt-list').style.display = 'flex';
-  document.getElementById('tag-tagged-chev').style.transform = '';
+  document.getElementById('tag-tagged-chev').style.transform = 'rotate(-180deg)';
   document.getElementById('tag-overlay').classList.add('open');
   document.getElementById('tag-panel').classList.add('open');
   document.getElementById('tag-name-input').focus();
