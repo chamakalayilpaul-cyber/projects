@@ -1073,6 +1073,9 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .snt-neg{font-size:14px;font-weight:400;color:#c62828}
 #snt-prompt-table tbody tr{background:#fff}
 #snt-prompt-table tbody tr:hover td{background:rgb(242,244,247)}
+#snt-by-prompt-table tbody tr{background:#fff}
+#snt-by-prompt-table tbody tr:hover td{background:#fff!important}
+#snt-by-prompt-table .pt-data-row:hover .pt-v2-prompt{color:inherit!important}
 #nsd-table tbody tr td{background:#fff}
 #nsd-table tbody tr:hover td{background:rgb(242,244,247)}
 #snt-prompt-table .pt-data-row:hover .pt-v2-prompt{color:#1976d2}
@@ -1397,6 +1400,13 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .cit-topic-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:rgb(85,85,85);border:1px solid #e0e0e0;border-radius:6px;padding:5px 10px;cursor:pointer;background:#fff;font-family:inherit;white-space:nowrap}
 .cit-topic-btn:hover{background:rgb(242,244,247)}
 .cit-topic-btn .material-symbols-rounded{font-size:16px;color:rgb(143,143,143)}
+.cit-toolbar-right{display:flex;align-items:center;gap:8px}
+.cit-nav{display:flex;align-items:center;gap:4px}
+.cit-nav-count{font-size:13px;color:rgb(85,85,85);white-space:nowrap;min-width:32px;text-align:center}
+.cit-nav-btn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border:1px solid #e0e0e0;border-radius:6px;background:#fff;cursor:pointer;color:rgb(85,85,85)}
+.cit-nav-btn:hover{background:rgb(242,244,247)}
+.cit-nav-btn:disabled{opacity:0.35;cursor:default;background:#fff}
+.cit-nav-btn .material-symbols-rounded{font-size:18px}
 .cit-topic-badge{background:#1976d2;color:#fff;border-radius:10px;font-size:11px;font-weight:600;padding:1px 6px;margin-left:2px}
 .cit-topic-drop{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);z-index:700;min-width:220px;padding:6px 0;max-height:260px;overflow-y:auto}
 .cit-topic-drop.open{display:block}
@@ -4234,56 +4244,7 @@ textarea.ap-input{
 
       </div>
 
-      <!-- Sentiment across competitors -->
-      <div class="snt-summary-card">
-        <div class="snt-summary-hdr">
-          <div class="snt-summary-title">Sentiment across competitors</div>
-        </div>
-        <div class="snt-metrics-row" style="align-items:flex-start">
 
-          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
-            <div class="snt-metric-val">82.3<span class="pct">%</span></div>
-            <span class="you-chip">You</span>
-          </div>
-
-          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
-            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
-          </div>
-
-          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
-            <div class="snt-metric-val">71<span class="pct">%</span></div>
-            <div class="snt-metric-label">Podium</div>
-          </div>
-
-          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
-            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
-          </div>
-
-          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
-            <div class="snt-metric-val">68<span class="pct">%</span></div>
-            <div class="snt-metric-label">Reputation.com</div>
-          </div>
-
-          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
-            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
-          </div>
-
-          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
-            <div class="snt-metric-val">74<span class="pct">%</span></div>
-            <div class="snt-metric-label">Yext</div>
-          </div>
-
-          <div style="display:flex;align-items:center;padding:0 20px;margin-top:4px;flex:none">
-            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
-          </div>
-
-          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
-            <div class="snt-metric-val">65<span class="pct">%</span></div>
-            <div class="snt-metric-label">Vendasta</div>
-          </div>
-
-        </div>
-      </div>
 
 
       <!-- Sentiment score over time -->
@@ -4557,7 +4518,58 @@ textarea.ap-input{
         </div>
       </div>
 
-      <!-- Sentiment breakdown by competitors -->
+      <!-- Sentiment across competitors -->
+      <div class="snt-summary-card" style="margin-top:24px">
+        <div class="snt-summary-hdr">
+          <div class="snt-summary-title">Sentiment across competitors</div>
+        </div>
+        <div class="snt-metrics-row" style="align-items:flex-start">
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">82.3<span class="pct">%</span></div>
+            <span class="you-chip">You</span>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 8px 0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">71<span class="pct">%</span></div>
+            <div class="snt-metric-label">Podium</div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 8px 0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">68<span class="pct">%</span></div>
+            <div class="snt-metric-label">Reputation.com</div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 8px 0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">74<span class="pct">%</span></div>
+            <div class="snt-metric-label">Yext</div>
+          </div>
+
+          <div style="display:flex;align-items:center;padding:0 8px 0 20px;margin-top:4px;flex:none">
+            <div style="background:#e8f0fb;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:rgb(85,85,85)">vs</div>
+          </div>
+
+          <div class="snt-metric-item" style="flex:1;padding-right:0;margin-right:0">
+            <div class="snt-metric-val">65<span class="pct">%</span></div>
+            <div class="snt-metric-label">Vendasta</div>
+          </div>
+
+        </div>
+      </div>
+
+            <!-- Sentiment breakdown by competitors -->
       <div class="pt-table-wrap" style="margin:24px 0 0;overflow:visible">
         <div style="padding:20px 20px 16px">
           <div style="font-size:16px;font-weight:500;color:rgb(33,33,33);margin-bottom:4px">Sentiment breakdown by competitors</div>
@@ -4717,6 +4729,138 @@ textarea.ap-input{
                 </td>
               </tr>
             </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- Sentiment by prompt -->
+      <div class="pt-table-wrap" style="margin:24px 0 0;overflow:visible">
+        <div style="padding:20px 20px 16px">
+          <div style="font-size:16px;font-weight:500;color:rgb(33,33,33);margin-bottom:4px">Sentiment by prompt</div>
+          <div style="font-size:13px;color:rgb(143,143,143)">How your tracked prompts are performing by sentiment score across AI platforms</div>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="pt-table" id="snt-by-prompt-table" style="table-layout:fixed">
+            <colgroup>
+              <col style="width:340px">
+              <col style="width:130px">
+              <col style="width:120px">
+              <col style="width:140px">
+            </colgroup>
+            <thead>
+              <tr>
+                <th><span class="pt-th-inner">Themes<span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+                <th><span class="pt-th-inner">Visibility rank <span class="material-symbols-rounded" style="font-size:14px;color:#9e9e9e">info</span><span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+                <th><span class="pt-th-inner">Executions <span class="material-symbols-rounded" style="font-size:14px;color:#9e9e9e">info</span><span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+                <th><span class="pt-th-inner">Sentiment score <span class="material-symbols-rounded" style="font-size:14px;color:#9e9e9e">info</span><span class="material-symbols-rounded pt-sort-icon">expand_more</span></span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pt-group-row" data-group="sp-inv" onclick="togglePtGroup('sp-inv')" style="background:#fff">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisalign</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
+                <td>1</td><td>1161</td><td><span class="snt-pos" style="font-size:14px">84%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-inv" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
+                <td>1</td><td>1161</td><td><span class="snt-pos" style="font-size:14px">89%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-inv" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisalign specialists for complex bite corrections</span></td>
+                <td>2</td><td>1043</td><td><span class="snt-neg" style="font-size:14px">75%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-inv" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does Invisalign cost with insurance?</span></td>
+                <td>1</td><td>1279</td><td><span class="snt-pos" style="font-size:14px">87%</span></td>
+              </tr>
+              <tr class="pt-group-row" data-group="sp-teeth" onclick="togglePtGroup('sp-teeth')" style="background:#fff">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Teeth whitening</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>2</td><td>987</td><td><span class="snt-neg" style="font-size:14px">67%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-teeth" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best teeth whitening dentist near me same-day appointments</span></td>
+                <td>2</td><td>1038</td><td><span class="snt-neg" style="font-size:14px">72%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-teeth" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Professional teeth whitening vs at-home kits</span></td>
+                <td>3</td><td>936</td><td><span class="snt-neg" style="font-size:14px">61%</span></td>
+              </tr>
+              <tr class="pt-group-row" data-group="sp-impl" onclick="togglePtGroup('sp-impl')" style="background:#fff">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Dental implants</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>1</td><td>1312</td><td><span class="snt-neg" style="font-size:14px">74%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-impl" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much do dental implants cost and what affects pricing?</span></td>
+                <td>1</td><td>1398</td><td><span class="snt-pos" style="font-size:14px">84%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-impl" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best dental implant specialists near me</span></td>
+                <td>2</td><td>1225</td><td><span class="snt-neg" style="font-size:14px">65%</span></td>
+              </tr>
+              <tr class="pt-group-row" data-group="sp-orth" onclick="togglePtGroup('sp-orth')" style="background:#fff">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Orthodontics</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>3</td><td>856</td><td><span class="snt-neg" style="font-size:14px">71%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-orth" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best orthodontists for adults near me</span></td>
+                <td>3</td><td>892</td><td><span class="snt-pos" style="font-size:14px">78%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-orth" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Orthodontic specialists with payment plans</span></td>
+                <td>4</td><td>819</td><td><span class="snt-neg" style="font-size:14px">64%</span></td>
+              </tr>
+              <tr class="pt-group-row" data-group="sp-trust" onclick="togglePtGroup('sp-trust')" style="background:#fff">
+                <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Patient trust</span><span class="pt-group-subcount">2 prompts</span></div></div></td>
+                <td>2</td><td>1074</td><td><span class="snt-pos" style="font-size:14px">81%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-trust" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Most trusted dental clinics for consistent Invisalign care</span></td>
+                <td>1</td><td>1118</td><td><span class="snt-pos" style="font-size:14px">86%</span></td>
+              </tr>
+              <tr class="pt-data-row pt-hidden" data-group="sp-trust" style="background:#fff">
+                <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Dental practices with highest verified patient satisfaction scores</span></td>
+                <td>2</td><td>1030</td><td><span class="snt-neg" style="font-size:14px">76%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Competitive Sentiment Matrix -->
+      <div class="pt-table-wrap" style="margin:24px 0 0;overflow:visible">
+        <div style="padding:20px 20px 16px">
+          <div style="font-size:16px;font-weight:500;color:rgb(33,33,33);margin-bottom:4px">Competitive Sentiment Matrix</div>
+          <div style="font-size:13px;color:rgb(143,143,143)">Comparison of positive sentiment grouped by topic across your tracked competitors</div>
+        </div>
+        <div style="overflow-x:auto">
+          <table id="csm-table" style="width:100%;border-collapse:collapse;table-layout:fixed">
+            <colgroup>
+              <col style="width:160px">
+              <col style="width:100px">
+              <col style="width:100px">
+              <col style="width:110px">
+              <col style="width:90px">
+              <col style="width:90px">
+              <col style="width:90px">
+              <col style="width:90px">
+              <col style="width:110px">
+              <col style="width:95px">
+            </colgroup>
+            <thead>
+              <tr style="border-bottom:1px solid #eaeaea">
+                <th style="padding:10px 16px;font-size:12px;font-weight:500;color:rgb(143,143,143);text-align:left;background:#fafafa">Topic</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:600;color:#1976d2;text-align:center;background:#fafafa">Birdeye <span style="font-size:10px;font-weight:400;color:rgb(143,143,143)">(You)</span></th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Podium</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Reputation.com</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Yext</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Vendasta</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Grade.us</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">SOCi</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">ReviewTrackers</th>
+                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Medallia</th>
+              </tr>
+            </thead>
+            <tbody id="csm-body"></tbody>
           </table>
         </div>
       </div>
@@ -10660,11 +10804,191 @@ const COMP_DATA = {
   medallia:       { name:'Medallia',       domain:'medallia.com',       pos:77, neg:23, posTopics:['Deep CX insights','Enterprise NPS','Real-time feedback','Journey mapping'], negTopics:['Enterprise-only pricing','Out of reach for SMBs','Complex rollout','High TCO'] },
 };
 
+const COMP_PAGE_CONTENT = {
+  podium: `
+    <h3>How Podium Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">Podium is one of the most recognised names in SMB reputation management and is consistently cited across ChatGPT, Perplexity, and Google AI Mode when users ask about review generation tools for local businesses.</span> Its SMS-first messaging model resonates strongly with service-based industries including automotive, dental, home services, and retail, where text-based customer communication is already the norm.</p>
+    <p><span class="cit-hl-pos">AI models routinely position Podium in the top three for ease of setup — users across multiple review platforms report going live within a single business day, with review request automations running before the end of the first week.</span> This frictionless onboarding narrative is being reproduced verbatim in AI responses, reinforcing Podium's brand as the "get started fast" option in the category.</p>
+    <p><span class="cit-hl-neg">However, AI responses also consistently frame Podium as a tool that businesses outgrow. As organisations scale beyond five locations, citation sources begin recommending platforms with more robust multi-location dashboards, consolidated analytics, and enterprise API access — capabilities where Podium is rated below Birdeye and Yext in nearly every head-to-head comparison indexed by AI models.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Podium's review volume impact is one of its most cited strengths. Independent studies referenced in AI responses report an average 2.8x increase in Google review count within 60 days of platform activation.</span> For local businesses where a small number of reviews can dramatically shift search visibility, this rapid volume growth translates directly into measurable business outcomes — and AI models surface this data point frequently when recommending tools for review growth.</p>
+    <p><span class="cit-hl-pos">The unified inbox, which consolidates SMS, Facebook Messenger, Google Business Messages, and website chat into a single thread view, receives strong praise in user-generated content indexed by AI models. Customer-facing staff report significantly reduced context-switching and faster response times after adoption.</span></p>
+    <p><span class="cit-hl-pos">Podium's mobile application is highlighted across multiple AI citation sources as a competitive advantage. Business owners and front-line staff who are rarely at a desktop can manage reviews, respond to messages, and collect payments directly from their phones — a workflow that resonates particularly well in field service and hospitality contexts.</span></p>
+    <p><span class="cit-hl-neg">Despite these strengths, AI models note a pattern: Podium's positive sentiment is concentrated among single-location and early-stage multi-location operators. Businesses with more than ten locations report that the lack of a consolidated enterprise analytics layer creates significant operational overhead as teams try to aggregate data manually across location dashboards.</span></p>
+
+    <h3>Where Competitors Outperform Podium</h3>
+    <p><span class="cit-hl-neg">Analytics depth is the most consistently cited gap. Podium's reporting is described in AI sources as adequate for monitoring review volume and average star rating but insufficient for businesses that need cross-location sentiment trending, AI-generated insight summaries, or custom KPI dashboards. Birdeye's competitive intelligence module and Yext's analytics suite are both cited as meaningfully superior in this area.</span></p>
+    <p><span class="cit-hl-neg">Integration coverage is the second major gap. While Podium supports connections to popular CRMs like Salesforce and HubSpot, AI citation sources note that its native connector library is significantly narrower than alternatives. Businesses in healthcare, automotive, and property management — verticals with specialised PMS, DMS, and EHR systems — frequently report needing costly custom middleware to complete the integration layer.</span></p>
+    <p><span class="cit-hl-neg">AI responses targeting queries about "reputation management for franchises" or "multi-location review software" rarely recommend Podium without a caveat about scale limitations. This framing, reproduced consistently across sources, positions Podium as a starting point rather than a long-term enterprise solution.</span></p>
+    <p><span class="cit-hl-pos">In queries specifically about payment collection via messaging or SMS-based customer engagement, Podium remains competitive and is often recommended alongside or above Birdeye, suggesting that its product evolution toward payments and messaging is creating a new defensible positioning outside of pure reputation management.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">For single-location businesses and small multi-location operators in service verticals, AI models present Podium as a credible, well-reviewed option with strong ROI for review generation and customer messaging.</span> Its NPS scores in third-party reviews are high for this segment, and the volume of positive user-generated content ensures that AI models continue to surface favourable signals for SMB queries.</p>
+    <p><span class="cit-hl-neg">For enterprise and high-location-count buyers, AI responses consistently recommend Birdeye over Podium, citing Birdeye's deeper analytics, broader integrations, AI-powered insights, and stronger competitive benchmarking capabilities. The gap widens in queries about franchise management, where Birdeye's location hierarchy tools have no direct equivalent in Podium's current feature set.</span></p>
+    <p><span class="cit-hl-pos">One notable opportunity: Podium's positioning around Payments and its growing financial services layer is not yet well-represented in AI citation sources. As more content around this capability is indexed, AI sentiment in payment-adjacent queries may shift more favourably toward Podium in the short term.</span></p>`,
+
+  reputation: `
+    <h3>How Reputation.com Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">Reputation.com holds a strong AI citation profile in the enterprise segment, consistently appearing in responses to queries about reputation management for large organisations in automotive, healthcare, financial services, and multi-site retail.</span> Its depth of data infrastructure and configurability are recognised by AI models as genuine competitive strengths that differentiate it from lighter-weight tools in the category.</p>
+    <p><span class="cit-hl-pos">AI models frequently cite Reputation.com's Reputation Score — a proprietary composite metric that aggregates review volume, sentiment, response rate, and competitive benchmarking data — as an innovation that has been adopted or emulated by other platforms in the space. This positioning reinforces Reputation.com's narrative as a category definer in enterprise reputation management.</span></p>
+    <p><span class="cit-hl-neg">Despite this strong enterprise profile, AI responses are notably restrained in recommending Reputation.com for buyers outside the enterprise tier. Pricing, implementation complexity, and a perceived focus on large deployments create a consistent narrative in AI sources that steers mid-market buyers elsewhere.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Reputation.com's analytics and reporting layer is its most cited strength. AI sources describe dashboards that provide executives with location-level and enterprise-level views of sentiment trends, competitive benchmarks, and operational performance metrics — capabilities that are particularly valuable for CX and operations teams managing hundreds or thousands of locations.</span></p>
+    <p><span class="cit-hl-pos">The platform's survey and feedback collection infrastructure receives strong marks in AI citations, particularly for healthcare and financial services clients where post-interaction surveys are a compliance and quality assurance requirement. AI models reference Reputation.com's integration with HCAHPS and other regulated feedback frameworks as a differentiator in these verticals.</span></p>
+    <p><span class="cit-hl-pos">Competitive benchmarking is another consistently cited positive signal. AI responses highlight Reputation.com's ability to show clients how their sentiment scores compare against named competitors within the same market, giving strategic context that pure monitoring tools cannot provide.</span></p>
+    <p><span class="cit-hl-neg">However, these strengths come with consistent caveats. AI models note that the full analytics and benchmarking capabilities are locked behind higher-tier contracts, meaning that organisations expecting enterprise-grade insight at mid-market pricing frequently encounter a significant gap between demo capabilities and what is included in their contracted package.</span></p>
+
+    <h3>Where Competitors Outperform Reputation.com</h3>
+    <p><span class="cit-hl-neg">Pricing accessibility is Reputation.com's most prominent cited weakness. AI sources consistently flag that contract values are positioned for large enterprises, with user-reported annual commitments starting at $25,000 and scaling significantly for multi-thousand-location deployments. This pricing reality means that AI models almost universally redirect mid-market buyers toward Birdeye or Podium before Reputation.com appears in their recommendations.</span></p>
+    <p><span class="cit-hl-neg">Onboarding and implementation timelines are the second major cited friction point. Multiple AI sources reference 60–90 day implementation cycles as typical for Reputation.com deployments, with dedicated IT involvement required. For businesses expecting to be live and generating reviews within two weeks, this timeline is a significant deterrent.</span></p>
+    <p><span class="cit-hl-neg">User interface complexity is mentioned in a meaningful subset of reviews indexed by AI models. Front-line staff and location managers — particularly those in service environments without dedicated technology support — report that the platform requires more training than alternatives and that day-to-day tasks like reviewing and responding to customer feedback are less intuitive than in Birdeye or Podium's interfaces.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">In the enterprise segment, AI models position Reputation.com and Birdeye as the two most comprehensive options, with Reputation.com scoring higher on analytics depth and Birdeye scoring higher on usability, integration breadth, and time-to-value.</span> The choice between the two is frequently framed in AI responses as analytics-first versus activation-first, with Reputation.com favoured by CX leaders who prioritise measurement and Birdeye favoured by operators who prioritise execution.</p>
+    <p><span class="cit-hl-neg">For mid-market and growing businesses, AI responses consistently recommend Birdeye over Reputation.com, citing more accessible pricing, faster onboarding, and a more usable interface for teams without dedicated technology support.</span></p>
+    <p><span class="cit-hl-pos">One area where Reputation.com's AI citation profile is strengthening: queries about AI-powered customer experience insight and executive reporting. As the platform invests in this layer, AI models are beginning to reference these capabilities more frequently, which may shift the competitive framing toward Reputation.com in data-heavy enterprise queries.</span></p>`,
+
+  yext: `
+    <h3>How Yext Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">Yext is the dominant platform cited in AI responses to queries about digital knowledge management, listings accuracy, and structured data for local search. Across ChatGPT, Perplexity, Google AI Mode, and Copilot, Yext appears in the top two results for nearly every query related to ensuring accurate, consistent business information across directories and search engines.</span></p>
+    <p><span class="cit-hl-pos">AI models recognise Yext's Knowledge Graph as a foundational differentiator — the structured data layer allows businesses to define and control their authoritative information profile and push it across 200+ publishers simultaneously. This capability is described in AI citations as uniquely scalable, particularly for enterprise brands managing thousands of location profiles.</span></p>
+    <p><span class="cit-hl-neg">However, AI responses consistently distinguish between Yext's listings management strength and its reputation management capability, with the latter receiving considerably weaker coverage. Businesses expecting a full-featured reputation management platform comparable to Birdeye frequently encounter AI responses that acknowledge Yext's listings leadership while directing them elsewhere for review automation, customer messaging, and AI-powered sentiment insights.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Listings accuracy is Yext's most cited and most consistent positive signal. Independent benchmarks referenced in AI sources score Yext at the top of the category for NAP consistency across Google, Bing, Apple Maps, Yelp, and industry-specific directories. Brands in regulated industries where incorrect business information carries compliance risk particularly value this reliability.</span></p>
+    <p><span class="cit-hl-pos">Yext's AI-readiness positioning is gaining traction in AI citation sources. As large language models increasingly draw from structured knowledge sources, Yext's ability to push verified, structured brand data into the information ecosystem positions it as a strategic tool for brands investing in AI search optimisation — a capability that AI models themselves reference with increasing frequency.</span></p>
+    <p><span class="cit-hl-pos">Enterprise scalability is consistently praised. AI sources highlight Yext's ability to manage location profiles at scale — brands with 5,000+ locations report that bulk update workflows, location hierarchy management, and publisher sync are all significantly more reliable than alternatives tested in the same category.</span></p>
+    <p><span class="cit-hl-neg">Despite these strengths, AI models note a consistent pattern: Yext's review management features, while present, are described as functional rather than best-in-class. Review request automation, AI-powered response drafting, and sentiment-driven operational alerting are all areas where AI sources score Birdeye noticeably higher.</span></p>
+
+    <h3>Where Competitors Outperform Yext</h3>
+    <p><span class="cit-hl-neg">Onboarding complexity is the most frequently cited barrier. AI sources reference implementation timelines of 60–120 days for mid-to-large Yext deployments, with meaningful IT involvement required for API configuration, location data migration, and publisher authentication flows. For operators expecting fast activation, this represents a significant friction point that AI models flag prominently.</span></p>
+    <p><span class="cit-hl-neg">Review engagement depth is a consistent gap in AI comparisons. Yext's review response tooling lacks the AI-generated reply drafts, sentiment filtering, and bulk response capabilities that Birdeye offers. Multiple AI sources note that businesses using Yext for listings but needing to actively manage their review conversation strategy often maintain a second tool in their stack — an inefficiency that surfaces as a negative signal in evaluation queries.</span></p>
+    <p><span class="cit-hl-neg">Template rigidity is mentioned in a meaningful share of reviews indexed by AI models. Location managers report that Yext's content publishing templates, while comprehensive, impose structural constraints that limit the ability to create locally differentiated content — a friction point for franchise brands that need a balance between national brand standards and local relevance.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">In queries specifically about listings management, structured data, and local search accuracy, AI models consistently recommend Yext as the category leader. The platform's publisher network and Knowledge Graph have no direct equivalent at the same scale, and AI responses reflect this clearly.</span></p>
+    <p>In queries about end-to-end reputation management — reviews, messaging, sentiment, competitive benchmarking, and AI insights — <span class="cit-hl-neg">AI responses consistently position Birdeye as the more complete solution, noting that Yext's strengths are concentrated in the listings and structured data layer rather than in the broader reputation and customer experience stack.</span></p>
+    <p><span class="cit-hl-pos">A growing number of AI sources recommend using Yext and Birdeye together — Yext for listings accuracy and structured data distribution, Birdeye for review management and customer experience — suggesting that the platforms are increasingly perceived as complementary rather than directly competitive in the minds of enterprise buyers.</span></p>`,
+
+  vendasta: `
+    <h3>How Vendasta Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">Vendasta occupies a unique position in AI citation sources as the dominant platform for agencies and technology resellers that white-label reputation management services to their SMB clients. AI models consistently recommend Vendasta in responses to queries about building a reseller business, launching a white-label SaaS offering, or managing multiple client brands under a unified platform.</span></p>
+    <p><span class="cit-hl-pos">The platform's marketplace model — which allows agencies to assemble bundles of resaleable products including reviews, social, SEO, and advertising tools — is recognised by AI models as genuinely differentiated. No other platform in the reputation management space offers the same breadth of resaleable products under a single white-label infrastructure.</span></p>
+    <p><span class="cit-hl-neg">However, AI responses consistently distinguish between Vendasta's value for the agency channel and its direct-to-business value proposition. When queries come from business owners or operators rather than agencies, AI models rarely recommend Vendasta, citing a user experience that is designed around the reseller layer rather than the end business.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Vendasta's partner ecosystem is its most cited strength. AI sources highlight the CRM, billing, and client management tools built natively into the platform as capabilities that allow agencies to run their entire service delivery operation — from prospect pipeline to monthly reporting — without leaving the Vendasta interface. For agencies managing 50+ SMB clients, this operational consolidation delivers meaningful efficiency gains.</span></p>
+    <p><span class="cit-hl-pos">The breadth of the product marketplace is frequently praised in AI citations. Agencies report being able to offer clients a full-stack digital presence solution — including review management, listings, social publishing, website, and paid advertising — from a single vendor relationship. AI models cite this comprehensiveness as a key reason agencies choose Vendasta over building a multi-vendor stack.</span></p>
+    <p><span class="cit-hl-neg">Despite this, AI sources consistently note that the depth of individual products within the Vendasta marketplace is shallower than category specialists. Review automation workflows, AI-powered response drafting, and sentiment analytics are all described as less capable than Birdeye's standalone offering — a trade-off that agencies and their clients navigate when choosing breadth over depth.</span></p>
+
+    <h3>Where Competitors Outperform Vendasta</h3>
+    <p><span class="cit-hl-neg">End-user experience is the most consistently cited weakness in AI sources. Business owners interacting with Vendasta-powered client portals frequently report confusion about platform capabilities, unclear navigation, and a sense that the tool was designed for someone else. This friction is attributed by AI sources to the abstraction layers inherent in a reseller model — features and workflows are optimised for agency efficiency rather than business owner usability.</span></p>
+    <p><span class="cit-hl-neg">Review management depth is a recurring gap in direct comparisons with Birdeye. AI sources note that Vendasta's review automation, competitive benchmarking, and AI-generated response quality are meaningfully weaker than Birdeye's core offering. For agencies whose clients are primarily focused on driving review volume and managing their online reputation, this gap becomes a material differentiator in platform selection.</span></p>
+    <p><span class="cit-hl-neg">Customisation limits within the white-label experience are noted in a meaningful share of AI citations. Agencies that want to deeply brand the client experience — custom domains, fully skinned UI, custom report templates — report running into constraints that require workarounds or create inconsistencies in the client-facing interface.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">AI models position Vendasta as the clear choice for agencies and resellers building a managed services or SaaS business. In this specific query context, no competitor matches Vendasta's combination of marketplace breadth, white-label depth, and partner tooling.</span></p>
+    <p><span class="cit-hl-neg">For direct-to-business reputation management, AI responses consistently favour Birdeye, citing superior review automation, deeper AI-powered insights, and a product designed around the needs of the business owner rather than the intermediary. When queries come from multi-location operators without an agency intermediary, Vendasta rarely appears in AI recommendations.</span></p>
+    <p><span class="cit-hl-pos">One emerging trend in AI citations: queries about "AI tools for agencies" are beginning to surface Vendasta's AI-powered reporting and client insight features more frequently, suggesting that the platform's investments in automation are gaining recognition in AI-indexed content — a signal worth monitoring.</span></p>`,
+
+  gradeus: `
+    <h3>How Grade.us Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">Grade.us is consistently cited in AI responses to queries about affordable review management tools for small businesses and solo operators. It holds a strong AI citation profile in the price-sensitive segment of the market, where its transparent pricing and simple feature set are positioned as advantages over more complex enterprise platforms.</span></p>
+    <p><span class="cit-hl-pos">AI models frequently recommend Grade.us alongside GetMoreReviews and NiceJob when users ask for lightweight, budget-friendly review generation tools. In this context, Grade.us performs well — its email-based review request campaigns, multi-platform review funnel, and basic reporting dashboard are described as delivering solid results for the price point charged.</span></p>
+    <p><span class="cit-hl-neg">However, the AI citation profile for Grade.us drops sharply when queries shift toward multi-location management, AI-powered insights, competitive benchmarking, or customer messaging. In these contexts, Grade.us is rarely surfaced, and when it does appear it is typically as a "starting point" before recommending a more capable alternative for growing businesses.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Pricing transparency is Grade.us's most cited positive differentiator in AI sources. In a category where most platforms require custom quotes, Grade.us publishes its pricing openly — a characteristic that AI models highlight when responding to buyers who want to evaluate options without entering a sales process. This transparency correlates strongly with positive sentiment in user reviews indexed by AI models.</span></p>
+    <p><span class="cit-hl-pos">The review funnel builder is consistently praised in AI citations for its simplicity. Users report being able to create a review request campaign from scratch, configure platform routing logic, and launch the first automated request sequence within a single hour of signing up — a onboarding speed that AI sources contrast favourably with longer implementation timelines at enterprise platforms.</span></p>
+    <p><span class="cit-hl-pos">White-label options at affordable price points are noted as a strength for small agencies. Grade.us offers reseller capabilities at price tiers that allow boutique digital marketing agencies to include review management in their service packages without the significant minimum commitments required by Vendasta or Birdeye's agency programmes.</span></p>
+    <p><span class="cit-hl-neg">Despite these genuine strengths, AI models consistently note that Grade.us lacks the platform depth needed to grow with a business. There is no meaningful AI layer, no competitive intelligence module, no multi-location analytics, and no customer messaging capability — gaps that become apparent quickly as clients scale beyond a handful of locations or seek more sophisticated reputation strategies.</span></p>
+
+    <h3>Where Competitors Outperform Grade.us</h3>
+    <p><span class="cit-hl-neg">Feature breadth is the most cited limitation across AI sources. Grade.us is described as a review generation tool, not a reputation management platform — a distinction that AI models draw explicitly when users ask about comprehensive solutions. Surveys, messaging, competitive benchmarking, AI insights, and listings management are all absent from Grade.us's feature set, limiting its relevance as businesses grow.</span></p>
+    <p><span class="cit-hl-neg">Reporting depth is consistently flagged. AI sources note that Grade.us's analytics are limited to basic review volume and average rating metrics. Businesses that need sentiment trending, response rate analysis, or multi-location roll-up reporting consistently find the reporting layer insufficient and migrate to platforms with more sophisticated analytics.</span></p>
+    <p><span class="cit-hl-neg">Integration coverage is a recurring gap. Grade.us's native connector library is narrow, and the lack of deep CRM, PMS, or EHR integrations makes it unsuitable for verticals where automated review triggering from operational systems — appointment completions, service closures, patient discharges — is critical to driving review volume at scale.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">Grade.us occupies a clear and defensible niche in AI citation sources — the entry-level, budget-friendly review generation tool for small businesses and solo operators. Within this segment, its AI sentiment is genuinely positive and its positioning is stable.</span></p>
+    <p><span class="cit-hl-neg">When queries involve multi-location management, AI-powered features, or platform scalability, Grade.us is displaced entirely by Birdeye, Podium, and Reputation.com in AI recommendations. The gap is not incremental — it is categorical, reflecting the fundamental product positioning difference between a review generation tool and a full reputation management platform.</span></p>
+    <p><span class="cit-hl-pos">One area where Grade.us could strengthen its AI citation profile: publishing more content around its agency programme and white-label capabilities. AI models currently underrepresent this aspect of Grade.us's offering relative to its actual product depth in this segment.</span></p>`,
+
+  soci: `
+    <h3>How SOCi Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">SOCi holds a strong AI citation profile in the multi-location social media management and local marketing space. AI models consistently surface SOCi in responses to queries about managing social publishing, local content, and brand compliance across large franchise and enterprise networks.</span></p>
+    <p><span class="cit-hl-pos">The platform's CoMarketing Cloud architecture — which allows national brands to define content standards while empowering local operators to publish within those guardrails — is cited by AI models as a genuine innovation in the franchise marketing space. Several AI sources describe SOCi as the category leader for localised social content management at enterprise scale.</span></p>
+    <p><span class="cit-hl-neg">However, AI responses distinguish clearly between SOCi's social and content management strengths and its reputation management capabilities. Queries specifically about review automation, AI-powered response drafting, and sentiment analytics consistently surface Birdeye as the stronger option, with SOCi positioned as complementary rather than competitive in the reputation layer.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Content calendar and social publishing depth are SOCi's most cited strengths. AI sources describe a publishing workflow that allows franchise marketing teams to create national content, configure local variation rules, and distribute across thousands of location social profiles simultaneously — a capability that is described as unmatched at this scale.</span></p>
+    <p><span class="cit-hl-pos">Brand compliance tooling is consistently praised in AI citations. SOCi's ability to enforce visual brand standards, messaging guidelines, and legal disclaimers across locally managed social accounts is particularly valued in regulated industries including financial services, healthcare, and food and beverage franchises where compliance is a material risk.</span></p>
+    <p><span class="cit-hl-pos">Local search and listings capabilities have been strengthened in recent platform updates, and AI sources are beginning to reflect this improvement. SOCi's integration of reputation monitoring with its local presence management tools is cited as a meaningful step toward a more unified platform offering.</span></p>
+    <p><span class="cit-hl-neg">Despite these positive signals, AI models consistently note that SOCi's review management features remain secondary to its social management core. Review request automation, competitive sentiment benchmarking, and AI-generated response quality are all described as less capable than Birdeye's offering — a perception that is reinforced across multiple review platforms indexed by AI models.</span></p>
+
+    <h3>Where Competitors Outperform SOCi</h3>
+    <p><span class="cit-hl-neg">Customer support quality is the most prominent negative signal in AI citation sources for SOCi. Multiple review aggregations indexed by AI models identify support response times and issue resolution consistency as below industry standard. Users report escalation paths that are slow and that technical issues — particularly around social publishing API failures and review platform integrations — take longer to resolve than with competing platforms.</span></p>
+    <p><span class="cit-hl-neg">Onboarding complexity is a secondary cited friction point. SOCi's architecture, while powerful, requires significant configuration to implement correctly — particularly the local content governance rules, location hierarchy setup, and social account authentication flows. AI sources note that mid-market buyers without a dedicated implementation team frequently experience a longer-than-expected time-to-value.</span></p>
+    <p><span class="cit-hl-neg">Review automation depth is consistently cited as a gap compared to Birdeye. SOCi's review request campaign tools lack the conditional logic, multi-channel triggering, and AI-powered personalisation that Birdeye's review automation offers. For franchise brands where review volume is a strategic priority alongside social publishing, this limitation often results in a two-platform approach.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">In the franchise social marketing category, AI models position SOCi as the category leader with no direct peer at the same scale. For brands whose primary need is localised social publishing and brand compliance across hundreds of franchise locations, SOCi is the clear AI-recommended choice.</span></p>
+    <p><span class="cit-hl-neg">In the broader reputation management and customer experience category, AI responses consistently position Birdeye above SOCi, citing review automation depth, AI-powered response quality, competitive benchmarking, and a more complete end-to-end platform for managing the full customer feedback lifecycle.</span></p>
+    <p><span class="cit-hl-pos">As SOCi continues to invest in its reputation layer — particularly AI-powered review responses and sentiment analytics — AI citation sources are beginning to reflect a more balanced profile. Monitoring the trajectory of this coverage is important for competitive positioning in franchise and enterprise queries where SOCi is a direct consideration.</span></p>`,
+
+  reviewtrackers: `
+    <h3>How ReviewTrackers Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">ReviewTrackers is consistently cited in AI responses to queries about review monitoring, sentiment analysis, and competitive reputation tracking. AI models position it as a strong analytics and listening tool, particularly for businesses and agencies that prioritise understanding their reputation landscape before taking action.</span></p>
+    <p><span class="cit-hl-pos">The platform's ability to aggregate reviews from 100+ platforms into a unified monitoring dashboard is recognised by AI models as genuinely comprehensive. Businesses in verticals with niche review platforms — healthcare on Healthgrades, attorneys on Avvo, hotels on TripAdvisor — value ReviewTrackers' broad source coverage, and AI sources reflect this vertical-specific strength.</span></p>
+    <p><span class="cit-hl-neg">However, AI responses consistently distinguish between ReviewTrackers' monitoring depth and its engagement and activation capabilities. The platform is described in AI sources as excellent for listening but limited for acting — a framing that positions it as a point solution rather than a complete reputation management platform.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Sentiment analysis accuracy is ReviewTrackers' most praised AI citation signal. AI sources reference the platform's NLP-powered sentiment engine as one of the most reliable in the category for accurately classifying review tone, identifying emerging complaint themes, and surfacing statistical shifts in customer sentiment before they become visible in aggregate star ratings.</span></p>
+    <p><span class="cit-hl-pos">Competitive benchmarking depth is consistently cited as a differentiated capability. ReviewTrackers enables businesses to compare their review performance metrics — volume, velocity, average rating, response rate, and sentiment distribution — directly against named competitors at the local level. AI models surface this feature prominently in queries about competitive reputation intelligence.</span></p>
+    <p><span class="cit-hl-pos">The alert and notification system is highlighted in multiple AI citation sources as particularly effective. Businesses can configure highly granular alerts — triggered by rating threshold, keyword mention, review platform, or location — ensuring that critical negative reviews surface to the right team members within minutes of posting. AI sources note this as a meaningful operational safeguard for brands with strict response time SLAs.</span></p>
+    <p><span class="cit-hl-neg">Despite these strengths, AI models note a consistent gap: ReviewTrackers' review request and automation capabilities are described as basic compared to platforms like Birdeye and Podium. The absence of multi-channel request automation, conditional logic flows, and AI-personalised outreach limits the platform's effectiveness for businesses trying to proactively grow review volume alongside monitoring existing sentiment.</span></p>
+
+    <h3>Where Competitors Outperform ReviewTrackers</h3>
+    <p><span class="cit-hl-neg">Integration gaps are the most frequently cited weakness in AI sources. ReviewTrackers' native connector library is narrower than leading alternatives, requiring third-party middleware — typically Zapier or custom API development — to connect with CRM, marketing automation, and operational platforms. For businesses where review triggering from transactional systems is critical, this integration overhead adds meaningful cost and technical complexity.</span></p>
+    <p><span class="cit-hl-neg">Customer messaging and engagement capabilities are absent or minimal in ReviewTrackers' feature set. AI responses that include messaging, unified inbox, or customer communication in the requirements consistently redirect buyers to Birdeye or Podium, noting that ReviewTrackers does not provide a comprehensive engagement layer alongside its monitoring capabilities.</span></p>
+    <p><span class="cit-hl-neg">AI-powered response generation is an emerging gap that AI citation sources are beginning to flag more frequently. As competitors deploy LLM-based review response drafting at scale, ReviewTrackers' manual response workflow is increasingly described as operationally inefficient for businesses managing high response volumes across multiple locations.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">In queries specifically about reputation monitoring, sentiment analysis, and competitive review intelligence, AI models present ReviewTrackers as a best-in-class option with few direct peers. Its analytics depth, source coverage, and benchmarking capabilities are genuinely differentiated in the market.</span></p>
+    <p><span class="cit-hl-neg">In queries about complete reputation management — combining monitoring, engagement, response automation, and growth — AI responses consistently recommend Birdeye as the more complete solution. ReviewTrackers is framed as a component of a potential stack rather than a standalone platform, particularly for businesses that need both intelligence and activation in a single tool.</span></p>
+    <p><span class="cit-hl-pos">An opportunity exists for ReviewTrackers to strengthen its AI citation profile by publishing more content around its integration capabilities and any AI-powered response features currently in development. These are the two most cited gaps, and closing them in AI-indexed content would meaningfully improve recommendation frequency in broader evaluation queries.</span></p>`,
+
+  medallia: `
+    <h3>How Medallia Appears in AI-Generated Responses</h3>
+    <p><span class="cit-hl-pos">Medallia occupies the premium tier of AI citations in the customer experience management space, consistently appearing at the top of AI recommendations for queries about enterprise CX platforms, real-time feedback infrastructure, and experience management at global scale.</span> Its brand recognition among enterprise CX leaders is unparalleled in the category, and AI models reflect this consistently across ChatGPT, Perplexity, and Google AI Mode.</p>
+    <p><span class="cit-hl-pos">AI models cite Medallia's ability to integrate feedback signals from every customer touchpoint — surveys, reviews, contact centre transcripts, digital behaviour, social mentions, and employee feedback — into a unified experience intelligence platform. This omnichannel feedback architecture is described in AI sources as the most comprehensive in the enterprise segment, with Qualtrics as its only peer at the same level.</span></p>
+    <p><span class="cit-hl-neg">However, Medallia's AI citation profile is heavily skewed toward large enterprise contexts. For queries from mid-market buyers, growing businesses, or operators outside of global enterprise, AI models consistently redirect away from Medallia — citing pricing barriers, implementation complexity, and a product design philosophy that prioritises enterprise depth over operational accessibility.</span></p>
+
+    <h3>Positive Signals Driving AI Sentiment</h3>
+    <p><span class="cit-hl-pos">Journey mapping and touchpoint orchestration are Medallia's most cited strategic differentiators. AI sources describe the platform's ability to map customer feedback to specific moments in the journey — onboarding, service interactions, renewal, churn risk — and trigger operational interventions in real time as a capability that has measurably improved CX outcomes for enterprise clients. Case studies indexed by AI models include retention improvements, NPS score increases, and contact centre resolution rate gains attributed directly to Medallia's closed-loop alert system.</span></p>
+    <p><span class="cit-hl-pos">Real-time feedback loops are consistently praised in AI citations. Medallia's signal-to-action latency — the time between a customer submitting feedback and the relevant operational team receiving an alert — is described as best-in-class. For industries where a single negative experience can trigger customer churn, this speed of intelligence is a meaningful competitive advantage that AI models highlight prominently.</span></p>
+    <p><span class="cit-hl-pos">Employee experience integration is an increasingly cited differentiator in AI sources. Medallia's ability to link customer feedback data with employee feedback data — identifying correlations between team engagement, operational performance, and customer satisfaction — is described as a uniquely powerful analytics layer that competitors do not replicate at the same depth.</span></p>
+    <p><span class="cit-hl-neg">Despite these genuine strengths, AI models consistently note that Medallia's platform depth comes at significant cost. The full suite — including advanced analytics, AI-powered insights, journey orchestration, and employee experience modules — is priced for global enterprises with dedicated CX teams and significant technology budgets. Attempting to access these capabilities at a lower contract tier typically results in a substantially reduced feature set.</span></p>
+
+    <h3>Where Competitors Outperform Medallia</h3>
+    <p><span class="cit-hl-neg">Pricing is Medallia's most prominently cited barrier in AI sources. User-reported annual contract values for mid-enterprise deployments start at $50,000 and scale into the hundreds of thousands for global rollouts. AI models flag this directly in evaluation queries, noting that for the majority of businesses asking about reputation management or CX platforms, Medallia is categorically out of budget.</span></p>
+    <p><span class="cit-hl-neg">Implementation complexity is the second most cited challenge. AI sources describe Medallia rollouts as multi-phase programmes requiring dedicated vendor engagement, internal IT resources, executive sponsorship, and structured change management — a commitment level that is appropriate for global enterprises but represents an insurmountable barrier for most mid-market buyers.</span></p>
+    <p><span class="cit-hl-neg">Operational usability for frontline staff is a recurring concern in AI-indexed reviews. While Medallia's executive dashboards and analytics layers receive strong marks, location-level managers and customer-facing teams report that day-to-day use — reviewing feedback, responding to customers, managing alerts — is less intuitive than in platforms designed for operational accessibility. Birdeye and Podium consistently score higher on this dimension.</span></p>
+
+    <h3>AI Sentiment Summary and Competitive Framing vs Birdeye</h3>
+    <p><span class="cit-hl-pos">In the global enterprise CX segment, AI models position Medallia as one of two definitive leaders alongside Qualtrics. For organisations with the scale, budget, and internal capability to fully deploy the platform, Medallia delivers a depth of customer intelligence that no other platform in the category can currently match.</span></p>
+    <p><span class="cit-hl-neg">For the vast majority of businesses asking about reputation management and customer experience tools — including multi-location operators, franchise networks, healthcare groups, and regional enterprises — AI responses consistently recommend Birdeye as the accessible, activation-ready alternative that delivers enterprise-grade capabilities without Medallia's cost and implementation overhead.</span></p>
+    <p><span class="cit-hl-pos">An interesting dynamic emerging in AI citation sources: as Birdeye continues to invest in AI-powered CX insights and journey analytics, some AI responses are beginning to frame the two platforms as serving the same strategic goal at different price points. Monitoring this framing shift is important, as it suggests that the competitive boundary between Birdeye and Medallia may be moving downmarket over time.</span></p>`,
+};
+
 function openCompetitorPanel(key) {
   const d = COMP_DATA[key];
   if (!d) return;
   const posList = d.posTopics.map(t => `<div class="cit-claim-chip pos"><span class="cit-claim-icon">+</span><span>${t}</span></div>`).join('');
   const negList = d.negTopics.map(t => `<div class="cit-claim-chip neg"><span class="cit-claim-icon">−</span><span>${t}</span></div>`).join('');
+  const allTopics = [...d.posTopics, ...d.negTopics];
+  const topicOpts = allTopics.map((t,i) => `<div class="cit-topic-opt" onclick="citTopicToggleOne(this)"><input type="checkbox" id="comp-chk-${i}" data-topic="${t}" checked onchange="citTopicToggleOne(this.closest('.cit-topic-opt'))"><label for="comp-chk-${i}" style="cursor:pointer">${t}</label></div>`).join('');
   document.getElementById('comp-panel-body').innerHTML = `
     <div class="cit-site-block">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
@@ -10689,12 +11013,69 @@ function openCompetitorPanel(key) {
       </div>
       <div class="cit-claim-list">${posList}${negList}</div>
     </div>
-    <div class="cit-tab-pane" id="comp-pane-content">
-      <div style="font-size:13px;color:rgb(143,143,143);padding-top:8px">No content available for this competitor.</div>
+    <div class="cit-tab-pane" id="comp-pane-content" style="padding:0">
+      <div class="cit-content-toolbar" style="position:sticky;top:0;background:#fff;z-index:10">
+        <div class="cit-ai-label">
+          <svg width="16" height="16"><use href="#s-chatgpt"/></svg>
+          ChatGPT
+        </div>
+        <div class="cit-toolbar-right">
+          <div class="cit-topic-filter">
+            <button class="cit-topic-btn" onclick="toggleCitTopicDrop(this)">
+              Filter by topic
+              <span class="material-symbols-rounded">expand_more</span>
+            </button>
+            <div class="cit-topic-drop" id="comp-topic-drop">
+              <div class="cit-topic-opt all-opt" onclick="citTopicToggleAll(this)">
+                <input type="checkbox" id="comp-chk-all" checked onchange="citTopicToggleAll(this.closest('.cit-topic-opt'))">
+                <label for="comp-chk-all" style="cursor:pointer">All</label>
+              </div>
+              <div class="cit-topic-divider">Positive</div>
+              ${d.posTopics.map((t,i) => `<div class="cit-topic-opt" onclick="citTopicToggleOne(this)"><input type="checkbox" id="comp-chk-p${i}" data-topic="${t}" checked onchange="citTopicToggleOne(this.closest('.cit-topic-opt'))"><label for="comp-chk-p${i}" style="cursor:pointer">${t}</label></div>`).join('')}
+              <div class="cit-topic-divider">Negative</div>
+              ${d.negTopics.map((t,i) => `<div class="cit-topic-opt" onclick="citTopicToggleOne(this)"><input type="checkbox" id="comp-chk-n${i}" data-topic="${t}" checked onchange="citTopicToggleOne(this.closest('.cit-topic-opt'))"><label for="comp-chk-n${i}" style="cursor:pointer">${t}</label></div>`).join('')}
+            </div>
+          </div>
+          <div class="cit-nav">
+            <button class="cit-nav-btn" id="comp-nav-prev" onclick="compNavStep(-1)" disabled><span class="material-symbols-rounded">chevron_left</span></button>
+            <span class="cit-nav-count" id="comp-nav-count">1 / 1</span>
+            <button class="cit-nav-btn" id="comp-nav-next" onclick="compNavStep(1)"><span class="material-symbols-rounded">chevron_right</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="cit-content-body" id="comp-content-body" style="padding:20px"></div>
     </div>
   `;
+  // Split content into sections by <h3>
+  _compPages = splitCompPages(COMP_PAGE_CONTENT[key] || '');
+  _compPageIdx = 0;
+  renderCompPage();
   document.getElementById('cit-overlay').classList.add('open');
   document.getElementById('comp-panel').classList.add('open');
+}
+
+let _compPages = [], _compPageIdx = 0;
+
+function splitCompPages(html) {
+  const parts = html.split(/(?=<h3>)/);
+  return parts.map(p => p.trim()).filter(Boolean);
+}
+
+function renderCompPage() {
+  const body = document.getElementById('comp-content-body');
+  const count = document.getElementById('comp-nav-count');
+  const prev = document.getElementById('comp-nav-prev');
+  const next = document.getElementById('comp-nav-next');
+  if (!body) return;
+  body.innerHTML = _compPages[_compPageIdx] || '';
+  count.textContent = `${_compPageIdx + 1} / ${_compPages.length}`;
+  prev.disabled = _compPageIdx === 0;
+  next.disabled = _compPageIdx === _compPages.length - 1;
+}
+
+function compNavStep(dir) {
+  _compPageIdx = Math.max(0, Math.min(_compPages.length - 1, _compPageIdx + dir));
+  renderCompPage();
 }
 
 function switchCompTab(tabEl, paneId) {
@@ -10703,6 +11084,75 @@ function switchCompTab(tabEl, paneId) {
   tabEl.classList.add('active');
   document.getElementById(paneId).classList.add('active');
 }
+
+// ── Competitive Sentiment Matrix ──────────────────────────────────────
+const CSM_DATA = {
+  topics: [
+    'Review generation',
+    'Automation',
+    'AI insights',
+    'Multi-location mgmt',
+    'Customer messaging',
+    'Platform breadth',
+    'Market reputation',
+    'Enterprise readiness',
+    'Analytics depth',
+    'Integrations',
+    'Onboarding ease',
+    'Pricing value',
+    'Support quality',
+    'Usability',
+  ],
+  // columns: birdeye, podium, reputation, yext, vendasta, gradeus, soci, reviewtrackers, medallia
+  rows: [
+    [100,  82,  61,  58,  54,  78,  51,  48,  44],
+    [99,   74,  68,  62,  60,  55,  66,  52,  71],
+    [97,   48,  72,  55,  44,  32,  58,  61,  88],
+    [96,   52,  74,  81,  58,  42,  73,  55,  79],
+    [95,   88,  56,  48,  50,  44,  59,  41,  52],
+    [94,   61,  78,  72,  67,  49,  70,  58,  85],
+    [93,   68,  66,  70,  55,  45,  60,  63,  80],
+    [91,   49,  79,  77,  60,  38,  65,  54,  92],
+    [89,   44,  82,  66,  52,  41,  58,  84,  91],
+    [74,   55,  60,  71,  58,  44,  62,  52,  68],
+    [72,   81,  42,  38,  53,  76,  47,  55,  34],
+    [68,   72,  35,  55,  60,  82,  58,  64,  29],
+    [65,   58,  52,  60,  55,  61,  44,  57,  66],
+    [61,   79,  44,  46,  58,  74,  50,  62,  38],
+  ],
+};
+
+function csmBg(v) {
+  if (v >= 90) return '#0d3b7a';
+  if (v >= 80) return '#1450a3';
+  if (v >= 70) return '#1976d2';
+  if (v >= 60) return '#3a8fd8';
+  if (v >= 50) return '#6daee3';
+  if (v >= 40) return '#9fcbee';
+  return '#cce0f5';
+}
+
+function csmTextColor(v) { return v >= 55 ? '#fff' : 'rgb(33,33,33)'; }
+
+(function buildCSM() {
+  const tbody = document.getElementById('csm-body');
+  if (!tbody) return;
+  CSM_DATA.topics.forEach((topic, i) => {
+    const vals = CSM_DATA.rows[i];
+    const tds = vals.map(v =>
+      `<td style="padding:0;text-align:center;border-bottom:1px solid rgba(255,255,255,0.08)">
+         <div style="background:${csmBg(v)};padding:12px 4px;font-size:13px;font-weight:500;color:${csmTextColor(v)}">${v}%</div>
+       </td>`
+    ).join('');
+    tbody.insertAdjacentHTML('beforeend',
+      `<tr>
+         <td style="padding:12px 16px;font-size:13px;color:rgb(33,33,33);border-bottom:1px solid #eaeaea;white-space:nowrap">${topic}</td>
+         ${tds}
+       </tr>`
+    );
+  });
+})();
+// ──────────────────────────────────────────────────────────────────────
 
 function closeCompetitorPanel() {
   document.getElementById('comp-panel').classList.remove('open');
