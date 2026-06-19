@@ -4849,15 +4849,15 @@ textarea.ap-input{
             <thead>
               <tr style="border-bottom:1px solid #eaeaea">
                 <th style="padding:10px 16px;font-size:12px;font-weight:500;color:rgb(143,143,143);text-align:left;background:#fafafa">Topic</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:600;color:#1976d2;text-align:center;background:#fafafa">Birdeye <span style="font-size:10px;font-weight:400;color:rgb(143,143,143)">(You)</span></th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Podium</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Reputation.com</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Yext</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Vendasta</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Grade.us</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">SOCi</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">ReviewTrackers</th>
-                <th style="padding:10px 8px;font-size:12px;font-weight:500;color:rgb(85,85,85);text-align:center;background:#fafafa">Medallia</th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><span class="you-chip" style="font-size:11px">You</span></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=podium.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">Podium</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=reputation.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">Reputation</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=yext.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">Yext</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=vendasta.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">Vendasta</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=grade.us&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">Grade.us</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=soci.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">SOCi</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=reviewtrackers.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">ReviewTrk</span></div></th>
+                <th style="padding:10px 8px;text-align:center;background:#fafafa"><div style="display:flex;flex-direction:column;align-items:center;gap:4px"><img src="https://www.google.com/s2/favicons?domain=medallia.com&sz=16" width="16" height="16" style="border-radius:3px"><span style="font-size:11px;color:rgb(85,85,85)">Medallia</span></div></th>
               </tr>
             </thead>
             <tbody id="csm-body"></tbody>
@@ -11047,14 +11047,15 @@ function openCompetitorPanel(key) {
     </div>
   `;
   // Split content into sections by <h3>
-  _compPages = splitCompPages(COMP_PAGE_CONTENT[key] || '');
+  _compAllPages = splitCompPages(COMP_PAGE_CONTENT[key] || '');
+  _compPages = [..._compAllPages];
   _compPageIdx = 0;
   renderCompPage();
   document.getElementById('cit-overlay').classList.add('open');
   document.getElementById('comp-panel').classList.add('open');
 }
 
-let _compPages = [], _compPageIdx = 0;
+let _compPages = [], _compAllPages = [], _compPageIdx = 0;
 
 function splitCompPages(html) {
   const parts = html.split(/(?=<h3>)/);
@@ -11160,17 +11161,19 @@ function closeCompetitorPanel() {
 }
 
 function toggleCitTopicDrop(btn) {
-  const drop = document.getElementById('cit-topic-drop');
+  const drop = btn.nextElementSibling;
+  if (!drop) return;
   drop.classList.toggle('open');
   event.stopPropagation();
 }
 
 function citTopicToggleAll(optEl) {
   const drop = optEl.closest('.cit-topic-drop');
-  const allChk = drop.querySelector('#cit-chk-all');
+  const allChk = drop.querySelector('[id$="-chk-all"], #cit-chk-all');
   const checked = allChk.checked;
   drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input[type=checkbox]').forEach(c => c.checked = checked);
-  updateCitTopicBadge();
+  updateCitTopicBadge(drop);
+  applyCompTopicFilter(drop);
 }
 
 function citTopicToggleOne(optEl) {
@@ -11179,16 +11182,36 @@ function citTopicToggleOne(optEl) {
   const drop = optEl.closest('.cit-topic-drop');
   const total = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input').length;
   const checked = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input:checked').length;
-  drop.querySelector('#cit-chk-all').checked = (checked === total);
-  updateCitTopicBadge();
+  const allChk = drop.querySelector('[id$="-chk-all"], #cit-chk-all');
+  if (allChk) allChk.checked = (checked === total);
+  updateCitTopicBadge(drop);
+  applyCompTopicFilter(drop);
 }
 
-function updateCitTopicBadge() {
-  const drop = document.getElementById('cit-topic-drop');
+function applyCompTopicFilter(drop) {
+  // Only act when this is the competitor panel's dropdown
+  if (!drop || drop.id !== 'comp-topic-drop') return;
+  const selected = [...drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input:checked')]
+    .map(c => c.closest('label') ? c.closest('.cit-topic-opt').querySelector('label').textContent.trim().toLowerCase()
+                                  : c.dataset.topic ? c.dataset.topic.toLowerCase() : '');
+  if (!selected.length) { renderCompPage(); return; }
+  // Filter _compAllPages to those mentioning at least one selected topic
+  _compPages = _compAllPages.filter(page => {
+    const text = page.toLowerCase();
+    return selected.some(t => t && text.includes(t));
+  });
+  if (!_compPages.length) _compPages = _compAllPages; // fallback: show all if nothing matches
+  _compPageIdx = 0;
+  renderCompPage();
+}
+
+function updateCitTopicBadge(drop) {
+  if (!drop) drop = document.getElementById('cit-topic-drop');
   if (!drop) return;
   const total = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input').length;
   const checked = drop.querySelectorAll('.cit-topic-opt:not(.all-opt) input:checked').length;
   const btn = drop.previousElementSibling;
+  if (!btn) return;
   let badge = btn.querySelector('.cit-topic-badge');
   if (checked < total) {
     if (!badge) { badge = document.createElement('span'); badge.className = 'cit-topic-badge'; btn.insertBefore(badge, btn.querySelector('.material-symbols-rounded')); }
@@ -11199,8 +11222,9 @@ function updateCitTopicBadge() {
 }
 
 document.addEventListener('click', function(e) {
-  const drop = document.getElementById('cit-topic-drop');
-  if (drop && !e.target.closest('.cit-topic-filter')) drop.classList.remove('open');
+  if (!e.target.closest('.cit-topic-filter')) {
+    document.querySelectorAll('.cit-topic-drop.open').forEach(d => d.classList.remove('open'));
+  }
 });
 
 function toggleTopicsPopover(triggerEl, topics, e) {
