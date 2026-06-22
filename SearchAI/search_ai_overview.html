@@ -2306,10 +2306,6 @@ textarea.ap-input{
       <div class="sb-sub-item">Visibility</div>
       <div class="sb-sub-item">Ranking</div>
       <div class="sb-sub-item">Accuracy</div>
-      <div class="sb-sub-item" id="nav-sentiment" onclick="showView('sentiment')">Sentiment</div>
-      <div class="sb-sub-item" id="nav-sentiment-v2" onclick="showView('sentiment-v2')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">2</span></div>
-      <div class="sb-sub-item" id="nav-sentiment-bp" onclick="showView('sentiment-bp')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">3</span></div>
-      <div class="sb-sub-item" id="nav-sentiment-t" onclick="showView('sentiment-t')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#ffffff;background:#1976d2;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">tab</span></div>
       <div class="sb-sub-item" id="nav-reports-prompts" onclick="showView('reports-prompts')">Prompts</div>
       <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-ai-crawler" onclick="showView('ai-crawler')">AI crawler status</div>
@@ -2324,7 +2320,12 @@ textarea.ap-input{
       <span>Iterations</span>
       <svg id="sb-chev-iterations" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
-    <div id="sb-group-iterations" style="display:none"></div>
+    <div id="sb-group-iterations" style="display:none">
+      <div class="sb-sub-item" id="nav-sentiment" onclick="showView('sentiment')">Sentiment</div>
+      <div class="sb-sub-item" id="nav-sentiment-v2" onclick="showView('sentiment-v2')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">2</span></div>
+      <div class="sb-sub-item" id="nav-sentiment-bp" onclick="showView('sentiment-bp')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">3</span></div>
+      <div class="sb-sub-item" id="nav-sentiment-t" onclick="showView('sentiment-t')" style="display:flex;align-items:center;justify-content:space-between">Sentiment new<span style="font-size:10px;font-weight:500;color:#ffffff;background:#2e7d32;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">New</span></div>
+    </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('settings',this)">
       <span>Settings</span>
       <svg id="sb-chev-settings" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
@@ -8688,7 +8689,7 @@ function settAddRecipient() {
 // Sidebar group toggle
 function toggleSbGroup(id, hdr) {
   // Close all other open groups first
-  ['actions','reports','agents','settings','ch-content','ch-settings'].forEach(g => {
+  ['actions','reports','agents','iterations','settings','ch-content','ch-settings'].forEach(g => {
     if (g !== id) {
       const grp = document.getElementById('sb-group-' + g);
       const chv = document.getElementById('sb-chev-' + g);
