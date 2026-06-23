@@ -8556,6 +8556,7 @@ const _viewToSlug = {
   'sentiment':         'searchai/reports/sentiment',
   'sentiment-v2':      'searchai/reports/sentiment-new',
   'sentiment-bp':      'searchai/reports/sentiment-brand-prompt',
+  'sentiment-t':       'searchai/reports/sentiment-new-tab',
   'reports-prompts':   'searchai/reports/prompts',
   'ai-crawler':        'searchai/reports/ai-crawler-status',
   'explore-themes':    'searchai/reports/explore-themes',
@@ -8626,7 +8627,7 @@ function showView(view, skipHash) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'ai-crawler' || view === 'reports-prompts') {
+  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'ai-crawler' || view === 'reports-prompts') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
