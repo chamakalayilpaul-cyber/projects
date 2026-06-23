@@ -2147,8 +2147,13 @@ textarea.ap-input{
 .cit-hl-neg{background:rgba(244,67,54,0.30);border-radius:2px;padding:1px 2px}
 .cit-hl-opportunity{background:rgba(25,118,210,0.30);border-radius:2px;padding:1px 2px}
 .cit-hl-threat{background:rgba(183,28,28,0.25);border-radius:2px;padding:1px 2px}
-.swot-section{margin-bottom:22px}
-.swot-section-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.swot-section{margin-bottom:0;border-bottom:1px solid #eaeaea}
+.swot-section:last-child{border-bottom:none}
+.swot-acc-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 0;cursor:pointer;user-select:none}
+.swot-acc-hdr:hover{background:rgba(0,0,0,0.02);border-radius:4px}
+.swot-section-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px;margin:0}
+.swot-acc-chev{font-size:20px;color:#9e9e9e;transition:transform 0.2s;flex-shrink:0}
+.swot-acc-body{padding-bottom:12px}
 .swot-dot{display:inline-block;width:8px;height:8px;border-radius:2px;flex-shrink:0}
 .swot-item{margin-bottom:9px;font-size:13px;line-height:1.55;color:#424242}
 .swot-item strong{color:#212121}
@@ -13300,22 +13305,34 @@ function openCitationPanel(key) {
       <div class="cit-tab active" onclick="switchCitTab(this,'cit-pane-analysis')">Analysis</div>
       <div class="cit-tab" onclick="switchCitTab(this,'cit-pane-content')">Evidence</div>
     </div>
-    <div class="cit-tab-pane active" id="cit-pane-analysis" style="padding:20px">
+    <div class="cit-tab-pane active" id="cit-pane-analysis" style="padding:0 20px">
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#2e7d32"><span class="swot-dot" style="background:#2e7d32"></span>Strengths</div>
-        ${mkItems(swot.strengths)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#2e7d32"><span class="swot-dot" style="background:#2e7d32"></span>Strengths</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkItems(swot.strengths)}</div>
       </div>
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#c62828"><span class="swot-dot" style="background:#c62828"></span>Weaknesses</div>
-        ${mkItems(swot.weaknesses)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#c62828"><span class="swot-dot" style="background:#c62828"></span>Weaknesses</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkItems(swot.weaknesses)}</div>
       </div>
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#1976d2"><span class="swot-dot" style="background:#1976d2"></span>Opportunities</div>
-        ${mkItems(swot.opportunities)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#1976d2"><span class="swot-dot" style="background:#1976d2"></span>Opportunities</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkItems(swot.opportunities)}</div>
       </div>
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#b71c1c"><span class="swot-dot" style="background:#b71c1c"></span>Threats</div>
-        ${mkItems(swot.threats)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#b71c1c"><span class="swot-dot" style="background:#b71c1c"></span>Threats</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkItems(swot.threats)}</div>
       </div>
     </div>
     <div class="cit-tab-pane" id="cit-pane-content" style="padding:0">
@@ -13780,22 +13797,34 @@ function openCompetitorPanel(key) {
       <div class="cit-tab active" onclick="switchCompTab(this,'comp-pane-topics')">Analysis</div>
       <div class="cit-tab" onclick="switchCompTab(this,'comp-pane-content')">Evidence</div>
     </div>
-    <div class="cit-tab-pane active" id="comp-pane-topics" style="padding:20px">
+    <div class="cit-tab-pane active" id="comp-pane-topics" style="padding:0 20px">
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#2e7d32"><span class="swot-dot" style="background:#2e7d32"></span>Strengths</div>
-        ${mkSwotItems(swot.strengths)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#2e7d32"><span class="swot-dot" style="background:#2e7d32"></span>Strengths</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkSwotItems(swot.strengths)}</div>
       </div>
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#c62828"><span class="swot-dot" style="background:#c62828"></span>Weaknesses</div>
-        ${mkSwotItems(swot.weaknesses)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#c62828"><span class="swot-dot" style="background:#c62828"></span>Weaknesses</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkSwotItems(swot.weaknesses)}</div>
       </div>
       <div class="swot-section">
-        <div class="swot-section-title" style="color:#1565c0"><span class="swot-dot" style="background:#1976d2"></span>Opportunities</div>
-        ${mkSwotItems(swot.opportunities)}
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#1565c0"><span class="swot-dot" style="background:#1976d2"></span>Opportunities</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkSwotItems(swot.opportunities)}</div>
       </div>
-      <div class="swot-section" style="margin-bottom:0">
-        <div class="swot-section-title" style="color:#b71c1c"><span class="swot-dot" style="background:#b71c1c"></span>Threats</div>
-        ${mkSwotItems(swot.threats)}
+      <div class="swot-section">
+        <div class="swot-acc-hdr" onclick="toggleSwotSection(this)">
+          <div class="swot-section-title" style="color:#b71c1c"><span class="swot-dot" style="background:#b71c1c"></span>Threats</div>
+          <span class="material-symbols-rounded swot-acc-chev" style="transform:rotate(180deg)">expand_more</span>
+        </div>
+        <div class="swot-acc-body">${mkSwotItems(swot.threats)}</div>
       </div>
     </div>
     <div class="cit-tab-pane" id="comp-pane-content" style="padding:0">
@@ -14058,6 +14087,14 @@ document.addEventListener('click', function(e) {
 </div>
 
 <script>
+function toggleSwotSection(hdr) {
+  var body = hdr.nextElementSibling;
+  var chev = hdr.querySelector('.swot-acc-chev');
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : '';
+  chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+
 function switchSentimentTab(tab, el) {
   ['overall','brand','prompt','competitors'].forEach(function(t) {
     document.getElementById('snt-tab-' + t).style.display = t === tab ? '' : 'none';
