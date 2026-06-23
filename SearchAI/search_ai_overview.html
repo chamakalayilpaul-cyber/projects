@@ -8952,7 +8952,7 @@ document.addEventListener('click', function(e) {
 // Resolve hash slug → view ID, falling back to prompts-v2
 function _viewFromHash() {
   const slug = location.hash.replace('#', '');
-  return _slugToView[slug] || 'prompts-v2';
+  return _slugToView[slug] || 'sentiment-t';
 }
 
 window.addEventListener('hashchange', () => showView(_viewFromHash(), true));
