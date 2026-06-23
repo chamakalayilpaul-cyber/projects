@@ -906,7 +906,10 @@ body{
 .snt-msdrop-cancel{background:none;border:1px solid #e0e0e0;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;font-family:inherit;color:rgb(85,85,85)}
 .snt-msdrop-apply{background:#1976d2;border:none;border-radius:6px;padding:6px 16px;font-size:13px;cursor:pointer;font-family:inherit;color:#fff;font-weight:500}
 .snt-you{display:inline-flex;align-items:center;justify-content:center;background:#00695c;color:#fff;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:500;white-space:nowrap}
-.snt-ci{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:11px;font-weight:600;flex-shrink:0}
+.snt-ci{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:11px;font-weight:600;flex-shrink:0;position:relative;cursor:default}
+.snt-ci[data-tip],.snt-you[data-tip]{position:relative;cursor:default}
+.snt-ci[data-tip]::after,.snt-you[data-tip]::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:rgba(33,33,33,0.92);color:#fff;font-size:11px;font-weight:400;white-space:nowrap;padding:4px 8px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:100}
+.snt-ci[data-tip]:hover::after,.snt-you[data-tip]:hover::after{opacity:1}
 .snt-ci-sb{background:#bbdefb;color:#0d47a1}.snt-ci-hd{background:#c8e6c9;color:#1b5e20}.snt-ci-pd{background:#c5cae9;color:#1a237e}
 .snt-ci-ge{background:#ffe0b2;color:#bf360c}.snt-ci-dc{background:#ffcdd2;color:#b71c1c}.snt-ci-1d{background:#e1bee7;color:#4a148c}
 .snt-ci-wd{background:#dce0f5;color:#283593}.snt-ci-cd{background:#cfd8dc;color:#263238}.snt-ci-bn{background:#b2ebf2;color:#006064}
@@ -14060,6 +14063,30 @@ function switchSentimentTab(tab, el) {
     b.classList.toggle('active', b === el);
   });
 }
+(function addCompTooltips() {
+  const map = {
+    'snt-ci-hd': 'Heartland Dental',
+    'snt-ci-sb': 'Smile Brands',
+    'snt-ci-pd': 'Pacific Dental',
+    'snt-ci-ge': 'Great Expressions',
+    'snt-ci-dc': 'DentalCare Alliance',
+    'snt-ci-1d': '1-800-Dentist',
+    'snt-ci-wd': 'Western Dental',
+    'snt-ci-cd': 'Castle Dental',
+    'snt-ci-bn': 'Bright Now Dental',
+  };
+  var tab = document.getElementById('snt-lc-tab-competitors');
+  if (!tab) return;
+  tab.querySelectorAll('.snt-ci').forEach(function(el) {
+    for (var cls in map) {
+      if (el.classList.contains(cls)) { el.setAttribute('data-tip', map[cls]); break; }
+    }
+  });
+  tab.querySelectorAll('.snt-you').forEach(function(el) {
+    el.setAttribute('data-tip', 'Birdeye (You)');
+  });
+})();
+
 function switchSentimentLcTab(tab, el) {
   ['overall','brand','prompt','competitors'].forEach(function(t) {
     document.getElementById('snt-lc-tab-' + t).style.display = t === tab ? '' : 'none';
