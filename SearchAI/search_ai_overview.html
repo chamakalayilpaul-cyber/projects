@@ -14108,25 +14108,31 @@ function switchSentimentTab(tab, el) {
 }
 (function addCompTooltips() {
   var map = {
-    'snt-ci-hd': 'Heartland Dental',
-    'snt-ci-sb': 'Smile Brands',
-    'snt-ci-pd': 'Pacific Dental',
-    'snt-ci-ge': 'Great Expressions',
-    'snt-ci-dc': 'DentalCare Alliance',
-    'snt-ci-1d': '1-800-Dentist',
-    'snt-ci-wd': 'Western Dental',
-    'snt-ci-cd': 'Castle Dental',
-    'snt-ci-bn': 'Bright Now Dental',
+    'snt-ci-hd': ['Heartland Dental',    'heartland.com'],
+    'snt-ci-sb': ['Smile Brands',        'smilebrands.com'],
+    'snt-ci-pd': ['Pacific Dental',      'pacificdentalservices.com'],
+    'snt-ci-ge': ['Great Expressions',   'greatexpressions.com'],
+    'snt-ci-dc': ['DentalCare Alliance', 'dentalcarealliance.com'],
+    'snt-ci-1d': ['1-800-Dentist',       '1800dentist.com'],
+    'snt-ci-wd': ['Western Dental',      'westerndental.com'],
+    'snt-ci-cd': ['Castle Dental',       'castledental.com'],
+    'snt-ci-bn': ['Bright Now Dental',   'brightnow.com'],
   };
   var tab = document.getElementById('snt-lc-tab-competitors');
   if (!tab) return;
   tab.querySelectorAll('.snt-ci').forEach(function(el) {
     for (var cls in map) {
-      if (el.classList.contains(cls)) { el.setAttribute('data-tip', map[cls]); break; }
+      if (el.classList.contains(cls)) {
+        var name = map[cls][0], domain = map[cls][1];
+        el.setAttribute('data-tip', name);
+        el.innerHTML = '<img src="https://www.google.com/s2/favicons?domain=' + domain + '&sz=32" width="20" height="20" style="border-radius:3px;pointer-events:none;display:block" onerror="this.style.display=\'none\'">';
+        break;
+      }
     }
   });
   tab.querySelectorAll('.snt-you').forEach(function(el) {
     el.setAttribute('data-tip', 'Birdeye (You)');
+    el.innerHTML = '<img src="https://www.google.com/s2/favicons?domain=birdeye.com&sz=32" width="16" height="16" style="border-radius:3px;pointer-events:none;display:block;margin-right:6px" onerror="this.style.display=\'none\'">You';
   });
 
   // Floating fixed tooltip — escapes all overflow:hidden parents
