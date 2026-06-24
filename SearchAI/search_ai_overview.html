@@ -14170,6 +14170,34 @@ function switchSentimentTab(tab, el) {
   });
 })();
 
+(function shuffleLcCompTailCols() {
+  var tab = document.getElementById('snt-lc-tab-competitors');
+  if (!tab) return;
+  // Seeded shuffle using row index as seed for stable-but-varied ordering
+  function seededShuffle(arr, seed) {
+    var s = seed + 1;
+    for (var i = arr.length - 1; i > 0; i--) {
+      s = (s * 1664525 + 1013904223) & 0xffffffff;
+      var j = Math.abs(s) % (i + 1);
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+  tab.querySelectorAll('table').forEach(function(table, tIdx) {
+    var rowIdx = 0;
+    table.querySelectorAll('tbody tr').forEach(function(tr) {
+      var cells = tr.querySelectorAll('td');
+      if (cells.length < 10) return;
+      // Collect inner HTML of cells 5-9 (columns #6-#10)
+      var tail = [];
+      for (var i = 5; i < 10; i++) tail.push(cells[i].innerHTML);
+      seededShuffle(tail, tIdx * 1000 + rowIdx);
+      for (var i = 5; i < 10; i++) cells[i].innerHTML = tail[i - 5];
+      rowIdx++;
+    });
+  });
+})();
+
 function switchSentimentLcTab(tab, el) {
   ['overall','brand','prompt','competitors'].forEach(function(t) {
     document.getElementById('snt-lc-tab-' + t).style.display = t === tab ? '' : 'none';
