@@ -909,9 +909,24 @@ body{
 .snt-ci{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:11px;font-weight:600;flex-shrink:0;position:relative;cursor:default}
 .snt-ci[data-tip],.snt-you[data-tip]{cursor:default}
 #snt-tip{position:fixed;background:rgba(33,33,33,0.92);color:#fff;font-size:11px;font-weight:400;white-space:nowrap;padding:4px 8px;border-radius:4px;pointer-events:none;z-index:9999;transform:translateX(-50%);transition:opacity 0.1s}
-.snt-ci-sb{background:#bbdefb;color:#0d47a1}.snt-ci-hd{background:#c8e6c9;color:#1b5e20}.snt-ci-pd{background:#c5cae9;color:#1a237e}
-.snt-ci-ge{background:#ffe0b2;color:#bf360c}.snt-ci-dc{background:#ffcdd2;color:#b71c1c}.snt-ci-1d{background:#e1bee7;color:#4a148c}
-.snt-ci-wd{background:#dce0f5;color:#283593}.snt-ci-cd{background:#cfd8dc;color:#263238}.snt-ci-bn{background:#b2ebf2;color:#006064}
+/* Smile Brands – blue */
+.snt-ci-sb{background:#d0e8f8}
+/* Heartland Dental – green */
+.snt-ci-hd{background:#cce8cc}
+/* Pacific Dental Services – navy blue */
+.snt-ci-pd{background:#d0d8f0}
+/* Great Expressions – gold */
+.snt-ci-ge{background:#fde8a8}
+/* DentalCare Alliance – teal */
+.snt-ci-dc{background:#c8e8f0}
+/* 1-800-Dentist – purple */
+.snt-ci-1d{background:#ddd0f5}
+/* Western Dental – violet */
+.snt-ci-wd{background:#d8d0ee}
+/* Castle Dental – pink */
+.snt-ci-cd{background:#f8d8e8}
+/* Bright Now Dental – teal/blue */
+.snt-ci-bn{background:#c8e8f0}
 /* ── Summary numbers small component ── */
 .snt-metric-item.snt-ai .snt-metric-val{font-size:32px;font-weight:300}
 .snt-metric-item.snt-ai .snt-metric-val .pct{font-size:24px;font-weight:300}
@@ -14132,7 +14147,6 @@ function switchSentimentTab(tab, el) {
   });
   tab.querySelectorAll('.snt-you').forEach(function(el) {
     el.setAttribute('data-tip', 'Birdeye (You)');
-    el.innerHTML = '<img src="https://www.google.com/s2/favicons?domain=birdeye.com&sz=32" width="16" height="16" style="border-radius:3px;pointer-events:none;display:block;margin-right:6px" onerror="this.style.display=\'none\'">You';
   });
 
   // Floating fixed tooltip — escapes all overflow:hidden parents
