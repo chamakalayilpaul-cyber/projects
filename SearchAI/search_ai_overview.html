@@ -2490,6 +2490,11 @@ textarea.ap-input{
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
     </div>
+    <div class="page-hdr-right" id="hdr-sentiment-lc-btns" style="display:none;gap:6px;padding-right:8px">
+      <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto">Dec 2025 – May 2026<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+    </div>
     <div class="page-hdr-right" id="hdr-explore-btns" style="display:none;gap:6px;padding-right:8px">
       <span style="font-size:13px;color:rgb(143,143,143);margin-right:4px">Updated on May 04, 2026</span>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
@@ -9592,6 +9597,7 @@ function showView(view, skipHash) {
   document.getElementById('hdr-explore-btns').style.display = view === 'explore-themes' ? 'flex' : 'none';
   document.getElementById('hdr-ai-crawler-btns').style.display = view === 'ai-crawler' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-btns').style.display = view === 'sentiment' ? 'flex' : 'none';
+  document.getElementById('hdr-sentiment-lc-btns').style.display = view === 'sentiment-lc' ? 'flex' : 'none';
   document.getElementById('hdr-reports-prompts-btns').style.display = view === 'reports-prompts' ? 'flex' : 'none';
   document.getElementById('hdr-tags-btns').style.display = view === 'tags' ? 'flex' : 'none';
   document.getElementById('hdr-settings-reports-btns').style.display = view === 'settings-reports' ? 'flex' : 'none';
