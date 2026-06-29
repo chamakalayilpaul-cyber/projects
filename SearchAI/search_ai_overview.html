@@ -11882,7 +11882,8 @@ function showView(view, skipHash) {
   var ptEl = document.getElementById('page-title');
   var isCompView = (view === 'comp-brand' || view === 'comp-location');
   var pageHdr = document.querySelector('.page-hdr');
-  if (pageHdr) pageHdr.style.display = isCompView ? 'none' : '';
+  if (pageHdr) pageHdr.style.display = '';
+  ptEl.style.visibility = isCompView ? 'hidden' : '';
   ptEl.textContent = baseTitle || titles[view] || view;
   // Reset location bench to main view on every nav
   if (view === 'comp-location') {
