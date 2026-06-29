@@ -2336,8 +2336,8 @@ textarea.ap-input{
       <div class="sb-sub-item">Visibility</div>
       <div class="sb-sub-item">Ranking</div>
       <div class="sb-sub-item">Accuracy</div>
-      <div class="sb-sub-item" id="nav-sentiment-lc" onclick="showView('sentiment-lc')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">LC</span></div>
-      <div class="sb-sub-item" id="nav-sentiment-sp" onclick="showView('sentiment-sp')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">SP</span></div>
+      <div class="sb-sub-item" id="nav-sentiment-lc" onclick="showView('sentiment-lc')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">Tabs</span></div>
+      <div class="sb-sub-item" id="nav-sentiment-sp" onclick="showView('sentiment-sp')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">Single page</span></div>
       <div class="sb-sub-item" id="nav-reports-prompts" onclick="showView('reports-prompts')">Prompts</div>
       <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-ai-crawler" onclick="showView('ai-crawler')">AI crawler status</div>
@@ -8341,15 +8341,7 @@ textarea.ap-input{
     <div class="view" id="view-comp-brand">
       <div style="padding-bottom:40px">
 
-        <!-- Sticky Header -->
-        <div style="position:sticky;top:0;z-index:20;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:12px 0 12px;margin-bottom:12px;border-bottom:1px solid #eaeaea">
-          <span class="page-title">Benchmarking by brand</span>
-          <div style="display:flex;gap:8px;align-items:center">
-            <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto;height:34px">Jun 2026<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
-            <button class="icon-btn-stroke" style="width:34px;height:34px"><span class="material-symbols-rounded" style="font-size:18px">more_vert</span></button>
-            <button class="icon-btn-stroke" style="width:34px;height:34px"><span class="material-symbols-rounded" style="font-size:18px">tune</span></button>
-          </div>
-        </div>
+
 
         <!-- Competitor selector -->
         <div class="snt-summary-card" style="margin-bottom:20px;padding:16px 20px">
@@ -8693,14 +8685,7 @@ textarea.ap-input{
         <!-- Main location list (shown by default) -->
         <div id="loc-bench-main">
 
-          <!-- Sticky Header -->
-          <div style="position:sticky;top:0;z-index:20;background:#f5f5f5;display:flex;align-items:center;justify-content:space-between;padding:12px 0 12px;margin-bottom:12px;border-bottom:1px solid #eaeaea">
-            <span class="page-title">Benchmarking by location</span>
-            <div style="display:flex;gap:8px;align-items:center">
-              <button class="icon-btn-stroke" style="width:34px;height:34px"><span class="material-symbols-rounded" style="font-size:18px">more_vert</span></button>
-              <button class="icon-btn-stroke" style="width:34px;height:34px"><span class="material-symbols-rounded" style="font-size:18px">filter_list</span></button>
-            </div>
-          </div>
+
 
           <!-- Scatter plot card -->
           <div class="snt-summary-card" style="padding:24px 28px;margin-bottom:20px">
@@ -9170,7 +9155,7 @@ window.switchBrandAiTab = function(btn, ai) {
 };
 
 // ── LOCATION PAGE ────────────────────────────────────────────
-function renderLocScatterDots() {
+window.renderLocScatterDots = function renderLocScatterDots() {
   var svg = document.getElementById('loc-scatter-dots');
   if (!svg) return;
   var W = 800, H = 300;
@@ -9186,7 +9171,7 @@ function renderLocScatterDots() {
     if (isYou) youDots.push(dot); else compDots.push(dot);
   });
   svg.innerHTML = compDots.join('') + youDots.join('');
-}
+};
 
 var _locTableAi = 'ChatGPT';
 function locRankCell(name) {
@@ -9202,7 +9187,7 @@ function qText(q) {
   var map = {leading:'#377e2c',emerging:'#1976d2',lagging:'#c0392b',underperforming:'#c0392b'};
   return '<span style="font-size:13px;font-weight:400;color:'+(map[q]||'#555')+'">'+(q.charAt(0).toUpperCase()+q.slice(1))+'</span>';
 }
-function renderLocTable() {
+window.renderLocTable = function renderLocTable() {
   var tbody = document.getElementById('loc-bench-table-body');
   if (!tbody) return;
   var youRows = LOC_SCATTER.filter(function(d){ return d.brand==='you'; });
@@ -9214,7 +9199,7 @@ function renderLocTable() {
       locRankCell(ranks[0])+locRankCell(ranks[1]||'')+locRankCell(ranks[2]||'')+locRankCell(ranks[3]||'')+locRankCell(ranks[4]||'')+
     '</tr>';
   }).join('');
-}
+};
 window.switchLocTableAiTab = function(btn, ai) {
   _locTableAi = ai;
   document.querySelectorAll('#loc-table-ai-tabs button').forEach(function(b){
@@ -11843,6 +11828,8 @@ const _viewToSlug = {
   'prompt-brandkit':   'searchai/settings/brand-context',
   'settings-reports':  'searchai/settings/reports',
   'tags':              'searchai/settings/tags',
+  'comp-brand':        'searchai/competitors/brand',
+  'comp-location':     'searchai/competitors/location',
 };
 const _slugToView = Object.fromEntries(Object.entries(_viewToSlug).map(([v,s])=>[s,v]));
 
@@ -11878,12 +11865,12 @@ function showView(view, skipHash) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-sp':'Sentiment SP', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location'};
   var ptEl = document.getElementById('page-title');
   var isCompView = (view === 'comp-brand' || view === 'comp-location');
   var pageHdr = document.querySelector('.page-hdr');
   if (pageHdr) pageHdr.style.display = '';
-  ptEl.style.visibility = isCompView ? 'hidden' : '';
+  ptEl.style.visibility = '';
   ptEl.textContent = baseTitle || titles[view] || view;
   // Reset location bench to main view on every nav
   if (view === 'comp-location') {
@@ -11891,6 +11878,8 @@ function showView(view, skipHash) {
     var lbDetail = document.getElementById('loc-bench-detail');
     if (lbMain) lbMain.style.display = '';
     if (lbDetail) lbDetail.style.display = 'none';
+    if (typeof window.renderLocTable === 'function') window.renderLocTable();
+    if (typeof window.renderLocScatterDots === 'function') window.renderLocScatterDots();
   }
   document.getElementById('page-info-icon').style.display = (view === 'prompt-brandkit' || view === 'ai-crawler' || view === 'reports-prompts') ? 'inline-flex' : 'none';
   document.getElementById('hdr-back-btn').style.display = view === 'article' ? 'flex' : 'none';
