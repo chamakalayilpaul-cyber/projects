@@ -1300,6 +1300,11 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .nm-suggest-info{display:flex;flex-direction:column;gap:2px}
 .nm-suggest-name{font-size:14px;color:rgb(33,33,33)}
 .nm-suggest-meta{font-size:13px;color:rgb(85,85,85)}
+.nm-dd-empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 16px 16px}
+.nm-dd-empty-icon{color:#d0d0d0}
+.nm-dd-empty-text{font-size:13px;color:rgb(143,143,143);margin:0;font-family:inherit}
+.nm-dd-add-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;background:none;border:none;border-bottom:1px solid #eaeaea;cursor:pointer;font-size:14px;color:#1976d2;font-family:inherit;text-align:left;transition:background 0.15s;box-sizing:border-box;outline:none;border-radius:0}
+.nm-dd-add-btn:hover{background:rgb(242,244,247)}
 .nm-map-btn{
   background:transparent;border:1px solid #e5e9f0;border-radius:4px;
   cursor:pointer;width:32px;height:32px;display:flex;align-items:center;
@@ -2349,8 +2354,8 @@ textarea.ap-input{
       <svg id="sb-chev-competitors" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition:transform 0.15s"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div id="sb-group-competitors" style="display:none">
-      <div class="sb-sub-item" id="nav-comp-brand" onclick="showView('comp-brand')">Benchmarking by brand</div>
-      <div class="sb-sub-item" id="nav-comp-location" onclick="showView('comp-location')">Benchmarking by location</div>
+      <div class="sb-sub-item" id="nav-comp-brand" onclick="showView('comp-brand')">Brand</div>
+      <div class="sb-sub-item" id="nav-comp-location" onclick="showView('comp-location')">Location</div>
     </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('agents',this)">
       <span>Agents</span>
@@ -3644,6 +3649,282 @@ textarea.ap-input{
 
     </div>
     </div><!-- /view-ai-crawler -->
+
+    <!-- ══ SITE AUDIT VIEW ══ -->
+    <div class="view" id="view-site-audit">
+    <div style="padding-top:16px">
+
+      <!-- Summary strip -->
+      <div class="snt-kpi-row">
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">248</div>
+          <div class="snt-kpi-label">Pages crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#16a34a">214</div>
+          <div class="snt-kpi-label">Indexable</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#e53935">18</div>
+          <div class="snt-kpi-label">Issues found</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#d97706">16</div>
+          <div class="snt-kpi-label">Warnings</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">5</div>
+          <div class="snt-kpi-label">URLs crawled</div>
+        </div>
+      </div>
+
+        <!-- Page health table -->
+        <div class="pt-table-wrap" style="overflow:hidden;width:100%">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0">
+            <div>
+              <div style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Page health</div>
+              <div style="font-size:12px;color:rgb(143,143,143);margin-top:3px">Crawl results grouped by website and pages</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
+              <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">filter_list</span></button>
+            </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;margin-top:12px">
+            <thead>
+              <tr style="background:#fafafa">
+                <th style="padding:10px 24px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea;width:40%">Website / Pages</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Health</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">AI readiness</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Discoverability</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Website 1: aspendentalcare.com -->
+              <tr class="pt-group-row" onclick="toggleAcsGroup(this,'ph-site-1')">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div class="pt-group-inner">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0">expand_more</span>
+                    <div class="pt-group-info">
+                      <span class="pt-group-label">aspendentalcare.com <span class="pt-group-badge">3 pages</span></span>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Good</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>High</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>High</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-1" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Good</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>High</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>High</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-1" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Good</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-1" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/blog/dental-implants-guide</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Warning</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#e53935"><span class="material-symbols-rounded" style="font-size:16px">cancel</span>Low</span></td>
+              </tr>
+              <!-- Website 2: aspendental.com -->
+              <tr class="pt-group-row" onclick="toggleAcsGroup(this,'ph-site-2')">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div class="pt-group-inner">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0">expand_more</span>
+                    <div class="pt-group-info">
+                      <span class="pt-group-label">aspendental.com <span class="pt-group-badge">4 pages</span></span>
+                    </div>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Warning</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-2" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Good</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>High</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#16a34a"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>High</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-2" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/services/teeth-whitening</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Warning</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#e53935"><span class="material-symbols-rounded" style="font-size:16px">cancel</span>Low</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-2" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/faq</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#e53935"><span class="material-symbols-rounded" style="font-size:16px">error</span>Error</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#e53935"><span class="material-symbols-rounded" style="font-size:16px">cancel</span>Low</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#e53935"><span class="material-symbols-rounded" style="font-size:16px">cancel</span>Low</span></td>
+              </tr>
+              <tr data-acs-group="ph-site-2" style="background:#fafafa">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/blog/invisalign-vs-braces</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Warning</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;color:#d97706"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Medium</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    <div class="view" id="view-comp-location">
+      <div style="padding-bottom:40px;padding-top:8px">
+
+        <!-- Main location list (shown by default) -->
+        <div id="loc-bench-main">
+
+
+
+          <!-- Scatter plot card -->
+          <div class="snt-summary-card" style="padding:24px 28px;margin-bottom:20px">
+            <span class="snt-card-title">Location visibility vs citation share</span>
+            <div style="font-size:13px;color:#9e9e9e;margin-top:4px;margin-bottom:16px">Each dot represents a location. Size indicates relative appearances.</div>
+            <!-- AI platform tabs -->
+            <div style="display:flex;gap:0;margin-bottom:20px" id="loc-scatter-ai-filter">
+              <button onclick="locScatterAiSelect(this,'ChatGPT')" style="padding:8px 16px;font-size:14px;font-weight:500;color:#1976d2;background:none;border:none;border-bottom:2px solid #1976d2;cursor:pointer;margin-bottom:-1px">ChatGPT</button>
+              <button onclick="locScatterAiSelect(this,'Gemini')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Gemini</button>
+              <button onclick="locScatterAiSelect(this,'Perplexity')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Perplexity</button>
+            </div>
+            <!-- Scatter SVG -->
+            <div style="position:relative" id="loc-scatter-wrap">
+              <div style="position:absolute;top:0;bottom:24px;left:0;width:40px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding-right:6px">
+                <span style="font-size:10px;color:#9e9e9e">100%</span>
+                <span style="font-size:10px;color:#9e9e9e">75%</span>
+                <span style="font-size:10px;color:#9e9e9e">50%</span>
+                <span style="font-size:10px;color:#9e9e9e">25%</span>
+                <span style="font-size:10px;color:#9e9e9e">0%</span>
+              </div>
+              <div style="margin-left:44px">
+                <svg id="loc-scatter-svg" width="100%" height="320" style="display:block;background:#fafafa;border:1px solid #f0f0f0;border-radius:6px;pointer-events:none" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                  <!-- grid lines -->
+                  <line x1="0" y1="0" x2="800" y2="0" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="0" y1="75" x2="800" y2="75" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="0" y1="150" x2="800" y2="150" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="0" y1="225" x2="800" y2="225" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="0" y1="300" x2="800" y2="300" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="0" y1="0" x2="0" y2="300" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="200" y1="0" x2="200" y2="300" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="400" y1="0" x2="400" y2="300" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="600" y1="0" x2="600" y2="300" stroke="#f0f0f0" stroke-width="1"/>
+                  <line x1="800" y1="0" x2="800" y2="300" stroke="#f0f0f0" stroke-width="1"/>
+                  <!-- quadrant labels -->
+                  <text x="10" y="20" font-size="11" fill="#bdbdbd">Leading</text>
+                  <text x="410" y="20" font-size="11" fill="#bdbdbd">Emerging</text>
+                  <text x="10" y="295" font-size="11" fill="#bdbdbd">Underperforming</text>
+                  <text x="410" y="295" font-size="11" fill="#bdbdbd">Lagging</text>
+                  <!-- dots rendered by JS -->
+                  <g id="loc-scatter-dots" style="pointer-events:all"></g>
+                </svg>
+                <!-- X-axis labels -->
+                <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:10px;color:#9e9e9e;padding:0 2px">
+                  <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+                </div>
+                <div style="text-align:center;font-size:11px;color:#9e9e9e;margin-top:2px">Citation share →</div>
+              </div>
+              <!-- Tooltip -->
+              <div id="loc-scatter-tooltip" style="display:none;position:fixed;background:#212121;color:#fff;border-radius:6px;padding:8px 12px;font-size:12px;pointer-events:none;z-index:9999;white-space:nowrap"></div>
+            </div>
+            <!-- Legend -->
+            <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#1976d2"></span>You</div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#4cae3d"></span>Competitors</div>
+            </div>
+          </div>
+
+          <!-- Location comparison table -->
+          <div class="snt-summary-card" style="padding:0">
+            <div style="padding:20px 24px 0">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2px">
+                <div>
+                  <div style="font-size:16px;font-weight:400;color:#212121;position:relative">How are your locations ranking vs competitors for <span style="color:#1976d2;cursor:pointer;position:relative" onclick="toggleLocMetricDrop(event)">Visibility score <span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle">expand_more</span><div id="loc-metric-drop" style="display:none;position:absolute;top:100%;left:0;margin-top:4px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:100;min-width:180px;padding:4px 0"><button onclick="selectLocMetric('Sentiment score')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Sentiment score</button><button onclick="selectLocMetric('Visibility score')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#1976d2;font-weight:500;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Visibility score</button><button onclick="selectLocMetric('Rank')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Rank</button><button onclick="selectLocMetric('Citation share')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Citation share</button></div></span></div>
+                  <div style="font-size:12px;color:#9e9e9e;margin-top:4px">Discover locations where your visibility has the highest impact across AI platforms</div>
+                </div>
+                <div style="display:flex;gap:6px;flex-shrink:0;margin-left:16px">
+                  <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
+                  <button class="icon-btn-stroke" style="width:32px;height:32px;border-radius:6px"><span style="font-size:11px;font-weight:600;color:#1976d2">Af</span></button>
+                  <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">more_vert</span></button>
+                </div>
+              </div>
+              <!-- AI tabs -->
+              <div style="display:flex;gap:0;margin-top:16px" id="loc-table-ai-tabs">
+                <button onclick="switchLocTableAiTab(this,'ChatGPT')" style="padding:8px 16px;font-size:14px;font-weight:500;color:#1976d2;background:none;border:none;border-bottom:2px solid #1976d2;cursor:pointer;margin-bottom:-1px">ChatGPT</button>
+                <button onclick="switchLocTableAiTab(this,'Gemini')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Gemini</button>
+                <button onclick="switchLocTableAiTab(this,'Perplexity')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Perplexity</button>
+              </div>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="pt-table" style="width:100%">
+                <thead>
+                  <tr>
+                    <th style="padding-left:24px;width:200px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Locations</span></th>
+                    <th style="width:130px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Performance</span></th>
+                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 1</span></th>
+                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 2</span></th>
+                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 3</span></th>
+                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 4</span></th>
+                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 5</span></th>
+                  </tr>
+                </thead>
+                <tbody id="loc-bench-table-body" style="background:#fff"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location detail view (hidden by default) -->
+        <div id="loc-bench-detail" style="display:none">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+            <button onclick="locBenchBack()" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid #e0e0e0;background:#fff;border-radius:6px;cursor:pointer">
+              <span class="material-symbols-rounded" style="font-size:18px;color:#555">arrow_back</span>
+            </button>
+            <span id="loc-bench-detail-title" style="font-size:17px;font-weight:600;color:#212121"></span>
+          </div>
+          <!-- Detail competitor table -->
+          <div class="snt-summary-card" style="padding:0;margin-bottom:20px">
+            <div style="padding:16px 20px 12px;font-size:16px;font-weight:400;color:#212121">Competitor breakdown for this location</div>
+            <div style="overflow-x:auto">
+              <table class="pt-table" style="width:100%;table-layout:fixed">
+                <colgroup><col style="width:220px"><col style="width:160px"><col style="width:150px"><col style="width:100px"><col style="width:120px"></colgroup>
+                <thead>
+                  <tr>
+                    <th style="padding-left:20px"><span class="pt-th-inner">Brand</span></th>
+                    <th><span class="pt-th-inner">Visibility score</span></th>
+                    <th><span class="pt-th-inner">Citation share</span></th>
+                    <th><span class="pt-th-inner">Rank</span></th>
+                    <th><span class="pt-th-inner">Quadrant</span></th>
+                  </tr>
+                </thead>
+                <tbody id="loc-bench-detail-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Visibility trend for this location -->
+          <div class="snt-summary-card" style="padding:24px 28px">
+            <div style="font-size:16px;font-weight:400;color:#212121;margin-bottom:4px" id="loc-bench-detail-chart-title">How are you performing against competitors for this location</div>
+            <div style="font-size:12px;color:#9e9e9e;margin-bottom:16px">Shows how often your location appears in AI-generated answers across AI sites</div>
+            <div class="snt-sw-tabs" style="margin-bottom:16px" id="loc-detail-ai-tabs">
+              <button class="snt-sw-tab active" onclick="switchLocDetailAiTab(this,'ChatGPT')">ChatGPT</button>
+              <button class="snt-sw-tab" onclick="switchLocDetailAiTab(this,'Gemini')">Gemini</button>
+              <button class="snt-sw-tab" onclick="switchLocDetailAiTab(this,'Perplexity')">Perplexity</button>
+            </div>
+            <div id="loc-detail-chart" style="position:relative;padding-left:40px;height:320px"></div>
+            <div id="loc-detail-xaxis" style="display:flex;justify-content:space-between;padding-left:40px;margin-top:8px;font-size:11px;color:#9e9e9e"></div>
+            <div id="loc-detail-legend" style="display:flex;gap:20px;margin-top:14px;padding-left:40px;flex-wrap:wrap"></div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /view-comp-location -->
+
 
     <!-- ══ TAGS VIEW ══ -->
     <div class="view" id="view-tags">
@@ -6414,7 +6695,7 @@ textarea.ap-input{
           <span class="proj-tab active" onclick="switchSentimentLcTab('overall',this)" style="cursor:pointer">Overall</span>
           <span class="proj-tab" onclick="switchSentimentLcTab('brand',this)" style="cursor:pointer">Presence</span>
           <span class="proj-tab" onclick="switchSentimentLcTab('prompt',this)" style="cursor:pointer">Prompt</span>
-          <span class="proj-tab" onclick="switchSentimentLcTab('competitors',this)" style="cursor:pointer">Competitors</span>
+          <span class="proj-tab" onclick="switchSentimentLcTab('competitors',this)" style="cursor:pointer;display:none">Competitors</span>
         </div>
       </div>
       <div id="snt-lc-tab-overall">
@@ -7360,14 +7641,6 @@ textarea.ap-input{
     </div><!-- /view-sentiment-lc -->
 
     <div class="view" id="view-sentiment-sp">
-      <div style="position:sticky;top:0;z-index:20;background:#f5f5f5;padding:0 0 4px;margin-bottom:8px;border-bottom:none">
-        <div class="proj-tabs" style="border-bottom:none;margin-bottom:0">
-          <span class="proj-tab active" onclick="switchSentimentSpTab('overall',this)" style="cursor:pointer">Overall</span>
-          <span class="proj-tab" style="display:none" onclick="switchSentimentSpTab('brand',this)" style="cursor:pointer">Brand</span>
-          <span class="proj-tab" style="display:none" onclick="switchSentimentSpTab('prompt',this)" style="cursor:pointer">Prompt</span>
-          <span class="proj-tab" onclick="switchSentimentSpTab('competitors',this)" style="cursor:pointer">Competitors</span>
-        </div>
-      </div>
       <div id="snt-sp-tab-overall">
 
       <!-- Row 1: Sentiment score + Sentiment score consists of -->
@@ -8685,154 +8958,6 @@ textarea.ap-input{
       </div>
     </div><!-- /view-comp-brand -->
 
-    <div class="view" id="view-comp-location">
-      <div style="padding-bottom:40px;padding-top:8px">
-
-        <!-- Main location list (shown by default) -->
-        <div id="loc-bench-main">
-
-
-
-          <!-- Scatter plot card -->
-          <div class="snt-summary-card" style="padding:24px 28px;margin-bottom:20px">
-            <span class="snt-card-title">Location visibility vs citation share</span>
-            <div style="font-size:13px;color:#9e9e9e;margin-top:4px;margin-bottom:16px">Each dot represents a location. Size indicates relative appearances.</div>
-            <!-- AI platform tabs -->
-            <div style="display:flex;gap:0;margin-bottom:20px" id="loc-scatter-ai-filter">
-              <button onclick="locScatterAiSelect(this,'ChatGPT')" style="padding:8px 16px;font-size:14px;font-weight:500;color:#1976d2;background:none;border:none;border-bottom:2px solid #1976d2;cursor:pointer;margin-bottom:-1px">ChatGPT</button>
-              <button onclick="locScatterAiSelect(this,'Gemini')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Gemini</button>
-              <button onclick="locScatterAiSelect(this,'Perplexity')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Perplexity</button>
-            </div>
-            <!-- Scatter SVG -->
-            <div style="position:relative" id="loc-scatter-wrap">
-              <div style="position:absolute;top:0;bottom:24px;left:0;width:40px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;padding-right:6px">
-                <span style="font-size:10px;color:#9e9e9e">100%</span>
-                <span style="font-size:10px;color:#9e9e9e">75%</span>
-                <span style="font-size:10px;color:#9e9e9e">50%</span>
-                <span style="font-size:10px;color:#9e9e9e">25%</span>
-                <span style="font-size:10px;color:#9e9e9e">0%</span>
-              </div>
-              <div style="margin-left:44px">
-                <svg id="loc-scatter-svg" width="100%" height="320" style="display:block;background:#fafafa;border:1px solid #f0f0f0;border-radius:6px;pointer-events:none" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
-                  <!-- grid lines -->
-                  <line x1="0" y1="0" x2="800" y2="0" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="0" y1="75" x2="800" y2="75" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="0" y1="150" x2="800" y2="150" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="0" y1="225" x2="800" y2="225" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="0" y1="300" x2="800" y2="300" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="0" y1="0" x2="0" y2="300" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="200" y1="0" x2="200" y2="300" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="400" y1="0" x2="400" y2="300" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="600" y1="0" x2="600" y2="300" stroke="#f0f0f0" stroke-width="1"/>
-                  <line x1="800" y1="0" x2="800" y2="300" stroke="#f0f0f0" stroke-width="1"/>
-                  <!-- quadrant labels -->
-                  <text x="10" y="20" font-size="11" fill="#bdbdbd">Leading</text>
-                  <text x="410" y="20" font-size="11" fill="#bdbdbd">Emerging</text>
-                  <text x="10" y="295" font-size="11" fill="#bdbdbd">Underperforming</text>
-                  <text x="410" y="295" font-size="11" fill="#bdbdbd">Lagging</text>
-                  <!-- dots rendered by JS -->
-                  <g id="loc-scatter-dots" style="pointer-events:all"></g>
-                </svg>
-                <!-- X-axis labels -->
-                <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:10px;color:#9e9e9e;padding:0 2px">
-                  <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
-                </div>
-                <div style="text-align:center;font-size:11px;color:#9e9e9e;margin-top:2px">Citation share →</div>
-              </div>
-              <!-- Tooltip -->
-              <div id="loc-scatter-tooltip" style="display:none;position:fixed;background:#212121;color:#fff;border-radius:6px;padding:8px 12px;font-size:12px;pointer-events:none;z-index:9999;white-space:nowrap"></div>
-            </div>
-            <!-- Legend -->
-            <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
-              <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#1976d2"></span>You</div>
-              <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#555"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#4cae3d"></span>Competitors</div>
-            </div>
-          </div>
-
-          <!-- Location comparison table -->
-          <div class="snt-summary-card" style="padding:0">
-            <div style="padding:20px 24px 0">
-              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:2px">
-                <div>
-                  <div style="font-size:16px;font-weight:400;color:#212121;position:relative">How are your locations ranking vs competitors for <span style="color:#1976d2;cursor:pointer;position:relative" onclick="toggleLocMetricDrop(event)">Visibility score <span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle">expand_more</span><div id="loc-metric-drop" style="display:none;position:absolute;top:100%;left:0;margin-top:4px;background:#fff;border:1px solid #e0e0e0;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:100;min-width:180px;padding:4px 0"><button onclick="selectLocMetric('Sentiment score')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Sentiment score</button><button onclick="selectLocMetric('Visibility score')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#1976d2;font-weight:500;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Visibility score</button><button onclick="selectLocMetric('Rank')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Rank</button><button onclick="selectLocMetric('Citation share')" style="display:block;width:100%;text-align:left;padding:8px 16px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer" onmouseenter="this.style.background='#f5f5f5'" onmouseleave="this.style.background=''">Citation share</button></div></span></div>
-                  <div style="font-size:12px;color:#9e9e9e;margin-top:4px">Discover locations where your visibility has the highest impact across AI platforms</div>
-                </div>
-                <div style="display:flex;gap:6px;flex-shrink:0;margin-left:16px">
-                  <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
-                  <button class="icon-btn-stroke" style="width:32px;height:32px;border-radius:6px"><span style="font-size:11px;font-weight:600;color:#1976d2">Af</span></button>
-                  <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">more_vert</span></button>
-                </div>
-              </div>
-              <!-- AI tabs -->
-              <div style="display:flex;gap:0;margin-top:16px" id="loc-table-ai-tabs">
-                <button onclick="switchLocTableAiTab(this,'ChatGPT')" style="padding:8px 16px;font-size:14px;font-weight:500;color:#1976d2;background:none;border:none;border-bottom:2px solid #1976d2;cursor:pointer;margin-bottom:-1px">ChatGPT</button>
-                <button onclick="switchLocTableAiTab(this,'Gemini')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Gemini</button>
-                <button onclick="switchLocTableAiTab(this,'Perplexity')" style="padding:8px 16px;font-size:14px;font-weight:400;color:#757575;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px">Perplexity</button>
-              </div>
-            </div>
-            <div style="overflow-x:auto">
-              <table class="pt-table" style="width:100%">
-                <thead>
-                  <tr>
-                    <th style="padding-left:24px;width:200px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Locations</span></th>
-                    <th style="width:130px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Performance</span></th>
-                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 1</span></th>
-                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 2</span></th>
-                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 3</span></th>
-                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 4</span></th>
-                    <th style="width:180px"><span class="pt-th-inner" style="font-size:13px;color:#9e9e9e;font-weight:400">Rank 5</span></th>
-                  </tr>
-                </thead>
-                <tbody id="loc-bench-table-body" style="background:#fff"></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Location detail view (hidden by default) -->
-        <div id="loc-bench-detail" style="display:none">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-            <button onclick="locBenchBack()" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid #e0e0e0;background:#fff;border-radius:6px;cursor:pointer">
-              <span class="material-symbols-rounded" style="font-size:18px;color:#555">arrow_back</span>
-            </button>
-            <span id="loc-bench-detail-title" style="font-size:17px;font-weight:600;color:#212121"></span>
-          </div>
-          <!-- Detail competitor table -->
-          <div class="snt-summary-card" style="padding:0;margin-bottom:20px">
-            <div style="padding:16px 20px 12px;font-size:16px;font-weight:400;color:#212121">Competitor breakdown for this location</div>
-            <div style="overflow-x:auto">
-              <table class="pt-table" style="width:100%;table-layout:fixed">
-                <colgroup><col style="width:220px"><col style="width:160px"><col style="width:150px"><col style="width:100px"><col style="width:120px"></colgroup>
-                <thead>
-                  <tr>
-                    <th style="padding-left:20px"><span class="pt-th-inner">Brand</span></th>
-                    <th><span class="pt-th-inner">Visibility score</span></th>
-                    <th><span class="pt-th-inner">Citation share</span></th>
-                    <th><span class="pt-th-inner">Rank</span></th>
-                    <th><span class="pt-th-inner">Quadrant</span></th>
-                  </tr>
-                </thead>
-                <tbody id="loc-bench-detail-body"></tbody>
-              </table>
-            </div>
-          </div>
-          <!-- Visibility trend for this location -->
-          <div class="snt-summary-card" style="padding:24px 28px">
-            <div style="font-size:16px;font-weight:400;color:#212121;margin-bottom:4px" id="loc-bench-detail-chart-title">How are you performing against competitors for this location</div>
-            <div style="font-size:12px;color:#9e9e9e;margin-bottom:16px">Shows how often your location appears in AI-generated answers across AI sites</div>
-            <div class="snt-sw-tabs" style="margin-bottom:16px" id="loc-detail-ai-tabs">
-              <button class="snt-sw-tab active" onclick="switchLocDetailAiTab(this,'ChatGPT')">ChatGPT</button>
-              <button class="snt-sw-tab" onclick="switchLocDetailAiTab(this,'Gemini')">Gemini</button>
-              <button class="snt-sw-tab" onclick="switchLocDetailAiTab(this,'Perplexity')">Perplexity</button>
-            </div>
-            <div id="loc-detail-chart" style="position:relative;padding-left:40px;height:320px"></div>
-            <div id="loc-detail-xaxis" style="display:flex;justify-content:space-between;padding-left:40px;margin-top:8px;font-size:11px;color:#9e9e9e"></div>
-            <div id="loc-detail-legend" style="display:flex;gap:20px;margin-top:14px;padding-left:40px;flex-wrap:wrap"></div>
-          </div>
-        </div>
-
-      </div>
-    </div><!-- /view-comp-location -->
 <script>
 (function(){
 'use strict';
@@ -9803,112 +9928,6 @@ else init();
       </div>
 
     </div><!-- /view-reports-prompts -->
-
-    <!-- ══ SITE AUDIT VIEW ══ -->
-    <div class="view" id="view-site-audit">
-    <div style="display:flex;flex-direction:column;gap:16px;padding-top:16px">
-
-      <!-- Summary strip -->
-      <div style="display:flex;gap:12px">
-          <div class="pt-table-wrap" style="flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:4px">
-            <div style="font-size:24px;font-weight:400;color:rgb(33,33,33)">248</div>
-            <div style="font-size:13px;color:rgb(85,85,85)">Pages crawled</div>
-          </div>
-          <div class="pt-table-wrap" style="flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:4px">
-            <div style="font-size:24px;font-weight:400;color:#16a34a">214</div>
-            <div style="font-size:13px;color:rgb(85,85,85)">Indexable</div>
-          </div>
-          <div class="pt-table-wrap" style="flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:4px">
-            <div style="font-size:24px;font-weight:400;color:#e53935">18</div>
-            <div style="font-size:13px;color:rgb(85,85,85)">Issues found</div>
-          </div>
-          <div class="pt-table-wrap" style="flex:1;padding:16px 20px;display:flex;flex-direction:column;gap:4px">
-            <div style="font-size:24px;font-weight:400;color:#d97706">16</div>
-            <div style="font-size:13px;color:rgb(85,85,85)">Warnings</div>
-          </div>
-        </div>
-
-        <!-- Page health table -->
-        <div class="pt-table-wrap" style="overflow:hidden">
-          <div class="pbk-card-hdr" style="padding:16px 24px;margin-bottom:0">
-            <div class="pbk-card-hdr-left" style="display:flex;align-items:center;gap:6px">
-              <span style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Page health</span>
-            </div>
-          </div>
-          <div style="font-size:12px;color:rgb(143,143,143);padding:0 24px 12px;margin-top:-16px">Crawl results for all tracked pages on your site</div>
-          <table style="width:100%;border-collapse:collapse;background:#fff">
-            <thead>
-              <tr>
-                <th style="padding:10px 20px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;white-space:nowrap">URL</th>
-                <th style="padding:10px 20px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;white-space:nowrap">Status</th>
-                <th style="padding:10px 20px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;white-space:nowrap">Indexable</th>
-                <th style="padding:10px 20px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;white-space:nowrap">Issues</th>
-                <th style="padding:10px 20px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;white-space:nowrap">Last crawled</th>
-              </tr>
-            </thead>
-            <tbody id="site-audit-tbody">
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac">200 OK</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Yes</span></td>
-                <td style="padding:12px 20px;font-size:14px;color:#8f8f8f;border-bottom:1px solid #f3f4f6">—</td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 29, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/about</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac">200 OK</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Yes</span></td>
-                <td style="padding:12px 20px;font-size:14px;color:#8f8f8f;border-bottom:1px solid #f3f4f6">—</td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 29, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/blog/dental-implants-guide</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac">200 OK</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Yes</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Missing meta description</span></td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 29, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/services/teeth-whitening</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#fff8e1;color:#d97706;border:1px solid #ffd54f">301 Redirect</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#8f8f8f;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">remove_circle</span>No</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Redirect chain</span></td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 28, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/contact</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac">200 OK</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Yes</span></td>
-                <td style="padding:12px 20px;font-size:14px;color:#8f8f8f;border-bottom:1px solid #f3f4f6">—</td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 29, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/faq</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#fde8e8;color:#e53935;border:1px solid #ef9a9a">404 Not Found</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">cancel</span>No</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">error</span>Broken page</span></td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 28, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">/blog/invisalign-vs-braces</td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac">200 OK</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Yes</span></td>
-                <td style="padding:12px 20px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">warning</span>Duplicate title tag</span></td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:1px solid #f3f4f6">Jun 29, 2026</td>
-              </tr>
-              <tr>
-                <td style="padding:12px 20px;font-size:14px;color:#212121;border-bottom:none">/services/dental-implants</td>
-                <td style="padding:12px 20px;border-bottom:none"><span style="display:inline-block;padding:2px 10px;border-radius:3px;font-size:13px;background:#e8f5e9;color:#16a34a;border:1px solid #a7d7ac">200 OK</span></td>
-                <td style="padding:12px 20px;border-bottom:none"><span style="font-size:13px;color:#16a34a;display:inline-flex;align-items:center;gap:4px"><span class="material-symbols-rounded" style="font-size:16px">check_circle</span>Yes</span></td>
-                <td style="padding:12px 20px;border-bottom:none;color:#8f8f8f;font-size:14px">—</td>
-                <td style="padding:12px 20px;font-size:13px;color:#555;border-bottom:none">Jun 29, 2026</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
 
     <!-- ══ EXPLORE THEMES VIEW ══ -->
     <div class="view" id="view-explore-themes">
@@ -12014,7 +12033,7 @@ function showView(view, skipHash) {
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
   document.getElementById('main-content').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location'].includes(view) ? '#f5f5f5' : '';
-  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
+  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
 
   // open Settings/Reports group when navigating to their sub-views
   if (view === 'prompts-v1' || view === 'prompts-v2' || view === 'prompt-brandkit' || view === 'tags' || view === 'settings-reports') {
@@ -13820,13 +13839,26 @@ function filterNmEditSearch(q) {
     if (!seen.has(s.name)) { seen.add(s.name); allPool.push(s); }
   });
   const matches = allPool.filter(s => s.name.toLowerCase().includes(q.toLowerCase()) && !existing.includes(s.name));
-  if (!matches.length) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
-  dd.innerHTML = matches.map(s =>
-    `<div class="nm-search-opt" onclick="addNmEditItem('${s.name.replace(/'/g,"\\'")}','${s.meta.replace(/'/g,"\\'")}')">
-      <span class="nm-search-opt-name">${s.name}</span>
-      <span class="nm-search-opt-meta">${s.meta}</span>
-    </div>`
-  ).join('');
+  const safeQ = q.trim().replace(/'/g, "\\'");
+  if (!matches.length) {
+    // No results: "Add as variation" row at top, empty state below
+    dd.innerHTML =
+      `<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #eaeaea;cursor:pointer;background:#fff;" onmousedown="addNmEditItem('${safeQ}','')" onmouseover="this.style.background='rgb(242,244,247)'" onmouseout="this.style.background='#fff'">` +
+        `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 3v10M3 8h10" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/></svg>` +
+        `<span style="font-size:14px;color:#1976d2;font-family:inherit;">Add "${q.trim()}" as a variation</span>` +
+      `</div>` +
+      `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;gap:10px;background:#fff;">` +
+        `<svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8.0628" cy="33.9388" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="33.7747" cy="33.9388" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="8.0628" cy="8.0628" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="34.3138" cy="8.0628" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/></svg>` +
+        `<p style="font-size:13px;color:rgb(143,143,143);margin:0;font-family:inherit;text-align:center;">No results found</p>` +
+      `</div>`;
+  } else {
+    dd.innerHTML = matches.map(s =>
+      `<div class="nm-search-opt" onclick="addNmEditItem('${s.name.replace(/'/g,"\\'")}','${s.meta.replace(/'/g,"\\'")}')">
+        <span class="nm-search-opt-name">${s.name}</span>
+        <span class="nm-search-opt-meta">${s.meta}</span>
+      </div>`
+    ).join('');
+  }
   // Position fixed to escape overflow:hidden of ap-body
   const rect = input.getBoundingClientRect();
   dd.style.position = 'fixed';
