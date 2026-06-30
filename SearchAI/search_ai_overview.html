@@ -11790,27 +11790,16 @@ else init();
       <input class="ap-input" type="text" id="nm-brand-input" placeholder="Enter brand name"
         oninput="onNmBrandInput(this.value)" autocomplete="off"/>
     </div>
+    <div class="ap-field">
+      <label class="ap-label">Search names</label>
+      <input class="ap-input" type="text" id="nmAddSearchInput" placeholder="Search mentions"
+        oninput="filterNmAddSearch(this.value)" autocomplete="off"/>
+    </div>
 
-    <!-- Mapped names section -->
+    <!-- Brand variations section -->
     <div id="nm-mapped-section" style="display:none">
       <label class="ap-label" style="margin-bottom:8px;display:block">Brand variations</label>
       <div id="nm-mapped-list"></div>
-    </div>
-
-    <!-- Name mapping suggestions section (always visible) -->
-    <div id="nm-suggest-section">
-      <label class="ap-label" style="margin-bottom:8px;display:block">Name mapping suggestions</label>
-      <!-- Empty state -->
-      <div id="nm-suggest-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;gap:12px;text-align:center">
-        <svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="8.0628" cy="33.9388" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
-          <circle cx="33.7747" cy="33.9388" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
-          <circle cx="8.0628" cy="8.0628" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
-          <circle cx="34.3138" cy="8.0628" r="7.16106" stroke="#666666" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/>
-        </svg>
-        <p style="font-size:13px;color:rgb(143,143,143);margin:0;font-family:'Inter',sans-serif">Add brand name to get name suggestions</p>
-      </div>
-      <div id="nm-suggest-list" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -13687,9 +13676,9 @@ let _nmMappedNames = [];
 function openAddBrandPanel() {
   _nmMappedNames = [];
   document.getElementById('nm-brand-input').value = '';
-  document.getElementById('nm-suggest-list').innerHTML = '';
-  document.getElementById('nm-suggest-list').style.display = 'none';
-  document.getElementById('nm-suggest-empty').style.display = 'flex';
+  document.getElementById('nmAddSearchInput').value = '';
+  document.getElementById('nmSearchDropdown').innerHTML = '';
+  document.getElementById('nmSearchDropdown').classList.remove('open');
   document.getElementById('nm-mapped-list').innerHTML = '';
   document.getElementById('nm-mapped-section').style.display = 'none';
   document.getElementById('nm-add-save-btn').classList.remove('enabled');
@@ -13704,31 +13693,65 @@ function closeAddBrandPanel() {
 }
 
 function onNmBrandInput(q) {
-  const trimmed = q.trim().toLowerCase();
-  const sugList = document.getElementById('nm-suggest-list');
-  const emptyState = document.getElementById('nm-suggest-empty');
-  if (!trimmed) {
-    sugList.style.display = 'none'; sugList.innerHTML = '';
-    emptyState.style.display = 'flex';
-    return;
-  }
+  const hasName = q.trim().length > 0;
+  const hasMapped = _nmMappedNames.length > 0;
+  document.getElementById('nm-add-save-btn').classList.toggle('enabled', hasName && hasMapped);
+}
 
+function filterNmAddSearch(q) {
+  const dd = document.getElementById('nmSearchDropdown');
+  const input = document.getElementById('nmAddSearchInput');
+  if (!q.trim()) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
   const matches = NM_BRAND_SUGGESTIONS.filter(s =>
-    s.name.toLowerCase().includes(trimmed) && !_nmMappedNames.includes(s.name)
+    s.name.toLowerCase().includes(q.toLowerCase()) && !_nmMappedNames.includes(s.name)
   );
-  emptyState.style.display = 'none';
-  sugList.style.display = matches.length ? '' : 'none';
-  sugList.innerHTML = matches.map(s =>
-    `<div class="nm-suggest-item">
-      <div class="nm-suggest-info">
-        <span class="nm-suggest-name">${s.name}</span>
-        <span class="nm-suggest-meta">${s.meta}</span>
-      </div>
-      <button class="nm-map-btn" title="Map name" onclick="mapNmSuggestion('${s.name.replace(/'/g,"\\'")}')">
-        <span class="material-symbols-rounded" style="font-size:18px">check</span>
-      </button>
-    </div>`
-  ).join('');
+  const safeQ = q.trim().replace(/'/g, "\\'");
+  if (!matches.length) {
+    dd.innerHTML =
+      `<div style="display:flex;align-items:center;gap:4px;padding:10px 14px;cursor:pointer;background:#fff;" onmousedown="addNmAddItem('${safeQ}','')" onmouseover="this.style.background='rgb(242,244,247)'" onmouseout="this.style.background='#fff'">` +
+        `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 3v10M3 8h10" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/></svg>` +
+        `<span style="font-size:14px;color:#1976d2;font-family:inherit;">Add '${q.trim()}' as a variation</span>` +
+      `</div>` +
+      `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;gap:10px;background:#fff;">` +
+        `<svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8.0628" cy="33.9388" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="33.7747" cy="33.9388" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="8.0628" cy="8.0628" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="34.3138" cy="8.0628" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/></svg>` +
+        `<p style="font-size:13px;color:rgb(143,143,143);margin:0;font-family:inherit;text-align:center;">No results found</p>` +
+      `</div>`;
+  } else {
+    dd.innerHTML = matches.map(s =>
+      `<div class="nm-search-opt" onclick="addNmAddItem('${s.name.replace(/'/g,"\\'")}','${s.meta.replace(/'/g,"\\'")}')">
+        <span class="nm-search-opt-name">${s.name}</span>
+        <span class="nm-search-opt-meta">${s.meta}</span>
+      </div>`
+    ).join('');
+  }
+  const rect = input.getBoundingClientRect();
+  dd.style.position = 'fixed';
+  dd.style.top = (rect.bottom + 4) + 'px';
+  dd.style.left = rect.left + 'px';
+  dd.style.width = rect.width + 'px';
+  dd.style.zIndex = '1200';
+  dd.classList.add('open');
+}
+
+function addNmAddItem(name, meta) {
+  if (_nmMappedNames.includes(name)) return;
+  _nmMappedNames.push(name);
+  const list = document.getElementById('nm-mapped-list');
+  const item = document.createElement('div');
+  item.className = 'nm-suggest-item nm-modal-item';
+  item.innerHTML =
+    `<div class="nm-suggest-info">` +
+    `<span class="nm-suggest-name">${name}</span>` +
+    (meta ? `<span class="nm-suggest-meta">${meta}</span>` : '') +
+    `</div>` +
+    `<button class="nm-map-btn" onclick="unmapNmName('${name.replace(/'/g,"\\'")}',this.closest('.nm-modal-item'))" title="Remove">` +
+    `<span class="material-symbols-rounded" style="font-size:18px">delete</span></button>`;
+  list.appendChild(item);
+  document.getElementById('nm-mapped-section').style.display = '';
+  const dd = document.getElementById('nmSearchDropdown');
+  dd.classList.remove('open'); dd.innerHTML = '';
+  document.getElementById('nmAddSearchInput').value = '';
+  onNmBrandInput(document.getElementById('nm-brand-input').value);
 }
 
 function mapNmSuggestion(name) {
@@ -13843,9 +13866,9 @@ function filterNmEditSearch(q) {
   if (!matches.length) {
     // No results: "Add as variation" row at top, empty state below
     dd.innerHTML =
-      `<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #eaeaea;cursor:pointer;background:#fff;" onmousedown="addNmEditItem('${safeQ}','')" onmouseover="this.style.background='rgb(242,244,247)'" onmouseout="this.style.background='#fff'">` +
+      `<div style="display:flex;align-items:center;gap:4px;padding:10px 14px;cursor:pointer;background:#fff;" onmousedown="addNmEditItem('${safeQ}','')" onmouseover="this.style.background='rgb(242,244,247)'" onmouseout="this.style.background='#fff'">` +
         `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><path d="M8 3v10M3 8h10" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/></svg>` +
-        `<span style="font-size:14px;color:#1976d2;font-family:inherit;">Add "${q.trim()}" as a variation</span>` +
+        `<span style="font-size:14px;color:#1976d2;font-family:inherit;">Add '${q.trim()}' as a variation</span>` +
       `</div>` +
       `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;gap:10px;background:#fff;">` +
         `<svg width="43" height="42" viewBox="0 0 43 42" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8.0628" cy="33.9388" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="33.7747" cy="33.9388" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="8.0628" cy="8.0628" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/><circle cx="34.3138" cy="8.0628" r="7.16106" stroke="#999" stroke-width="1.80349" stroke-dasharray="3.61 1.8"/></svg>` +
@@ -13942,11 +13965,14 @@ function addNmSuggestion(name, meta) {
   dd.innerHTML = '';
 }
 
-// Close edit search dropdown on outside click
+// Close search dropdown on outside click (shared by both Edit and Add Brand panels)
 document.addEventListener('click', function(e) {
-  const input = document.getElementById('nmModalSearchInput');
+  const editInput = document.getElementById('nmModalSearchInput');
+  const addInput = document.getElementById('nmAddSearchInput');
   const dd = document.getElementById('nmSearchDropdown');
-  if (dd && input && !input.contains(e.target) && !dd.contains(e.target)) {
+  if (dd && !dd.contains(e.target) &&
+      !(editInput && editInput.contains(e.target)) &&
+      !(addInput && addInput.contains(e.target))) {
     dd.classList.remove('open'); dd.innerHTML = '';
   }
 });
