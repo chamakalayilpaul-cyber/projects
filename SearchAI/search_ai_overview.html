@@ -1543,6 +1543,8 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 #view-site-audit-v3 tr[data-acs-group]:hover td:first-child { color:#1976d2!important; }
 #view-site-audit-v3 .v3-more-btn { position:absolute;right:12px;top:50%;transform:translateY(-50%);visibility:hidden;z-index:10; }
 #view-site-audit-v3 .v3-group-row:hover .v3-more-btn { visibility:visible; }
+#view-site-audit-v3 tr[data-acs-group] td { background:#fafafa; }
+#view-site-audit-v3 tr[data-acs-group]:hover td { background:rgb(242,244,247)!important; }
 
 #view-site-audit-v2 .pt-data-row:hover td{background:rgb(242,244,247)}
 #view-site-audit-v2 .pt-data-row:hover .sav2-url{color:#1976d2!important}
@@ -2539,6 +2541,11 @@ textarea.ap-input{
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-site-audit-v2-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
+      <button onclick="openAcsAddPanel()" style="height:32px;padding:0 12px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:13px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>Add URL</button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-site-audit-v3-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
       <button onclick="openAcsAddPanel()" style="height:32px;padding:0 12px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:13px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>Add URL</button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
