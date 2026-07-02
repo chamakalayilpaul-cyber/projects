@@ -1533,6 +1533,20 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 /* ── Prompts accordion ── */
 .pt-group-row{background:#fff;cursor:pointer;user-select:none}
 .pt-group-row:hover{background:rgb(242,244,247)}
+
+#view-site-audit-v2 .pt-data-row{background:#fff}
+/* ── Site audit v3 group row hover ── */
+#view-site-audit-v3 .v3-group-row:hover td { background:rgb(242,244,247); }
+#view-site-audit-v3 .v3-group-row:hover .v3-site-name { color:#1976d2!important; cursor:pointer; }
+#view-site-audit-v3 .v3-group-row { position:relative; }
+#view-site-audit-v3 tr[data-acs-group]:hover td { background:rgb(242,244,247)!important; cursor:pointer; }
+#view-site-audit-v3 tr[data-acs-group]:hover td:first-child { color:#1976d2!important; }
+#view-site-audit-v3 .v3-more-btn { position:absolute;right:12px;top:50%;transform:translateY(-50%);visibility:hidden;z-index:10; }
+#view-site-audit-v3 .v3-group-row:hover .v3-more-btn { visibility:visible; }
+
+#view-site-audit-v2 .pt-data-row:hover td{background:rgb(242,244,247)}
+#view-site-audit-v2 .pt-data-row:hover .sav2-url{color:#1976d2!important}
+
 .pt-data-row{background:#fafafa}
 .pt-group-row td{height:56px;padding:0 20px;border-bottom:1px solid #eaeaea;vertical-align:middle}
 .pt-group-inner{display:flex;align-items:flex-start;gap:8px}
@@ -2347,7 +2361,15 @@ textarea.ap-input{
       <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-ai-crawler" onclick="showView('ai-crawler')">AI crawler status</div>
       <div class="sb-sub-item" id="nav-explore-themes" onclick="showView('explore-themes')">Explore themes</div>
-      <div class="sb-sub-item" id="nav-site-audit" onclick="showView('site-audit')">Site audit</div>
+      <div class="sb-sub-item" id="nav-site-audit" onclick="showView('site-audit')" style="display:flex;align-items:center;justify-content:space-between">Site audit<span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V1</span></div>
+      <div class="sb-sub-item" id="nav-site-audit-v2" onclick="showView('site-audit-v2')" style="display:flex;align-items:center;justify-content:space-between">
+        Site audit
+        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V2</span>
+      </div>
+      <div class="sb-sub-item" id="nav-site-audit-v3" onclick="showView('site-audit-v3')" style="display:flex;align-items:center;justify-content:space-between">
+        /site-audit-v3
+        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V3</span>
+      </div>
     </div>
     <div class="sb-group-hdr" id="nav-competitors-parent" onclick="toggleSbGroup('competitors',this)">
       <span>Competitors</span>
@@ -2513,6 +2535,11 @@ textarea.ap-input{
     </div>
     <div class="page-hdr-right" id="hdr-site-audit-btns" style="display:none;gap:6px;padding-right:8px">
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">search</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-site-audit-v2-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
+      <button onclick="openAcsAddPanel()" style="height:32px;padding:0 12px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:13px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>Add URL</button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
     </div>
@@ -3786,7 +3813,572 @@ textarea.ap-input{
 
       </div>
     </div>
-    <div class="view" id="view-comp-location">
+    <div class="view" id="view-site-audit-v2">
+    <div style="padding-top:16px">
+
+      <!-- Summary strip -->
+      <div class="snt-kpi-row">
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">10</div>
+          <div class="snt-kpi-label">URLs crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">248</div>
+          <div class="snt-kpi-label">Pages crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#16a34a">214</div>
+          <div class="snt-kpi-label">Indexable</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#e53935">18</div>
+          <div class="snt-kpi-label">Issues found</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#d97706">16</div>
+          <div class="snt-kpi-label">Warnings</div>
+        </div>
+      </div>
+
+      <!-- Page health table -->
+        <div class="pt-table-wrap" style="overflow:hidden;width:100%">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0">
+            <div>
+              <div style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Website health</div>
+              <div style="font-size:12px;color:rgb(143,143,143);margin-top:3px">Crawl results grouped by website</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
+              </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;margin-top:12px">
+            <thead>
+              <tr style="background:#fff">
+                <th style="padding:10px 24px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea;width:40%">URL</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Health</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">AI readiness</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Discoverability</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Freshness</th>
+              </tr>
+            </thead>
+                                    <tbody>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalcare.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendentalcare.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">3 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendental.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendental.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">4 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalimplants.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendentalimplants.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">6 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('myaspendentalplan.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">myaspendentalplan.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">2 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('dentalcarebyaspen.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">dentalcarebyaspen.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">8 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspensmilecenter.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspensmilecenter.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">5 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalonline.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendentalonline.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">11 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalreviews.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendentalreviews.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">3 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalblog.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendentalblog.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">9 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentallocations.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav2-url" style="font-size:14px;color:#212121">aspendentallocations.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">7 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    
+<div class="view" id="view-site-audit-v3">
+    <div style="padding-top:16px">
+
+      <!-- Summary strip -->
+      <div class="snt-kpi-row">
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">10</div>
+          <div class="snt-kpi-label">URLs crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">248</div>
+          <div class="snt-kpi-label">Pages crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#16a34a">214</div>
+          <div class="snt-kpi-label">Indexable</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#e53935">18</div>
+          <div class="snt-kpi-label">Issues found</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#d97706">16</div>
+          <div class="snt-kpi-label">Warnings</div>
+        </div>
+      </div>
+
+      <!-- Page health table -->
+        <div class="pt-table-wrap" style="overflow:hidden;width:100%">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0">
+            <div>
+              <div style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Website health</div>
+              <div style="font-size:12px;color:rgb(143,143,143);margin-top:3px">Crawl results grouped by website</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
+              </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;margin-top:12px">
+            <thead>
+              <tr style="background:#fff">
+                <th style="padding:10px 24px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea;width:40%">Website / Pages</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Health</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">AI readiness</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Discoverability</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Freshness</th>
+              </tr>
+            </thead>
+                                                <tbody>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site1')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendentalcare.com')">aspendentalcare.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">3 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendentalcare.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalcare.com','/')" style="cursor:pointer" data-acs-group="v3-site1">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalcare.com','/about')" style="cursor:pointer" data-acs-group="v3-site1">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalcare.com','/blog/dental-implants-guide')" style="cursor:pointer" data-acs-group="v3-site1">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/blog/dental-implants-guide</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site2')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendental.com')">aspendental.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">4 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendental.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendental.com','/')" style="cursor:pointer" data-acs-group="v3-site2">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendental.com','/services/teeth-whitening')" style="cursor:pointer" data-acs-group="v3-site2">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/services/teeth-whitening</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendental.com','/faq')" style="cursor:pointer" data-acs-group="v3-site2">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/faq</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendental.com','/blog/invisalign-vs-braces')" style="cursor:pointer" data-acs-group="v3-site2">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/blog/invisalign-vs-braces</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site3')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendentalimplants.com')">aspendentalimplants.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">6 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendentalimplants.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalimplants.com','/')" style="cursor:pointer" data-acs-group="v3-site3">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalimplants.com','/implants')" style="cursor:pointer" data-acs-group="v3-site3">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/implants</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalimplants.com','/about')" style="cursor:pointer" data-acs-group="v3-site3">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalimplants.com','/pricing')" style="cursor:pointer" data-acs-group="v3-site3">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/pricing</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalimplants.com','/contact')" style="cursor:pointer" data-acs-group="v3-site3">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/contact</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalimplants.com','/blog')" style="cursor:pointer" data-acs-group="v3-site3">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/blog</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site4')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('myaspendentalplan.com')">myaspendentalplan.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">2 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'myaspendentalplan.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('myaspendentalplan.com','/')" style="cursor:pointer" data-acs-group="v3-site4">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('myaspendentalplan.com','/plan')" style="cursor:pointer" data-acs-group="v3-site4">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/plan</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site5')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('dentalcarebyaspen.com')">dentalcarebyaspen.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">8 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'dentalcarebyaspen.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/services')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/services</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/about')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/locations')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/locations</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/contact')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/contact</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/blog')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/blog</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/faq')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/faq</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('dentalcarebyaspen.com','/team')" style="cursor:pointer" data-acs-group="v3-site5">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/team</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site6')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspensmilecenter.com')">aspensmilecenter.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">5 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspensmilecenter.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspensmilecenter.com','/')" style="cursor:pointer" data-acs-group="v3-site6">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspensmilecenter.com','/smile')" style="cursor:pointer" data-acs-group="v3-site6">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/smile</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspensmilecenter.com','/about')" style="cursor:pointer" data-acs-group="v3-site6">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspensmilecenter.com','/contact')" style="cursor:pointer" data-acs-group="v3-site6">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/contact</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspensmilecenter.com','/gallery')" style="cursor:pointer" data-acs-group="v3-site6">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/gallery</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site7')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendentalonline.com')">aspendentalonline.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">11 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendentalonline.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/services')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/services</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/about')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/contact')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/contact</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/blog')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/blog</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/faq')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/faq</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/locations')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/locations</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/pricing')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/pricing</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/team')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/team</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/careers')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/careers</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalonline.com','/legal')" style="cursor:pointer" data-acs-group="v3-site7">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/legal</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site8')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendentalreviews.com')">aspendentalreviews.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">3 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendentalreviews.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalreviews.com','/')" style="cursor:pointer" data-acs-group="v3-site8">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalreviews.com','/reviews')" style="cursor:pointer" data-acs-group="v3-site8">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/reviews</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalreviews.com','/about')" style="cursor:pointer" data-acs-group="v3-site8">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site9')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendentalblog.com')">aspendentalblog.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">9 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendentalblog.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/posts')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/posts</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/about')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/archive')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/archive</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/category/implants')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/category/implants</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/category/whitening')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/category/whitening</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/category/orthodontics')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/category/orthodontics</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/contact')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/contact</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentalblog.com','/newsletter')" style="cursor:pointer" data-acs-group="v3-site9">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/newsletter</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="v3-group-row" onclick="toggleAcsGroup(this,'v3-site10')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span class="material-symbols-rounded pt-group-chev" style="margin-top:0;color:#8f8f8f;font-size:18px">expand_more</span>
+                    <div style="display:flex;flex-direction:column;gap:2px;flex:1">
+                      <span class="v3-site-name" style="font-size:14px;color:#212121;font-weight:400" onclick="event.stopPropagation();openWhPanel('aspendentallocations.com')">aspendentallocations.com</span>
+                      <span style="font-size:12px;color:#8f8f8f">7 pages</span>
+                    </div>
+                  </div>
+                <button class="v3-more-btn pt-row-icon-btn" onclick="openV3Popover(this,'aspendentallocations.com')" style="align-items:center;justify-content:center;width:28px;height:28px;flex-shrink:0;display:flex"><span class="material-symbols-rounded" style="font-size:18px;color:rgb(33,33,33)">more_vert</span></button>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/locations')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/locations</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/map')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/map</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/about')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/about</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/contact')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/contact</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/blog')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #f3f4f6;font-size:14px;color:#212121">/blog</td>
+                <td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#16a34a;cursor:default" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #f3f4f6"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr onclick="openPageDetailsPanel('aspendentallocations.com','/faq')" style="cursor:pointer" data-acs-group="v3-site10">
+                <td style="padding:0 24px 0 56px;height:48px;border-bottom:1px solid #eaeaea;font-size:14px;color:#212121">/faq</td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#e53935;cursor:default" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span style="font-size:13px;color:#d97706;cursor:default" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    
+
+<div class="view" id="view-comp-location">
       <div style="padding-bottom:40px;padding-top:8px">
 
         <!-- Main location list (shown by default) -->
@@ -11998,7 +12590,7 @@ function showView(view, skipHash) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location','site-audit':'Site audit'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location','site-audit':'Site audit','site-audit-v2':'Site audit v2','site-audit-v3':'Site audit v3'};
   var ptEl = document.getElementById('page-title');
   var isCompView = (view === 'comp-brand' || view === 'comp-location');
   var pageHdr = document.querySelector('.page-hdr');
@@ -12024,6 +12616,8 @@ function showView(view, skipHash) {
   document.getElementById('hdr-explore-btns').style.display = view === 'explore-themes' ? 'flex' : 'none';
   document.getElementById('hdr-ai-crawler-btns').style.display = view === 'ai-crawler' ? 'flex' : 'none';
   document.getElementById('hdr-site-audit-btns').style.display = view === 'site-audit' ? 'flex' : 'none';
+  if(document.getElementById('hdr-site-audit-v2-btns')) document.getElementById('hdr-site-audit-v2-btns').style.display = view === 'site-audit-v2' ? 'flex' : 'none';
+  if(document.getElementById('hdr-site-audit-v3-btns')) document.getElementById('hdr-site-audit-v3-btns').style.display = view === 'site-audit-v3' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-btns').style.display = view === 'sentiment' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-lc-btns').style.display = (view === 'sentiment-lc' || view === 'sentiment-sp') ? 'flex' : 'none';
   document.getElementById('hdr-reports-prompts-btns').style.display = view === 'reports-prompts' ? 'flex' : 'none';
@@ -12032,7 +12626,7 @@ function showView(view, skipHash) {
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
   document.getElementById('main-content').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location'].includes(view) ? '#f5f5f5' : '';
-  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
+  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit','site-audit-v2','site-audit-v3'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
 
   // open Settings/Reports group when navigating to their sub-views
   if (view === 'prompts-v1' || view === 'prompts-v2' || view === 'prompt-brandkit' || view === 'tags' || view === 'settings-reports') {
@@ -12041,7 +12635,7 @@ function showView(view, skipHash) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit') {
+  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
@@ -16274,6 +16868,315 @@ function applyCitTopicFilter(drop) {
   });
 }
 
+
+// ── Website Health Details panel ────────────────────────────────────────
+const WH_DATA = {
+  "aspendentalcare.com": {
+    "pages": 3,
+    "health": "Excellent",
+    "ai": "Excellent",
+    "disc": "Excellent",
+    "fresh": "Needs Attention"
+  },
+  "aspendental.com": {
+    "pages": 4,
+    "health": "Needs Attention",
+    "ai": "Needs Attention",
+    "disc": "Needs Attention",
+    "fresh": "Needs Attention"
+  },
+  "aspendentalimplants.com": {
+    "pages": 6,
+    "health": "Excellent",
+    "ai": "Excellent",
+    "disc": "Critical",
+    "fresh": "Excellent"
+  },
+  "myaspendentalplan.com": {
+    "pages": 2,
+    "health": "Critical",
+    "ai": "Critical",
+    "disc": "Critical",
+    "fresh": "Critical"
+  },
+  "dentalcarebyaspen.com": {
+    "pages": 8,
+    "health": "Needs Attention",
+    "ai": "Excellent",
+    "disc": "Needs Attention",
+    "fresh": "Needs Attention"
+  },
+  "aspensmilecenter.com": {
+    "pages": 5,
+    "health": "Excellent",
+    "ai": "Needs Attention",
+    "disc": "Excellent",
+    "fresh": "Excellent"
+  },
+  "aspendentalonline.com": {
+    "pages": 11,
+    "health": "Needs Attention",
+    "ai": "Critical",
+    "disc": "Needs Attention",
+    "fresh": "Critical"
+  },
+  "aspendentalreviews.com": {
+    "pages": 3,
+    "health": "Critical",
+    "ai": "Critical",
+    "disc": "Critical",
+    "fresh": "Needs Attention"
+  },
+  "aspendentalblog.com": {
+    "pages": 9,
+    "health": "Excellent",
+    "ai": "Excellent",
+    "disc": "Excellent",
+    "fresh": "Excellent"
+  },
+  "aspendentallocations.com": {
+    "pages": 7,
+    "health": "Needs Attention",
+    "ai": "Excellent",
+    "disc": "Critical",
+    "fresh": "Needs Attention"
+  }
+};
+const WH_STATUS_COLOR = {"Excellent": "#16a34a", "Needs Attention": "#d97706", "Critical": "#e53935"};
+
+function openWhPanel(domain) {
+  const WH_DETAILS = {
+    'aspendentalcare.com':      {sitemap:'3 / 3',coverage:'100%',robots:98,crawler:82,conflicts:'No', blocked:['/admin/','/api/','/staging/'],canon:100,redir:100,dup:100},
+    'aspendental.com':          {sitemap:'4 / 6',coverage:'67%', robots:74,crawler:65,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/blog/wp-content/plugins/','/index.php/','/landing/','/reservation/'],canon:72,redir:85,dup:68},
+    'aspendentalimplants.com':  {sitemap:'6 / 6',coverage:'100%',robots:91,crawler:88,conflicts:'No', blocked:['/admin/','/api/'],canon:95,redir:100,dup:90},
+    'myaspendentalplan.com':    {sitemap:'1 / 2',coverage:'50%', robots:40,crawler:32,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/blog/wp-content/plugins/','/index.php/','/landing/','/lease/','/reservation-confirmation/','/reservation/','/reservenow/','/search-results?*'],canon:40,redir:55,dup:38},
+    'dentalcarebyaspen.com':    {sitemap:'8 / 8',coverage:'100%',robots:85,crawler:79,conflicts:'No', blocked:['/admin/','/api/','/staging/'],canon:88,redir:92,dup:80},
+    'aspensmilecenter.com':     {sitemap:'5 / 5',coverage:'100%',robots:95,crawler:90,conflicts:'No', blocked:['/admin/'],canon:100,redir:97,dup:100},
+    'aspendentalonline.com':    {sitemap:'7 / 11',coverage:'64%',robots:55,crawler:48,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/index.php/','/landing/','/reservation/'],canon:60,redir:70,dup:55},
+    'aspendentalreviews.com':   {sitemap:'2 / 3',coverage:'67%', robots:38,crawler:29,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/blog/wp-content/plugins/','/index.php/','/landing/','/lease/','/reservation-confirmation/','/reservation/','/reservenow/','/search-results?*','/private/'],canon:35,redir:42,dup:30},
+    'aspendentalblog.com':      {sitemap:'9 / 9',coverage:'100%',robots:97,crawler:93,conflicts:'No', blocked:['/admin/','/api/'],canon:100,redir:100,dup:100},
+    'aspendentallocations.com': {sitemap:'7 / 7',coverage:'100%',robots:80,crawler:71,conflicts:'No', blocked:['/admin/','/api/','/staging/','/internal/'],canon:85,redir:90,dup:78},
+  };
+
+  function kvRow(label, value, bold) {
+    const vStyle = 'font-weight:400;color:#212121';
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
+      <span style="font-size:14px;color:#444">${label}</span>
+      <span style="font-size:14px;${vStyle}">${value}</span>
+    </div>`;
+  }
+
+  function accordion(title, bodyHtml, open) {
+    const rot = open ? 'rotate(180deg)' : 'rotate(0deg)';
+    const display = open ? 'block' : 'none';
+    return `<div style="margin-bottom:4px">
+      <div onclick="var _b=this.nextElementSibling;_b.style.display=_b.style.display==='none'?'block':'none';this.querySelector('.wh-chev').style.transform=_b.style.display==='none'?'rotate(0deg)':'rotate(180deg)';this.style.borderBottom=_b.style.display==='none'?'1px solid #eaeaea':'none'" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;cursor:pointer;background:#fff;border-bottom:1px solid #eaeaea">
+        <span style="font-size:14px;font-weight:400;color:#212121">${title}</span>
+        <span class="material-symbols-rounded wh-chev" style="font-size:18px;color:#888;transform:${rot};transition:transform 0.2s">expand_more</span>
+      </div>
+      <div style="display:${display};padding:0 16px 4px;border-bottom:1px solid #eaeaea">
+        ${bodyHtml}
+      </div>
+    </div>`;
+  }
+
+  const dd = WH_DETAILS[domain] || {sitemap:'—',coverage:'—',robots:'—',crawler:'—',conflicts:'—',blocked:[]};
+
+  const crawlBody =
+    kvRow('Pages in sitemap', dd.sitemap, true) +
+    kvRow('Sitemap coverage', dd.coverage, true) +
+    kvRow('Robots.txt health score', dd.robots, true) +
+    kvRow('Crawler-friendly score', dd.crawler, true) +
+    kvRow('Conflicting directives', dd.conflicts, true);
+
+  const blockedBody = dd.blocked.length
+    ? dd.blocked.map(p => kvRow(p, '<span style="font-weight:400;color:#212121">Disallowed</span>', false)).join('')
+    : '<div style="padding:10px 0;font-size:13px;color:#8f8f8f">No blocked folders found</div>';
+
+  function scoreColor(n){ return n>=90?'#16a34a':n>=60?'#d97706':'#e53935'; }
+  const siteBody =
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0"><span style="font-size:14px;font-weight:400;color:#212121">Canonical tags</span><span style="font-size:14px;font-weight:400;color:${scoreColor(dd.canon)}">${dd.canon}</span></div>` +
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0"><span style="font-size:14px;font-weight:400;color:#212121">Redirects</span><span style="font-size:14px;font-weight:400;color:${scoreColor(dd.redir)}">${dd.redir}</span></div>` +
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0"><span style="font-size:14px;font-weight:400;color:#212121">Duplicate content</span><span style="font-size:14px;font-weight:400;color:${scoreColor(dd.dup)}">${dd.dup}</span></div>` +
+    `<div style="padding:12px 0 4px;font-size:13px;color:#666;line-height:1.6">These checks look across your whole site for duplicate pages, broken redirect chains, and conflicting canonical tags — the kind of issues that confuse search engines about which page is the "real" one.</div>`;
+
+  document.querySelector('#cit-panel .cit-header-title').textContent = 'Website health details';
+  document.getElementById('cit-body').innerHTML = `
+    <div style="padding:20px 20px 0;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+        <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=24" width="24" height="24" style="border-radius:4px" onerror="this.style.display='none'"/>
+        <div style="font-size:18px;font-weight:400;color:rgb(33,33,33)">${domain}</div>
+        <a href="https://${domain}" target="_blank" rel="noopener" style="display:flex;align-items:center;color:#1976d2;text-decoration:none;flex-shrink:0">
+          <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
+        </a>
+      </div>
+    </div>
+    <div style="padding:0 20px 20px;flex:1;overflow-y:auto">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Pages crawled</div>
+          <div style="font-size:20px;font-weight:400;color:#212121">${(WH_DATA[domain]||{}).pages||dd.pages||"—"}</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Health</div>
+          <div style="font-size:14px;font-weight:400;color:${WH_STATUS_COLOR[(WH_DATA[domain]||{}).health]||'#555'}">${(WH_DATA[domain]||{}).health||"—"}</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">AI readiness</div>
+          <div style="font-size:14px;font-weight:400;color:${WH_STATUS_COLOR[(WH_DATA[domain]||{}).ai]||'#555'}">${(WH_DATA[domain]||{}).ai||"—"}</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Discoverability</div>
+          <div style="font-size:14px;font-weight:400;color:${WH_STATUS_COLOR[(WH_DATA[domain]||{}).disc]||'#555'}">${(WH_DATA[domain]||{}).disc||"—"}</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Freshness</div>
+          <div style="font-size:14px;font-weight:400;color:${WH_STATUS_COLOR[(WH_DATA[domain]||{}).fresh]||'#555'}">${(WH_DATA[domain]||{}).fresh||"—"}</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Issues found</div>
+          <div style="font-size:20px;font-weight:400;color:#e53935">3</div>
+        </div>
+      </div>
+      ${accordion('Crawlability', crawlBody, false)}
+      ${accordion('Blocked folders', blockedBody, false)}
+      ${accordion('Site-wide technical health', siteBody, false)}
+    </div>`;
+  document.getElementById('cit-panel').classList.add('open');
+  document.querySelector('.cit-overlay').classList.add('open');
+}
+
+
+window._v3ActiveDomain = '';
+function openV3Popover(btn, domain) {
+  event.stopPropagation();
+  window._v3ActiveDomain = domain;
+  const pop = document.getElementById('v3-more-popover');
+  const r = btn.getBoundingClientRect();
+  pop.style.display = 'block';
+  pop.style.top = (r.bottom + 4) + 'px';
+  pop.style.left = (r.right - pop.offsetWidth || r.left) + 'px';
+  // reposition after display
+  requestAnimationFrame(() => {
+    pop.style.left = (r.right - pop.offsetWidth) + 'px';
+  });
+}
+function closeV3Popover() {
+  document.getElementById('v3-more-popover').style.display = 'none';
+}
+document.addEventListener('click', function(e) {
+  const pop = document.getElementById('v3-more-popover');
+  if (pop && !pop.contains(e.target)) closeV3Popover();
+});
+
+
+function openPageDetailsPanel(domain, path) {
+  function pdKv(label, value, valColor) {
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+      <span style="font-size:14px;color:#444">${label}</span>
+      <span style="font-size:14px;color:${valColor||'#212121'}">${value}</span>
+    </div>`;
+  }
+  function pdCheck(label, ok) {
+    const circle = ok
+      ? `<svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#16a34a"/><path d="M5.5 10l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+      : `<svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#e53935"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>`;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+      <span style="font-size:14px;color:#212121">${label}</span>
+      ${circle}
+    </div>`;
+  }
+  function pdWarn(label) {
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+      <span style="font-size:14px;font-weight:700;color:#d97706">!</span>
+      <span style="font-size:14px;color:#212121">${label}</span>
+    </div>`;
+  }
+  function pdScore(label, val) {
+    const c = val>=90?'#16a34a':val>=60?'#d97706':'#e53935';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+      <span style="font-size:14px;color:#444">${label}</span>
+      <span style="font-size:14px;color:${c}">${val}%</span>
+    </div>`;
+  }
+  function pdAcc(title, body) {
+    return `<div style="margin-bottom:4px">
+      <div onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.pd-chev').style.transform=b.style.display==='none'?'rotate(0deg)':'rotate(180deg)';this.style.borderBottom=b.style.display==='none'?'1px solid #eaeaea':'none'" style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;cursor:pointer;border-bottom:1px solid #eaeaea">
+        <span style="font-size:14px;font-weight:400;color:#212121">${title}</span>
+        <span class="material-symbols-rounded pd-chev" style="font-size:18px;color:#888;transform:rotate(0deg);transition:transform 0.2s">expand_more</span>
+      </div>
+      <div style="display:none;padding:4px 0;border-bottom:1px solid #eaeaea">${body}</div>
+    </div>`;
+  }
+
+  const scoreBody =
+    pdScore('FAQ', 33) + pdScore('Structure', 100) + pdScore('Entities', 75) +
+    pdScore('Readability', 50) + pdScore('Indexability', 100) + pdScore('Technical', 100) +
+    pdScore('Content', 70) + pdScore('Internal links', 100) +
+    pdScore('AI accessibility', 50) + pdScore('Freshness', 49) +
+    pdScore('Citation readiness', 90) + pdScore('Performance', 65);
+
+  function pdBot(name, status, statusColor) {
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+      <span style="font-size:14px;color:#212121">${name}</span>
+      <span style="font-size:14px;color:${statusColor||'#d97706'}">${status}</span>
+    </div>`;
+  }
+  const aiBotBody =
+    pdBot('GPTBot (OpenAI)', 'Partially restricted', '#d97706') +
+    pdBot('ClaudeBot (Anthropic)', 'Partially restricted', '#d97706') +
+    pdBot('Google-Extended', 'Partially restricted', '#d97706') +
+    pdBot('PerplexityBot', 'Partially restricted', '#d97706');
+
+  const contentBody =
+    pdKv('Words', '1,370', '#212121') + pdKv('Reading score', '50', '#212121') +
+    pdKv('Lists', '15', '#212121') + pdKv('Images', '20', '#212121') +
+    pdKv('Internal links', '113', '#212121');
+
+  const techBody =
+    pdCheck('Title tag', true) + pdCheck('Meta description', true) +
+    pdCheck('Canonical tag', true) + pdCheck('Structured data', true) +
+    pdCheck('In sitemap', true) + pdCheck('HTTPS', true);
+
+  document.querySelector('#cit-panel .cit-header-title').textContent = 'Page details';
+  document.getElementById('cit-body').innerHTML = `
+    <div style="padding:20px 20px 0;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+        <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=24" width="24" height="24" style="border-radius:4px" onerror="this.style.display='none'"/>
+        <div style="flex:1;font-size:16px;font-weight:400;color:#212121">${domain}${path}</div>
+        <a href="https://${domain}${path}" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;display:flex;align-items:center">
+          <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
+        </a>
+      </div>
+    </div>
+    <div style="padding:0 20px 20px;flex:1;overflow-y:auto">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">HTTP status</div>
+          <div style="font-size:20px;font-weight:400;color:#16a34a">200</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Load time</div>
+          <div style="font-size:20px;font-weight:400;color:#212121">1.2s</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Last crawled</div>
+          <div style="font-size:13px;font-weight:400;color:#d97706">42 days ago</div>
+        </div>
+        <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
+          <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Word count</div>
+          <div style="font-size:20px;font-weight:400;color:#212121">843</div>
+        </div>
+      </div>
+      ${pdAcc('Score breakdown', scoreBody)}
+      ${pdAcc('AI bot access', aiBotBody)}
+      ${pdAcc('Content', contentBody)}
+      ${pdAcc('Technical', techBody)}
+    </div>`;
+  document.getElementById('cit-panel').classList.add('open');
+  document.querySelector('.cit-overlay').classList.add('open');
+}
+
 function closeCitationPanel() {
   document.getElementById('cit-panel').classList.remove('open');
   document.getElementById('cit-overlay').classList.remove('open');
@@ -17305,5 +18208,12 @@ document.addEventListener('click', function(e) {
   });
 });
 </script>
+
+<!-- v3 more-btn popover -->
+<div id="v3-more-popover" style="display:none;position:fixed;background:#fff;border:1px solid #eaeaea;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.12);z-index:2000;min-width:148px;padding:4px 0">
+  <button onclick="openWhPanel(window._v3ActiveDomain);closeV3Popover()" style="display:flex;align-items:center;width:100%;padding:8px 14px;font-size:13px;color:#212121;background:none;border:none;cursor:pointer;font-family:inherit;text-align:left" onmouseover="this.style.background='rgb(242,244,247)'" onmouseout="this.style.background='none'">View details</button>
+  <button onclick="closeV3Popover()" style="display:flex;align-items:center;width:100%;padding:8px 14px;font-size:13px;color:#e53935;background:none;border:none;cursor:pointer;font-family:inherit;text-align:left" onmouseover="this.style.background='rgb(242,244,247)'" onmouseout="this.style.background='none'">Delete</button>
+</div>
+
 </body>
 </html>
