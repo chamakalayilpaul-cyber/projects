@@ -1535,6 +1535,7 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .pt-group-row:hover{background:rgb(242,244,247)}
 
 #view-site-audit-v2 .pt-data-row{background:#fff}
+#view-site-audit-v4 .pt-data-row{background:#fff}
 /* ── Site audit v3 group row hover ── */
 #view-site-audit-v3 .v3-group-row:hover td { background:rgb(242,244,247); }
 #view-site-audit-v3 .v3-group-row:hover .v3-site-name { color:#1976d2!important; cursor:pointer; }
@@ -1548,6 +1549,9 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 
 #view-site-audit-v2 .pt-data-row:hover td{background:rgb(242,244,247)}
 #view-site-audit-v2 .pt-data-row:hover .sav2-url{color:#1976d2!important}
+
+#view-site-audit-v4 .pt-data-row:hover td{background:rgb(242,244,247)}
+#view-site-audit-v4 .pt-data-row:hover .sav4-url{color:#1976d2!important}
 
 .pt-data-row{background:#fafafa}
 .pt-group-row td{height:56px;padding:0 20px;border-bottom:1px solid #eaeaea;vertical-align:middle}
@@ -2376,6 +2380,7 @@ textarea.ap-input{
         Site audit
         <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V3</span>
       </div>
+      <div class="sb-sub-item" id="nav-site-audit-v4" onclick="showView('site-audit-v4')">Site audit v4</div>
     </div>
     <div class="sb-group-hdr" id="nav-competitors-parent" onclick="toggleSbGroup('competitors',this)">
       <span>Competitors</span>
@@ -2550,6 +2555,11 @@ textarea.ap-input{
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
     </div>
     <div class="page-hdr-right" id="hdr-site-audit-v3-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
+      <button onclick="openAcsAddPanel()" style="height:32px;padding:0 12px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:13px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>Add URL</button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
+      <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+    </div>
+    <div class="page-hdr-right" id="hdr-site-audit-v4-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
       <button onclick="openAcsAddPanel()" style="height:32px;padding:0 12px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:13px;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7h10" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>Add URL</button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">filter_list</span></button>
       <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
@@ -3958,6 +3968,152 @@ textarea.ap-input{
                 <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
                   <div style="display:flex;flex-direction:column;gap:2px">
                     <span class="sav2-url" style="font-size:14px;color:#212121">aspendentallocations.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">7 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="view" id="view-site-audit-v4">
+    <div style="padding-top:16px">
+
+      <!-- Summary strip -->
+      <div class="snt-kpi-row">
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">10</div>
+          <div class="snt-kpi-label">URLs crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">248</div>
+          <div class="snt-kpi-label">Pages crawled</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val">214</div>
+          <div class="snt-kpi-label">Indexable</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#e53935">18</div>
+          <div class="snt-kpi-label">Issues found</div>
+        </div>
+        <div class="snt-kpi-card">
+          <div class="snt-kpi-val" style="color:#d97706">16</div>
+          <div class="snt-kpi-label">Warnings</div>
+        </div>
+      </div>
+
+      <!-- Page health table -->
+        <div class="pt-table-wrap" style="overflow:hidden;width:100%">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0">
+            <div>
+              <div style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Website health</div>
+              <div style="font-size:12px;color:rgb(143,143,143);margin-top:3px">Crawl results grouped by website</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <button class="icon-btn-stroke" style="width:32px;height:32px"><span class="material-symbols-rounded" style="font-size:18px">search</span></button>
+              </div>
+          </div>
+          <table style="width:100%;border-collapse:collapse;margin-top:12px">
+            <thead>
+              <tr style="background:#fff">
+                <th style="padding:10px 24px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea;width:40%">URL</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Health</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">AI readiness</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Discoverability</th>
+                <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Freshness</th>
+              </tr>
+            </thead>
+                                    <tbody>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalcare.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendentalcare.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">3 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendental.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendental.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">4 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalimplants.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendentalimplants.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">6 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('myaspendentalplan.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">myaspendentalplan.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">2 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('dentalcarebyaspen.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">dentalcarebyaspen.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">8 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspensmilecenter.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspensmilecenter.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">5 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="AI can partially read page">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalonline.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendentalonline.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">11 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Minor errors or slow load">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Partially visible to crawlers">Needs Attention</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Crawl blocked by robots.txt">Critical</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalreviews.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendentalreviews.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">3 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Page down or erroring">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="AI cannot process page">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-red" data-satip="Blocked or not indexed">Critical</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-orange" data-satip="Not recently crawled">Needs Attention</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentalblog.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendentalblog.com</span>
+                    <span style="font-size:12px;color:#8f8f8f">9 pages</span>
+                  </div>
+                </td>
+                <td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page live, no errors">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Page fully usable by AI">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Fully indexed by crawlers">Excellent</span></td><td style="padding:0 16px;border-bottom:1px solid #eaeaea"><span class="sat-status-chip sat-green" data-satip="Recently crawled">Excellent</span></td>
+              </tr>
+              <tr class="pt-data-row" onclick="openWhPanel('aspendentallocations.com')" style="cursor:pointer">
+                <td style="padding:0 24px;height:52px;border-bottom:1px solid #eaeaea">
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span class="sav4-url" style="font-size:14px;color:#212121">aspendentallocations.com</span>
                     <span style="font-size:12px;color:#8f8f8f">7 pages</span>
                   </div>
                 </td>
@@ -12565,6 +12721,7 @@ const _viewToSlug = {
   'comp-location':     'searchai/competitors/location',
   'site-audit':        'searchai/reports/site-audit',
   'site-audit-v2':     'searchai/reports/site-audit-v2',
+  'site-audit-v4':     'searchai/reports/site-audit-v4',
   'site-audit-v3':     'searchai/reports/site-audit-v3',
   'import-prompts':    'searchai/settings/import-prompts',
 };
@@ -12605,7 +12762,7 @@ function showView(view, skipHash) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location','site-audit':'Site audit','site-audit-v2':'Site audit v2','site-audit-v3':'Site audit v3'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location','site-audit':'Site audit','site-audit-v2':'Site audit v2','site-audit-v3':'Site audit v3','site-audit-v4':'Site audit v4'};
   var ptEl = document.getElementById('page-title');
   var isCompView = (view === 'comp-brand' || view === 'comp-location');
   var pageHdr = document.querySelector('.page-hdr');
@@ -12632,6 +12789,7 @@ function showView(view, skipHash) {
   document.getElementById('hdr-ai-crawler-btns').style.display = view === 'ai-crawler' ? 'flex' : 'none';
   document.getElementById('hdr-site-audit-btns').style.display = view === 'site-audit' ? 'flex' : 'none';
   if(document.getElementById('hdr-site-audit-v2-btns')) document.getElementById('hdr-site-audit-v2-btns').style.display = view === 'site-audit-v2' ? 'flex' : 'none';
+  if(document.getElementById('hdr-site-audit-v4-btns')) document.getElementById('hdr-site-audit-v4-btns').style.display = view === 'site-audit-v4' ? 'flex' : 'none';
   if(document.getElementById('hdr-site-audit-v3-btns')) document.getElementById('hdr-site-audit-v3-btns').style.display = view === 'site-audit-v3' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-btns').style.display = view === 'sentiment' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-lc-btns').style.display = (view === 'sentiment-lc' || view === 'sentiment-sp') ? 'flex' : 'none';
@@ -12641,7 +12799,7 @@ function showView(view, skipHash) {
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
   document.getElementById('main-content').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location'].includes(view) ? '#f5f5f5' : '';
-  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit','site-audit-v2','site-audit-v3'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
+  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit','site-audit-v2','site-audit-v3','site-audit-v4'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
 
   // open Settings/Reports group when navigating to their sub-views
   if (view === 'prompts-v1' || view === 'prompts-v2' || view === 'prompt-brandkit' || view === 'tags' || view === 'settings-reports') {
@@ -12650,7 +12808,7 @@ function showView(view, skipHash) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3') {
+  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3' || view === 'site-audit-v4') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
@@ -17176,7 +17334,7 @@ function openPageDetailsPanel(domain, path) {
         </div>
         <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
           <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Last crawled</div>
-          <div style="font-size:13px;font-weight:400;color:#d97706">42 days ago</div>
+          <div style="font-size:20px;font-weight:400;color:#212121">42 days ago</div>
         </div>
         <div style="border:1px solid #eaeaea;border-radius:8px;padding:16px">
           <div style="font-size:12px;color:#8f8f8f;margin-bottom:6px">Word count</div>
