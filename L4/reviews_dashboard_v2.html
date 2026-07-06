@@ -28,24 +28,27 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
 .rail-badge{position:absolute;top:2px;right:2px;width:7px;height:7px;background:#ef4444;border-radius:50%;border:1.5px solid rgb(229,233,240)}
 
 /* ── SIDEBAR (L2) ── */
-.sidebar{width:222px;background:#fff;border-right:1px solid rgb(234,234,234);overflow-y:auto;flex-shrink:0;padding:0}
+.sidebar{width:222px;background:#fafafa;border-right:1px solid rgb(234,234,234);overflow-y:auto;flex-shrink:0;padding:0}
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-thumb{background:rgb(199,214,246);border-radius:4px}
 /* title inside sidebar */
-.sb-title{height:52px;background:#fafafa;display:flex;align-items:center;gap:8px;padding:15px 16px;font-size:18px;font-weight:400;color:rgba(33,33,33,1);font-family:'Roboto',sans-serif;letter-spacing:-0.02em;flex-shrink:0;border-bottom:1px solid rgb(234,234,234)}
+.sb-title{height:52px;background:#fafafa;display:flex;align-items:center;gap:8px;padding:15px 16px;font-size:18px;font-weight:400;color:rgba(33,33,33,1);font-family:'Roboto',sans-serif;letter-spacing:-0.02em;flex-shrink:0}
 /* search */
-.sb-search-wrap{padding:0 24px;background:#fafafa}
-.sb-search{display:flex;align-items:center;gap:8px;background:#fafafa;border:1px solid rgb(229,233,240);border-radius:4px;padding:8px 0;margin-bottom:0}
-.sb-search svg{width:20px;height:20px;color:rgba(48,48,48,1);flex-shrink:0;margin-left:8px}
+.sb-search-wrap{padding:0 16px;background:#fafafa}
+.sb-search{display:flex;align-items:center;gap:8px;background:#fafafa;border:none;border-bottom:1px solid rgb(229,233,240);border-radius:0;padding:8px 0;margin-bottom:0}
+.sb-search svg{width:20px;height:20px;color:rgba(48,48,48,1);flex-shrink:0}
 .sb-search input{border:none;background:transparent;font-size:14px;font-family:'Roboto',sans-serif;color:rgba(33,33,33,1);outline:none;width:100%;padding-right:8px}
 .sb-search input::placeholder{color:rgba(143,143,143,1)}
 /* content body */
 .sb-body{background:#fafafa;padding:8px 16px;display:flex;flex-direction:column;gap:8px}
-.sb-section-lbl{font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(143,143,143,1);padding:0 4px 0 8px;height:24px;display:flex;align-items:center}
+.sb-section-lbl{font-size:12px;font-weight:600;text-transform:none;color:rgba(143,143,143,1);height:24px;display:flex;align-items:center;margin:0 -16px 8px;padding:0 16px 8px;border-bottom:1px solid rgb(234,234,234)}
 .sb-group-hdr{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgba(33,33,33,1);border-radius:4px}
 .sb-group-hdr:hover{background:rgba(0,0,0,0.04)}
-.sb-group-hdr svg{width:20px;height:20px;color:rgba(48,48,48,1);flex-shrink:0}
+.sb-group-hdr svg{width:20px;height:20px;color:rgba(48,48,48,1);flex-shrink:0;transition:transform .15s}
 .sb-group-hdr.open{color:rgba(33,33,33,1)}
+.sb-group-hdr.open svg{transform:rotate(180deg)}
+.sb-group-items{display:flex;flex-direction:column;overflow:hidden;max-height:0;transition:max-height .15s ease}
+.sb-group-items.open{max-height:1000px}
 .sb-item{display:flex;align-items:center;justify-content:space-between;padding:4px 8px;height:28px;cursor:pointer;font-size:14px;font-weight:400;color:rgba(33,33,33,1);border-radius:4px}
 .sb-item:hover{background:rgba(0,0,0,0.04)}
 .sb-item.active{background:rgba(199,214,246,1);color:rgba(33,33,33,1);font-weight:400}
@@ -62,11 +65,14 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .main::-webkit-scrollbar{width:6px}
 .main::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:4px}
-.page-hdr{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#fff;border-bottom:1px solid #e5e7eb;flex-shrink:0}
+.page-hdr{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgb(242,242,242);border-bottom:1px solid #e5e7eb;flex-shrink:0}
 .page-hdr h1{font-size:18px;font-weight:400;color:rgb(33,33,33)}
 .page-hdr-right{display:flex;align-items:center;gap:8px}
 .page-hdr-right svg{width:20px;height:20px;color:rgb(48,48,48);cursor:pointer}
 .page-hdr-right svg:hover{color:rgb(33,33,33)}
+.icon-btn-stroke{width:36px;height:36px;border-radius:4px;border:1px solid #e5e9f0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgb(48,48,48);flex-shrink:0}
+.icon-btn-stroke:hover{background:rgb(242,244,247)}
+.icon-btn-stroke .material-symbols-outlined{font-size:20px}
 .page-hdr-avatar{width:28px;height:28px;border-radius:50%;background:rgb(99,102,241);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0;cursor:pointer}
 .topnav-actions{display:flex;align-items:center;gap:6px;border:1px solid #d1d5db;border-radius:4px;padding:6px 12px;font-size:14px;font-weight:400;color:rgb(33,33,33);cursor:pointer;background:#fff;font-family:'Roboto',sans-serif}
 .topnav-actions:hover{background:rgb(242,244,247)}
@@ -92,6 +98,39 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
 .panel-backdrop.open{display:block}
 .tab-settings-panel{position:fixed;top:0;right:0;bottom:0;width:300px;background:#fff;border-left:1px solid #e5e7eb;box-shadow:-4px 0 24px rgba(0,0,0,0.08);transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:200;display:flex;flex-direction:column}
 .tab-settings-panel.open{transform:translateX(0)}
+.sr-edit-panel{position:fixed;top:0;right:0;bottom:0;width:62%;min-width:640px;background:#fff;border-left:1px solid #e5e7eb;box-shadow:-4px 0 24px rgba(0,0,0,0.08);transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:200;display:flex;flex-direction:column;overflow-y:auto}
+.sr-edit-panel.open{transform:translateX(0)}
+.sr-edit-hdr{display:flex;align-items:center;gap:10px;padding:16px 24px;border-bottom:1px solid #e5e7eb;flex-shrink:0}
+.sr-edit-back{border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgb(33,33,33);padding:4px;border-radius:4px}
+.sr-edit-back:hover{background:#f5f5f5}
+.sr-edit-title{font-size:16px;font-weight:400;color:rgb(33,33,33)}
+.sr-edit-title-pencil{color:rgb(143,143,143);cursor:pointer;flex-shrink:0;display:flex}
+.sr-edit-hdr-right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.sr-edit-cancel{background:none;border:none;color:#1976d2;font-size:14px;font-weight:500;cursor:pointer}
+.sr-edit-save{background:#1976d2;border:none;color:#fff;font-size:14px;font-weight:500;padding:9px 18px;border-radius:6px;cursor:pointer}
+.sr-edit-body{padding:20px 24px;display:flex;flex-direction:column;gap:20px}
+.sre-section-title{font-size:14px;font-weight:500;color:rgb(33,33,33);margin-bottom:8px}
+.sre-freq-row{display:flex;align-items:center;gap:5px;font-size:14px;color:rgb(33,33,33);flex-wrap:wrap}
+.sre-freq-dd{color:#1976d2;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:2px}
+.sre-format-grid{background:#fafafa;border-radius:8px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;row-gap:16px;column-gap:16px}
+.sre-format-opt{display:flex;align-items:center;gap:10px;font-size:14px;color:rgb(33,33,33);cursor:pointer}
+.sre-format-opt input{width:16px;height:16px;accent-color:#1976d2}
+.sre-field-label{font-size:13px;color:rgb(33,33,33);margin-bottom:6px}
+.sre-share-row{font-size:14px;color:rgb(33,33,33);margin-bottom:8px}
+.sre-share-row .sre-freq-dd{margin-left:2px}
+.sre-chip-input{display:flex;flex-wrap:wrap;align-items:center;gap:8px;border:1px solid #dcdfe4;border-radius:6px;padding:8px 10px;min-height:38px}
+.sre-chip{display:inline-flex;align-items:center;gap:8px;background:#eceef0;border-radius:16px;padding:4px 8px 4px 12px;font-size:13px;color:rgb(33,33,33)}
+.sre-chip button{border:none;background:none;cursor:pointer;color:rgb(90,90,90);display:flex;align-items:center}
+.sre-chip-input input{border:none;outline:none;flex:1;min-width:120px;font-size:14px;font-family:'Roboto',sans-serif;color:rgb(33,33,33)}
+.sre-chip-input input::placeholder{color:rgb(143,143,143)}
+.sre-text-input{width:100%;border:1px solid #dcdfe4;border-radius:6px;padding:8px 10px;font-size:14px;font-family:'Roboto',sans-serif;color:rgb(33,33,33);outline:none;box-sizing:border-box}
+.sre-textarea{width:100%;border:1px solid #dcdfe4;border-radius:6px;padding:10px;font-size:14px;font-family:'Roboto',sans-serif;color:rgb(33,33,33);outline:none;resize:vertical;min-height:70px;line-height:1.5;box-sizing:border-box}
+.sre-popover{position:fixed;background:#fff;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.18);z-index:400;min-width:190px;max-height:260px;overflow-y:auto;padding:6px 0;display:none}
+.sre-popover.open{display:block}
+.sre-popover-item{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:11px 20px;font-size:15px;color:rgb(60,60,60);cursor:pointer;white-space:nowrap}
+.sre-popover-item:hover{background:#f5f5f5}
+.sre-popover-item.selected{font-weight:500;color:rgb(33,33,33)}
+.sre-popover-check{color:rgb(33,33,33);display:flex;flex-shrink:0}
 
 .tsp-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid #e5e7eb;flex-shrink:0}
 .tsp-title{font-size:13.5px;font-weight:700;color:#111}
@@ -188,14 +227,20 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
 .billing-link-btn{font-size:13px;color:rgb(25,118,210);cursor:pointer;background:none;border:none;font-family:'Roboto',sans-serif;padding:0}
 .billing-link-btn:hover{text-decoration:underline}
 .invoice-table{width:100%;border-collapse:collapse}
-.invoice-table th{font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgb(143,143,143);text-align:left;padding:10px 20px;border-bottom:1px solid #e5e7eb}
+.invoice-table th{font-size:12px;font-weight:400;text-transform:none;color:rgb(143,143,143);text-align:left;padding:10px 20px;border-bottom:1px solid #e5e7eb}
 .invoice-table td{font-size:13.5px;color:rgb(33,33,33);padding:12px 20px;border-bottom:1px solid #f3f4f6}
 .invoice-table tr:last-child td{border-bottom:none}
 .invoice-table tr:hover td{background:rgb(242,244,247)}
-.inv-status{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
-.inv-status.paid{background:#dcfce7;color:#16a34a}
-.inv-status.pending{background:#fef9c3;color:#a16207}
-.inv-status.failed{background:#fee2e2;color:#dc2626}
+.inv-status{display:inline-flex;align-items:center;padding:5px 12px;border-radius:8px;font-size:13px;font-weight:400;white-space:nowrap}
+.inv-status.paid{background:#e8f5e9;color:#2e7d32}
+.inv-status.pending{background:#ECF5FD;color:#1976D2}
+.inv-status.failed{background:#f5f5f5;color:#555}
+.sr-action-cell{position:relative;overflow:visible}
+.sr-row-hover-actions{display:none;align-items:center;gap:6px;position:absolute;right:16px;top:50%;transform:translateY(-50%)}
+tr:hover .sr-row-hover-actions{display:flex}
+.sr-row-icon-btn{width:32px;height:32px;border:none;cursor:pointer;background:#fff;border-radius:4px;display:flex;align-items:center;justify-content:center}
+.sr-row-icon-btn:hover{background:#f5f5f5}
+.sr-row-icon-btn .material-symbols-outlined{font-size:18px;color:rgb(33,33,33)}
 .inv-download{width:28px;height:28px;border:1px solid #e5e7eb;border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;color:#6b7280}
 .inv-download:hover{background:#f9fafb;color:rgb(25,118,210)}
 .inv-download svg{width:14px;height:14px}
@@ -315,24 +360,41 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
       </div>
       <div>
         <div class="sb-section-lbl">Reports</div>
-        <div class="sb-group-hdr open" style="color:rgb(25,118,210)">Reviews <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgb(25,118,210)" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></div>
-        <div class="sb-item active">Reviews &amp; ratings <span class="badge">4</span></div>
-        <div class="sb-item">Relative location rank <span class="badge">4</span></div>
-        <div class="sb-item">Reviews distribution <span class="badge">4</span></div>
-        <div class="sb-item">Response time <span class="badge">4</span></div>
-        <div class="sb-item">Response time distribu... <span class="badge">4</span></div>
-        <div class="sb-item">Response rate distribut... <span class="badge">4</span></div>
-        <div class="sb-item">Review NPS <span class="badge">4</span></div>
-        <div class="sb-item">Review tags <span class="badge">4</span></div>
-        <div class="sb-item">Leaderboard <span class="badge">4</span></div>
+        <div class="sb-group-hdr open" style="color:rgb(25,118,210)">Reviews <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgb(25,118,210)" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items open">
+          <div class="sb-item active" id="sb-reviews-ratings">Reviews &amp; ratings <span class="badge">4</span></div>
+          <div class="sb-item">Relative location rank <span class="badge">4</span></div>
+          <div class="sb-item">Reviews distribution <span class="badge">4</span></div>
+          <div class="sb-item">Response time <span class="badge">4</span></div>
+          <div class="sb-item">Response time distribu... <span class="badge">4</span></div>
+          <div class="sb-item">Response rate distribut... <span class="badge">4</span></div>
+          <div class="sb-item">Review NPS <span class="badge">4</span></div>
+          <div class="sb-item">Review tags <span class="badge">4</span></div>
+          <div class="sb-item">Leaderboard <span class="badge">4</span></div>
+        </div>
         <div class="sb-group-hdr">Inbox <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
         <div class="sb-group-hdr">Listings <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
         <div class="sb-group-hdr">Social <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
         <div class="sb-group-hdr">Surveys <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
         <div class="sb-group-hdr">Campaigns <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
         <div class="sb-group-hdr">Workflows</div>
         <div class="sb-group-hdr">Ticketing <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
         <div class="sb-group-hdr">Contacts <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
+      </div>
+      <div>
+        <div class="sb-section-lbl">Settings</div>
+        <div class="sb-item" id="sb-scheduled-reports">Scheduled reports</div>
+        <div class="sb-group-hdr">Users &amp; permissions <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
+        <div class="sb-group-hdr">Integrations <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sb-group-items"></div>
       </div>
     </div>
   </div>
@@ -370,11 +432,15 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
       </div>
     </div>
     <div class="page-hdr">
-      <h1>Reviews &amp; ratings over time</h1>
-      <div class="page-hdr-right">
+      <h1 id="page-title">Reviews &amp; ratings over time</h1>
+      <div class="page-hdr-right" id="page-hdr-right-reviews">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         <button class="topnav-actions">Actions <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+      </div>
+      <div class="page-hdr-right" id="page-hdr-right-scheduled" style="display:none">
+        <button class="icon-btn-stroke" title="Search"><span class="material-symbols-outlined">search</span></button>
+        <button class="icon-btn-stroke" title="More"><span class="material-symbols-outlined">more_vert</span></button>
       </div>
     </div>
 
@@ -385,205 +451,7 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
       </button>
     </div>
 
-    <div class="content-pad">
-
-      <!-- BILLING SUMMARY ROW -->
-      <div class="billing-summary-row">
-        <div class="billing-summary-card">
-          <div class="bsc-label">Current Plan</div>
-          <div class="plan-name">Enterprise</div>
-          <div class="bsc-sub">Billed annually</div>
-          <div class="bsc-badge active"><span class="material-symbols-outlined" style="font-size:12px">check_circle</span> Active</div>
-        </div>
-        <div class="billing-summary-card">
-          <div class="bsc-label">Next Invoice</div>
-          <div class="bsc-value">$2,400.00</div>
-          <div class="bsc-sub">Due on Jul 1, 2026</div>
-        </div>
-        <div class="billing-summary-card">
-          <div class="bsc-label">Locations</div>
-          <div class="bsc-value">48 <span style="font-size:13px;font-weight:400;color:rgb(143,143,143)">/ 50</span></div>
-          <div class="bsc-sub">2 seats available</div>
-        </div>
-      </div>
-
-      <!-- PAYMENT METHOD -->
-      <div class="card">
-        <div class="billing-card-header">
-          <span class="billing-card-title">Payment method</span>
-          <button class="billing-link-btn">+ Add payment method</button>
-        </div>
-        <div class="pm-row">
-          <div class="pm-icon">
-            <svg viewBox="0 0 38 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="38" height="24" rx="3" fill="#f3f4f6"/>
-              <path d="M14.5 16.5H13l.9-5.5h1.5l-.9 5.5zm4.1-5.4c-.3-.1-.8-.2-1.4-.2-1.5 0-2.6.8-2.6 2 0 .9.8 1.3 1.4 1.6.6.3.8.5.8.8 0 .4-.5.6-1 .6-.7 0-1-.1-1.5-.3l-.2-.1-.2 1.3c.4.2 1.1.3 1.8.3 1.6 0 2.7-.8 2.7-2.1 0-.7-.4-1.2-1.4-1.6-.6-.3-.9-.5-.9-.8 0-.3.3-.5.9-.5.5 0 .9.1 1.2.2l.1.1.3-1.3zm4 0h-1.2c-.4 0-.6.1-.8.5l-2.2 5h1.6l.3-.9h1.9l.2.9H24l-1.4-5.5zm-1.8 3.5l.6-1.6.3 1.6h-.9z" fill="#1a1f71"/>
-            </svg>
-          </div>
-          <div class="pm-info">
-            <div class="pm-name">Visa ending in 4242 <span class="pm-default-badge">Default</span></div>
-            <div class="pm-exp">Expires 08 / 2027</div>
-          </div>
-          <button class="billing-link-btn">Edit</button>
-        </div>
-      </div>
-
-      <!-- INVOICE HISTORY -->
-      <div class="card">
-        <div class="billing-card-header">
-          <span class="billing-card-title">Invoice history</span>
-          <button class="billing-link-btn">Export all</button>
-        </div>
-        <table class="invoice-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Jun 1, 2026</td>
-              <td>Enterprise plan — Annual</td>
-              <td>$2,400.00</td>
-              <td><span class="inv-status paid">Paid</span></td>
-              <td><div class="inv-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div></td>
-            </tr>
-            <tr>
-              <td>May 1, 2026</td>
-              <td>Enterprise plan — Annual</td>
-              <td>$2,400.00</td>
-              <td><span class="inv-status paid">Paid</span></td>
-              <td><div class="inv-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div></td>
-            </tr>
-            <tr>
-              <td>Apr 1, 2026</td>
-              <td>Enterprise plan — Annual</td>
-              <td>$2,400.00</td>
-              <td><span class="inv-status paid">Paid</span></td>
-              <td><div class="inv-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div></td>
-            </tr>
-            <tr>
-              <td>Mar 1, 2026</td>
-              <td>Enterprise plan — Annual</td>
-              <td>$2,400.00</td>
-              <td><span class="inv-status failed">Failed</span></td>
-              <td><div class="inv-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div></td>
-            </tr>
-            <tr>
-              <td>Feb 1, 2026</td>
-              <td>Enterprise plan — Annual</td>
-              <td>$2,400.00</td>
-              <td><span class="inv-status paid">Paid</span></td>
-              <td><div class="inv-download"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- SECTION DIVIDER: USAGE -->
-      <div class="section-hdr">
-        <span class="section-hdr-title">Usage</span>
-        <span class="section-hdr-sub">Billing period: Jun 1 – Jun 30, 2026</span>
-      </div>
-
-      <!-- USAGE SUMMARY ROW -->
-      <div class="usage-summary-row">
-        <div class="usage-summary-card">
-          <div class="usc-label">Locations</div>
-          <div class="usc-value">48 <span style="font-size:13px;font-weight:400;color:rgb(143,143,143)">/ 50</span></div>
-          <div class="usc-cap">96% of limit</div>
-          <div class="usc-bar-track"><div class="usc-bar-fill warn" style="width:96%"></div></div>
-        </div>
-        <div class="usage-summary-card">
-          <div class="usc-label">Review requests</div>
-          <div class="usc-value">18.4k <span style="font-size:13px;font-weight:400;color:rgb(143,143,143)">/ 25k</span></div>
-          <div class="usc-cap">74% of limit</div>
-          <div class="usc-bar-track"><div class="usc-bar-fill" style="width:74%"></div></div>
-        </div>
-        <div class="usage-summary-card">
-          <div class="usc-label">Messages sent</div>
-          <div class="usc-value">9.1k <span style="font-size:13px;font-weight:400;color:rgb(143,143,143)">/ 10k</span></div>
-          <div class="usc-cap">91% of limit</div>
-          <div class="usc-bar-track"><div class="usc-bar-fill warn" style="width:91%"></div></div>
-        </div>
-        <div class="usage-summary-card">
-          <div class="usc-label">Contacts</div>
-          <div class="usc-value">6.2k <span style="font-size:13px;font-weight:400;color:rgb(143,143,143)">/ Unlimited</span></div>
-          <div class="usc-cap">No limit</div>
-          <div class="usc-bar-track"><div class="usc-bar-fill" style="width:0%"></div></div>
-        </div>
-      </div>
-
-      <!-- USAGE BREAKDOWN -->
-      <div class="card">
-        <div class="billing-card-header">
-          <span class="billing-card-title">Feature usage breakdown</span>
-          <span class="section-hdr-sub">Current billing period</span>
-        </div>
-        <table class="usage-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Used</th>
-              <th>Limit</th>
-              <th style="width:220px">Usage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Locations</td>
-              <td>48</td>
-              <td>50</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill warn" style="width:96%"></div></div><span class="usage-pct">96%</span></div></td>
-            </tr>
-            <tr>
-              <td>Review requests</td>
-              <td>18,412</td>
-              <td>25,000</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill" style="width:74%"></div></div><span class="usage-pct">74%</span></div></td>
-            </tr>
-            <tr>
-              <td>Messages sent</td>
-              <td>9,103</td>
-              <td>10,000</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill warn" style="width:91%"></div></div><span class="usage-pct">91%</span></div></td>
-            </tr>
-            <tr>
-              <td>Campaigns sent</td>
-              <td>34</td>
-              <td>50</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill" style="width:68%"></div></div><span class="usage-pct">68%</span></div></td>
-            </tr>
-            <tr>
-              <td>Survey responses</td>
-              <td>2,841</td>
-              <td>5,000</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill" style="width:57%"></div></div><span class="usage-pct">57%</span></div></td>
-            </tr>
-            <tr>
-              <td>API calls</td>
-              <td>487,200</td>
-              <td>500,000</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill crit" style="width:97%"></div></div><span class="usage-pct">97%</span></div></td>
-            </tr>
-            <tr>
-              <td>Contacts</td>
-              <td>6,241</td>
-              <td>Unlimited</td>
-              <td><div class="usage-bar-wrap"><div class="usage-bar-track"><div class="usage-bar-fill" style="width:0%"></div></div><span class="usage-pct">—</span></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- SECTION DIVIDER: REVIEWS -->
-      <div class="section-hdr">
-        <span class="section-hdr-title">Reports</span>
-      </div>
+    <div class="content-pad" id="page-reviews">
 
       <div class="card">
         <div class="card-top">
@@ -612,6 +480,67 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
           <div class="leg"><div style="border-top:2px solid #1e3a5f;width:20px;height:0"></div> Legend 1</div>
         </div>
         <div class="scroll-bar-wrap"><div class="scroll-bar-track"><div class="scroll-bar-thumb"></div></div></div>
+      </div>
+    </div>
+
+    <div class="content-pad" id="page-scheduled" style="display:none">
+      <div class="card">
+        <table class="invoice-table">
+          <thead>
+            <tr>
+              <th>Report name</th>
+              <th>Frequency</th>
+              <th>Recipients</th>
+              <th>Format</th>
+              <th>Scheduled by</th>
+              <th>Last updated on</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-name="Reviews &amp; ratings over time" data-frequency="Weekly" data-format="PDF" data-status="RUNNING">
+              <td>Reviews &amp; ratings over time</td>
+              <td>Weekly</td>
+              <td>3 recipients</td>
+              <td>PDF</td>
+              <td>Priya Nair</td>
+              <td>Jun 28, 2026</td>
+              <td><span class="inv-status paid">Active</span></td>
+              <td class="sr-action-cell"><span class="sr-row-hover-actions"><button class="sr-row-icon-btn" onclick="openScheduledReportEdit(this)"><span class="material-symbols-outlined">edit</span></button><button class="sr-row-icon-btn"><span class="material-symbols-outlined">more_vert</span></button></span></td>
+            </tr>
+            <tr data-name="Reviews distribution" data-frequency="Monthly" data-format="CSV" data-status="RUNNING">
+              <td>Reviews distribution</td>
+              <td>Monthly</td>
+              <td>5 recipients</td>
+              <td>CSV</td>
+              <td>Daniel Ortiz</td>
+              <td>Jun 20, 2026</td>
+              <td><span class="inv-status paid">Active</span></td>
+              <td class="sr-action-cell"><span class="sr-row-hover-actions"><button class="sr-row-icon-btn" onclick="openScheduledReportEdit(this)"><span class="material-symbols-outlined">edit</span></button><button class="sr-row-icon-btn"><span class="material-symbols-outlined">more_vert</span></button></span></td>
+            </tr>
+            <tr data-name="Response time" data-frequency="Daily" data-format="PDF" data-status="RUNNING">
+              <td>Response time</td>
+              <td>Daily</td>
+              <td>2 recipients</td>
+              <td>PDF</td>
+              <td>Meera Shah</td>
+              <td>Jul 2, 2026</td>
+              <td><span class="inv-status paid">Active</span></td>
+              <td class="sr-action-cell"><span class="sr-row-hover-actions"><button class="sr-row-icon-btn" onclick="openScheduledReportEdit(this)"><span class="material-symbols-outlined">edit</span></button><button class="sr-row-icon-btn"><span class="material-symbols-outlined">more_vert</span></button></span></td>
+            </tr>
+            <tr data-name="Leaderboard" data-frequency="Weekly" data-format="PDF" data-status="PAUSED">
+              <td>Leaderboard</td>
+              <td>Weekly</td>
+              <td>8 recipients</td>
+              <td>PDF</td>
+              <td>Tom Reilly</td>
+              <td>May 15, 2026</td>
+              <td><span class="inv-status failed">Paused</span></td>
+              <td class="sr-action-cell"><span class="sr-row-hover-actions"><button class="sr-row-icon-btn" onclick="openScheduledReportEdit(this)"><span class="material-symbols-outlined">edit</span></button><button class="sr-row-icon-btn"><span class="material-symbols-outlined">more_vert</span></button></span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -653,6 +582,64 @@ body{font-family:'Roboto',sans-serif;background:rgb(242,242,242);height:100vh;ov
     <span class="tsp-max-warn" id="tsp-max-warn">Max 7 tabs reached</span>
   </div>
 </div>
+
+<!-- SCHEDULED REPORTS EDIT PANEL -->
+<div class="sr-edit-panel" id="sr-edit-panel">
+  <div class="sr-edit-hdr">
+    <button class="sr-edit-back" id="sr-edit-back-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <span class="sr-edit-title" id="sre-report-name">Reviews &amp; ratings over time</span>
+    <span class="sr-edit-title-pencil">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    </span>
+    <div class="sr-edit-hdr-right">
+      <button class="sr-edit-cancel" id="sr-edit-cancel-btn">Cancel</button>
+      <button class="sr-edit-save">Save Schedule</button>
+    </div>
+  </div>
+  <div class="sr-edit-body">
+    <div>
+      <div class="sre-section-title">Frequency</div>
+      <div class="sre-freq-row">
+        Send <span class="sre-freq-dd" id="sre-freq-toggle" onclick="openFrequencyPopover(this,event)"><span id="sre-freq-label">weekly</span> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span id="sre-on-wrap">on <span class="sre-freq-dd" id="sre-day-toggle" onclick="openDayPopover(this,event)"><span id="sre-day-label">Monday</span> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></span>
+        at <span class="sre-freq-dd" id="sre-time-toggle" onclick="openTimePopover(this,event)"><span id="sre-time-label">8:00 am</span> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </div>
+    </div>
+
+    <div>
+      <div class="sre-section-title">Choose the file format</div>
+      <div class="sre-format-grid">
+        <label class="sre-format-opt"><input type="radio" name="sre-format" id="sre-format-xls"/> XLS</label>
+        <label class="sre-format-opt"><input type="radio" name="sre-format" id="sre-format-pdf"/> PDF</label>
+        <label class="sre-format-opt"><input type="radio" name="sre-format" id="sre-format-ppt"/> PPT</label>
+        <label class="sre-format-opt"><input type="radio" name="sre-format" id="sre-format-png"/> PNG</label>
+      </div>
+    </div>
+
+    <div>
+      <div class="sre-section-title">Configure scheduled report</div>
+      <div class="sre-share-row">Share reports with <span class="sre-freq-dd" id="sre-share-toggle" onclick="openSharePopover(this,event)"><span id="sre-share-label">Users</span> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+      <div class="sre-chip-input">
+        <span class="sre-chip">Akhil Chamakalayil <button aria-label="Remove"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></span>
+        <input type="text" placeholder="Enter a name"/>
+      </div>
+    </div>
+
+    <div>
+      <div class="sre-field-label">Subject</div>
+      <input type="text" class="sre-text-input" id="sre-subject" value="Scheduled report: Reviews & ratings over time - Last 30 days"/>
+    </div>
+
+    <div>
+      <div class="sre-field-label">Body</div>
+      <textarea class="sre-textarea" id="sre-report-body">Your scheduled report Reviews & ratings over time from the Last 30 days is now ready for your review. This report is scheduled by Akhil Chamakalayil</textarea>
+    </div>
+  </div>
+</div>
+
+<div class="sre-popover" id="sre-popover"></div>
 
 <script>
 // ─── DATA ───
@@ -922,6 +909,145 @@ new Chart(document.getElementById('barChart').getContext('2d'), {
   options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{mode:'index'}},
     scales:{x:{grid:{display:false},ticks:{font:{size:10},color:'#6b7280',padding:4},border:{display:false}},y:{min:0,max:550,ticks:{stepSize:100,font:{size:10},color:'#9ca3af',padding:4},grid:{color:'#f3f4f6'},border:{display:false}}}},
   plugins:[{id:'barLabels',afterDatasetsDraw(chart){const{ctx}=chart;chart.data.datasets.forEach((ds,di)=>{chart.getDatasetMeta(di).data.forEach((bar,i)=>{ctx.save();ctx.fillStyle='#374151';ctx.font='9px sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(ds.data[i],bar.x,bar.y-2);ctx.restore();});});}}]
+});
+
+function openScheduledReports(){
+  document.getElementById('page-title').textContent = 'Scheduled reports';
+  document.getElementById('page-reviews').style.display = 'none';
+  document.getElementById('page-scheduled').style.display = 'flex';
+  document.getElementById('tabs-bar').style.display = 'none';
+  document.getElementById('page-hdr-right-reviews').style.display = 'none';
+  document.getElementById('page-hdr-right-scheduled').style.display = 'flex';
+  document.querySelectorAll('.sb-item.active').forEach(el=>el.classList.remove('active'));
+  document.getElementById('sb-scheduled-reports').classList.add('active');
+}
+document.getElementById('sb-scheduled-reports').addEventListener('click', openScheduledReports);
+if(window.location.hash === '#scheduled-reports') openScheduledReports();
+
+function openReviewsRatings(){
+  document.getElementById('page-title').textContent = 'Reviews & ratings over time';
+  document.getElementById('page-scheduled').style.display = 'none';
+  document.getElementById('page-reviews').style.display = 'flex';
+  document.getElementById('tabs-bar').style.display = '';
+  document.getElementById('page-hdr-right-scheduled').style.display = 'none';
+  document.getElementById('page-hdr-right-reviews').style.display = '';
+  document.querySelectorAll('.sb-item.active').forEach(el=>el.classList.remove('active'));
+  document.getElementById('sb-reviews-ratings').classList.add('active');
+}
+document.getElementById('sb-reviews-ratings').addEventListener('click', openReviewsRatings);
+
+function openScheduledReportEdit(btn){
+  const row = btn.closest('tr');
+  document.getElementById('sre-report-name').firstChild.textContent = row.dataset.name;
+  document.querySelectorAll('input[name="sre-format"]').forEach(r=>r.checked=false);
+  const fmtEl = document.getElementById('sre-format-'+row.dataset.format.toLowerCase());
+  if(fmtEl) fmtEl.checked = true;
+  document.getElementById('sr-edit-panel').classList.add('open');
+  document.getElementById('panel-backdrop').classList.add('open');
+}
+function closeScheduledReportEdit(){
+  document.getElementById('sr-edit-panel').classList.remove('open');
+  document.getElementById('panel-backdrop').classList.remove('open');
+}
+document.getElementById('sr-edit-back-btn').addEventListener('click', closeScheduledReportEdit);
+document.getElementById('sr-edit-cancel-btn').addEventListener('click', closeScheduledReportEdit);
+document.getElementById('panel-backdrop').addEventListener('click', closeScheduledReportEdit);
+
+// ─── SCHEDULE FREQUENCY / TIME / DAY / SHARE POPOVERS ───
+const WEEKDAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const MONTH_DAYS = ['1st','15th','last day of the month'];
+const FREQUENCIES = ['daily','weekly','monthly','quarterly'];
+const TIME_OPTIONS = (()=>{
+  const out = [];
+  for(let h=0; h<24; h++){
+    for(const m of [0,30]){
+      const hour12 = h % 12 === 0 ? 12 : h % 12;
+      const ampm = h < 12 ? 'am' : 'pm';
+      out.push(`${hour12}:${m===0?'00':'30'} ${ampm}`);
+    }
+  }
+  return out;
+})();
+
+function renderPopover(anchorEl, items, selectedValue, onSelect){
+  const pop = document.getElementById('sre-popover');
+  pop.innerHTML = '';
+  items.forEach(item=>{
+    const row = document.createElement('div');
+    const isSelected = item === selectedValue;
+    row.className = 'sre-popover-item' + (isSelected ? ' selected' : '');
+    row.innerHTML = `<span>${item}</span>` + (isSelected ? '<span class="sre-popover-check"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span>' : '');
+    row.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      onSelect(item);
+      pop.classList.remove('open');
+    });
+    pop.appendChild(row);
+  });
+  const rect = anchorEl.getBoundingClientRect();
+  pop.style.left = rect.left + 'px';
+  pop.style.top = (rect.bottom + 6) + 'px';
+  pop.classList.add('open');
+  if(isSelectedScroll(pop)) pop.querySelector('.sre-popover-item.selected').scrollIntoView({block:'center'});
+}
+function isSelectedScroll(pop){ return !!pop.querySelector('.sre-popover-item.selected'); }
+
+function openFrequencyPopover(el, evt){
+  evt.stopPropagation();
+  const current = document.getElementById('sre-freq-label').textContent;
+  renderPopover(el, FREQUENCIES, current, (val)=>{
+    document.getElementById('sre-freq-label').textContent = val;
+    const onWrap = document.getElementById('sre-on-wrap');
+    if(val === 'daily'){
+      onWrap.style.display = 'none';
+    } else {
+      onWrap.style.display = '';
+      if(val === 'monthly' || val === 'quarterly'){
+        document.getElementById('sre-day-label').textContent = '1st';
+        onWrap.firstChild.textContent = 'on the ';
+      } else {
+        document.getElementById('sre-day-label').textContent = 'Monday';
+        onWrap.firstChild.textContent = 'on ';
+      }
+    }
+  });
+}
+function openDayPopover(el, evt){
+  evt.stopPropagation();
+  const freq = document.getElementById('sre-freq-label').textContent;
+  const isMonthly = freq === 'monthly' || freq === 'quarterly';
+  const list = isMonthly ? MONTH_DAYS : WEEKDAYS;
+  const current = document.getElementById('sre-day-label').textContent;
+  renderPopover(el, list, current, (val)=>{
+    document.getElementById('sre-day-label').textContent = val;
+  });
+}
+function openTimePopover(el, evt){
+  evt.stopPropagation();
+  const current = document.getElementById('sre-time-label').textContent;
+  renderPopover(el, TIME_OPTIONS, current, (val)=>{
+    document.getElementById('sre-time-label').textContent = val;
+  });
+}
+function openSharePopover(el, evt){
+  evt.stopPropagation();
+  const current = document.getElementById('sre-share-label').textContent;
+  renderPopover(el, ['Roles','Users'], current, (val)=>{
+    document.getElementById('sre-share-label').textContent = val;
+  });
+}
+document.addEventListener('click', (e)=>{
+  const pop = document.getElementById('sre-popover');
+  if(!pop.contains(e.target)) pop.classList.remove('open');
+});
+
+document.querySelectorAll('.sb-group-hdr').forEach(hdr=>{
+  const items = hdr.nextElementSibling;
+  if(!items || !items.classList.contains('sb-group-items')) return;
+  hdr.addEventListener('click', ()=>{
+    hdr.classList.toggle('open');
+    items.classList.toggle('open');
+  });
 });
 </script>
 </body>
