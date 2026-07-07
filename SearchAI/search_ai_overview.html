@@ -1474,7 +1474,7 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 .cit-panel.open{transform:translateX(0)}
 .cit-header{
   height:52px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 16px;border-bottom:1px solid #eaeaea;flex-shrink:0;
+  padding:0 16px;flex-shrink:0;
 }
 .cit-header-title{font-size:15px;font-weight:500;color:rgb(33,33,33)}
 .cit-body{flex:1;overflow-y:hidden;display:flex;flex-direction:column}
@@ -17175,6 +17175,7 @@ function openWhPanel(domain) {
     `<div style="padding:12px 0 4px;font-size:13px;color:#666;line-height:1.6">These checks look across your whole site for duplicate pages, broken redirect chains, and conflicting canonical tags — the kind of issues that confuse search engines about which page is the "real" one.</div>`;
 
   document.querySelector('#cit-panel .cit-header-title').textContent = 'Website health details';
+  document.getElementById('cit-view-details-cta').style.display = 'inline';
   document.getElementById('cit-body').innerHTML = `
     <div style="padding:20px 20px 0;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
@@ -17313,6 +17314,7 @@ function openPageDetailsPanel(domain, path) {
     pdCheck('In sitemap', true) + pdCheck('HTTPS', true);
 
   document.querySelector('#cit-panel .cit-header-title').textContent = 'Page details';
+  document.getElementById('cit-view-details-cta').style.display = 'none';
   document.getElementById('cit-body').innerHTML = `
     <div style="padding:20px 20px 0;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
@@ -18154,7 +18156,10 @@ document.addEventListener('click', function(e) {
       <button class="icon-btn" onclick="closeCitationPanel()"><span class="material-symbols-rounded">arrow_back</span></button>
       <span class="cit-header-title">Citation Analysis</span>
     </div>
-    <button class="icon-btn" onclick="closeCitationPanel()"><span class="material-symbols-rounded">close</span></button>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span id="cit-view-details-cta" class="tp-banner-link" style="display:none">View details</span>
+      <button class="icon-btn" onclick="closeCitationPanel()"><span class="material-symbols-rounded">close</span></button>
+    </div>
   </div>
   <div class="cit-body" id="cit-body" style="flex:1;overflow-y:hidden;display:flex;flex-direction:column"></div>
 </div>
