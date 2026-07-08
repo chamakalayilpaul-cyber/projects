@@ -17622,10 +17622,10 @@ function buildDomainAuditBodyV4(domain) {
         <div style="font-size:20px;font-weight:400;color:${whColor('fresh')}">${wh.fresh || '—'}</div>
       </div>
     </div>
+    ${pagesWidget}
     ${pdCard('Crawlability', crawlBody)}
     ${pdCard('Blocked folders', blockedBody)}
-    ${pdCard('Site-wide technical health', techBody)}
-    ${pagesWidget}`;
+    ${pdCard('Site-wide technical health', techBody)}`;
 }
 
 function openDomainAuditFullView(domain) {
