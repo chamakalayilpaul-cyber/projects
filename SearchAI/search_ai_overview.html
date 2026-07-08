@@ -1552,6 +1552,8 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 
 #view-site-audit-v4 .pt-data-row:hover td{background:rgb(242,244,247)}
 #view-site-audit-v4 .pt-data-row:hover .sav4-url{color:#1976d2!important}
+.dav4-page-row:hover td{background:rgb(242,244,247)}
+.dav4-page-row:hover .dav4-page-path{color:#1976d2!important}
 
 .pt-data-row{background:#fafafa}
 .pt-group-row td{height:56px;padding:0 20px;border-bottom:1px solid #eaeaea;vertical-align:middle}
@@ -4136,7 +4138,7 @@ textarea.ap-input{
             <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
           </a>
         </div>
-        <div id="pdv4-body" style="max-width:1040px"></div>
+        <div id="pdv4-body"></div>
       </div>
     </div>
 
@@ -4149,7 +4151,7 @@ textarea.ap-input{
             <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
           </a>
         </div>
-        <div id="dav4-body" style="max-width:1040px"></div>
+        <div id="dav4-body"></div>
       </div>
     </div>
 
@@ -17405,7 +17407,7 @@ function buildPageDetailsBodyV4(domain, path) {
   }
   function pdCard(title, rows) {
     return `<div style="border:1px solid #eaeaea;border-radius:8px;margin-bottom:16px;overflow:hidden">
-      <div style="padding:12px 24px;font-size:14px;font-weight:500;color:#212121;background:#fafafa;border-bottom:1px solid #eaeaea">${title}</div>
+      <div style="padding:12px 24px;font-size:16px;font-weight:400;color:#212121">${title}</div>
       <div>${rows}</div>
     </div>`;
   }
@@ -17563,7 +17565,7 @@ function buildDomainAuditBodyV4(domain) {
   const techRows = [
     ['Canonical tags', dd.canon], ['Redirects', dd.redir], ['Duplicate content', dd.dup],
   ];
-  const techBody = techRows.map(([label, val], i) => pdKv(label, typeof val === 'number' ? val : val, typeof val === 'number' ? scoreColor(val) : '#212121', i === techRows.length - 1)).join('');
+  const techBody = techRows.map(([label, val], i) => pdKv(label, val, '#212121', i === techRows.length - 1)).join('');
 
   const pages = PAGES_BY_DOMAIN[domain] || ['/'];
   const pageRowsHtml = pages.map((path, i) => {
@@ -17571,8 +17573,8 @@ function buildDomainAuditBodyV4(domain) {
     const h = pdvSeededScore(seed + 'h'), ai = pdvSeededScore(seed + 'a'), disc = pdvSeededScore(seed + 'd'), fresh = pdvSeededScore(seed + 'f');
     const tier = (v) => v >= 80 ? 'sat-green' : v >= 50 ? 'sat-orange' : 'sat-red';
     const last = i === pages.length - 1;
-    return `<tr onclick="openPageDetailsFullView('${domain}','${path}','domain-audit-v4')" style="cursor:pointer">
-      <td style="padding:0 16px 0 24px;height:48px;${last?'':'border-bottom:1px solid #f3f4f6'};font-size:14px;color:#212121">${path}</td>
+    return `<tr class="dav4-page-row" onclick="openPageDetailsFullView('${domain}','${path}','domain-audit-v4')" style="cursor:pointer">
+      <td style="padding:0 16px 0 24px;height:48px;${last?'':'border-bottom:1px solid #f3f4f6'};font-size:14px"><span class="dav4-page-path" style="color:#212121">${path}</span></td>
       <td style="padding:0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(h)}">${h}</span></td>
       <td style="padding:0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(ai)}">${ai}</span></td>
       <td style="padding:0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(disc)}">${disc}</span></td>
@@ -17588,11 +17590,11 @@ function buildDomainAuditBodyV4(domain) {
     <table style="width:100%;border-collapse:collapse">
       <thead>
         <tr style="background:#fff">
-          <th style="padding:10px 16px 10px 24px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Page</th>
-          <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Health</th>
-          <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">AI readiness</th>
-          <th style="padding:10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Discoverability</th>
-          <th style="padding:10px 24px 10px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-top:1px solid #eaeaea;border-bottom:1px solid #eaeaea">Freshness</th>
+          <th style="padding:10px 16px 10px 24px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">Page</th>
+          <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">Health</th>
+          <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">AI readiness</th>
+          <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">Discoverability</th>
+          <th style="padding:10px 24px 10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">Freshness</th>
         </tr>
       </thead>
       <tbody>${pageRowsHtml}</tbody>
