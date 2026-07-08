@@ -955,7 +955,11 @@ document.getElementById('panel-backdrop').addEventListener('click', closeSchedul
 
 // ─── SCHEDULE FREQUENCY / TIME / DAY / SHARE POPOVERS ───
 const WEEKDAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const MONTH_DAYS = ['1st','15th','last day of the month'];
+function ordinal(n){
+  const s = ['th','st','nd','rd'], v = n % 100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+const MONTH_DAYS = Array.from({length:31}, (_,i)=>ordinal(i+1)).concat(['last day of the month']);
 const FREQUENCIES = ['daily','weekly','monthly','quarterly'];
 const TIME_OPTIONS = (()=>{
   const out = [];
