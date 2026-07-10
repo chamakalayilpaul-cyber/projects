@@ -1527,6 +1527,9 @@ table.snt-table td.snt-summary{white-space:normal!important;word-break:break-wor
 }
 .pt-monthly-cell{font-size:14px;color:rgb(33,33,33);min-width:90px;white-space:nowrap}
 .pt-ai-wrap{display:inline-flex;align-items:center;gap:6px;vertical-align:middle}
+.pt-brand-cell{font-size:14px;color:rgb(33,33,33);white-space:nowrap}
+.pt-brand-multi{display:inline-flex;align-items:center;cursor:default}
+.pt-brand-chev{font-size:16px;margin-left:4px;color:rgb(143,143,143)}
 .pt-col-info{font-size:14px!important;color:rgb(143,143,143);cursor:default;vertical-align:middle;margin-left:3px}
 .pt-ai-wrap svg{width:16px;height:16px;flex-shrink:0}
 .pt-date{color:rgb(33,33,33);font-size:14px}
@@ -3075,11 +3078,12 @@ textarea.ap-input{
       <div class="pt-table-wrap" id="pt-v2-table-wrap">
         <table class="pt-table" id="pt-v2-table">
           <colgroup>
-            <col><col class="pt-loc-col-header"><col><col><col><col>
+            <col><col><col class="pt-loc-col-header"><col><col><col><col>
           </colgroup>
           <thead>
             <tr>
               <th><span class="pt-th-inner">Themes and prompts</span></th>
+              <th class="pt-brand-col" style="display:none"><span class="pt-th-inner">Brand</span></th>
               <th class="pt-loc-col"><span class="pt-th-inner">Locations<span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">Monthly searches<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Average number of monthly AI searches for this prompt across platforms')" onmouseleave="hideColInfoTooltip()">info</span><span class="material-symbols-rounded pt-sort-icon">expand_less</span></span></th>
               <th><span class="pt-th-inner">AI sites</span></th>
@@ -3091,12 +3095,13 @@ textarea.ap-input{
 
             <tr class="pt-group-row" data-group="invisalign" onclick="togglePtGroup('invisalign')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Invisialign</span><span class="pt-group-subcount">6 prompts</span></div></div></td>
-              <td class="pt-loc-col"></td><td></td><td></td>
+              <td class="pt-brand-cell pt-brand-col"></td><td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
               <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Invisialign')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Invisialign')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-rated Invisalign providers near me?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental">Aspen Dental</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="34" data-brand="4">34</td>
               <td class="pt-monthly-cell">89.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3105,6 +3110,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Can you recommend clinics that specialise in clear aligner therapy for complex bite corrections in adults?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental|Clear Choice"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Aspen Dental|Clear Choice"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="76" data-brand="4">76</td>
               <td class="pt-monthly-cell">76.2K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3113,6 +3119,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental practices offer the most advanced Invisalign solutions with 3D scanning and virtual outcome previews?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental|Clear Choice|WellNow"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Aspen Dental|Clear Choice|WellNow"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="67" data-brand="4">67</td>
               <td class="pt-monthly-cell">67.3K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3121,6 +3128,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Best Invisalign dentist with payment plans</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice">Clear Choice</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="8" data-brand="4">8</td>
               <td class="pt-monthly-cell">45.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3129,6 +3137,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the leading Invisalign provider practices in my area with the highest verified patient satisfaction scores?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice|WellNow"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Clear Choice|WellNow"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="45" data-brand="4">45</td>
               <td class="pt-monthly-cell">54.8K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg></span></td>
@@ -3137,6 +3146,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="invisalign">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisible aligner clinics offering free consultations</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice|WellNow|Aspen Dental"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Clear Choice|WellNow|Aspen Dental"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="78" data-brand="4">78</td>
               <td class="pt-monthly-cell">31.5K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3146,12 +3156,13 @@ textarea.ap-input{
 
             <tr class="pt-group-row" data-group="orthodontics" onclick="togglePtGroup('orthodontics')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Orthodontics</span><span class="pt-group-subcount">5 prompts</span></div></div></td>
-              <td class="pt-loc-col"></td><td></td><td></td>
+              <td class="pt-brand-cell pt-brand-col"></td><td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
               <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Orthodontics')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Orthodontics')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which orthodontic specialists near me offer invisible braces for adults?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="WellNow">WellNow</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="22" data-brand="3">22</td>
               <td class="pt-monthly-cell">54.2K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3160,6 +3171,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the top-rated dental practices known for precision Invisalign dentistry and same-day appointment availability?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="WellNow|Aspen Dental"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="WellNow|Aspen Dental"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="56" data-brand="3">56</td>
               <td class="pt-monthly-cell">48.7K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3168,6 +3180,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Invisalign specialists who accept insurance</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="WellNow|Aspen Dental|Clear Choice"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="WellNow|Aspen Dental|Clear Choice"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="22" data-brand="3">22</td>
               <td class="pt-monthly-cell">38.9K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3176,6 +3189,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental offices provide personalised Invisalign plans with remote progress monitoring and fewer required office visits?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental">Aspen Dental</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="34" data-brand="3">34</td>
               <td class="pt-monthly-cell">42.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3184,6 +3198,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="orthodontics">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Most recommended orthodontic centres for faster Invisalign results</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental|Clear Choice"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Aspen Dental|Clear Choice"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="38" data-brand="3">38</td>
               <td class="pt-monthly-cell">35.6K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
@@ -3193,12 +3208,13 @@ textarea.ap-input{
 
             <tr class="pt-group-row" data-group="trusted" onclick="togglePtGroup('trusted')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Trusted invisalign care</span><span class="pt-group-subcount">1 prompt</span></div></div></td>
-              <td class="pt-loc-col"></td><td></td><td></td>
+              <td class="pt-brand-cell pt-brand-col"></td><td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
               <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Trusted invisalign care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Trusted invisalign care')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="trusted">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental clinics in my area are most trusted by patients for delivering consistent and reliable Invisalign care throughout the full treatment?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental|Clear Choice|WellNow"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Aspen Dental|Clear Choice|WellNow"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="12" data-brand="2">12</td>
               <td class="pt-monthly-cell">28.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
@@ -3211,12 +3227,13 @@ textarea.ap-input{
 
             <tr class="pt-group-row" data-group="cosmetic-br" onclick="togglePtGroup('cosmetic-br')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Cosmetic dentistry</span><span class="pt-group-subcount">4 prompts</span></div></div></td>
-              <td class="pt-loc-col"></td><td></td><td></td>
+              <td class="pt-brand-cell pt-brand-col"></td><td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
               <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Cosmetic dentistry')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Cosmetic dentistry')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best cosmetic dentistry options for improving my smile?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice">Clear Choice</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">78.3K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3225,6 +3242,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which dental clinics near me specialise in porcelain veneers and crowns?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice|WellNow"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Clear Choice|WellNow"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">62.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3233,6 +3251,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>How much does a full smile makeover cost at cosmetic dental clinics?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice|WellNow|Aspen Dental"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Clear Choice|WellNow|Aspen Dental"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">55.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3241,6 +3260,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="cosmetic-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find highly rated cosmetic dentists accepting new patients near me</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="WellNow">WellNow</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="4">0</td>
               <td class="pt-monthly-cell">48.9K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg><svg width="16" height="16"><use href="#s-claude"/></svg></span></td>
@@ -3250,12 +3270,13 @@ textarea.ap-input{
 
             <tr class="pt-group-row" data-group="pediatric-br" onclick="togglePtGroup('pediatric-br')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Pediatric dentistry</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
-              <td class="pt-loc-col"></td><td></td><td></td>
+              <td class="pt-brand-cell pt-brand-col"></td><td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
               <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Pediatric dentistry')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Pediatric dentistry')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="pediatric-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What are the best-reviewed pediatric dentists near me for young children?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="WellNow|Aspen Dental"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="WellNow|Aspen Dental"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">67.2K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
@@ -3264,6 +3285,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="pediatric-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>At what age should my child have their first dental appointment?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="WellNow|Aspen Dental|Clear Choice"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="WellNow|Aspen Dental|Clear Choice"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">43.8K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
@@ -3272,6 +3294,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="pediatric-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find a pediatric dentist who specialises in anxious or special needs children</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental">Aspen Dental</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">51.6K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg><svg width="16" height="16"><use href="#s-copilot"/></svg></span></td>
@@ -3281,12 +3304,13 @@ textarea.ap-input{
 
             <tr class="pt-group-row" data-group="emergency-br" onclick="togglePtGroup('emergency-br')">
               <td><div class="pt-group-inner"><span class="material-symbols-rounded pt-group-chev">expand_more</span><div class="pt-group-info"><span class="pt-group-label">Dental emergency care</span><span class="pt-group-subcount">3 prompts</span></div></div></td>
-              <td class="pt-loc-col"></td><td></td><td></td>
+              <td class="pt-brand-cell pt-brand-col"></td><td class="pt-loc-col"></td><td></td><td></td>
               <td class="pt-status-cell"></td>
               <td class="pt-action-cell"><span class="pt-row-hover-actions"><button class="pt-row-icon-btn" onclick="openAddPromptPanel(event,'Dental emergency care')"><span class="material-symbols-rounded">add</span></button><button class="pt-row-icon-btn" onclick="confirmDeleteTheme(event,'Dental emergency care')"><span class="material-symbols-rounded">delete</span></button></span></td>
             </tr>
             <tr class="pt-data-row" data-group="emergency-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Which emergency dental clinics are open on weekends near me?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental|Clear Choice"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Aspen Dental|Clear Choice"><span class="pt-brand-count">2</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">72.1K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3295,6 +3319,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="emergency-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>What should I do if I have a sudden toothache or dental emergency?</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental|Clear Choice|WellNow"><span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="Aspen Dental|Clear Choice|WellNow"><span class="pt-brand-count">3</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span></td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">58.4K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -3303,6 +3328,7 @@ textarea.ap-input{
             </tr>
             <tr class="pt-data-row" data-group="emergency-br">
               <td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>Find a 24-hour emergency dentist with same-day appointments in my area</span></td>
+              <td class="pt-brand-cell pt-brand-col" data-brands="Clear Choice">Clear Choice</td>
               <td class="pt-scope-cell pt-loc-col" data-locations="0" data-brand="3">0</td>
               <td class="pt-monthly-cell">63.7K</td>
               <td class="pt-ai-cell"><span class="pt-ai-wrap"><svg width="16" height="16"><use href="#s-chatgpt"/></svg><svg width="16" height="16"><use href="#s-gemini"/></svg><svg width="16" height="16"><use href="#s-perplexity"/></svg></span></td>
@@ -9749,10 +9775,7 @@ textarea.ap-input{
         </div>
       </div>
 
-      </div>
-
-      </div>
-    </div><!-- /view-comp-brand -->
+      </div><!-- /view-comp-brand -->
 
 <script>
 (function(){
@@ -11306,17 +11329,19 @@ else init();
         
 
         <!-- Location prompts row -->
-        <div style="padding:12px 24px;display:flex;align-items:center;gap:16px">
+        <div style="padding:12px 24px;display:flex;align-items:center;gap:16px;max-width:534px">
           <div class="sett-toggle on" id="loc-toggle" onclick="reportToggleFreq(this,'loc-freq','loc-chev');checkReportChanges()" title="Toggle location prompts"></div>
           <div style="flex:1">
             <div style="font-size:14px;font-weight:400;color:#212121;display:inline-flex;align-items:center;gap:6px">Location prompts<span id="loc-toggle-icon" style="display:none"></span></div>
+            <div style="font-size:12px;color:rgb(85,85,85)">200 locations</div>
           </div>
-          <div style="width:180px">
+          <div style="width:180px" id="loc-freq-wrap">
             <div class="fp-dropdown" id="loc-freq-dd" onclick="toggleSettDd('loc-freq-dd')">
               <span class="fp-dropdown-val has-val" id="loc-freq-val">Weekly</span>
               <span id="loc-freq-icon" style="display:none"></span>
               <span class="material-symbols-rounded" style="font-size:18px;color:#555;flex-shrink:0">expand_more</span>
               <div class="fp-dropdown-menu" id="loc-freq-menu" onclick="event.stopPropagation()">
+                <div class="fp-opt" onclick="selectSettDd('loc-freq','Not tracking')"><span>Not tracking</span><span id="loc-freq-opt-Not tracking" style="margin-left:auto"></span></div>
                 <div class="fp-opt" onclick="selectSettDd('loc-freq','Daily')"><span>Daily</span><span id="loc-freq-opt-Daily" style="margin-left:auto"></span></div>
                 <div class="fp-opt" onclick="selectSettDd('loc-freq','Weekly')"><span>Weekly</span><span id="loc-freq-opt-Weekly" style="margin-left:auto"></span></div>
                 <div class="fp-opt" onclick="selectSettDd('loc-freq','Monthly')"><span>Monthly</span><span id="loc-freq-opt-Monthly" style="margin-left:auto"></span></div>
@@ -11326,17 +11351,19 @@ else init();
         </div>
 
         <!-- Brand prompts row -->
-        <div style="padding:12px 24px 24px;display:flex;align-items:center;gap:16px">
+        <div style="padding:12px 24px 24px;display:flex;align-items:center;gap:16px;max-width:534px">
           <div class="sett-toggle" id="brand-toggle" onclick="reportToggleFreq(this,'brand-freq','brand-chev');checkReportChanges()" title="Toggle brand prompts"></div>
           <div style="flex:1">
             <div style="font-size:14px;font-weight:400;color:#212121;display:inline-flex;align-items:center;gap:6px">Brand prompts<span id="brand-toggle-icon" style="display:none"></span></div>
+            <div id="brand-sub" style="font-size:12px;color:rgb(85,85,85);display:none">3 Brands</div>
           </div>
-          <div style="width:180px">
-            <div class="fp-dropdown ap-disabled" id="brand-freq-dd" onclick="toggleSettDd('brand-freq-dd')">
-              <span class="fp-dropdown-val has-val" id="brand-freq-val">Weekly</span>
+          <div style="width:180px" id="brand-freq-wrap">
+            <div class="fp-dropdown" id="brand-freq-dd" onclick="toggleSettDd('brand-freq-dd')">
+              <span class="fp-dropdown-val has-val" id="brand-freq-val">Not tracking</span>
               <span id="brand-freq-icon" style="display:none"></span>
-              <span class="material-symbols-rounded" style="font-size:18px;color:#ccc;flex-shrink:0">expand_more</span>
+              <span class="material-symbols-rounded" style="font-size:18px;color:#555;flex-shrink:0">expand_more</span>
               <div class="fp-dropdown-menu" id="brand-freq-menu" onclick="event.stopPropagation()">
+                <div class="fp-opt" onclick="selectSettDd('brand-freq','Not tracking')"><span>Not tracking</span><span id="brand-freq-opt-Not tracking" style="margin-left:auto"></span></div>
                 <div class="fp-opt" onclick="selectSettDd('brand-freq','Daily')"><span>Daily</span><span id="brand-freq-opt-Daily" style="margin-left:auto"></span></div>
                 <div class="fp-opt" onclick="selectSettDd('brand-freq','Weekly')"><span>Weekly</span><span id="brand-freq-opt-Weekly" style="margin-left:auto"></span></div>
                 <div class="fp-opt" onclick="selectSettDd('brand-freq','Monthly')"><span>Monthly</span><span id="brand-freq-opt-Monthly" style="margin-left:auto"></span></div>
@@ -12057,16 +12084,33 @@ else init();
         </div>
         <div class="ap-ms-menu">
           <div class="ap-ms-search-wrap"><span class="material-symbols-rounded ap-ms-search-icon">search</span><input class="ap-ms-search" placeholder="Search locations" oninput="filterApMs('at-loc-ms',this.value)" onclick="event.stopPropagation()"/></div>
-          <label class="ap-ms-opt"><input type="checkbox" value="Austin, TX" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Austin, TX</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Denver, CO" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Denver, CO</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Chicago, IL" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Chicago, IL</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="New York, NY" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>New York, NY</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Los Angeles, CA" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Los Angeles, CA</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Seattle, WA" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Seattle, WA</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Miami, FL" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Miami, FL</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Dallas, TX" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Dallas, TX</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Boston, MA" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Boston, MA</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Phoenix, AZ" onchange="refreshApMs('at-loc-ms','at-loc-label','Select locations');checkAtAdd()"><span>Phoenix, AZ</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" class="ap-ms-all" onchange="apMsAllToggle('at-loc-ms','at-loc-label','Select locations','All Locations',this);checkAtAdd();markAtLocTouched()"><span>All Locations</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Austin, TX" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Austin, TX</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Denver, CO" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Denver, CO</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Chicago, IL" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Chicago, IL</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="New York, NY" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>New York, NY</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Los Angeles, CA" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Los Angeles, CA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Seattle, WA" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Seattle, WA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Miami, FL" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Miami, FL</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Dallas, TX" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Dallas, TX</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Boston, MA" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Boston, MA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Phoenix, AZ" onchange="apMsItemToggle('at-loc-ms','at-loc-label','Select locations');checkAtAdd();markAtLocTouched()"><span>Phoenix, AZ</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ap-field" id="at-brand-field" style="display:none">
+      <label class="ap-label">Brands <span class="ap-req">*</span></label>
+      <div class="ap-multiselect" id="at-brand-ms">
+        <div class="ap-ms-trigger" onclick="toggleApMs('at-brand-ms')">
+          <span class="ap-ms-label" id="at-brand-label">Select brands</span>
+          <span class="material-symbols-rounded" style="font-size:18px;color:#555">expand_more</span>
+        </div>
+        <div class="ap-ms-menu">
+          <label class="ap-ms-opt"><input type="checkbox" class="ap-ms-all" onchange="apMsAllToggle('at-brand-ms','at-brand-label','Select brands','All Brands',this);checkAtAdd();markAtBrandTouched()"><span>All Brands</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Aspen Dental" onchange="apMsItemToggle('at-brand-ms','at-brand-label','Select brands');checkAtAdd();markAtBrandTouched()"><span>Aspen Dental</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Clear Choice" onchange="apMsItemToggle('at-brand-ms','at-brand-label','Select brands');checkAtAdd();markAtBrandTouched()"><span>Clear Choice</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="WellNow" onchange="apMsItemToggle('at-brand-ms','at-brand-label','Select brands');checkAtAdd();markAtBrandTouched()"><span>WellNow</span></label>
         </div>
       </div>
     </div>
@@ -12149,16 +12193,33 @@ else init();
         </div>
         <div class="ap-ms-menu">
           <div class="ap-ms-search-wrap"><span class="material-symbols-rounded ap-ms-search-icon">search</span><input class="ap-ms-search" placeholder="Search locations" oninput="filterApMs('ap-loc-ms',this.value)" onclick="event.stopPropagation()"/></div>
-          <label class="ap-ms-opt"><input type="checkbox" value="Austin, TX" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Austin, TX</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Denver, CO" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Denver, CO</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Chicago, IL" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Chicago, IL</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="New York, NY" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>New York, NY</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Los Angeles, CA" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Los Angeles, CA</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Seattle, WA" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Seattle, WA</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Miami, FL" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Miami, FL</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Dallas, TX" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Dallas, TX</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Boston, MA" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Boston, MA</span></label>
-          <label class="ap-ms-opt"><input type="checkbox" value="Phoenix, AZ" onchange="refreshApMs('ap-loc-ms','ap-loc-label','Select locations');checkApAdd()"><span>Phoenix, AZ</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" class="ap-ms-all" onchange="apMsAllToggle('ap-loc-ms','ap-loc-label','Select locations','All Locations',this);checkApAdd();markApLocTouched()"><span>All Locations</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Austin, TX" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Austin, TX</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Denver, CO" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Denver, CO</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Chicago, IL" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Chicago, IL</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="New York, NY" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>New York, NY</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Los Angeles, CA" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Los Angeles, CA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Seattle, WA" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Seattle, WA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Miami, FL" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Miami, FL</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Dallas, TX" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Dallas, TX</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Boston, MA" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Boston, MA</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Phoenix, AZ" onchange="apMsItemToggle('ap-loc-ms','ap-loc-label','Select locations');checkApAdd();markApLocTouched()"><span>Phoenix, AZ</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ap-field" id="ap-brand-field" style="display:none">
+      <label class="ap-label">Brands <span class="ap-req">*</span></label>
+      <div class="ap-multiselect" id="ap-brand-ms">
+        <div class="ap-ms-trigger" onclick="toggleApMs('ap-brand-ms')">
+          <span class="ap-ms-label" id="ap-brand-label">Select brands</span>
+          <span class="material-symbols-rounded">expand_more</span>
+        </div>
+        <div class="ap-ms-menu">
+          <label class="ap-ms-opt"><input type="checkbox" class="ap-ms-all" onchange="apMsAllToggle('ap-brand-ms','ap-brand-label','Select brands','All Brands',this);checkApAdd();markApBrandTouched()"><span>All Brands</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Aspen Dental" onchange="apMsItemToggle('ap-brand-ms','ap-brand-label','Select brands');checkApAdd();markApBrandTouched()"><span>Aspen Dental</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="Clear Choice" onchange="apMsItemToggle('ap-brand-ms','ap-brand-label','Select brands');checkApAdd();markApBrandTouched()"><span>Clear Choice</span></label>
+          <label class="ap-ms-opt"><input type="checkbox" value="WellNow" onchange="apMsItemToggle('ap-brand-ms','ap-brand-label','Select brands');checkApAdd();markApBrandTouched()"><span>WellNow</span></label>
         </div>
       </div>
     </div>
@@ -12705,6 +12766,11 @@ _taActive = true;
     const group = groupRow.dataset.group;
     const dataRows = [...table.querySelectorAll('.pt-data-row[data-group="' + group + '"]')];
     const tds = groupRow.querySelectorAll('td');
+    let brandNames = [];
+    dataRows.forEach(function(r) {
+      const cell = r.querySelector('.pt-brand-cell');
+      if (cell && cell.dataset.brands) brandNames = brandNames.concat(cell.dataset.brands.split('|'));
+    });
     let maxLoc = 0, maxLocStr = '';
     dataRows.forEach(function(r) {
       const cell = r.querySelector('.pt-scope-cell');
@@ -12719,9 +12785,10 @@ _taActive = true;
       const count = wrap ? wrap.querySelectorAll('svg').length : 0;
       if (count > maxIcons) { maxIcons = count; bestAiHtml = wrap ? wrap.outerHTML : ''; }
     });
-    if (tds[1]) tds[1].textContent = maxLocStr;
-    if (tds[2]) tds[2].textContent = formatMonthly(totalMonthly);
-    if (tds[3]) tds[3].innerHTML = bestAiHtml;
+    if (tds[1]) tds[1].innerHTML = renderBrandCell(brandNames);
+    if (tds[2]) tds[2].textContent = maxLocStr;
+    if (tds[3]) tds[3].textContent = formatMonthly(totalMonthly);
+    if (tds[4]) tds[4].innerHTML = bestAiHtml;
   });
 })();
 
@@ -12873,16 +12940,22 @@ function showView(view, skipHash) {
 }
 
 // Settings › Reports helpers
+const _reportLastFreq = { 'loc-freq': 'Weekly', 'brand-freq': 'Weekly' };
 function reportToggleFreq(toggle, freqId, chevId) {
   toggle.classList.toggle('on');
   const on = toggle.classList.contains('on');
-  const dd = document.getElementById(freqId + '-dd');
-  if (dd) {
-    dd.classList.toggle('ap-disabled', !on);
-    const val = dd.querySelector('.fp-dropdown-val');
-    if (val) val.style.color = on ? '#212121' : '#b0b0b0';
-    const chev = dd.querySelector('.material-symbols-rounded');
-    if (chev) chev.style.color = on ? '#555' : '#ccc';
+  const valEl = document.getElementById(freqId + '-val');
+  if (valEl) {
+    if (!on) {
+      if (valEl.textContent !== 'Not tracking') _reportLastFreq[freqId] = valEl.textContent;
+      selectSettDd(freqId, 'Not tracking', true);
+    } else {
+      selectSettDd(freqId, _reportLastFreq[freqId] || 'Weekly', true);
+    }
+  }
+  if (freqId === 'brand-freq') {
+    const sub = document.getElementById('brand-sub');
+    if (sub) sub.style.display = on ? '' : 'none';
   }
 }
 function settSetFreq(btn) {
@@ -13315,6 +13388,10 @@ function switchPromptsScope(scope) {
   document.querySelectorAll('#pt-v2-table .pt-loc-col').forEach(el => {
     el.style.display = isBrand ? 'none' : '';
   });
+  // Brand column only appears on the Brand tab
+  document.querySelectorAll('#pt-v2-table .pt-brand-col').forEach(el => {
+    el.style.display = isBrand ? '' : 'none';
+  });
   // No width tweak needed — table-layout:auto sizes from content
 }
 
@@ -13424,6 +13501,13 @@ function toggleThemeAggregate() {
     const tds = groupRow.querySelectorAll('td');
 
     if (_taActive) {
+      // Brand union
+      let brandNames = [];
+      dataRows.forEach(r => {
+        const cell = r.querySelector('.pt-brand-cell');
+        if (cell?.dataset.brands) brandNames = brandNames.concat(cell.dataset.brands.split('|'));
+      });
+
       // Max locations
       let maxLoc = 0, maxLocStr = '';
       dataRows.forEach(r => {
@@ -13446,13 +13530,15 @@ function toggleThemeAggregate() {
         if (count > maxIcons) { maxIcons = count; bestAiHtml = wrap ? wrap.outerHTML : ''; }
       });
 
-      tds[1].textContent = maxLocStr;
-      tds[2].textContent = formatMonthly(totalMonthly);
-      tds[3].innerHTML = bestAiHtml;
+      tds[1].innerHTML = renderBrandCell(brandNames);
+      tds[2].textContent = maxLocStr;
+      tds[3].textContent = formatMonthly(totalMonthly);
+      tds[4].innerHTML = bestAiHtml;
     } else {
       tds[1].textContent = '';
       tds[2].textContent = '';
-      tds[3].innerHTML = '';
+      tds[3].textContent = '';
+      tds[4].innerHTML = '';
     }
   });
 }
@@ -13478,22 +13564,33 @@ function openAddPromptPanel(event, theme) {
   // Reset location field visibility
   const locFld = document.getElementById("ap-loc-field");
   if (locFld) locFld.style.display = "";  // Clear multiselects
+  const brandFld = document.getElementById("ap-brand-field");
+  if (brandFld) brandFld.style.display = "none";
   document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.querySelectorAll('#ap-brand-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.querySelectorAll('#ap-tag-ms input[type="checkbox"]').forEach(c => c.checked = false);
   document.getElementById('ap-loc-label').textContent = 'Select locations';
   document.getElementById('ap-loc-label').classList.remove('has-val');
+  document.getElementById('ap-brand-label').textContent = 'Select brands';
+  document.getElementById('ap-brand-label').classList.remove('has-val');
   document.getElementById('ap-ai-label').textContent = 'Select AI sites';
   document.getElementById('ap-ai-label').classList.remove('has-val');
   document.getElementById('ap-tag-label').textContent = 'Select tags';
   document.getElementById('ap-tag-label').classList.remove('has-val');
   // Close any open menus
   document.querySelectorAll('.ap-multiselect.open').forEach(m => m.classList.remove('open'));
+  // Reset "first-visible defaults to All" tracking, then apply the default to the field
+  // that starts visible (Locations, since default track-by is "location")
+  _apLocTouched = false;
+  _apBrandTouched = false;
+  apMsDefaultAll('ap-loc-ms', 'ap-loc-label', 'Select locations', 'All Locations');
   // Disable Add
   document.getElementById('ap-btn-add').classList.remove('enabled');
   // Open panel
   document.getElementById('ap-overlay').classList.add('open');
   document.getElementById('ap-panel').classList.add('open');
+  checkApAdd();
 }
 
 let _apEditMode = false;
@@ -13528,8 +13625,8 @@ function openEtTrackingPanel(btn) {
   }
 
   // Select all locations
-  document.querySelectorAll('#ap-loc-ms input[type="checkbox"]').forEach(c => c.checked = true);
-  refreshApMs('ap-loc-ms', 'ap-loc-label', 'Select locations');
+  apMsDefaultAll('ap-loc-ms', 'ap-loc-label', 'Select locations', 'All Locations');
+  _apLocTouched = true;
 
   // Select all AI sites
   document.querySelectorAll('#ap-ai-ms input[type="checkbox"]').forEach(c => c.checked = true);
@@ -13624,6 +13721,39 @@ function refreshApMs(msId, labelId, placeholder) {
   }
 }
 
+/* ── "All" option handling for Locations/Brands multiselects ── */
+function apMsAllToggle(msId, labelId, placeholder, allText, cb) {
+  if (cb.checked) {
+    document.querySelectorAll('#' + msId + ' input[type="checkbox"]:not(.ap-ms-all)').forEach(o => o.checked = false);
+    const label = document.getElementById(labelId);
+    label.textContent = allText;
+    label.classList.add('has-val');
+  } else {
+    refreshApMs(msId, labelId, placeholder);
+  }
+}
+function apMsItemToggle(msId, labelId, placeholder) {
+  const allCb = document.querySelector('#' + msId + ' input.ap-ms-all');
+  if (allCb) allCb.checked = false;
+  refreshApMs(msId, labelId, placeholder);
+}
+function apMsIsAll(msId) {
+  return !!document.querySelector('#' + msId + ' input.ap-ms-all:checked');
+}
+
+let _apLocTouched = false, _apBrandTouched = false, _atLocTouched = false, _atBrandTouched = false;
+function markApLocTouched() { _apLocTouched = true; }
+function markApBrandTouched() { _apBrandTouched = true; }
+function markAtLocTouched() { _atLocTouched = true; }
+function markAtBrandTouched() { _atBrandTouched = true; }
+
+function apMsDefaultAll(msId, labelId, placeholder, allText) {
+  const allCb = document.querySelector('#' + msId + ' input.ap-ms-all');
+  if (!allCb) return;
+  allCb.checked = true;
+  apMsAllToggle(msId, labelId, placeholder, allText, allCb);
+}
+
 function refreshApAiMs() {
   const checked = [...document.querySelectorAll('#ap-ai-ms input:checked')];
   const label = document.getElementById('ap-ai-label');
@@ -13647,7 +13777,7 @@ function switchNmTab(btn, tab) {
 /* ── Settings > Reports change tracking ── */
 const REPORT_DEFAULTS = {
   'loc-toggle': true, 'loc-freq': 'Weekly',
-  'brand-toggle': false, 'brand-freq': 'Weekly',
+  'brand-toggle': false, 'brand-freq': 'Not tracking',
   'ai-chatgpt': true, 'ai-gemini': true, 'ai-perplexity': true,
   'ai-google-aio': false, 'ai-google-aim': false, 'ai-claude': false
 };
@@ -13664,9 +13794,24 @@ function toggleSettDd(id) {
   dd.classList.toggle('open');
 }
 
-function selectSettDd(freqId, value) {
+function selectSettDd(freqId, value, fromToggle) {
   document.getElementById(freqId + '-val').textContent = value;
   document.getElementById(freqId + '-dd').classList.remove('open');
+  if (!fromToggle && (freqId === 'loc-freq' || freqId === 'brand-freq')) {
+    const toggleId = freqId === 'loc-freq' ? 'loc-toggle' : 'brand-toggle';
+    const toggle = document.getElementById(toggleId);
+    if (toggle) {
+      const shouldBeOn = value !== 'Not tracking';
+      if (toggle.classList.contains('on') !== shouldBeOn) {
+        toggle.classList.toggle('on', shouldBeOn);
+        if (freqId === 'brand-freq') {
+          const sub = document.getElementById('brand-sub');
+          if (sub) sub.style.display = shouldBeOn ? '' : 'none';
+        }
+      }
+      if (shouldBeOn) _reportLastFreq[freqId] = value;
+    }
+  }
   checkReportChanges();
 }
 
@@ -13746,7 +13891,7 @@ function checkReportChanges() {
         iconEl.style.display = 'none'; iconEl.innerHTML = '';
       }
     }
-    ['Weekly','Daily','Monthly'].forEach(opt => {
+    ['Not tracking','Weekly','Daily','Monthly'].forEach(opt => {
       const optIcon = document.getElementById(id + '-opt-' + opt);
       if (!optIcon) return;
       if (opt === currentVal && !changed) {
@@ -13824,11 +13969,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const brandToggle = document.getElementById('brand-toggle');
   if (locToggle) { locToggle.classList.toggle('on', saved['loc-toggle']); }
   if (brandToggle) { brandToggle.classList.toggle('on', saved['brand-toggle']); }
-  // Restore freq dropdowns
+  const brandSub = document.getElementById('brand-sub');
+  if (brandSub) brandSub.style.display = saved['brand-toggle'] ? '' : 'none';
+  // Restore freq dropdowns (defaults to "Not tracking" when the section's toggle is off)
+  if (saved['loc-freq'] && saved['loc-freq'] !== 'Not tracking') _reportLastFreq['loc-freq'] = saved['loc-freq'];
+  if (saved['brand-freq'] && saved['brand-freq'] !== 'Not tracking') _reportLastFreq['brand-freq'] = saved['brand-freq'];
   const locFreqVal = document.getElementById('loc-freq-val');
-  if (locFreqVal) locFreqVal.textContent = saved['loc-freq'] || 'Weekly';
+  if (locFreqVal) locFreqVal.textContent = saved['loc-toggle'] ? (saved['loc-freq'] || 'Weekly') : 'Not tracking';
   const brandFreqVal = document.getElementById('brand-freq-val');
-  if (brandFreqVal) brandFreqVal.textContent = saved['brand-freq'] || 'Weekly';
+  if (brandFreqVal) brandFreqVal.textContent = saved['brand-toggle'] ? (saved['brand-freq'] || 'Weekly') : 'Not tracking';
   // Restore checkboxes
   ['ai-chatgpt','ai-gemini','ai-perplexity','ai-google-aio','ai-google-aim','ai-claude'].forEach(id => {
     const el = document.getElementById(id);
@@ -14931,6 +15080,25 @@ function hideColInfoTooltip() {
   document.getElementById('pt-mod-tooltip').style.display = 'none';
 }
 
+/* ── Brand column tooltip ── */
+function showBrandTooltip(e, el) {
+  const names = (el.dataset.brands || '').split('|').filter(Boolean);
+  const tip = document.getElementById('pt-mod-tooltip');
+  tip.innerHTML = names.map(n => `<div>${n}</div>`).join('');
+  tip.style.display = 'block';
+  const r = el.getBoundingClientRect();
+  tip.style.top = (r.bottom + 6) + 'px';
+  tip.style.left = Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2) + 'px';
+}
+
+function renderBrandCell(names) {
+  const uniq = [...new Set(names)];
+  if (uniq.length === 0) return '';
+  if (uniq.length === 1) return uniq[0];
+  const attr = uniq.join('|');
+  return `<span class="pt-brand-multi" onmouseenter="showBrandTooltip(event,this)" onmouseleave="hideColInfoTooltip()" data-brands="${attr}"><span class="pt-brand-count">${uniq.length}</span><span class="material-symbols-rounded pt-brand-chev">expand_more</span></span>`;
+}
+
 /* ── AI site icon tooltips ── */
 const AI_SITE_NAMES = {
   chatgpt: 'ChatGPT', gemini: 'Gemini', perplexity: 'Perplexity',
@@ -15087,10 +15255,14 @@ document.addEventListener('click', function(e) {
 
 function checkApAdd() {
   const name = document.getElementById('ap-name').value.trim();
-  const locs = document.querySelectorAll('#ap-loc-ms input:checked').length;
+  const trackBy = document.querySelector('input[name="ap-track"]:checked')?.value || 'location';
+  const locs = document.querySelectorAll('#ap-loc-ms input:checked:not(.ap-ms-all)').length;
+  const brands = document.querySelectorAll('#ap-brand-ms input:checked:not(.ap-ms-all)').length;
   const ais = document.querySelectorAll('#ap-ai-ms input:checked').length;
+  const locOk = trackBy === 'brand' || apMsIsAll('ap-loc-ms') || locs > 0;
+  const brandOk = trackBy === 'location' || apMsIsAll('ap-brand-ms') || brands > 0;
   const btn = document.getElementById('ap-btn-add');
-  btn.classList.toggle('enabled', name.length > 0 && locs > 0 && ais > 0);
+  btn.classList.toggle('enabled', name.length > 0 && locOk && brandOk && ais > 0);
 }
 
 function addPromptToTable() {
@@ -15116,7 +15288,7 @@ function addPromptToTable() {
 
   const theme = document.getElementById('ap-theme-val').textContent;
   const name = document.getElementById('ap-name').value.trim();
-  const locs = [...document.querySelectorAll('#ap-loc-ms input:checked')];
+  const locs = [...document.querySelectorAll('#ap-loc-ms input:checked:not(.ap-ms-all)')];
   const sites = [...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value);
 
   const groupMap = {'Invisialign':'invisalign','Orthodontics':'orthodontics','Trusted invisalign care':'trusted'};
@@ -15206,11 +15378,13 @@ function openEditPromptPanel(e, btn) {
   apNameEl.style.height = apNameEl.scrollHeight + 'px';
 
   // Pre-check locations
-  const locCheckboxes = [...document.querySelectorAll('#ap-loc-ms input[type="checkbox"]')];
+  const locCheckboxes = [...document.querySelectorAll('#ap-loc-ms input[type="checkbox"]:not(.ap-ms-all)')];
   // Effective values: use pendingLocValues if saved, else derive from count
   const pendingLocValues = row.dataset.pendingLocValues ? row.dataset.pendingLocValues.split(',').filter(Boolean) : null;
   const effectiveLocValues = pendingLocValues || locCheckboxes.slice(0, Math.min(effectiveLocs, locCheckboxes.length)).map(c => c.value);
   locCheckboxes.forEach(c => { c.checked = effectiveLocValues.includes(c.value); });
+  const locAllCb = document.querySelector('#ap-loc-ms input.ap-ms-all');
+  if (locAllCb) locAllCb.checked = false;
   _editOrigLocs = Math.min(tableLocs, locCheckboxes.length);
 
   // Store original specific values on first open (used for sync icon comparison)
@@ -15227,6 +15401,18 @@ function openEditPromptPanel(e, btn) {
   document.getElementById('ap-tag-label').classList.remove('has-val');
   refreshApMs('ap-loc-ms', 'ap-loc-label', 'Select locations');
   refreshApAiMs();
+
+  // Pre-check brands from the row's existing Brand-column data — never default to "All Brands" here
+  const brandCell = row.querySelector('.pt-brand-cell');
+  const effectiveBrandValues = brandCell?.dataset.brands ? brandCell.dataset.brands.split('|').filter(Boolean) : [];
+  document.querySelectorAll('#ap-brand-ms input[type="checkbox"]:not(.ap-ms-all)').forEach(c => { c.checked = effectiveBrandValues.includes(c.value); });
+  const brandAllCb = document.querySelector('#ap-brand-ms input.ap-ms-all');
+  if (brandAllCb) brandAllCb.checked = false;
+  refreshApMs('ap-brand-ms', 'ap-brand-label', 'Select brands');
+
+  // Edit mode must retain the row's real selections — never auto-default to "All" for this session
+  _apLocTouched = true;
+  _apBrandTouched = true;
   checkApAdd();
 
   // Remove old track icons
@@ -15279,7 +15465,7 @@ function openEditPromptPanel(e, btn) {
   }
 
   // Snapshot checked sets so save can diff them
-  _origLocSet = new Set([...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value));
+  _origLocSet = new Set([...document.querySelectorAll('#ap-loc-ms input:checked:not(.ap-ms-all)')].map(c => c.value));
   _origAiSet  = new Set([...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value));
 
   // If no pending values yet, fall back to _rowTracking for in-session change icons
@@ -15317,7 +15503,7 @@ function saveEditPrompt() {
   if (!btn.classList.contains('enabled') || !_editPromptRow) return;
 
   const newText = document.getElementById('ap-name').value.trim();
-  const locs    = document.querySelectorAll('#ap-loc-ms input:checked').length;
+  const locs    = document.querySelectorAll('#ap-loc-ms input:checked:not(.ap-ms-all)').length;
   const sites   = [...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value);
 
   // Keep existing prompt text in table — pending change stored as data attribute
@@ -15338,7 +15524,7 @@ function saveEditPrompt() {
   _editPromptRow.dataset.pendingPrompt = newText;
 
   // Store pending specific values — do NOT update table cells
-  const checkedLocValues = [...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value);
+  const checkedLocValues = [...document.querySelectorAll('#ap-loc-ms input:checked:not(.ap-ms-all)')].map(c => c.value);
   _editPromptRow.dataset.pendingLocs = locs;
   _editPromptRow.dataset.pendingLocValues = checkedLocValues.join(',');
   _editPromptRow.dataset.pendingAi = sites.join(',');
@@ -15369,7 +15555,7 @@ function saveEditPrompt() {
   }
 
   // Persist added/removed sets per row for the next panel open
-  const newLocSet   = new Set([...document.querySelectorAll('#ap-loc-ms input:checked')].map(c => c.value));
+  const newLocSet   = new Set([...document.querySelectorAll('#ap-loc-ms input:checked:not(.ap-ms-all)')].map(c => c.value));
   const newAiSet    = new Set([...document.querySelectorAll('#ap-ai-ms input:checked')].map(c => c.value));
   const addedLocs   = new Set([...newLocSet].filter(v => !_origLocSet.has(v)));
   const removedLocs = new Set([..._origLocSet].filter(v => !newLocSet.has(v)));
@@ -15494,8 +15680,23 @@ document.addEventListener('click', function(e) {
 function openAddPromptModal() {}
 
 function toggleApLocField(radio) {
-  const field = document.getElementById("ap-loc-field");
-  if (field) field.style.display = radio.value === "brand" ? "none" : "";
+  const locField = document.getElementById("ap-loc-field");
+  const brandField = document.getElementById("ap-brand-field");
+  const showLoc = radio.value !== "brand";
+  const showBrand = radio.value !== "location";
+  if (locField) {
+    if (showLoc && locField.style.display === "none" && !_apLocTouched) {
+      apMsDefaultAll('ap-loc-ms', 'ap-loc-label', 'Select locations', 'All Locations');
+    }
+    locField.style.display = showLoc ? "" : "none";
+  }
+  if (brandField) {
+    if (showBrand && brandField.style.display === "none" && !_apBrandTouched) {
+      apMsDefaultAll('ap-brand-ms', 'ap-brand-label', 'Select brands', 'All Brands');
+    }
+    brandField.style.display = showBrand ? "" : "none";
+  }
+  checkApAdd();
 }
 
 function goToExploreThemes() {
@@ -15575,6 +15776,7 @@ function switchPtVersion(v) {
 /* ── Column Customizer ── */
 const _defaultCols = [
   { key:'themes',   label:'Themes and prompts', enabled:true },
+  { key:'brand',    label:'Brand',              enabled:true },
   { key:'locs',     label:'Locations',          enabled:true },
   { key:'monthly',  label:'Monthly searches',   enabled:true },
   { key:'aisites',  label:'AI sites',           enabled:true },
@@ -15694,8 +15896,13 @@ function openAddThemePanel() {
   // Reset track by fields
   document.querySelectorAll('input[name="at-track"]').forEach(r => r.checked = false);
   document.getElementById('at-loc-field').style.display = 'none';
+  document.getElementById('at-brand-field').style.display = 'none';
   document.querySelectorAll('#at-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
+  document.querySelectorAll('#at-brand-ms input[type="checkbox"]').forEach(c => c.checked = false);
   refreshApMs('at-loc-ms', 'at-loc-label', 'Select locations');
+  refreshApMs('at-brand-ms', 'at-brand-label', 'Select brands');
+  _atLocTouched = false;
+  _atBrandTouched = false;
   document.getElementById('at-overlay').classList.add('open');
   document.getElementById('at-panel').classList.add('open');
 }
@@ -15899,12 +16106,24 @@ function atRemovePrompt(btn) {
 }
 
 function toggleAtLocField(radio) {
-  const field = document.getElementById('at-loc-field');
-  field.style.display = radio.value === 'brand' ? 'none' : '';
-  if (radio.value === 'brand') {
+  const locField = document.getElementById('at-loc-field');
+  const brandField = document.getElementById('at-brand-field');
+  const isBrand = radio.value === 'brand';
+  if (isBrand) {
     document.querySelectorAll('#at-loc-ms input[type="checkbox"]').forEach(c => c.checked = false);
     refreshApMs('at-loc-ms', 'at-loc-label', 'Select locations');
+    if (brandField.style.display === 'none' && !_atBrandTouched) {
+      apMsDefaultAll('at-brand-ms', 'at-brand-label', 'Select brands', 'All Brands');
+    }
+  } else {
+    document.querySelectorAll('#at-brand-ms input[type="checkbox"]').forEach(c => c.checked = false);
+    refreshApMs('at-brand-ms', 'at-brand-label', 'Select brands');
+    if (locField.style.display === 'none' && !_atLocTouched) {
+      apMsDefaultAll('at-loc-ms', 'at-loc-label', 'Select locations', 'All Locations');
+    }
   }
+  locField.style.display = isBrand ? 'none' : '';
+  brandField.style.display = isBrand ? '' : 'none';
   checkAtAdd();
 }
 
@@ -15913,9 +16132,10 @@ function checkAtAdd() {
   const confirmed = document.querySelectorAll('#at-prompts-list .at-prompt-item:not(.at-prompt-item-input)').length;
   const pending = document.querySelectorAll('#at-prompts-list .at-prompt-item-input').length;
   const trackVal = document.querySelector('input[name="at-track"]:checked')?.value;
-  const locOk = !trackVal || trackVal === 'brand' || document.querySelectorAll('#at-loc-ms input:checked').length > 0;
+  const locOk = !trackVal || trackVal === 'brand' || apMsIsAll('at-loc-ms') || document.querySelectorAll('#at-loc-ms input:checked:not(.ap-ms-all)').length > 0;
+  const brandOk = !trackVal || trackVal === 'location' || apMsIsAll('at-brand-ms') || document.querySelectorAll('#at-brand-ms input:checked:not(.ap-ms-all)').length > 0;
   document.getElementById('at-btn-add').classList.toggle('enabled',
-    name.length > 0 && confirmed > 0 && pending === 0 && !!trackVal && locOk);
+    name.length > 0 && confirmed > 0 && pending === 0 && !!trackVal && locOk && brandOk);
 }
 
 function addThemeToTable() {
@@ -15932,9 +16152,9 @@ function addThemeToTable() {
   // Location count from track-by selection
   const trackVal = document.querySelector('input[name="at-track"]:checked')?.value;
   const locCount = trackVal === 'location'
-    ? document.querySelectorAll('#at-loc-ms input:checked').length
+    ? document.querySelectorAll('#at-loc-ms input:checked:not(.ap-ms-all)').length
     : 0;
-  const locDisplay = locCount > 0 ? String(locCount) : '-';
+  const locDisplay = trackVal === 'location' && apMsIsAll('at-loc-ms') ? 'All' : (locCount > 0 ? String(locCount) : '-');
 
   // All AI site icons
   const ALL_AI = '<span class="pt-ai-wrap">' +
@@ -15961,6 +16181,7 @@ function addThemeToTable() {
         <span class="pt-group-subcount">${prompts.length} prompt${prompts.length !== 1 ? 's' : ''}</span>
       </div>
     </div></td>` +
+    `<td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental">Aspen Dental</td>` +
     `<td class="pt-loc-col">${locDisplay}</td>` +
     `<td>-</td>` +
     `<td>${ALL_AI}</td>` +
@@ -15971,7 +16192,7 @@ function addThemeToTable() {
     `</span></td>`;
   tbody.insertBefore(grpTr, firstRow);
 
-  // Data rows — correct 6-column structure
+  // Data rows — correct 7-column structure
   let insertAfter = grpTr;
   prompts.forEach(prompt => {
     const tr = document.createElement('tr');
@@ -15979,6 +16200,7 @@ function addThemeToTable() {
     tr.dataset.group = groupKey;
     tr.innerHTML =
       `<td class="pt-v2-prompt"><span class="pt-v2-row-inner"><span class="pt-v2-spacer"></span>${prompt}</span></td>` +
+      `<td class="pt-brand-cell pt-brand-col" data-brands="Aspen Dental">Aspen Dental</td>` +
       `<td class="pt-scope-cell pt-loc-col" data-locations="${locCount}" data-brand="0">${locDisplay}</td>` +
       `<td class="pt-monthly-cell">-</td>` +
       `<td class="pt-ai-cell">${ALL_AI}</td>` +
