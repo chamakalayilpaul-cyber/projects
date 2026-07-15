@@ -2395,6 +2395,10 @@ textarea.ap-input{
       <div class="sb-sub-item" id="nav-domain-health" onclick="showView('domain-health')" style="display:flex;align-items:center;justify-content:space-between">
         Domain health
       </div>
+      <div class="sb-sub-item" id="nav-domain-health-single" onclick="openDomainHealthSingleView()" style="display:flex;align-items:center;justify-content:space-between">
+        Domain health
+        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px;white-space:nowrap">SMB</span>
+      </div>
     </div>
     <div class="sb-group-hdr" id="nav-competitors-parent" onclick="toggleSbGroup('competitors',this)">
       <span>Competitors</span>
@@ -2576,6 +2580,8 @@ textarea.ap-input{
     <div class="page-hdr-right" id="hdr-site-audit-v4-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
     </div>
     <div class="page-hdr-right" id="hdr-domain-health-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
+    </div>
+    <div class="page-hdr-right" id="hdr-domain-health-single-btns" style="display:none;gap:6px;padding-right:8px;align-items:center">
     </div>
     <div class="page-hdr-right" id="hdr-explore-btns" style="display:none;gap:6px;padding-right:8px">
       <span style="font-size:13px;color:rgb(143,143,143);margin-right:4px">Updated on May 04, 2026</span>
@@ -4388,6 +4394,56 @@ textarea.ap-input{
           </div>
         </div>
         <div id="dhrec-body"></div>
+      </div>
+    </div>
+
+    <div class="view" id="view-domain-health-single">
+      <div style="padding:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+          <div id="dhsda-title" style="font-size:18px;font-weight:400;color:#212121"></div>
+          <a id="dhsda-ext-link" href="#" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;display:flex;align-items:center">
+            <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
+          </a>
+        </div>
+        <div id="dhsda-body"></div>
+      </div>
+    </div>
+
+    <div class="view" id="view-domain-health-single-page-details">
+      <div style="padding:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+          <button class="icon-btn" onclick="showView(window._dhsPageBackView || 'domain-health-single')" title="Back"><span class="material-symbols-rounded">arrow_back</span></button>
+          <div id="dhspd-title" style="font-size:18px;font-weight:400;color:#212121"></div>
+          <a id="dhspd-ext-link" href="#" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;display:flex;align-items:center">
+            <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
+          </a>
+        </div>
+        <div id="dhspd-body"></div>
+      </div>
+    </div>
+
+    <div class="view" id="view-domain-health-single-rec-detail">
+      <div style="padding:24px">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <button class="icon-btn" onclick="showView(window._dhsRecBackView || 'domain-health-single')" title="Back" style="margin-top:1px"><span class="material-symbols-rounded">arrow_back</span></button>
+            <div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div id="dhsrec-title" style="font-size:18px;font-weight:400;color:#212121"></div>
+                <a id="dhsrec-ext-link" href="#" target="_blank" rel="noopener" style="color:#1976d2;text-decoration:none;display:flex;align-items:center">
+                  <span class="material-symbols-rounded" style="font-size:18px">open_in_new</span>
+                </a>
+              </div>
+              <div id="dhsrec-location" style="font-size:13px;color:#8f8f8f;margin-top:4px;display:flex;align-items:center;gap:4px"></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+            <button style="height:36px;padding:0 16px;background:#fff;color:#212121;border:1px solid #eaeaea;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer">Reject</button>
+            <button style="height:36px;padding:0 16px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:500">Accept</button>
+            <button class="icon-btn-stroke"><span class="material-symbols-rounded">more_vert</span></button>
+          </div>
+        </div>
+        <div id="dhsrec-body"></div>
       </div>
     </div>
 
@@ -12988,6 +13044,7 @@ const _viewToSlug = {
   'site-audit-v2':     'searchai/reports/site-audit-v2',
   'site-audit-v4':     'searchai/reports/site-audit-v4',
   'domain-health':     'searchai/reports/domain-health',
+  'domain-health-single': 'searchai/reports/domain-health-single',
   'site-audit-v3':     'searchai/reports/site-audit-v3',
   'import-prompts':    'searchai/settings/import-prompts',
 };
@@ -13028,11 +13085,11 @@ function showView(view, skipHash) {
 
   // update page title + header buttons
   const baseTitle = (view === 'article' && window._articleMode === 'optimize') ? 'Optimize content' : (view === 'article' ? 'Create content' : null);
-  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location','site-audit':'Site audit','site-audit-v2':'Site audit v2','site-audit-v3':'Site audit v3','site-audit-v4':'Site audit','page-details-v4':'Site audit','domain-audit-v4':'Site audit','rec-detail-v4':'Site audit','domain-health':'Domain health','domain-health-page-details':'Domain health','domain-health-domain-audit':'Domain health','domain-health-rec-detail':'Domain health'};
+  const titles = {overview:'Overview', recommendations:'Recommendations', content:'Content', 'prompts-v1':'Prompts V1', 'prompts-v2':'Themes and prompts','explore-themes':'Explore themes', 'import-prompts':'Import prompts', 'prompt-brandkit':'Brand context', 'tags':'Tags', 'sentiment':'Sentiment', 'sentiment-v2':'Sentiment 2', 'sentiment-bp':'Sentiment 3', 'sentiment-t':'Sentiment 4', 'sentiment-lc':'Sentiment','sentiment-sp':'Sentiment', 'settings-reports':'Reports','ai-crawler':'AI crawler status','reports-prompts':'Prompts','comp-brand':'Benchmarking by brand','comp-location':'Benchmarking by location','site-audit':'Site audit','site-audit-v2':'Site audit v2','site-audit-v3':'Site audit v3','site-audit-v4':'Site audit','page-details-v4':'Site audit','domain-audit-v4':'Site audit','rec-detail-v4':'Site audit','domain-health':'Domain health','domain-health-page-details':'Domain health','domain-health-domain-audit':'Domain health','domain-health-rec-detail':'Domain health','domain-health-single':'Domain health','domain-health-single-page-details':'Domain health','domain-health-single-rec-detail':'Domain health'};
   var ptEl = document.getElementById('page-title');
   var isCompView = (view === 'comp-brand' || view === 'comp-location');
   var pageHdr = document.querySelector('.page-hdr');
-  if (pageHdr) pageHdr.style.display = (view === 'page-details-v4' || view === 'domain-audit-v4' || view === 'rec-detail-v4' || view === 'domain-health-page-details' || view === 'domain-health-domain-audit' || view === 'domain-health-rec-detail') ? 'none' : '';
+  if (pageHdr) pageHdr.style.display = (view === 'page-details-v4' || view === 'domain-audit-v4' || view === 'rec-detail-v4' || view === 'domain-health-page-details' || view === 'domain-health-domain-audit' || view === 'domain-health-rec-detail' || view === 'domain-health-single-page-details' || view === 'domain-health-single-rec-detail') ? 'none' : '';
   ptEl.style.visibility = '';
   ptEl.textContent = baseTitle || titles[view] || view;
   // Reset location bench to main view on every nav
@@ -13057,6 +13114,7 @@ function showView(view, skipHash) {
   if(document.getElementById('hdr-site-audit-v2-btns')) document.getElementById('hdr-site-audit-v2-btns').style.display = view === 'site-audit-v2' ? 'flex' : 'none';
   if(document.getElementById('hdr-site-audit-v4-btns')) document.getElementById('hdr-site-audit-v4-btns').style.display = view === 'site-audit-v4' ? 'flex' : 'none';
   if(document.getElementById('hdr-domain-health-btns')) document.getElementById('hdr-domain-health-btns').style.display = view === 'domain-health' ? 'flex' : 'none';
+  if(document.getElementById('hdr-domain-health-single-btns')) document.getElementById('hdr-domain-health-single-btns').style.display = view === 'domain-health-single' ? 'flex' : 'none';
   if(document.getElementById('hdr-site-audit-v3-btns')) document.getElementById('hdr-site-audit-v3-btns').style.display = view === 'site-audit-v3' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-btns').style.display = view === 'sentiment' ? 'flex' : 'none';
   document.getElementById('hdr-sentiment-lc-btns').style.display = (view === 'sentiment-lc' || view === 'sentiment-sp') ? 'flex' : 'none';
@@ -13066,7 +13124,7 @@ function showView(view, skipHash) {
   const isPrompts = view === 'prompts-v1' || view === 'prompts-v2';
   document.getElementById('hdr-prompts-btns').style.display = isPrompts ? 'flex' : 'none';
   document.getElementById('main-content').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location'].includes(view) ? '#f5f5f5' : '';
-  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit','site-audit-v2','site-audit-v3','site-audit-v4','page-details-v4','domain-audit-v4','rec-detail-v4','domain-health','domain-health-page-details','domain-health-domain-audit','domain-health-rec-detail'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
+  document.querySelector('.page-hdr').style.background = ['prompts-v2','explore-themes','prompt-brandkit','settings-reports','comp-brand','comp-location','sentiment','sentiment-v2','sentiment-bp','sentiment-t','sentiment-lc','sentiment-sp','reports-prompts','ai-crawler','site-audit','site-audit-v2','site-audit-v3','site-audit-v4','page-details-v4','domain-audit-v4','rec-detail-v4','domain-health','domain-health-page-details','domain-health-domain-audit','domain-health-rec-detail','domain-health-single','domain-health-single-page-details','domain-health-single-rec-detail'].includes(view) ? '#f5f5f5' : view === 'tags' ? 'transparent' : '';
 
   // open Settings/Reports group when navigating to their sub-views
   if (view === 'prompts-v1' || view === 'prompts-v2' || view === 'prompt-brandkit' || view === 'tags' || view === 'settings-reports') {
@@ -13075,7 +13133,7 @@ function showView(view, skipHash) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3' || view === 'site-audit-v4' || view === 'page-details-v4' || view === 'domain-audit-v4' || view === 'rec-detail-v4' || view === 'domain-health' || view === 'domain-health-page-details' || view === 'domain-health-domain-audit' || view === 'domain-health-rec-detail') {
+  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3' || view === 'site-audit-v4' || view === 'page-details-v4' || view === 'domain-audit-v4' || view === 'rec-detail-v4' || view === 'domain-health' || view === 'domain-health-page-details' || view === 'domain-health-domain-audit' || view === 'domain-health-rec-detail' || view === 'domain-health-single' || view === 'domain-health-single-page-details' || view === 'domain-health-single-rec-detail') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
@@ -18160,6 +18218,122 @@ function buildDomainHealthPageDetailsBody(domain, path) {
     </div>`;
 }
 
+function buildDomainHealthSinglePageDetailsBody(domain, path) {
+  function pdRow(label, valueHtml, isLast) {
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 24px;${isLast?'':'border-bottom:1px solid #f3f4f6'}">
+      <span style="font-size:14px;color:#444">${label}</span>
+      ${valueHtml}
+    </div>`;
+  }
+  function pdKv(label, value, valColor, isLast) {
+    return pdRow(label, `<span style="font-size:14px;color:${valColor||'#212121'}">${value}</span>`, isLast);
+  }
+  function pdCheck(label, ok, isLast) {
+    const circle = ok
+      ? `<svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#16a34a"/><path d="M5.5 10l3 3 6-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+      : `<svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#e53935"/><path d="M6.5 6.5l7 7M13.5 6.5l-7 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>`;
+    return pdRow(label, circle, isLast);
+  }
+  function pdScore(label, val, isLast) {
+    const bar = `<div style="display:flex;align-items:center;gap:10px">
+        <div style="width:140px;height:6px;border-radius:3px;background:#f0f0f0;overflow:hidden">
+          <div style="width:${val}%;height:100%;background:#1976d2"></div>
+        </div>
+        <span style="font-size:14px;color:#212121;width:40px;text-align:right">${val}%</span>
+      </div>`;
+    return pdRow(label, bar, isLast);
+  }
+  function pdBot(name, status, statusColor, isLast) {
+    return pdKv(name, status, statusColor, isLast);
+  }
+  function pdCard(title, rows) {
+    return `<div style="border:1px solid #eaeaea;border-radius:8px;overflow:hidden;background:#fff;height:400px;display:flex;flex-direction:column">
+      <div style="padding:24px 24px 16px;font-size:16px;font-weight:400;color:#212121;flex-shrink:0">${title}</div>
+      <div style="padding-bottom:16px;overflow-y:auto;flex:1">${rows}</div>
+    </div>`;
+  }
+
+  const scoreRows = [
+    ['FAQ', 33], ['Structure', 100], ['Entities', 75], ['Readability', 50],
+    ['Indexability', 100], ['Technical', 100], ['Content', 70], ['Internal links', 100],
+    ['AI accessibility', 50], ['Freshness', 49], ['Citation readiness', 90], ['Performance', 65],
+  ];
+  const scoreBody = scoreRows.map(([label, val], i) => pdScore(label, val, i === scoreRows.length - 1)).join('');
+
+  const botRows = [
+    ['GPTBot (OpenAI)', 'Partially restricted', '#d97706'],
+    ['ClaudeBot (Anthropic)', 'Partially restricted', '#d97706'],
+    ['Google-Extended', 'Partially restricted', '#d97706'],
+    ['PerplexityBot', 'Partially restricted', '#d97706'],
+  ];
+  const aiBotBody = botRows.map(([name, status, color], i) => pdBot(name, status, color, i === botRows.length - 1)).join('');
+
+  const contentRows = [
+    ['Words', '1,370'], ['Reading score', '50'], ['Lists', '15'],
+    ['Images', '20'], ['Internal links', '113'],
+  ];
+  const contentBody = contentRows.map(([label, value], i) => pdKv(label, value, '#212121', i === contentRows.length - 1)).join('');
+
+  const techRows = ['Title tag', 'Meta description', 'Canonical tag', 'Structured data', 'In sitemap', 'HTTPS'];
+  const techBody = techRows.map((label, i) => pdCheck(label, true, i === techRows.length - 1)).join('');
+
+  const scores = WH_SCORES[domain] || {};
+  function tierColor(n){ return n>=80?'#16a34a':n>=50?'#d97706':'#e53935'; }
+  const healthAvg = (scores.ai != null && scores.disc != null && scores.fresh != null)
+    ? Math.round((scores.ai + scores.disc + scores.fresh) / 3)
+    : null;
+
+  return `
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+      <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
+        <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
+        <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
+        <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Health score</div>
+      </div>
+      <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
+        <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
+        <div style="display:flex;gap:100px">
+          <div>
+            <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">AI readiness</div>
+          </div>
+          <div>
+            <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Discoverability</div>
+          </div>
+          <div>
+            <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Freshness</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val" style="color:#e53935">3</div>
+        <div class="snt-kpi-label">Issues found</div>
+      </div>
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val" style="color:#16a34a">200</div>
+        <div class="snt-kpi-label">HTTP status</div>
+      </div>
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val">1.2s</div>
+        <div class="snt-kpi-label">Load time</div>
+      </div>
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val" style="white-space:nowrap;display:flex;align-items:baseline;gap:4px"><span style="font-size:32px">42</span><span style="font-size:20px">days ago</span></div>
+        <div class="snt-kpi-label">Last crawled</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      ${pdCard('Score breakdown', scoreBody)}
+      ${pdCard('Content', contentBody)}
+      ${pdCard('Technical', techBody)}
+      ${pdCard('AI bot access', aiBotBody)}
+    </div>`;
+}
+
 function buildDomainHealthRecommendationsBanner(domain, totalCount) {
   const highCount = Math.max(1, Math.round(totalCount * 0.35));
   return `<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#f5f4fc;border:1px solid #e6e3f7;border-radius:8px;padding:16px 20px;margin-bottom:24px">
@@ -18181,6 +18355,30 @@ function buildDomainHealthRecommendationsBanner(domain, totalCount) {
 
 function openDomainHealthRecommendationsFullView(domain) {
   const el = document.getElementById('dh-rec-widget-anchor');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function buildDomainHealthSingleRecommendationsBanner(domain, totalCount) {
+  const highCount = Math.max(1, Math.round(totalCount * 0.35));
+  return `<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#f5f4fc;border:1px solid #e6e3f7;border-radius:8px;padding:16px 20px;margin-bottom:24px">
+    <div style="border:1px solid #eaeaea;border-radius:8px;padding:12px 20px;background:#fff;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:110px">
+      <span style="font-size:22px;color:#212121">${totalCount}</span>
+      <div style="font-size:12px;color:#8f8f8f;white-space:nowrap">Recommendations</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#7c4dff">
+        <span class="material-symbols-rounded" style="font-size:16px">auto_awesome</span>
+        AI recommendations
+      </div>
+      <div style="font-size:16px;color:#212121;font-weight:400">Improve how AI tools discover your business</div>
+      <div style="font-size:13px;color:#666">${highCount} high-impact fixes could meaningfully improve your AI visibility.</div>
+    </div>
+    <button onclick="openDomainHealthSingleRecommendationsFullView('${domain}')" style="height:36px;padding:0 16px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:500;flex-shrink:0;white-space:nowrap">View recommendations</button>
+  </div>`;
+}
+
+function openDomainHealthSingleRecommendationsFullView(domain) {
+  const el = document.getElementById('dhs-rec-widget-anchor');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -18206,6 +18404,51 @@ function buildDomainHealthRecommendationsWidget(domain, totalCount, pageCount) {
     const last = i === rows.length - 1;
     const border = last ? '' : 'border-bottom:1px solid #f3f4f6;';
     return `<tr class="dh-page-row" style="height:48px;cursor:pointer" onclick="openDomainHealthRecDetailFullView('${domain}',${i},'domain-health-domain-audit')">
+      <td style="padding:0 16px 0 24px;${border}font-size:14px"><span class="dh-page-path" style="color:#212121">${r.title}</span></td>
+      <td style="padding:0 16px;${border}font-size:14px;color:#212121">${r.affected}</td>
+      <td style="padding:0 24px 0 16px;${border}"><span class="sat-status-chip" style="background:${r.color}1a;color:${r.color}">+${r.impact} ${r.metric}</span></td>
+    </tr>`;
+  }).join('');
+
+  return `<div style="border:1px solid #eaeaea;border-radius:8px;overflow:hidden;background:#fff;height:400px;display:flex;flex-direction:column">
+    <div style="padding:24px 24px 16px;font-size:16px;font-weight:400;color:#212121;flex-shrink:0">Recommendations</div>
+    <div style="overflow-y:auto;flex:1">
+      <table style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr>
+            <th style="padding:10px 16px 10px 24px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Recommendations</th>
+            <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Affected pages</th>
+            <th style="padding:10px 24px 10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Impact</th>
+          </tr>
+        </thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function buildDomainHealthSingleRecommendationsWidget(domain, totalCount, pageCount) {
+  function impactColor(impact) {
+    if (impact >= 8) return '#e53935';
+    if (impact >= 5) return '#d97706';
+    return '#16a34a';
+  }
+
+  const rows = Array.from({ length: totalCount }, (_, i) => {
+    const [title, metric] = REC_TEMPLATES[i % REC_TEMPLATES.length];
+    const seed = pdvSeededScore(domain + title + i);
+    const affected = 1 + (seed % Math.max(pageCount, 1));
+    const impact = 2 + (seed % 9);
+    return { title, metric, affected, impact, color: impactColor(impact), domain };
+  }).sort((a, b) => b.impact - a.impact);
+
+  window._dhsRecRegistry = window._dhsRecRegistry || {};
+  window._dhsRecRegistry[domain] = rows;
+
+  const rowsHtml = rows.map((r, i) => {
+    const last = i === rows.length - 1;
+    const border = last ? '' : 'border-bottom:1px solid #f3f4f6;';
+    return `<tr class="dh-page-row" style="height:48px;cursor:pointer" onclick="openDomainHealthSingleRecDetailFullView('${domain}',${i},'domain-health-single')">
       <td style="padding:0 16px 0 24px;${border}font-size:14px"><span class="dh-page-path" style="color:#212121">${r.title}</span></td>
       <td style="padding:0 16px;${border}font-size:14px;color:#212121">${r.affected}</td>
       <td style="padding:0 24px 0 16px;${border}"><span class="sat-status-chip" style="background:${r.color}1a;color:${r.color}">+${r.impact} ${r.metric}</span></td>
@@ -18290,6 +18533,67 @@ function buildDomainHealthRecDetailBody(r) {
     </div>`;
 }
 
+function buildDomainHealthSingleRecDetailBody(r) {
+  function card(content, style) {
+    return `<div style="border:1px solid #eaeaea;border-radius:8px;padding:24px;background:#fff;min-height:400px;overflow-y:auto;${style||''}">${content}</div>`;
+  }
+  const score = Math.min(99, 30 + r.impact * 7) + (r.impact % 3) * 0.7;
+  const scoreLabel = `${score.toFixed(1)}%`;
+
+  const whyMatters = `Inconsistent ${r.metric.toLowerCase()} signals across AI platforms can create confusion for potential customers, who may draw the wrong conclusion about ${r.domain}. This can result in missed opportunities, lost trust, and reduced visibility in AI-generated answers.`;
+  const whatFixingDoes = `Fixing "${r.title}" will improve how ChatGPT, Gemini, and Perplexity represent ${r.domain} for related queries, closing the gap between what's published and what AI assistants currently surface.`;
+
+  const steps = [
+    `Fix the source data referenced by AI assistants — they are currently citing outdated or incomplete information related to "${r.title}".`,
+    `After 30–60 days, verify that AI assistants return the corrected information when customers search for ${r.domain}.`,
+  ];
+  const stepsHtml = steps.map((s, i) => `<div style="display:flex;gap:14px;${i === steps.length - 1 ? '' : 'padding-bottom:20px'}">
+      <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+        <div style="width:22px;height:22px;border-radius:50%;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:12px;color:#555">${i + 1}</div>
+        ${i === steps.length - 1 ? '' : '<div style="width:1px;flex:1;background:#eaeaea;margin-top:4px"></div>'}
+      </div>
+      <div style="font-size:14px;color:#212121;line-height:1.5;padding-top:2px">${s}</div>
+    </div>`).join('');
+
+  const aiSites = ['ChatGPT', 'Gemini', 'Perplexity'];
+  const citationCounts = aiSites.map((_, i) => 3 + ((r.impact + i) % 4));
+  const compareHeader = `<tr>
+      <th style="padding:12px 24px 12px 24px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">Fields</th>
+      <th style="padding:12px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">On Birdeye</th>
+      ${aiSites.map(s => `<th style="padding:12px 16px;font-size:13px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea">${s}</th>`).join('')}
+    </tr>`;
+  const compareRow1 = `<tr>
+      <td style="padding:16px 24px;font-size:14px;color:#212121;border-bottom:1px solid #f3f4f6">Citations</td>
+      <td style="padding:16px;font-size:14px;color:#1976d2;border-bottom:1px solid #f3f4f6">Business profile</td>
+      ${citationCounts.map(c => `<td style="padding:16px;font-size:14px;color:#1976d2;border-bottom:1px solid #f3f4f6">${c} Citations</td>`).join('')}
+    </tr>`;
+  const compareRow2 = `<tr>
+      <td style="padding:16px 24px;font-size:14px;color:#212121;vertical-align:top">${r.metric}</td>
+      <td style="padding:16px;font-size:14px;color:#212121;vertical-align:top">Up to date</td>
+      ${aiSites.map(() => `<td style="padding:16px;font-size:14px;color:#e53935;vertical-align:top">Out of date</td>`).join('')}
+    </tr>`;
+
+  return `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      ${card(`<div style="font-size:14px;color:#8f8f8f;margin-bottom:12px">What is your ${r.metric} score</div><div style="font-size:32px;color:#212121">${scoreLabel}</div>`)}
+      ${card(`<div style="font-size:14px;color:#8f8f8f;margin-bottom:12px">Why does this recommendation matter</div><div style="font-size:14px;color:#212121;line-height:1.5">${whyMatters}</div>`)}
+    </div>
+    ${card(`<div style="font-size:14px;color:#8f8f8f;margin-bottom:12px">What will fixing this do</div><div style="font-size:14px;color:#212121;line-height:1.5">${whatFixingDoes}</div>`, 'margin-bottom:16px')}
+    ${card(`<div style="font-size:14px;color:#8f8f8f">What to do next</div><div style="font-size:12px;color:#8f8f8f;margin-bottom:20px">Step by step guide on what you need to do next</div>${stepsHtml}`, 'margin-bottom:16px')}
+    <div style="border:1px solid #eaeaea;border-radius:8px;overflow:hidden;background:#fff;min-height:400px;display:flex;flex-direction:column">
+      <div style="padding:24px 24px 4px;flex-shrink:0">
+        <div style="font-size:14px;color:#8f8f8f">What AI sites show compared to your Birdeye profile</div>
+        <div style="font-size:12px;color:#8f8f8f;margin-top:4px">See how AI platforms are reporting your business information</div>
+      </div>
+      <div style="overflow-y:auto;flex:1">
+        <table style="width:100%;border-collapse:collapse;margin-top:12px">
+          <thead>${compareHeader}</thead>
+          <tbody>${compareRow1}${compareRow2}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
 function openDomainHealthRecDetailFullView(domain, index, backView) {
   const r = (window._dhRecRegistry && window._dhRecRegistry[domain] && window._dhRecRegistry[domain][index]) || null;
   if (!r) return;
@@ -18301,6 +18605,20 @@ function openDomainHealthRecDetailFullView(domain, index, backView) {
   document.getElementById('dhrec-body').innerHTML = buildDomainHealthRecDetailBody(r);
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
   const navEl = document.getElementById('nav-domain-health');
+  if (navEl) navEl.classList.add('active');
+}
+
+function openDomainHealthSingleRecDetailFullView(domain, index, backView) {
+  const r = (window._dhsRecRegistry && window._dhsRecRegistry[domain] && window._dhsRecRegistry[domain][index]) || null;
+  if (!r) return;
+  window._dhsRecBackView = backView || 'domain-health-single';
+  showView('domain-health-single-rec-detail');
+  document.getElementById('dhsrec-title').textContent = r.title;
+  document.getElementById('dhsrec-ext-link').href = 'https://' + domain;
+  document.getElementById('dhsrec-location').innerHTML = '<span class="material-symbols-rounded" style="font-size:14px">location_on</span>' + (REC_LOCATIONS[domain] || domain);
+  document.getElementById('dhsrec-body').innerHTML = buildDomainHealthSingleRecDetailBody(r);
+  document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
+  const navEl = document.getElementById('nav-domain-health-single');
   if (navEl) navEl.classList.add('active');
 }
 
@@ -18317,7 +18635,110 @@ function openDomainHealthPageDetailsFullView(domain, path, backView) {
   if (navEl) navEl.classList.add('active');
 }
 
+function openDomainHealthSinglePageDetailsFullView(domain, path, backView) {
+  path = path || '/';
+  window._dhsPageBackView = backView || 'domain-health-single';
+  closeCitationPanel();
+  showView('domain-health-single-page-details');
+  document.getElementById('dhspd-title').textContent = 'Page audit: ' + domain + path;
+  document.getElementById('dhspd-ext-link').href = 'https://' + domain + path;
+  document.getElementById('dhspd-body').innerHTML = buildDomainHealthSinglePageDetailsBody(domain, path);
+  document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
+  const navEl = document.getElementById('nav-domain-health-single');
+  if (navEl) navEl.classList.add('active');
+}
+
 function buildDomainHealthScoreOverTimeWidget(domain, scores, healthAvg) {
+  function seededSeries(seedKey, endVal) {
+    const points = [];
+    let v = endVal;
+    for (let i = 5; i >= 0; i--) {
+      const seed = pdvSeededScore(domain + seedKey + i);
+      const delta = (seed % 13) - 6;
+      points.unshift(Math.max(5, Math.min(99, Math.round(v))));
+      v = v - delta;
+    }
+    points[points.length - 1] = endVal;
+    return points;
+  }
+  function toPath(points) {
+    const stepX = 860 / (points.length - 1);
+    const toY = (val) => 160 - (val / 100) * 160;
+    let d = `M0,${toY(points[0]).toFixed(1)}`;
+    for (let i = 1; i < points.length; i++) {
+      const x0 = (i - 1) * stepX, x1 = i * stepX;
+      const midX = (x0 + x1) / 2;
+      d += ` C${midX.toFixed(1)},${toY(points[i-1]).toFixed(1)} ${midX.toFixed(1)},${toY(points[i]).toFixed(1)} ${x1.toFixed(1)},${toY(points[i]).toFixed(1)}`;
+    }
+    return d;
+  }
+
+  const healthSeries = seededSeries('health', healthAvg ?? 70);
+  const aiSeries = seededSeries('ai', scores.ai ?? 70);
+  const discSeries = seededSeries('disc', scores.disc ?? 70);
+  const freshSeries = seededSeries('fresh', scores.fresh ?? 70);
+
+  return `<div class="snt-card" style="display:flex;flex-direction:column;margin-bottom:24px">
+    <div class="snt-card-hdr">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="snt-card-title">Health score over time</span>
+        <span class="material-symbols-rounded" style="font-size:16px;color:#9e9e9e">info</span>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button class="icon-btn-stroke" style="gap:6px;padding:0 12px;font-size:13px;width:auto;height:32px">Last 6 months<span class="material-symbols-rounded" style="font-size:16px">expand_more</span></button>
+      </div>
+    </div>
+    <div style="display:flex;gap:32px;margin-bottom:20px">
+      <div>
+        <div style="font-size:18px;font-weight:400;color:#212121;line-height:1">${healthAvg ?? '—'}</div>
+        <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">Health</div>
+      </div>
+      <div>
+        <div style="font-size:18px;font-weight:400;color:#212121;line-height:1">${scores.ai ?? '—'}</div>
+        <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">AI readiness</div>
+      </div>
+      <div>
+        <div style="font-size:18px;font-weight:400;color:#212121;line-height:1">${scores.disc ?? '—'}</div>
+        <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">Discoverability</div>
+      </div>
+      <div>
+        <div style="font-size:18px;font-weight:400;color:#212121;line-height:1">${scores.fresh ?? '—'}</div>
+        <div style="font-size:12px;color:rgb(85,85,85);margin-top:4px">Freshness</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;min-height:0">
+      <div style="flex:1;position:relative;padding-left:40px;min-height:0">
+        <span style="position:absolute;left:0;top:0%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">100</span>
+        <span style="position:absolute;left:0;top:25%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">75</span>
+        <span style="position:absolute;left:0;top:50%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">50</span>
+        <span style="position:absolute;left:0;top:75%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">25</span>
+        <span style="position:absolute;left:0;top:100%;width:36px;text-align:right;font-size:11px;color:#9e9e9e;transform:translateY(-50%)">0</span>
+        <svg width="100%" height="100%" viewBox="0 0 860 160" preserveAspectRatio="none" style="display:block;overflow:visible;position:absolute;top:0;left:40px;right:0;width:calc(100% - 40px)">
+          <line x1="0" y1="0" x2="860" y2="0" stroke="#f0f0f0" stroke-width="1"/>
+          <line x1="0" y1="40" x2="860" y2="40" stroke="#f0f0f0" stroke-width="1"/>
+          <line x1="0" y1="80" x2="860" y2="80" stroke="#f0f0f0" stroke-width="1"/>
+          <line x1="0" y1="120" x2="860" y2="120" stroke="#f0f0f0" stroke-width="1"/>
+          <line x1="0" y1="160" x2="860" y2="160" stroke="#f0f0f0" stroke-width="1"/>
+          <path d="${toPath(aiSeries)}" stroke="#2e7d32" stroke-width="1.25" fill="none"/>
+          <path d="${toPath(discSeries)}" stroke="#7c4dff" stroke-width="1.25" fill="none"/>
+          <path d="${toPath(freshSeries)}" stroke="#e65100" stroke-width="1.25" fill="none"/>
+          <path d="${toPath(healthSeries)}" stroke="#1976d2" stroke-width="1.25" fill="none"/>
+        </svg>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding-left:40px;margin-top:8px;font-size:11px;color:#9e9e9e">
+        <span>Dec 2025</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May 2026</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;margin-top:16px">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgb(85,85,85)"><div style="width:20px;height:1px;background:#1976d2;border-radius:1px;flex-shrink:0"></div>Health</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgb(85,85,85)"><div style="width:20px;height:1px;background:#2e7d32;border-radius:1px;flex-shrink:0"></div>AI readiness</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgb(85,85,85)"><div style="width:20px;height:1px;background:#7c4dff;border-radius:1px;flex-shrink:0"></div>Discoverability</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgb(85,85,85)"><div style="width:20px;height:1px;background:#e65100;border-radius:1px;flex-shrink:0"></div>Freshness</div>
+    </div>
+  </div>`;
+}
+
+function buildDomainHealthSingleScoreOverTimeWidget(domain, scores, healthAvg) {
   function seededSeries(seedKey, endVal) {
     const points = [];
     let v = endVal;
@@ -18562,6 +18983,161 @@ function buildDomainHealthBody(domain) {
     </div>`;
 }
 
+function buildDomainHealthSingleBody(domain) {
+  const WH_DETAILS = {
+    'aspendentalcare.com':      {sitemap:'3 / 3',coverage:'100%',robots:98,crawler:82,conflicts:'No', blocked:['/admin/','/api/','/staging/'],canon:100,redir:100,dup:100},
+    'aspendental.com':          {sitemap:'4 / 6',coverage:'67%', robots:74,crawler:65,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/blog/wp-content/plugins/','/index.php/','/landing/','/reservation/'],canon:72,redir:85,dup:68},
+    'aspendentalimplants.com':  {sitemap:'6 / 6',coverage:'100%',robots:91,crawler:88,conflicts:'No', blocked:['/admin/','/api/'],canon:95,redir:100,dup:90},
+    'myaspendentalplan.com':    {sitemap:'1 / 2',coverage:'50%', robots:40,crawler:32,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/blog/wp-content/plugins/','/index.php/','/landing/','/lease/','/reservation-confirmation/','/reservation/','/reservenow/','/search-results?*'],canon:40,redir:55,dup:38},
+    'dentalcarebyaspen.com':    {sitemap:'8 / 8',coverage:'100%',robots:85,crawler:79,conflicts:'No', blocked:['/admin/','/api/','/staging/'],canon:88,redir:92,dup:80},
+    'aspensmilecenter.com':     {sitemap:'5 / 5',coverage:'100%',robots:95,crawler:90,conflicts:'No', blocked:['/admin/'],canon:100,redir:97,dup:100},
+    'aspendentalonline.com':    {sitemap:'7 / 11',coverage:'64%',robots:55,crawler:48,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/index.php/','/landing/','/reservation/'],canon:60,redir:70,dup:55},
+    'aspendentalreviews.com':   {sitemap:'2 / 3',coverage:'67%', robots:38,crawler:29,conflicts:'Yes',blocked:['/admin/','/api/','/blog/wp-admin/','/blog/wp-content/plugins/','/index.php/','/landing/','/lease/','/reservation-confirmation/','/reservation/','/reservenow/','/search-results?*','/private/'],canon:35,redir:42,dup:30},
+    'aspendentalblog.com':      {sitemap:'9 / 9',coverage:'100%',robots:97,crawler:93,conflicts:'No', blocked:['/admin/','/api/'],canon:100,redir:100,dup:100},
+    'aspendentallocations.com': {sitemap:'7 / 7',coverage:'100%',robots:80,crawler:71,conflicts:'No', blocked:['/admin/','/api/','/staging/','/internal/'],canon:85,redir:90,dup:78},
+  };
+
+  function pdRow(label, valueHtml, isLast) {
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 24px;${isLast?'':'border-bottom:1px solid #f3f4f6'}">
+      <span style="font-size:14px;color:#444">${label}</span>
+      ${valueHtml}
+    </div>`;
+  }
+  function pdKv(label, value, valColor, isLast) {
+    return pdRow(label, `<span style="font-size:14px;color:${valColor||'#212121'}">${value}</span>`, isLast);
+  }
+  function pdCard(title, rows) {
+    return `<div style="border:1px solid #eaeaea;border-radius:8px;overflow:hidden;background:#fff;height:400px;display:flex;flex-direction:column">
+      <div style="padding:24px 24px 16px;font-size:16px;font-weight:400;color:#212121;flex-shrink:0">${title}</div>
+      <div style="padding-bottom:16px;overflow-y:auto;flex:1">${rows}</div>
+    </div>`;
+  }
+
+  const dd = WH_DETAILS[domain] || {sitemap:'—',coverage:'—',robots:'—',crawler:'—',conflicts:'—',blocked:[],canon:'—',redir:'—',dup:'—'};
+  const wh = WH_DATA[domain] || {};
+  const scores = WH_SCORES[domain] || {};
+  function scoreColor(n){ return n>=90?'#16a34a':n>=60?'#d97706':'#e53935'; }
+  function tierColor(n){ return n>=80?'#16a34a':n>=50?'#d97706':'#e53935'; }
+  const healthAvg = (scores.ai != null && scores.disc != null && scores.fresh != null)
+    ? Math.round((scores.ai + scores.disc + scores.fresh) / 3)
+    : null;
+
+  const crawlRows = [
+    ['Pages in sitemap', dd.sitemap], ['Sitemap coverage', dd.coverage],
+    ['Robots.txt health score', dd.robots], ['Crawler-friendly score', dd.crawler],
+    ['Conflicting directives', dd.conflicts],
+  ];
+  const crawlBody = crawlRows.map(([label, value], i) => pdKv(label, value, '#212121', i === crawlRows.length - 1)).join('');
+
+  const blockedBody = dd.blocked.length
+    ? dd.blocked.map((p, i) => pdKv(p, 'Disallowed', '#212121', i === dd.blocked.length - 1)).join('')
+    : `<div style="padding:12px 24px;font-size:13px;color:#8f8f8f">No blocked folders found</div>`;
+
+  const techRows = [
+    ['Canonical tags', dd.canon], ['Redirects', dd.redir], ['Duplicate content', dd.dup],
+  ];
+  const techBody = techRows.map(([label, val], i) => pdKv(label, val, '#212121', i === techRows.length - 1)).join('');
+
+  const basePages = PAGES_BY_DOMAIN[domain] || ['/'];
+  const pages = basePages.slice();
+  const dhExtraSlugs = ['/pricing-plans', '/testimonials', '/careers', '/privacy-policy', '/terms-of-service',
+    '/blog/oral-health-tips', '/blog/patient-stories', '/services/cleanings', '/services/crowns', '/services/dentures',
+    '/services/root-canal', '/services/sedation', '/gallery', '/insurance-accepted', '/new-patient-forms',
+    '/accessibility', '/site-map', '/press', '/partners', '/financing'];
+  let extraIdx = 0;
+  while (pages.length < 20 && extraIdx < dhExtraSlugs.length) {
+    const slug = dhExtraSlugs[extraIdx++];
+    if (!pages.includes(slug)) pages.push(slug);
+  }
+  const pageRowsHtml = pages.map((path, i) => {
+    const seed = domain + path;
+    const h = pdvSeededScore(seed + 'h'), ai = pdvSeededScore(seed + 'a'), disc = pdvSeededScore(seed + 'd'), fresh = pdvSeededScore(seed + 'f');
+    const tier = (v) => v >= 80 ? 'sat-green' : v >= 50 ? 'sat-orange' : 'sat-red';
+    const last = i === pages.length - 1;
+    return `<tr class="dh-page-row" onclick="openDomainHealthSinglePageDetailsFullView('${domain}','${path}','domain-health-single')" style="cursor:pointer">
+      <td style="padding:0 16px 0 24px;height:48px;${last?'':'border-bottom:1px solid #f3f4f6'};font-size:14px"><span class="dh-page-path" style="color:#212121">${path}</span></td>
+      <td style="padding:0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(h)}">${h}</span></td>
+      <td style="padding:0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(ai)}">${ai}</span></td>
+      <td style="padding:0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(disc)}">${disc}</span></td>
+      <td style="padding:0 24px 0 16px;${last?'':'border-bottom:1px solid #f3f4f6'}"><span class="sat-status-chip ${tier(fresh)}">${fresh}</span></td>
+    </tr>`;
+  }).join('');
+
+  const pagesWidget = `<div style="border:1px solid #eaeaea;border-radius:8px;overflow:hidden;background:#fff;height:400px;display:flex;flex-direction:column">
+    <div style="padding:16px 24px;flex-shrink:0">
+      <div style="font-size:16px;font-weight:400;color:rgb(33,33,33)">Pages</div>
+      <div style="font-size:12px;color:rgb(143,143,143);margin-top:3px">All crawled pages for this website</div>
+    </div>
+    <div style="overflow-y:auto;flex:1">
+      <table style="width:100%;border-collapse:collapse">
+        <thead>
+          <tr style="background:#fff">
+            <th style="padding:10px 16px 10px 24px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Page</th>
+            <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Health</th>
+            <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">AI readiness</th>
+            <th style="padding:10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Discoverability</th>
+            <th style="padding:10px 24px 10px 16px;font-size:12px;font-weight:400;color:#8f8f8f;text-align:left;border-bottom:1px solid #eaeaea;position:sticky;top:0;background:#fff">Freshness</th>
+          </tr>
+        </thead>
+        <tbody>${pageRowsHtml}</tbody>
+      </table>
+    </div>
+  </div>`;
+
+  return `
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+      <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
+        <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
+        <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
+        <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Health score</div>
+      </div>
+      <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
+        <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
+        <div style="display:flex;gap:100px">
+          <div>
+            <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">AI readiness</div>
+          </div>
+          <div>
+            <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Discoverability</div>
+          </div>
+          <div>
+            <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Freshness</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val">${pages.length}</div>
+        <div class="snt-kpi-label">Pages crawled</div>
+      </div>
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val" style="color:#16a34a">${Math.max(0, pages.length - 1)}</div>
+        <div class="snt-kpi-label">Indexable</div>
+      </div>
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val" style="color:#e53935">3</div>
+        <div class="snt-kpi-label">Issues found</div>
+      </div>
+      <div class="snt-kpi-card">
+        <div class="snt-kpi-val" style="color:#d97706">2</div>
+        <div class="snt-kpi-label">Warnings</div>
+      </div>
+    </div>
+    ${buildDomainHealthSingleRecommendationsBanner(domain, pages.length * 3)}
+    ${buildDomainHealthSingleScoreOverTimeWidget(domain, scores, healthAvg)}
+    <div style="margin-bottom:24px">${pagesWidget}</div>
+    <div id="dhs-rec-widget-anchor" style="margin-bottom:24px;display:none">${buildDomainHealthSingleRecommendationsWidget(domain, pages.length * 3, pages.length)}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      ${pdCard('Crawlability', crawlBody)}
+      ${pdCard('Blocked folders', blockedBody)}
+      ${pdCard('Site-wide technical health', techBody)}
+    </div>`;
+}
+
 function openDomainHealthFullView(domain) {
   showView('domain-health-domain-audit');
   document.getElementById('dhda-title').textContent = domain;
@@ -18569,6 +19145,17 @@ function openDomainHealthFullView(domain) {
   document.getElementById('dhda-body').innerHTML = buildDomainHealthBody(domain);
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
   const navEl = document.getElementById('nav-domain-health');
+  if (navEl) navEl.classList.add('active');
+}
+
+function openDomainHealthSingleView() {
+  const domain = 'aspendentalcare.com';
+  showView('domain-health-single');
+  document.getElementById('dhsda-title').textContent = domain;
+  document.getElementById('dhsda-ext-link').href = 'https://' + domain;
+  document.getElementById('dhsda-body').innerHTML = buildDomainHealthSingleBody(domain);
+  document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
+  const navEl = document.getElementById('nav-domain-health-single');
   if (navEl) navEl.classList.add('active');
 }
 
