@@ -2379,19 +2379,6 @@ textarea.ap-input{
       <div class="sb-sub-item">Platforms</div>
       <div class="sb-sub-item" id="nav-ai-crawler" onclick="showView('ai-crawler')">AI crawler status</div>
       <div class="sb-sub-item" id="nav-explore-themes" onclick="showView('explore-themes')">Explore themes</div>
-      <div class="sb-sub-item" id="nav-site-audit" onclick="showView('site-audit')" style="display:flex;align-items:center;justify-content:space-between">Site audit<span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V1</span></div>
-      <div class="sb-sub-item" id="nav-site-audit-v2" onclick="showView('site-audit-v2')" style="display:flex;align-items:center;justify-content:space-between">
-        Site audit
-        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V2</span>
-      </div>
-      <div class="sb-sub-item" id="nav-site-audit-v3" onclick="showView('site-audit-v3')" style="display:flex;align-items:center;justify-content:space-between">
-        Site audit
-        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V3</span>
-      </div>
-      <div class="sb-sub-item" id="nav-site-audit-v4" onclick="showView('site-audit-v4')" style="display:flex;align-items:center;justify-content:space-between">
-        Site audit
-        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V4</span>
-      </div>
       <div class="sb-sub-item" id="nav-domain-health" onclick="showView('domain-health')" style="display:flex;align-items:center;justify-content:space-between">
         Domain health
       </div>
@@ -2422,6 +2409,19 @@ textarea.ap-input{
       <div class="sb-sub-item" id="nav-sentiment-v2" onclick="showView('sentiment-v2')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">2</span></div>
       <div class="sb-sub-item" id="nav-sentiment-bp" onclick="showView('sentiment-bp')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">3</span></div>
       <div class="sb-sub-item" id="nav-sentiment-t" onclick="showView('sentiment-t')" style="display:flex;align-items:center;justify-content:space-between">Sentiment<span style="font-size:10px;font-weight:500;color:#1976d2;background:#e3f0fd;border-radius:4px;padding:1px 6px;line-height:16px;flex-shrink:0">4</span></div>
+      <div class="sb-sub-item" id="nav-site-audit" onclick="showView('site-audit')" style="display:flex;align-items:center;justify-content:space-between">Site audit<span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V1</span></div>
+      <div class="sb-sub-item" id="nav-site-audit-v2" onclick="showView('site-audit-v2')" style="display:flex;align-items:center;justify-content:space-between">
+        Site audit
+        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V2</span>
+      </div>
+      <div class="sb-sub-item" id="nav-site-audit-v3" onclick="showView('site-audit-v3')" style="display:flex;align-items:center;justify-content:space-between">
+        Site audit
+        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V3</span>
+      </div>
+      <div class="sb-sub-item" id="nav-site-audit-v4" onclick="showView('site-audit-v4')" style="display:flex;align-items:center;justify-content:space-between">
+        Site audit
+        <span style="font-size:11px;font-weight:500;color:#1976d2;background:#ecf5fd;border-radius:4px;padding:1px 6px;line-height:16px;letter-spacing:0.2px">V4</span>
+      </div>
     </div>
     <div class="sb-group-hdr" onclick="toggleSbGroup('settings',this)">
       <span>Settings</span>
@@ -13133,10 +13133,16 @@ function showView(view, skipHash) {
     grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
-  if (view === 'explore-themes' || view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3' || view === 'site-audit-v4' || view === 'page-details-v4' || view === 'domain-audit-v4' || view === 'rec-detail-v4' || view === 'domain-health' || view === 'domain-health-page-details' || view === 'domain-health-domain-audit' || view === 'domain-health-rec-detail' || view === 'domain-health-single' || view === 'domain-health-single-page-details' || view === 'domain-health-single-rec-detail') {
+  if (view === 'explore-themes' || view === 'sentiment-lc' || view === 'sentiment-sp' || view === 'ai-crawler' || view === 'reports-prompts' || view === 'domain-health' || view === 'domain-health-page-details' || view === 'domain-health-domain-audit' || view === 'domain-health-rec-detail' || view === 'domain-health-single' || view === 'domain-health-single-page-details' || view === 'domain-health-single-rec-detail') {
     const grp = document.getElementById('sb-group-reports');
     const chev = document.getElementById('sb-chev-reports');
     grp.style.display = 'block';
+    if (chev) chev.style.transform = 'rotate(180deg)';
+  }
+  if (view === 'sentiment' || view === 'sentiment-v2' || view === 'sentiment-bp' || view === 'sentiment-t' || view === 'site-audit' || view === 'site-audit-v2' || view === 'site-audit-v3' || view === 'site-audit-v4' || view === 'page-details-v4' || view === 'domain-audit-v4' || view === 'rec-detail-v4') {
+    const grp = document.getElementById('sb-group-iterations');
+    const chev = document.getElementById('sb-chev-iterations');
+    if (grp) grp.style.display = 'block';
     if (chev) chev.style.transform = 'rotate(180deg)';
   }
   if (view === 'comp-brand' || view === 'comp-location') {
@@ -18172,22 +18178,22 @@ function buildDomainHealthPageDetailsBody(domain, path) {
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
         <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
-        <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Health score</div>
+        <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
             <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">AI readiness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Discoverability</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Freshness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
       </div>
@@ -18211,10 +18217,10 @@ function buildDomainHealthPageDetailsBody(domain, path) {
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      ${pdCard('AI bot access', aiBotBody)}
       ${pdCard('Score breakdown', scoreBody)}
       ${pdCard('Content', contentBody)}
       ${pdCard('Technical', techBody)}
-      ${pdCard('AI bot access', aiBotBody)}
     </div>`;
 }
 
@@ -18288,22 +18294,22 @@ function buildDomainHealthSinglePageDetailsBody(domain, path) {
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
         <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
-        <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Health score</div>
+        <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
             <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">AI readiness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Discoverability</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Freshness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
       </div>
@@ -18327,10 +18333,10 @@ function buildDomainHealthSinglePageDetailsBody(domain, path) {
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      ${pdCard('AI bot access', aiBotBody)}
       ${pdCard('Score breakdown', scoreBody)}
       ${pdCard('Content', contentBody)}
       ${pdCard('Technical', techBody)}
-      ${pdCard('AI bot access', aiBotBody)}
     </div>`;
 }
 
@@ -18627,7 +18633,7 @@ function openDomainHealthPageDetailsFullView(domain, path, backView) {
   window._dhPageBackView = backView || 'domain-health';
   closeCitationPanel();
   showView('domain-health-page-details');
-  document.getElementById('dhpd-title').textContent = 'Page audit: ' + domain + path;
+  document.getElementById('dhpd-title').textContent = domain + path;
   document.getElementById('dhpd-ext-link').href = 'https://' + domain + path;
   document.getElementById('dhpd-body').innerHTML = buildDomainHealthPageDetailsBody(domain, path);
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
@@ -18640,7 +18646,7 @@ function openDomainHealthSinglePageDetailsFullView(domain, path, backView) {
   window._dhsPageBackView = backView || 'domain-health-single';
   closeCitationPanel();
   showView('domain-health-single-page-details');
-  document.getElementById('dhspd-title').textContent = 'Page audit: ' + domain + path;
+  document.getElementById('dhspd-title').textContent = domain + path;
   document.getElementById('dhspd-ext-link').href = 'https://' + domain + path;
   document.getElementById('dhspd-body').innerHTML = buildDomainHealthSinglePageDetailsBody(domain, path);
   document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => el.classList.remove('active'));
@@ -18883,6 +18889,17 @@ function buildDomainHealthBody(domain) {
   ];
   const techBody = techRows.map(([label, val], i) => pdKv(label, val, '#212121', i === techRows.length - 1)).join('');
 
+  const issuesWarningsRows = [
+    ['Page returns 404 for /old-promo', 'Issue', '#e53935'],
+    ['Missing canonical tag on 2 pages', 'Issue', '#e53935'],
+    ['Broken internal link to /services', 'Issue', '#e53935'],
+    ['Meta description missing on 3 pages', 'Warning', '#d97706'],
+    ['Slow load time on mobile (>3s)', 'Warning', '#d97706'],
+    ['Duplicate title tags detected', 'Warning', '#d97706'],
+    ['Low word count on 2 pages', 'Warning', '#d97706'],
+  ];
+  const issuesWarningsBody = issuesWarningsRows.map(([label, type, color], i) => pdKv(label, type, color, i === issuesWarningsRows.length - 1)).join('');
+
   const basePages = PAGES_BY_DOMAIN[domain] || ['/'];
   const pages = basePages.slice();
   const dhExtraSlugs = ['/pricing-plans', '/testimonials', '/careers', '/privacy-policy', '/terms-of-service',
@@ -18934,22 +18951,22 @@ function buildDomainHealthBody(domain) {
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
         <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
-        <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Health score</div>
+        <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
             <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">AI readiness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Discoverability</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Freshness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
       </div>
@@ -18980,6 +18997,7 @@ function buildDomainHealthBody(domain) {
       ${pdCard('Crawlability', crawlBody)}
       ${pdCard('Blocked folders', blockedBody)}
       ${pdCard('Site-wide technical health', techBody)}
+      ${pdCard('Issues &amp; warnings', issuesWarningsBody)}
     </div>`;
 }
 
@@ -19038,6 +19056,17 @@ function buildDomainHealthSingleBody(domain) {
   ];
   const techBody = techRows.map(([label, val], i) => pdKv(label, val, '#212121', i === techRows.length - 1)).join('');
 
+  const issuesWarningsRows = [
+    ['Page returns 404 for /old-promo', 'Issue', '#e53935'],
+    ['Missing canonical tag on 2 pages', 'Issue', '#e53935'],
+    ['Broken internal link to /services', 'Issue', '#e53935'],
+    ['Meta description missing on 3 pages', 'Warning', '#d97706'],
+    ['Slow load time on mobile (>3s)', 'Warning', '#d97706'],
+    ['Duplicate title tags detected', 'Warning', '#d97706'],
+    ['Low word count on 2 pages', 'Warning', '#d97706'],
+  ];
+  const issuesWarningsBody = issuesWarningsRows.map(([label, type, color], i) => pdKv(label, type, color, i === issuesWarningsRows.length - 1)).join('');
+
   const basePages = PAGES_BY_DOMAIN[domain] || ['/'];
   const pages = basePages.slice();
   const dhExtraSlugs = ['/pricing-plans', '/testimonials', '/careers', '/privacy-policy', '/terms-of-service',
@@ -19089,22 +19118,22 @@ function buildDomainHealthSingleBody(domain) {
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
         <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
-        <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Health score</div>
+        <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
             <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">AI readiness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Discoverability</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
             <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
-            <div style="font-size:13px;color:#8f8f8f;margin-top:8px">Freshness</div>
+            <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
       </div>
@@ -19135,6 +19164,7 @@ function buildDomainHealthSingleBody(domain) {
       ${pdCard('Crawlability', crawlBody)}
       ${pdCard('Blocked folders', blockedBody)}
       ${pdCard('Site-wide technical health', techBody)}
+      ${pdCard('Issues &amp; warnings', issuesWarningsBody)}
     </div>`;
 }
 
