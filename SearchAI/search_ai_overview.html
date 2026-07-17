@@ -18177,22 +18177,22 @@ function buildDomainHealthPageDetailsBody(domain, path) {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
-        <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
         <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
@@ -18293,22 +18293,22 @@ function buildDomainHealthSinglePageDetailsBody(domain, path) {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
-        <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
         <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
@@ -18343,17 +18343,13 @@ function buildDomainHealthSinglePageDetailsBody(domain, path) {
 function buildDomainHealthRecommendationsBanner(domain, totalCount) {
   const highCount = Math.max(1, Math.round(totalCount * 0.35));
   return `<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#f5f4fc;border:1px solid #e6e3f7;border-radius:8px;padding:16px 20px;margin-bottom:24px">
-    <div style="border:1px solid #eaeaea;border-radius:8px;padding:12px 20px;background:#fff;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:110px">
-      <span style="font-size:22px;color:#212121">${totalCount}</span>
-      <div style="font-size:12px;color:#8f8f8f;white-space:nowrap">Recommendations</div>
-    </div>
     <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1">
       <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#7c4dff">
         <span class="material-symbols-rounded" style="font-size:16px">auto_awesome</span>
         AI recommendations
       </div>
-      <div style="font-size:16px;color:#212121;font-weight:400">Improve how AI tools discover your business</div>
-      <div style="font-size:13px;color:#666">${highCount} high-impact fixes could meaningfully improve your AI visibility.</div>
+      <div style="font-size:16px;color:#212121;font-weight:400">AI tools may not be finding your business accurately</div>
+      <div style="font-size:13px;color:#666">${highCount} high-impact fixes can change that. ${totalCount} fixes in total.</div>
     </div>
     <button onclick="openDomainHealthRecommendationsFullView('${domain}')" style="height:36px;padding:0 16px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:500;flex-shrink:0;white-space:nowrap">View recommendations</button>
   </div>`;
@@ -18367,17 +18363,13 @@ function openDomainHealthRecommendationsFullView(domain) {
 function buildDomainHealthSingleRecommendationsBanner(domain, totalCount) {
   const highCount = Math.max(1, Math.round(totalCount * 0.35));
   return `<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;background:#f5f4fc;border:1px solid #e6e3f7;border-radius:8px;padding:16px 20px;margin-bottom:24px">
-    <div style="border:1px solid #eaeaea;border-radius:8px;padding:12px 20px;background:#fff;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:110px">
-      <span style="font-size:22px;color:#212121">${totalCount}</span>
-      <div style="font-size:12px;color:#8f8f8f;white-space:nowrap">Recommendations</div>
-    </div>
     <div style="display:flex;flex-direction:column;gap:4px;min-width:0;flex:1">
       <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#7c4dff">
         <span class="material-symbols-rounded" style="font-size:16px">auto_awesome</span>
         AI recommendations
       </div>
-      <div style="font-size:16px;color:#212121;font-weight:400">Improve how AI tools discover your business</div>
-      <div style="font-size:13px;color:#666">${highCount} high-impact fixes could meaningfully improve your AI visibility.</div>
+      <div style="font-size:16px;color:#212121;font-weight:400">AI tools may not be finding your business accurately</div>
+      <div style="font-size:13px;color:#666">${highCount} high-impact fixes can change that. ${totalCount} fixes in total.</div>
     </div>
     <button onclick="openDomainHealthSingleRecommendationsFullView('${domain}')" style="height:36px;padding:0 16px;background:#1976d2;color:#fff;border:none;border-radius:4px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:500;flex-shrink:0;white-space:nowrap">View recommendations</button>
   </div>`;
@@ -18950,22 +18942,22 @@ function buildDomainHealthBody(domain) {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
-        <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
         <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
@@ -19117,22 +19109,22 @@ function buildDomainHealthSingleBody(domain) {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px">
       <div style="background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health</div>
-        <div style="font-size:32px;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
+        <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(healthAvg)}">${healthAvg ?? '—'}</div>
         <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Health score<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'Overall score combining AI readiness, Discoverability, and Freshness for this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
       </div>
       <div style="grid-column:span 3;background:#fff;border:1px solid #eaeaea;border-radius:8px;padding:20px 24px">
         <div style="font-size:14px;color:#212121;margin-bottom:12px">Health consists of</div>
         <div style="display:flex;gap:100px">
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.ai)}">${scores.ai ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">AI readiness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How well AI assistants can read and understand this page\\'s content.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.disc)}">${scores.disc ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Discoverability<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How easily crawlers and AI assistants can find and index this page.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
           <div>
-            <div style="font-size:32px;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
+            <div style="font-size:32px;font-weight:400;font-family:'Inter',sans-serif;color:${tierColor(scores.fresh)}">${scores.fresh ?? '—'}</div>
             <div style="font-size:13px;color:#8f8f8f;margin-top:8px;display:flex;align-items:center">Freshness<span class="material-symbols-rounded pt-col-info" onmouseenter="showColInfoTooltip(event,'How recently this page was crawled and updated.')" onmouseleave="hideColInfoTooltip()">info</span></div>
           </div>
         </div>
