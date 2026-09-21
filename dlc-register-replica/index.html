@@ -132,11 +132,13 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
 .question-block::before{color:#999}
 .field-hint{position:absolute;top:100%;left:0;margin-top:6px;font-size:11px;color:#647a8e;line-height:1.4;display:flex;align-items:center;gap:5px}
 .field-hint .icon-info-svg{color:#647a8e;margin-top:0}
+.field-hint.field-hint-visited{color:#f44336}
+.field-hint.field-hint-visited .icon-info-svg{color:#f44336}
 .question-block:hover::after{content:attr(data-tooltip);position:absolute;bottom:calc(100% + 8px);left:0;background:#455b76;color:#fff;font-family:"Roboto",arial,sans-serif;font-size:13px;font-weight:400;line-height:1.5;text-transform:none;white-space:pre-wrap;width:280px;padding:12px 15px;border-radius:4px;box-shadow:0 3px 8px rgba(0,0,0,.25);z-index:20}
-.info-banner{display:flex;align-items:flex-start;gap:10px;background:#fff8e1;border:1px solid #ffe0a3;border-radius:4px;padding:12px 15px;margin-bottom:20px;font-family:"Roboto",arial,sans-serif;font-size:13px;line-height:1.5;color:#212121}
+.info-banner{display:flex;align-items:flex-start;gap:10px;background:#ecf5fd;border:none;border-radius:4px;padding:12px 15px;margin-bottom:20px;font-family:"Roboto",arial,sans-serif;font-size:13px;line-height:1.5;color:#212121}
 .info-banner strong{font-weight:700}
 .icon-info-svg{display:inline-block;width:16px;height:16px;min-width:16px;background-color:currentColor;-webkit-mask-image:url('info.svg');mask-image:url('info.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;flex-shrink:0;margin-top:2px}
-.info-banner .icon-info-svg{color:#f44336}
+.info-banner .icon-info-svg{color:#1976d2}
 .info-banner .see-reference-link{color:#1976d2;font-weight:400;text-decoration:none;white-space:nowrap}
 .reference-modal{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2;background-color:rgba(33,33,33,.5);display:flex;align-items:center;justify-content:center}
 .reference-modal .reference-modal-content{position:relative;background:#fff;padding:20px;border-radius:4px;max-width:90vw;max-height:90vh;display:flex;flex-direction:column}
@@ -203,7 +205,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
             <li id="registration_number_container">
               <label>Registration ID Number</label><span class="required-mark">*</span>
               <div class="fieldsRow reg-number-block" id="reg-num">
-                <input id="registration_number" name="registration_number" placeholder="E.g. 89-0089988" class="business-input" autocomplete="off">
+                <input id="registration_number" name="registration_number" placeholder="Ex. 89-0089988" class="business-input" autocomplete="off">
               </div>
               <div class="errorMessage hide"></div>
             </li>
@@ -234,7 +236,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
             <li id="city_container">
               <label>City<span class="required-mark">*</span></label>
               <div class="fieldsRow">
-                <input id="city" name="city" placeholder="E.g. Los Angeles" class="business-input" autocomplete="off">
+                <input id="city" name="city" placeholder="Ex. Los Angeles" class="business-input" autocomplete="off">
               </div>
               <div class="errorMessage hide"></div>
             </li>
@@ -254,7 +256,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
             <li id="zip_code_container">
               <label>Zip/Postal code</label><span class="required-mark">*</span>
               <div class="fieldsRow">
-                <input id="zip_code" name="zip_code" placeholder="E.g. 81504" class="business-input" autocomplete="off">
+                <input id="zip_code" name="zip_code" placeholder="Ex. 81504" class="business-input" autocomplete="off">
               </div>
               <div class="errorMessage hide"></div>
             </li>
@@ -368,7 +370,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
             <li id="business_title_1_container">
               <label>Business title<span class="required-mark">*</span></label>
               <div class="fieldsRow">
-                <input id="business_title_1" name="business_title_1" placeholder="E.g. Vice President" class="business-input" autocomplete="off">
+                <input id="business_title_1" name="business_title_1" placeholder="Ex. Vice President" class="business-input" autocomplete="off">
               </div>
               <div class="errorMessage hide"></div>
             </li>
@@ -522,8 +524,15 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
   businessNameHint.className = 'field-hint hide';
   businessNameHint.innerHTML = '<span class="icon-info-svg"></span><span>Enter exact legal business name as shown in your CP575 letter</span>';
   businessNameRow.appendChild(businessNameHint);
-  businessNameInput.addEventListener('focus', function(){ businessNameHint.classList.remove('hide'); });
-  businessNameInput.addEventListener('blur', function(){ businessNameHint.classList.add('hide'); });
+  function updateBusinessNameHint(){
+    businessNameHint.classList.toggle('hide', businessNameInput.value.trim() !== '');
+  }
+  businessNameInput.addEventListener('focus', updateBusinessNameHint);
+  businessNameInput.addEventListener('input', updateBusinessNameHint);
+  businessNameInput.addEventListener('blur', function(){
+    updateBusinessNameHint();
+    businessNameHint.classList.add('field-hint-visited');
+  });
 
   // registration ID number: show helper hint below the field while focused
   var regNumberInput = document.getElementById('registration_number');
@@ -532,8 +541,16 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
   regNumberHint.className = 'field-hint hide';
   regNumberHint.innerHTML = '<span class="icon-info-svg"></span><span>Enter the number exactly as shown in your CP575 letter</span>';
   regNumberRow.appendChild(regNumberHint);
-  regNumberInput.addEventListener('focus', function(){ regNumberHint.classList.remove('hide'); });
-  regNumberInput.addEventListener('blur', function(){ regNumberHint.classList.add('hide'); });
+  function updateRegNumberHint(){
+    var isValid = /^\d{2}-\d{7}$/.test(regNumberInput.value.trim());
+    regNumberHint.classList.toggle('hide', isValid);
+  }
+  regNumberInput.addEventListener('focus', updateRegNumberHint);
+  regNumberInput.addEventListener('input', updateRegNumberHint);
+  regNumberInput.addEventListener('blur', function(){
+    updateRegNumberHint();
+    regNumberHint.classList.add('field-hint-visited');
+  });
 
   // EIN/CBN checkbox toggles registration id fields
   var einCheckbox = document.getElementById('is_business_registered');
