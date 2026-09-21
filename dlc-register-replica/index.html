@@ -179,7 +179,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
         <div class="business-information-block common-block">
           <div class="info-banner">
             <span class="icon-info-svg"></span>
-            <span>Registration errors are often caused by mismatched details. Keep your IRS CP575 document handy and enter information exactly as it appears. <a href="#" id="see-reference-link" class="see-reference-link">See reference.</a></span>
+            <span>Registration errors are often caused by mismatched details. Keep your IRS CP575 letter handy and enter information exactly as it appears. <a href="#" id="see-reference-link" class="see-reference-link">See reference.</a></span>
           </div>
           <ul class="business-listing-wrapper">
 
@@ -522,7 +522,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
   var businessNameRow = businessNameInput.closest('.fieldsRow');
   var businessNameHint = document.createElement('div');
   businessNameHint.className = 'field-hint hide';
-  businessNameHint.innerHTML = '<span class="icon-info-svg"></span><span>Enter exact legal business name as shown in your CP575 letter</span>';
+  businessNameHint.innerHTML = '<span>Enter exact legal business name as shown in your CP575 letter</span>';
   businessNameRow.appendChild(businessNameHint);
   function updateBusinessNameHint(){
     businessNameHint.classList.toggle('hide', businessNameInput.value.trim() !== '');
@@ -539,7 +539,7 @@ a:focus,button:focus,input:focus,textarea:focus{outline:none}
   var regNumberRow = regNumberInput.closest('.fieldsRow');
   var regNumberHint = document.createElement('div');
   regNumberHint.className = 'field-hint hide';
-  regNumberHint.innerHTML = '<span class="icon-info-svg"></span><span>Enter the number exactly as shown in your CP575 letter</span>';
+  regNumberHint.innerHTML = '<span>Enter the number exactly as shown in your CP575 letter</span>';
   regNumberRow.appendChild(regNumberHint);
   function updateRegNumberHint(){
     var isValid = /^\d{2}-\d{7}$/.test(regNumberInput.value.trim());
