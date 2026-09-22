@@ -1,156 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Marketing Automation — Campaign Agents</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"/>
-<link rel="stylesheet" href="../ds-tokens.css"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Roboto',sans-serif;
-  background:var(--ds-color-bg-page);
-  color:var(--ds-color-text-primary);
-  min-height:100vh;
-}
-.wrap{max-width:920px;margin:0 auto;padding:48px 24px 80px}
-
-.back{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:13px;color:var(--ds-color-text-muted);text-decoration:none;
-  margin-bottom:24px;
-}
-.back:hover{color:var(--ds-color-blue-100)}
-
-.hero{margin-bottom:36px}
-.eyebrow{
-  font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;
-  color:var(--ds-color-blue-100);margin-bottom:10px;
-}
-h1{font-size:30px;font-weight:500;letter-spacing:-0.4px;margin-bottom:12px}
-.lede{font-size:15px;line-height:1.6;color:var(--ds-color-text-secondary);max-width:680px}
-
-.meta-row{
-  display:flex;gap:24px;margin-top:20px;padding-top:20px;
-  border-top:1px solid var(--ds-color-border);
-}
-.meta-item .meta-label{font-size:11px;color:var(--ds-color-text-muted);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
-.meta-item .meta-value{font-size:14px;font-weight:500}
-
-section{margin-top:48px}
-h2{font-size:18px;font-weight:500;margin-bottom:8px;letter-spacing:-0.2px}
-p.body{font-size:14px;line-height:1.65;color:var(--ds-color-text-secondary);max-width:680px;margin-bottom:20px}
-ul.body{font-size:14px;line-height:1.65;color:var(--ds-color-text-secondary);max-width:680px;margin:0 0 20px 20px}
-ul.body li{margin-bottom:6px}
-
-figure{margin:0 0 40px}
-figure img{
-  width:100%;display:block;border:1px solid var(--ds-color-border);
-  border-radius:var(--ds-radius-lg);box-shadow:var(--ds-shadow-card);
-}
-figcaption{font-size:13px;color:var(--ds-color-text-muted);margin-top:10px;text-align:center}
-
-.note{
-  margin-top:56px;padding:16px 18px;border-radius:var(--ds-radius-md);
-  background:var(--ds-color-bg-muted);font-size:13px;color:var(--ds-color-text-secondary);
-  line-height:1.6;
-}
-</style>
-</head>
-<body>
-  <div class="wrap">
-    <a class="back" href="../index.html">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      All projects
-    </a>
-
-    <div class="hero">
-      <div class="eyebrow">Case study</div>
-      <h1>Marketing Automation — Campaign Agents</h1>
-      <p class="lede">
-        A campaign management surface built inside an existing multi-product console: a searchable,
-        filterable list of email/text campaigns, a per-campaign detail view with a full delivery funnel
-        (targeted → sent → delivered → opened → clicked, plus every drop-off reason along the way),
-        a recipient-level breakdown with saved filters, and a chart/list report view.
-      </p>
-
-      <div class="meta-row">
-        <div class="meta-item">
-          <div class="meta-label">Role</div>
-          <div class="meta-value">Product design + build</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Surfaces</div>
-          <div class="meta-value">List, detail, recipients, reports</div>
-        </div>
-        <div class="meta-item">
-          <div class="meta-label">Last updated</div>
-          <div class="meta-value">Sep 22, 2026</div>
-        </div>
-      </div>
-    </div>
-
-    <section>
-      <h2>1. Campaign list</h2>
-      <p class="body">
-        Every campaign — review requests, surveys, and custom sends — in one sortable, searchable table,
-        with a live status pill and a delivered count at a glance.
-      </p>
-      <figure>
-        <img src="./screenshots/01-campaign-list.png" alt="Campaign agents list view showing name, status, and delivered count for each campaign"/>
-        <figcaption>Campaign agents — list view</figcaption>
-      </figure>
-    </section>
-
-    <section>
-      <h2>2. Delivery funnel, down to the drop-off reason</h2>
-      <p class="body">
-        Clicking into a campaign surfaces the full funnel with a percentage at every step relative to the
-        stage before it — not just aggregate totals. The four ways a contact can fail to receive a message
-        are split into two groups with tooltips explaining each:
-      </p>
-      <ul class="body">
-        <li><strong>Pre-delivery</strong> — suppressed (on a suppression list) or unsubscribed before a send was attempted</li>
-        <li><strong>Post-delivery</strong> — bounced/blocked, or filtered as spam after a send was attempted</li>
-      </ul>
-      <figure>
-        <img src="./screenshots/02-campaign-detail.png" alt="Campaign detail view with funnel KPIs, percentages, and drop-off tooltips"/>
-        <figcaption>Campaign detail — funnel KPIs with step-over-step percentages</figcaption>
-      </figure>
-    </section>
-
-    <section>
-      <h2>3. Recipient-level detail</h2>
-      <p class="body">
-        A per-recipient table (contact, location, status, source, last activity) alongside a persistent,
-        multi-select filter panel — status, location, division, and a dozen other org-specific dimensions.
-      </p>
-      <figure>
-        <img src="./screenshots/03-recipients.png" alt="Recipients table with a persistent multi-select filter panel"/>
-        <figcaption>Recipients — table + filters</figcaption>
-      </figure>
-    </section>
-
-    <section>
-      <h2>4. Reports: chart and list views of the same data</h2>
-      <p class="body">
-        A donut breaks delivery into pre-delivery failure / post-delivery failure / delivered, backed by a
-        "Failure reasons" panel that expands each bucket into its underlying causes. A toggle switches the
-        whole report between a chart view and a plain list view of the same numbers.
-      </p>
-      <figure>
-        <img src="./screenshots/04-reports.png" alt="Campaign report view with a delivery donut chart and a failure-reasons breakdown panel"/>
-        <figcaption>Reports — delivery donut + failure reasons</figcaption>
-      </figure>
-    </section>
-
-    <p class="note">
-      Note: all campaign names, contacts, and numbers shown here are placeholder data generated for this
-      case study — no real customer or business data is used.
-    </p>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>MYNA — Frontdesk</title>
+    <script type="module" crossorigin src="/projects/MarketingAutomation/assets/index-DFfqrJBG.js"></script>
+    <link rel="stylesheet" crossorigin href="/projects/MarketingAutomation/assets/index-CG_m4xQ7.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
