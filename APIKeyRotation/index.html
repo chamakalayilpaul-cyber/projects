@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Settings | Birdeye</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,300,0..1,0&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <div class="shell-body">
+        <div class="rail-slot">
+          <nav class="rail" id="rail" aria-label="Primary">
+            <div class="rail-brand" id="rail-brand">
+              <button type="button" class="rail-brand-btn" id="product-toggle" aria-label="Switch product" aria-expanded="false">
+                <img src="logo.svg" alt="" class="rail-logo" />
+                <span class="rail-brand-label">
+                  <span class="rail-brand-name" id="product-name">Birdeye Healthcare</span>
+                  <span class="material-symbols-outlined rail-chevron" id="product-chevron">keyboard_arrow_down</span>
+                </span>
+              </button>
+              <div class="product-menu" id="product-menu" hidden>
+                <p class="product-menu-label">Switch product</p>
+                <button type="button" class="product-option" data-product="Birdeye Healthcare">
+                  <span class="product-check material-symbols-outlined">check</span>
+                  Birdeye Healthcare
+                </button>
+                <button type="button" class="product-option" data-product="Birdeye Dental">
+                  <span class="product-check material-symbols-outlined"></span>
+                  Birdeye Dental
+                </button>
+                <button type="button" class="product-option" data-product="Birdeye Automotive">
+                  <span class="product-check material-symbols-outlined"></span>
+                  Birdeye Automotive
+                </button>
+              </div>
+            </div>
+
+            <div class="rail-items">
+              <button type="button" class="rail-item" data-title="Overview" title="Overview" aria-label="Overview">
+                <span class="material-symbols-outlined">home</span>
+                <span class="rail-label">Overview</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Resellers" title="Resellers" aria-label="Resellers">
+                <span class="material-symbols-outlined">hub</span>
+                <span class="rail-label">Resellers</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Businesses" title="Businesses" aria-label="Businesses">
+                <span class="material-symbols-outlined">work</span>
+                <span class="rail-label">Businesses</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Locations" title="Locations" aria-label="Locations">
+                <span class="material-symbols-outlined">near_me</span>
+                <span class="rail-label">Locations</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Reviews AI" title="Reviews AI" aria-label="Reviews AI">
+                <span class="material-symbols-outlined">star</span>
+                <span class="rail-label">Reviews AI</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Listings AI" title="Listings AI" aria-label="Listings AI">
+                <span class="material-symbols-outlined">place</span>
+                <span class="rail-label">Listings AI</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Social AI" title="Social AI" aria-label="Social AI">
+                <span class="material-symbols-outlined">workspaces</span>
+                <span class="rail-label">Social AI</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Reports" title="Reports" aria-label="Reports">
+                <span class="material-symbols-outlined">pie_chart</span>
+                <span class="rail-label">Reports</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Snapshots" title="Snapshots" aria-label="Snapshots">
+                <span class="material-symbols-outlined">photo_camera</span>
+                <span class="rail-label">Snapshots</span>
+              </button>
+              <button type="button" class="rail-item" data-title="SSL certificates" title="SSL certificates" aria-label="SSL certificates">
+                <span class="material-symbols-outlined">lock</span>
+                <span class="rail-label">SSL certificates</span>
+              </button>
+              <button type="button" class="rail-item" data-title="Scan listings" title="Scan listings" aria-label="Scan listings">
+                <span class="material-symbols-outlined">screen_search_desktop</span>
+                <span class="rail-label">Scan listings</span>
+                <span class="material-symbols-outlined rail-external">open_in_new</span>
+              </button>
+            </div>
+          </nav>
+        </div>
+
+        <div class="workspace">
+          <header class="topnav">
+            <span class="topnav-title" id="topnav-title">Settings</span>
+            <div class="topnav-actions">
+              <button type="button" class="icon-chip" aria-label="Create new">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+              <button type="button" class="ask-bird">
+                <span class="material-symbols-outlined ask-bird-icon" aria-hidden="true">auto_awesome</span>
+                <span class="ask-bird-label">Ask BirdGPT</span>
+              </button>
+              <button type="button" class="icon-chip" aria-label="Menu">
+                <span class="material-symbols-outlined">menu</span>
+              </button>
+            </div>
+          </header>
+
+          <div class="stage">
+            <div class="stage-card">
+              <main class="page">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="#settings">Settings</a>
+          <span class="material-symbols-outlined crumb-sep" aria-hidden="true">chevron_right</span>
+          <a href="#integrations">Integrations</a>
+          <span class="material-symbols-outlined crumb-sep" aria-hidden="true">chevron_right</span>
+          <span class="crumb-current">API</span>
+        </nav>
+        <div class="tabs" role="tablist" aria-label="API sections">
+          <button class="tab tab--active" type="button" role="tab" aria-selected="true">API</button>
+          <button class="tab" type="button" role="tab" aria-selected="false">API Analytics</button>
+          <button class="tab" type="button" role="tab" aria-selected="false">API Config</button>
+        </div>
+
+        <section class="section" aria-labelledby="api-key-heading">
+          <h1 id="api-key-heading">API key</h1>
+          <p class="lede">
+            API key allows you to access your business data via Birdeye APIs. Example, a business can
+            integrate their customer reviews on their business website via API integration. Birdeye API
+            documentation is available at
+            <a href="https://developers.birdeye.com">https://developers.birdeye.com</a>
+          </p>
+
+          <div class="panel">
+            <dl class="facts">
+              <dt>Business ID</dt>
+              <dd>
+                <span>153027269604508</span>
+                <button class="icon-btn" type="button" data-copy="153027269604508" aria-label="Copy Business ID">
+                  <span class="material-symbols-outlined">content_copy</span>
+                </button>
+              </dd>
+              <dt class="facts-key-label">API key</dt>
+              <dd class="facts-key">
+                <div class="key-line">
+                  <span id="masked-key">09yWmomSVrJFdeTSJ37cQblSt3nHkrKj</span>
+                  <button class="icon-btn" type="button" id="copy-current" aria-label="Copy API key">
+                    <span class="material-symbols-outlined">content_copy</span>
+                  </button>
+                  <button class="outline-btn" type="button" id="open-rotate">
+                    <span class="material-symbols-outlined">autorenew</span>
+                    Rotate key
+                  </button>
+                </div>
+                <p class="key-created" id="key-created">Created on Sep 18, 2026, 9:41 AM</p>
+              </dd>
+            </dl>
+            <div class="key-info" role="note">
+              <span class="material-symbols-outlined" aria-hidden="true">info</span>
+              <p>Rotate your key if it may have been exposed, if someone with access has left, or as part of a regular security routine. It stays active for 24 hours so you can update integrations without downtime.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" aria-labelledby="sftp-heading">
+          <h2 id="sftp-heading">SFTP credentials</h2>
+          <p class="lede">
+            SFTP credentials are needed to transfer customer data file, on a daily basis, in a secure and reliable method. As part of SFTP credentials, we will assign a username, password and server IP for your business, using which you can transfer the customer data file everyday. SFTP file upload process is available at
+            <a href="http://goo.gl/aeORBe">http://goo.gl/aeORBe</a>
+          </p>
+
+          <div class="sftp">
+            <div class="sftp-row">
+              <span class="sftp-label">Server IP</span>
+              <span>besftp.com</span>
+            </div>
+            <div class="sftp-row">
+              <span class="sftp-label">Server Username</span>
+              <span>jysk</span>
+            </div>
+            <div class="sftp-row">
+              <label class="sftp-label" for="sftp-password">Password</label>
+              <div class="password-field">
+                <input id="sftp-password" type="password" value="sftp-secret" autocomplete="off" />
+                <button type="button" class="password-toggle" id="toggle-password" aria-label="Show password">
+                  <span class="material-symbols-outlined" id="password-icon">visibility</span>
+                </button>
+              </div>
+            </div>
+            <div class="sftp-row sftp-row--alerts">
+              <label class="sftp-label" for="alert-email">Send alerts to</label>
+              <div>
+                <div class="email-box" id="email-box">
+                  <div class="email-chips" id="email-chips"></div>
+                  <input id="alert-email" type="email" aria-label="Add alert email" placeholder="" />
+                </div>
+                <label class="check-row">
+                  <input type="checkbox" id="skip-success-alerts" />
+                  <span>Do not send alerts when SFTP processing is successful.</span>
+                </label>
+              </div>
+            </div>
+            <div class="sftp-actions">
+              <span class="save-note" id="save-note" hidden>Changes saved</span>
+              <button type="button" class="btn-primary" id="save-sftp">Save</button>
+            </div>
+          </div>
+        </section>
+
+        <p class="help">
+          For questions regarding your API key or SFTP access, email
+          <a href="mailto:support@birdeye.com">support@birdeye.com</a>
+          or call
+          <a href="tel:8005613357">(800) 561 3357</a>
+          ext 3.
+        </p>
+              </main>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="backdrop" id="backdrop" hidden>
+      <div
+        class="dialog"
+        id="dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-desc"
+        tabindex="-1"
+      >
+        <div id="confirm-step">
+          <header class="dialog-header">
+            <h2 class="dialog-title" id="dialog-title">Rotate API key?</h2>
+            <button class="close-btn" type="button" data-close aria-label="Close">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </header>
+          <div class="dialog-body">
+            <p class="dialog-desc" id="dialog-desc">
+              Your previous API key will become invalid as soon as a new key is generated. Any
+              integrations using the old key will stop working until they are updated.
+            </p>
+            <div class="field">
+              <p class="field-label" id="handling-label">For your old integrations, do you want</p>
+              <div class="radio-group" role="radiogroup" aria-labelledby="handling-label">
+                <label class="radio-option">
+                  <input type="radio" name="old-key-handling" value="grace" checked />
+                  <span class="radio-text">
+                    <span class="radio-title">24-hour grace period</span>
+                    <span class="radio-description">The old key keeps working for 24 hours, then is invalidated.</span>
+                  </span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="old-key-handling" value="immediate" />
+                  <span class="radio-text">
+                    <span class="radio-title">Invalidate immediately</span>
+                    <span class="radio-description">The old key stops working as soon as the new key is generated.</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <footer class="dialog-footer">
+            <button class="btn-secondary" type="button" data-close>Cancel</button>
+            <button class="btn-primary" type="button" id="confirm-rotate">Rotate key</button>
+          </footer>
+        </div>
+
+        <div id="success-step" hidden>
+          <header class="dialog-header">
+            <h2 class="dialog-title" id="success-title">API key rotated</h2>
+            <button class="close-btn" type="button" data-close aria-label="Close">
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </header>
+          <div class="dialog-body">
+            <p class="dialog-desc" id="success-desc">
+              Copy and store this key securely now. The full key is shown only once.
+            </p>
+            <div class="key-row">
+              <input class="key-input" id="new-key" readonly aria-label="New API key" />
+              <button class="copy-btn" type="button" id="copy-new" aria-label="Copy">
+                <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+                <span class="copy-tooltip" id="copy-tooltip" role="tooltip">Copy</span>
+              </button>
+            </div>
+            <div class="note note--success" role="status">
+              <span class="material-symbols-outlined note-icon">check_circle</span>
+              <span>API key rotated successfully. Admins and owners have been notified by email.</span>
+            </div>
+          </div>
+          <footer class="dialog-footer">
+            <button class="btn-primary" type="button" id="done">Done</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

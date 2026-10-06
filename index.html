@@ -119,6 +119,21 @@ body{
 }
 .view-btn svg{transition:stroke 0.15s}
 .view-btn:hover svg{stroke:#fff}
+
+.preview-links{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:12px;
+}
+.preview-links a{
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:-0.26px;
+  color:var(--ds-color-blue-100);
+  text-decoration:none;
+}
+.preview-links a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -133,6 +148,32 @@ body{
   </header>
 
   <main class="grid">
+
+    <!-- API key rotation Card -->
+    <div class="card">
+      <div class="card-thumb" style="background:linear-gradient(135deg,#e8f1fb 0%,#c7d6f6 100%);display:flex;align-items:center;justify-content:center">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1976D2" stroke-width="1.5" opacity="0.75"><circle cx="8" cy="15" r="4"/><path d="M11 15h10v3h-3v-3"/><path d="M15 15v-2"/></svg>
+      </div>
+      <div class="card-body">
+        <div class="card-name">API key rotation</div>
+        <div class="card-meta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated Oct 06, 2026
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="view-btn" href="./APIKeyRotation/">
+          View
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <div class="preview-links">
+          <a href="./APIKeyRotation/">Settings</a>
+          <a href="./APIKeyRotation/#rotate">Rotate key</a>
+          <a href="./APIKeyRotation/#rotated">Key rotated</a>
+        </div>
+      </div>
+    </div>
+
 
     <!-- SSL certificate Card -->
     <div class="card">
