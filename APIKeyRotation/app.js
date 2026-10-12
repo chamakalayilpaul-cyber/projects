@@ -168,8 +168,29 @@ copyNew.addEventListener("click", async () => {
 copyNew.addEventListener("mouseleave", resetCopyButton);
 copyNew.addEventListener("blur", resetCopyButton);
 
-document.getElementById("copy-current").addEventListener("click", (event) => {
-  copyText(currentKey, event.currentTarget);
+const toast = document.getElementById("toast");
+const toastText = document.getElementById("toast-text");
+let toastTimer = null;
+
+function showToast(message) {
+  toastText.textContent = message;
+  toast.classList.add("is-visible");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => {
+    toast.classList.remove("is-visible");
+  }, 3000);
+}
+
+function hideToast() {
+  window.clearTimeout(toastTimer);
+  toast.classList.remove("is-visible");
+}
+
+document.getElementById("toast-close").addEventListener("click", hideToast);
+
+document.getElementById("copy-current").addEventListener("click", async (event) => {
+  await copyText(currentKey, event.currentTarget);
+  showToast("API key copied");
 });
 
 document.querySelector("[data-copy]").addEventListener("click", (event) => {

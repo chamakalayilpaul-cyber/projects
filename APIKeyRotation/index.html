@@ -120,18 +120,18 @@
           <span class="crumb-current">API</span>
         </nav>
         <div class="tabs" role="tablist" aria-label="API sections">
-          <button class="tab tab--active" type="button" role="tab" aria-selected="true">API</button>
-          <button class="tab" type="button" role="tab" aria-selected="false">API Analytics</button>
-          <button class="tab" type="button" role="tab" aria-selected="false">API Config</button>
+          <button class="tab tab--active" type="button" role="tab" aria-selected="true">Credentials</button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Analytics</button>
+          <button class="tab" type="button" role="tab" aria-selected="false">Configuration</button>
         </div>
 
         <section class="section" aria-labelledby="api-key-heading">
           <h1 id="api-key-heading">API key</h1>
           <p class="lede">
-            API key allows you to access your business data via Birdeye APIs. Example, a business can
-            integrate their customer reviews on their business website via API integration. Birdeye API
-            documentation is available at
-            <a href="https://developers.birdeye.com">https://developers.birdeye.com</a>
+            Use your API key to connect Birdeye to your website or other tools. For example, show your
+            latest reviews on your site. Anyone with this key can access your business data, so keep it
+            private.
+            <a href="https://developers.birdeye.com">View API documentation</a>
           </p>
 
           <div class="panel">
@@ -147,8 +147,9 @@
               <dd class="facts-key">
                 <div class="key-line">
                   <span id="masked-key">09yWmomSVrJFdeTSJ37cQblSt3nHkrKj</span>
-                  <button class="icon-btn" type="button" id="copy-current" aria-label="Copy API key">
-                    <span class="material-symbols-outlined">content_copy</span>
+                  <button class="icon-btn has-tooltip" type="button" id="copy-current" aria-label="Copy API key">
+                    <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
+                    <span class="copy-tooltip copy-tooltip--above" role="tooltip">Copy API key</span>
                   </button>
                   <button class="outline-btn" type="button" id="open-rotate">
                     <span class="material-symbols-outlined">autorenew</span>
@@ -160,7 +161,7 @@
             </dl>
             <div class="key-info" role="note">
               <span class="material-symbols-outlined" aria-hidden="true">info</span>
-              <p>Rotate your key if it may have been exposed, if someone with access has left, or as part of a regular security routine. It stays active for 24 hours so you can update integrations without downtime.</p>
+              <p>Rotate your key if it may be exposed, someone with access has left, or as part of routine security.</p>
             </div>
           </div>
         </section>
@@ -168,17 +169,17 @@
         <section class="section" aria-labelledby="sftp-heading">
           <h2 id="sftp-heading">SFTP credentials</h2>
           <p class="lede">
-            SFTP credentials are needed to transfer customer data file, on a daily basis, in a secure and reliable method. As part of SFTP credentials, we will assign a username, password and server IP for your business, using which you can transfer the customer data file everyday. SFTP file upload process is available at
-            <a href="http://goo.gl/aeORBe">http://goo.gl/aeORBe</a>
+            Use SFTP to send your customer data file to Birdeye every day.
+            <a href="http://goo.gl/aeORBe">Learn how to upload files</a>
           </p>
 
           <div class="sftp">
             <div class="sftp-row">
-              <span class="sftp-label">Server IP</span>
+              <span class="sftp-label">Server address</span>
               <span>besftp.com</span>
             </div>
             <div class="sftp-row">
-              <span class="sftp-label">Server Username</span>
+              <span class="sftp-label">Username</span>
               <span>jysk</span>
             </div>
             <div class="sftp-row">
@@ -186,12 +187,13 @@
               <div class="password-field">
                 <input id="sftp-password" type="password" value="sftp-secret" autocomplete="off" />
                 <button type="button" class="password-toggle" id="toggle-password" aria-label="Show password">
-                  <span class="material-symbols-outlined" id="password-icon">visibility</span>
+                  <span class="material-symbols-outlined" id="password-icon" aria-hidden="true">visibility</span>
+                  <span class="copy-tooltip copy-tooltip--above" role="tooltip">View</span>
                 </button>
               </div>
             </div>
             <div class="sftp-row sftp-row--alerts">
-              <label class="sftp-label" for="alert-email">Send alerts to</label>
+              <label class="sftp-label" for="alert-email">Email alerts to</label>
               <div>
                 <div class="email-box" id="email-box">
                   <div class="email-chips" id="email-chips"></div>
@@ -199,7 +201,7 @@
                 </div>
                 <label class="check-row">
                   <input type="checkbox" id="skip-success-alerts" />
-                  <span>Do not send alerts when SFTP processing is successful.</span>
+                  <span>Only send alerts for failed uploads</span>
                 </label>
               </div>
             </div>
@@ -243,24 +245,22 @@
           </header>
           <div class="dialog-body">
             <p class="dialog-desc" id="dialog-desc">
-              Your previous API key will become invalid as soon as a new key is generated. Any
-              integrations using the old key will stop working until they are updated.
+              You’ll get a new API key. When should your current key stop working?
             </p>
             <div class="field">
-              <p class="field-label" id="handling-label">For your old integrations, do you want</p>
-              <div class="radio-group" role="radiogroup" aria-labelledby="handling-label">
+              <div class="radio-group" role="radiogroup" aria-labelledby="dialog-desc">
                 <label class="radio-option">
                   <input type="radio" name="old-key-handling" value="grace" checked />
                   <span class="radio-text">
-                    <span class="radio-title">24-hour grace period</span>
-                    <span class="radio-description">The old key keeps working for 24 hours, then is invalidated.</span>
+                    <span class="radio-title">In 24 hours</span>
+                    <span class="radio-description">Gives you time to update your integrations</span>
                   </span>
                 </label>
                 <label class="radio-option">
                   <input type="radio" name="old-key-handling" value="immediate" />
                   <span class="radio-text">
-                    <span class="radio-title">Invalidate immediately</span>
-                    <span class="radio-description">The old key stops working as soon as the new key is generated.</span>
+                    <span class="radio-title">Right now</span>
+                    <span class="radio-description">Choose this if your key may be exposed. Anything using it stops working immediately.</span>
                   </span>
                 </label>
               </div>
@@ -300,6 +300,14 @@
           </footer>
         </div>
       </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span class="material-symbols-outlined toast-icon" aria-hidden="true">check_circle</span>
+      <span class="toast-text" id="toast-text"></span>
+      <button class="toast-close" type="button" id="toast-close" aria-label="Dismiss">
+        <span class="material-symbols-outlined">close</span>
+      </button>
     </div>
 
     <script src="app.js"></script>
