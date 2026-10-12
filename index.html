@@ -408,7 +408,7 @@ body{
     </div>
 
     <!-- Marketing Automation Card -->
-    <div class="card">
+    <div class="card" data-fresh="1">
       <div class="card-thumb" style="background:linear-gradient(135deg,#e5e9f0 0%,#c7d6f6 100%);display:flex;align-items:center;justify-content:center;padding:0 22px">
         <svg width="140" height="44" viewBox="0 0 140 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.85">
           <rect x="0"  y="4"  width="140" height="9" rx="4.5" fill="#1976d2" opacity="0.22"/>
@@ -421,7 +421,7 @@ body{
         <div class="card-name">Marketing Automation — Campaign Agents</div>
         <div class="card-meta">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8f8f8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Last updated Sep 30, 2026
+          Last updated Oct 12, 2026
         </div>
       </div>
       <div class="card-footer">
@@ -454,6 +454,26 @@ body{
     </div>
 
   </main>
+
+
+<script>
+(function () {
+  var grid = document.querySelector('main.grid');
+  if (!grid) return;
+  var months = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  function stamp(card) {
+    var meta = card.querySelector('.card-meta');
+    var t = 0;
+    var m = meta && meta.textContent.match(/Last updated ([A-Za-z]+) (\d+), (\d+)/);
+    if (m && months[m[1]] != null) t = Date.UTC(+m[3], months[m[1]], +m[2]);
+    if (card.getAttribute('data-fresh') === '1') t += 1;
+    return t;
+  }
+  Array.prototype.slice.call(grid.querySelectorAll(':scope > .card'))
+    .sort(function (a, b) { return stamp(b) - stamp(a); })
+    .forEach(function (card) { grid.appendChild(card); });
+})();
+</script>
 
 </body>
 </html>
