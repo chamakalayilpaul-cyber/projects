@@ -15,6 +15,11 @@ function generateKey() {
   return `be_live_${body}`;
 }
 
+function maskKey(key) {
+  if (key.length <= 8) return key;
+  return `${key.slice(0, 4)}${"•".repeat(8)}${key.slice(-4)}`;
+}
+
 function formatCreated(date) {
   return `Created on ${date.toLocaleString("en-US", {
     month: "short",
@@ -122,7 +127,7 @@ function showRotatedBanner() {
 
 document.getElementById("confirm-rotate").addEventListener("click", () => {
   currentKey = generateKey();
-  maskedKey.textContent = currentKey;
+  maskedKey.textContent = maskKey(currentKey);
   keyCreated.textContent = formatCreated(new Date());
   showRotatedBanner();
   closeDialog();
