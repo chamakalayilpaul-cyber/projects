@@ -2,16 +2,10 @@ const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
 
 const backdrop = document.getElementById("backdrop");
 const dialog = document.getElementById("dialog");
-const confirmStep = document.getElementById("confirm-step");
-const successStep = document.getElementById("success-step");
-const newKeyInput = document.getElementById("new-key");
 const maskedKey = document.getElementById("masked-key");
 const keyCreated = document.getElementById("key-created");
-const copyNew = document.getElementById("copy-new");
-const copyTooltip = document.getElementById("copy-tooltip");
 
 let currentKey = "09yWmomSVrJFdeTSJ37cQblSt3nHkrKj";
-let generatedKey = "";
 let lastFocus = null;
 
 function generateKey() {
@@ -19,11 +13,6 @@ function generateKey() {
   crypto.getRandomValues(bytes);
   const body = Array.from(bytes, (byte) => ALPHABET[byte % ALPHABET.length]).join("");
   return `be_live_${body}`;
-}
-
-function maskKey(key) {
-  if (key.length <= 10) return key;
-  return `${key.slice(0, 10)}••••••••••••••••••`;
 }
 
 function formatCreated(date) {
@@ -36,19 +25,8 @@ function formatCreated(date) {
   })}`;
 }
 
-function setStep(step) {
-  const showingSuccess = step === "success";
-  confirmStep.hidden = showingSuccess;
-  successStep.hidden = !showingSuccess;
-  dialog.setAttribute("aria-labelledby", showingSuccess ? "success-title" : "dialog-title");
-  dialog.setAttribute("aria-describedby", showingSuccess ? "success-desc" : "dialog-desc");
-}
-
 function openDialog() {
   lastFocus = document.activeElement;
-  document.querySelector('input[name="old-key-handling"][value="grace"]').checked = true;
-  resetCopyButton();
-  setStep("confirm");
   backdrop.hidden = false;
   document.body.style.overflow = "hidden";
   dialog.focus();
@@ -58,11 +36,6 @@ function closeDialog() {
   backdrop.hidden = true;
   document.body.style.overflow = "";
   if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
-}
-
-function resetCopyButton() {
-  copyTooltip.textContent = "Copy";
-  copyNew.setAttribute("aria-label", "Copy");
 }
 
 async function copyText(value, button) {
@@ -131,42 +104,29 @@ document.addEventListener("mousedown", (event) => {
 document.getElementById("open-rotate").addEventListener("click", openDialog);
 
 if (location.hash === "#rotate") openDialog();
-if (location.hash === "#rotated") {
-  generatedKey = generateKey();
-  newKeyInput.value = generatedKey;
-  openDialog();
-  setStep("success");
-}
 
 document.querySelectorAll("[data-close]").forEach((button) => {
   button.addEventListener("click", closeDialog);
 });
 
-document.getElementById("done").addEventListener("click", () => {
-  if (generatedKey) {
-    currentKey = generatedKey;
-    maskedKey.textContent = maskKey(generatedKey);
-    keyCreated.textContent = formatCreated(new Date());
-  }
-  closeDialog();
-});
+const keyInfo = document.getElementById("key-info");
+const keyInfoIcon = document.getElementById("key-info-icon");
+const keyInfoText = document.getElementById("key-info-text");
+
+function showRotatedBanner() {
+  keyInfo.classList.add("is-success");
+  keyInfoIcon.textContent = "check";
+  keyInfoText.textContent =
+    "New API key generated. Your previous API key will become invalid immediately. Any integrations using the old key will stop working until they are updated with the new API key.";
+}
 
 document.getElementById("confirm-rotate").addEventListener("click", () => {
-  generatedKey = generateKey();
-  newKeyInput.value = generatedKey;
-  resetCopyButton();
-  setStep("success");
-  copyNew.focus();
+  currentKey = generateKey();
+  maskedKey.textContent = currentKey;
+  keyCreated.textContent = formatCreated(new Date());
+  showRotatedBanner();
+  closeDialog();
 });
-
-copyNew.addEventListener("click", async () => {
-  await copyText(generatedKey);
-  copyTooltip.textContent = "Copied";
-  copyNew.setAttribute("aria-label", "Copied");
-});
-
-copyNew.addEventListener("mouseleave", resetCopyButton);
-copyNew.addEventListener("blur", resetCopyButton);
 
 document.getElementById("copy-current").addEventListener("click", (event) => {
   copyText(currentKey, event.currentTarget);

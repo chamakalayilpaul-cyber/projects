@@ -636,6 +636,13 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
 }
 
+.key-info.is-success {
+  background: #f1faf0;
+  color: #212121;
+}
+
+.key-info.is-success .material-symbols-outlined { color: var(--ok-ink); }
+
 .facts {
   display: grid;
   grid-template-columns: 180px minmax(0, 1fr);

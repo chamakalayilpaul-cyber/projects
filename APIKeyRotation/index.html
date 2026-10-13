@@ -158,9 +158,9 @@
                 <p class="key-created" id="key-created">Created on Sep 18, 2026, 9:41 AM</p>
               </dd>
             </dl>
-            <div class="key-info" role="note">
-              <span class="material-symbols-outlined" aria-hidden="true">info</span>
-              <p>Rotate your key if it may have been exposed, if someone with access has left, or as part of a regular security routine. It stays active for 24 hours so you can update integrations without downtime.</p>
+            <div class="key-info" id="key-info" role="note">
+              <span class="material-symbols-outlined" id="key-info-icon" aria-hidden="true">info</span>
+              <p id="key-info-text">Rotate your key if it may have been exposed, if someone with access has left, or as part of a regular security routine. It stays active for 24 hours so you can update integrations without downtime.</p>
             </div>
           </div>
         </section>
@@ -246,57 +246,10 @@
               Your previous API key will become invalid as soon as a new key is generated. Any
               integrations using the old key will stop working until they are updated.
             </p>
-            <div class="field">
-              <p class="field-label" id="handling-label">For your old integrations, do you want</p>
-              <div class="radio-group" role="radiogroup" aria-labelledby="handling-label">
-                <label class="radio-option">
-                  <input type="radio" name="old-key-handling" value="grace" checked />
-                  <span class="radio-text">
-                    <span class="radio-title">24-hour grace period</span>
-                    <span class="radio-description">The old key keeps working for 24 hours, then is invalidated.</span>
-                  </span>
-                </label>
-                <label class="radio-option">
-                  <input type="radio" name="old-key-handling" value="immediate" />
-                  <span class="radio-text">
-                    <span class="radio-title">Invalidate immediately</span>
-                    <span class="radio-description">The old key stops working as soon as the new key is generated.</span>
-                  </span>
-                </label>
-              </div>
-            </div>
           </div>
           <footer class="dialog-footer">
             <button class="btn-secondary" type="button" data-close>Cancel</button>
             <button class="btn-primary" type="button" id="confirm-rotate">Rotate key</button>
-          </footer>
-        </div>
-
-        <div id="success-step" hidden>
-          <header class="dialog-header">
-            <h2 class="dialog-title" id="success-title">API key rotated</h2>
-            <button class="close-btn" type="button" data-close aria-label="Close">
-              <span class="material-symbols-outlined">close</span>
-            </button>
-          </header>
-          <div class="dialog-body">
-            <p class="dialog-desc" id="success-desc">
-              Copy and store this key securely now. The full key is shown only once.
-            </p>
-            <div class="key-row">
-              <input class="key-input" id="new-key" readonly aria-label="New API key" />
-              <button class="copy-btn" type="button" id="copy-new" aria-label="Copy">
-                <span class="material-symbols-outlined" aria-hidden="true">content_copy</span>
-                <span class="copy-tooltip" id="copy-tooltip" role="tooltip">Copy</span>
-              </button>
-            </div>
-            <div class="note note--success" role="status">
-              <span class="material-symbols-outlined note-icon">check_circle</span>
-              <span>API key rotated successfully. Admins and owners have been notified by email.</span>
-            </div>
-          </div>
-          <footer class="dialog-footer">
-            <button class="btn-primary" type="button" id="done">Done</button>
           </footer>
         </div>
       </div>
