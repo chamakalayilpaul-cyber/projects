@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Business information — Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&display=swap" rel="stylesheet" />
+<style>
+  /* ── Design tokens — ported from the "Onboarding through Google Business Profile" repo's tailwind.config.ts ── */
+  :root {
+    --primary: #1976D2;
+    --primary-hover: #1565C0;
+
+    --surface: #ffffff;
+    --surface-l2: #f0f1f5;
+    --surface-shell: #e0e5eb;
+    --surface-hover: #f2f4f7;
+    --surface-selected: #e5e9f0;
+    --surface-selected-l1: #c7d6f6;
+    --surface-subtle: #f7f7f7;
+
+    --control-border: #9e9e9e;
+
+    --border: #e5e9f0;
+    --border-strong: #cccccc;
+    --border-input: #e5e9f0;
+
+    --text-primary: #0d0d12;
+    --text-secondary: #717182;
+    --text-tertiary: #9ca3af;
+    --text-action: #1976D2;
+    --text-icon: #303030;
+
+    --radius: 8px;
+
+    /* spacing scale */
+    --xs: 4px; --sm: 8px; --md: 12px; --lg: 16px; --xl: 20px; --xxl: 24px; --xxxl: 32px; --xxxxl: 40px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text-primary);
+    background: var(--surface-shell);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, select { font-family: inherit; }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* ── App shell ── */
+  .app {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  /* ── Icon rail (52px, collapsed) ── */
+  .rail {
+    width: 52px;
+    flex-shrink: 0;
+    background: var(--surface-shell);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .rail-logo {
+    height: 52px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rail-logo svg { width: 28px; height: 28px; }
+  .rail-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px 0;
+    overflow: hidden;
+  }
+  .rail-item {
+    height: 28px;
+    margin: 0 14px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-icon);
+    background: transparent;
+    border: none;
+  }
+  .rail-item:hover { background: rgba(0,0,0,0.04); }
+  .rail-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .rail-bottom {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+  .rail-item.active {
+    margin: 0 14px;
+    background: var(--surface-selected-l1);
+  }
+  .rail-avatar {
+    margin: 0 14px;
+    height: 28px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .rail-avatar .dot {
+    position: absolute;
+    bottom: -1px;
+    right: 10px;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: #39b54a;
+    border: 1.5px solid var(--surface-shell);
+  }
+  .rail-avatar-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  /* ── Main column ── */
+  .main-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: var(--surface-shell);
+  }
+  .topbar-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-primary);
+  }
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .icon-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--surface-l2);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    transition: background-color .15s;
+  }
+  .icon-btn:hover { background: var(--surface-selected); }
+  .icon-btn .material-symbols-outlined { font-size: 18px; }
+
+  /* ── Content area ── */
+  .content-wrap {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden auto;
+    background: var(--surface-shell);
+    padding: 0 10px 10px;
+  }
+  .content-card {
+    min-height: calc(100% - 0px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 32px;
+  }
+  .page-title { font-size: 18px; line-height: 26px; letter-spacing: -0.36px; font-weight: 600; color: var(--text-primary); margin: 0; }
+  .header-actions { display: flex; align-items: center; gap: 8px; }
+  .btn-cancel {
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-action);
+  }
+  .btn-cancel:hover { background: var(--surface-hover); }
+  .btn-save {
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .btn-save:hover { background: var(--primary-hover); }
+
+  .form-card {
+    margin: 0 32px 32px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 40px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .field-row:first-child { padding-top: 0; }
+  .field-row:last-child { border-bottom: none; }
+
+  .field-label-col {
+    width: 230px;
+    flex-shrink: 0;
+  }
+  .field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+  .required { color: #de1b0c; margin-left: 2px; }
+  .field-hint {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.24px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  .field-hint a { color: var(--text-action); text-decoration: none; }
+  .field-hint a:hover { text-decoration: underline; }
+
+  .field-input-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .text-input {
+    height: 36px;
+    width: 100%;
+    border: 1px solid var(--border-input);
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface);
+    outline: none;
+  }
+  .text-input::placeholder { color: var(--text-tertiary); }
+  .text-input:focus { border-color: var(--primary); }
+
+  .input-row { display: flex; gap: 12px; }
+  /* Fixed 50/50 basis — flex:1 alone splits unevenly here because a plain
+     <div>/<button> flex sibling doesn't shrink like an <input> does, even
+     with min-width:0 (a long-standing Chromium form-control flex quirk). */
+  .input-row > * { flex: 0 0 calc(50% - 6px); min-width: 0; }
+
+  .select-trigger {
+    height: 36px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border: 1px solid var(--border-input);
+    border-radius: 8px;
+    padding: 0 8px 0 12px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface);
+  }
+  .select-trigger:hover { background: var(--surface-l2); }
+  .select-trigger .material-symbols-outlined { font-size: 20px; color: var(--text-icon); }
+
+  /* ── Combo / searchable select (state dropdown) ── */
+  .combo { position: relative; min-width: 0; }
+  .combo.open .select-trigger { border-color: var(--primary); background: var(--surface); }
+  .select-trigger-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    color: var(--text-primary);
+  }
+  .select-trigger-label.placeholder { color: var(--text-tertiary); }
+  .select-trigger-icons { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+  .clear-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+  }
+  .clear-icon:hover { background: var(--surface-selected); color: var(--text-secondary); }
+  .clear-icon .material-symbols-outlined { font-size: 16px; }
+  .clear-icon[hidden] { display: none; }
+  .chevron-icon { transition: transform .15s ease; flex-shrink: 0; }
+  .chevron-icon[hidden] { display: none; }
+  .combo.open .chevron-icon { transform: rotate(180deg); }
+
+  .dropdown-panel {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 264px;
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    padding: 4px;
+    z-index: 50;
+  }
+  .dropdown-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    color: var(--text-primary);
+    text-align: left;
+  }
+  .dropdown-option:hover { background: var(--surface-hover); }
+  .dropdown-option.selected { background: var(--surface-selected); }
+  .dropdown-option .material-symbols-outlined { font-size: 18px; color: var(--primary); visibility: hidden; }
+  .dropdown-option.selected .material-symbols-outlined { visibility: visible; }
+
+  .radio-group { display: flex; align-items: center; gap: 28px; height: 36px; }
+  .radio-option { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-primary); cursor: pointer; }
+  .radio-option input[type="radio"] { accent-color: var(--primary); width: 16px; height: 16px; margin: 0; cursor: pointer; }
+
+  .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-primary); }
+  .checkbox-row input[type="checkbox"] { accent-color: var(--primary); width: 16px; height: 16px; margin: 0; cursor: pointer; }
+  .checkbox-row img { opacity: 0.4; }
+
+  .map-box {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 190px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #cfe5f3;
+  }
+  .map-pin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+  }
+  .map-expand {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+    color: var(--text-icon);
+  }
+  .map-expand .material-symbols-outlined { font-size: 16px; }
+  .map-footer {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 6px;
+    font-size: 10px;
+    color: #4a4a4a;
+    background: rgba(255,255,255,0.6);
+  }
+  .map-footer-left { font-weight: 500; }
+  .map-footer-right { display: flex; gap: 8px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ── Icon rail (ported from IconRail.tsx, collapsed state) ── -->
+  <nav class="rail">
+    <div class="rail-logo">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="14" fill="#1976D2"/>
+        <path d="M9 17.5c1.5-5 3.5-7.5 7-8.5-1 3-3 8.5-7 8.5z" fill="#fff"/>
+      </svg>
+    </div>
+
+    <div class="rail-nav">
+      <!-- Overview -->
+      <button class="rail-item" title="Overview"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 17.5H14.8333C15.7667 17.5 16.2335 17.5 16.59 17.3183C16.9036 17.1586 17.1586 16.9036 17.3183 16.59C17.5 16.2334 17.5 15.7667 17.5 14.8333V8.80425C17.5 8.32558 17.5 8.08627 17.4383 7.86587C17.3837 7.67065 17.2938 7.48703 17.1733 7.32405C17.0372 7.14005 16.8483 6.99313 16.4705 6.69928L10.8186 2.30333C10.5258 2.07562 10.3794 1.96177 10.2178 1.918C10.0752 1.87938 9.92483 1.87938 9.78225 1.918C9.62058 1.96177 9.47417 2.07562 9.18142 2.30333L3.52949 6.69927C3.15168 6.99312 2.96278 7.14005 2.82669 7.32405C2.70614 7.48703 2.61633 7.67065 2.56169 7.86587C2.5 8.08627 2.5 8.32558 2.5 8.80425V14.8333C2.5 15.7667 2.5 16.2334 2.68166 16.59C2.84144 16.9036 3.09641 17.1586 3.41002 17.3183C3.76653 17.5 4.23324 17.5 5.16667 17.5H10ZM10 17.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- AI Search -->
+      <button class="rail-item" title="AI Search"><svg viewBox="4 4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.9375 21.5594C12.6458 21.2656 12.5 20.9125 12.5 20.5H15.5C15.5 20.9167 15.3527 21.2708 15.0581 21.5625C14.7635 21.8542 14.4094 22 13.9956 22C13.5819 22 13.2292 21.8531 12.9375 21.5594ZM11.7558 19.5C11.5436 19.5 11.3646 19.4285 11.2188 19.2856C11.0729 19.1427 11 18.9656 11 18.7544C11 18.5431 11.0718 18.3646 11.2154 18.2188C11.359 18.0729 11.5369 18 11.7492 18H16.2442C16.4564 18 16.6354 18.0715 16.7812 18.2144C16.9271 18.3573 17 18.5344 17 18.7456C17 18.9569 16.9282 19.1354 16.7846 19.2812C16.641 19.4271 16.4631 19.5 16.2508 19.5H11.7558ZM10.6875 17C9.82639 16.4722 9.16319 15.7604 8.69792 14.8646C8.23264 13.9688 8 13.0139 8 12C8 10.3333 8.58333 8.91667 9.75 7.75C10.9167 6.58333 12.3333 6 14 6C15.6667 6 17.0833 6.58333 18.25 7.75C19.4167 8.91667 20 10.3333 20 12C20 13.0139 19.7674 13.9688 19.3021 14.8646C18.8368 15.7604 18.1736 16.4722 17.3125 17H10.6875ZM11.1667 15.5H16.8333C17.3611 15.0694 17.7708 14.5486 18.0625 13.9375C18.3542 13.3264 18.5 12.6806 18.5 12C18.5 10.7454 18.0641 9.68181 17.1923 8.80917C16.3205 7.93639 15.258 7.5 14.0048 7.5C12.7516 7.5 11.6875 7.93639 10.8125 8.80917C9.9375 9.68181 9.5 10.7454 9.5 12C9.5 12.6806 9.64583 13.3264 9.9375 13.9375C10.2292 14.5486 10.6389 15.0694 11.1667 15.5Z" fill="currentColor"/></svg></button>
+      <!-- Listings (pin) -->
+      <button class="rail-item" title="Listings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></button>
+      <!-- Reviews (star) -->
+      <button class="rail-item" title="Reviews"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.40227 2.87776C9.59427 2.48865 9.69035 2.29409 9.82068 2.23192C9.9341 2.17784 10.0659 2.17784 10.1794 2.23192C10.3098 2.29409 10.4058 2.48865 10.5978 2.87776L12.4201 6.5694C12.4768 6.68427 12.5051 6.74171 12.5465 6.78631C12.5833 6.8258 12.6273 6.85779 12.6761 6.88051C12.7313 6.90618 12.7947 6.91545 12.9214 6.93397L16.9975 7.52976C17.4268 7.59249 17.6413 7.62386 17.7407 7.7287C17.8271 7.81991 17.8677 7.94525 17.8513 8.06981C17.8323 8.21298 17.677 8.36433 17.3663 8.667L14.4178 11.5387C14.326 11.6282 14.28 11.673 14.2504 11.7262C14.2241 11.7733 14.2073 11.8252 14.2008 11.8787C14.1934 11.9392 14.2043 12.0025 14.2259 12.1289L14.9217 16.1851C14.995 16.6129 15.0317 16.8268 14.9628 16.9537C14.9028 17.0642 14.7962 17.1417 14.6726 17.1646C14.5305 17.1909 14.3384 17.0898 13.9543 16.8878L10.3103 14.9715C10.1968 14.9118 10.14 14.882 10.0802 14.8702C10.0273 14.8598 9.97277 14.8598 9.91985 14.8702C9.86002 14.882 9.80327 14.9118 9.68977 14.9715L6.04578 16.8878C5.66162 17.0898 5.46953 17.1909 5.32749 17.1646C5.20392 17.1417 5.09728 17.0642 5.0373 16.9537C4.96835 16.8268 5.00504 16.6129 5.07841 16.1851L5.77409 12.1289C5.79578 12.0025 5.80663 11.9392 5.79928 11.8787C5.79278 11.8252 5.77594 11.7733 5.74969 11.7262C5.72003 11.673 5.67408 11.6282 5.58218 11.5387L2.63382 8.667C2.32307 8.36433 2.16769 8.21298 2.14879 8.06981C2.13234 7.94525 2.17298 7.81991 2.25939 7.7287C2.35872 7.62386 2.57333 7.59249 3.00255 7.52976L7.07861 6.93397C7.20537 6.91545 7.26875 6.90618 7.32395 6.88051C7.37282 6.85779 7.41682 6.8258 7.45351 6.78631C7.49494 6.74171 7.52329 6.68427 7.57999 6.5694L9.40227 2.87776Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Social (hub dots) -->
+      <button class="rail-item" title="Social"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.64585 16.5208C1.99308 15.8681 1.66669 15.0833 1.66669 14.1667C1.66669 13.25 1.99308 12.4653 2.64585 11.8125C3.29863 11.1597 4.08335 10.8333 5.00002 10.8333C5.91669 10.8333 6.70141 11.1597 7.35419 11.8125C8.00696 12.4653 8.33335 13.25 8.33335 14.1667C8.33335 15.0833 8.00696 15.8681 7.35419 16.5208C6.70141 17.1736 5.91669 17.5 5.00002 17.5C4.08335 17.5 3.29863 17.1736 2.64585 16.5208ZM12.6459 16.5208C11.9931 15.8681 11.6667 15.0833 11.6667 14.1667C11.6667 13.25 11.9931 12.4653 12.6459 11.8125C13.2986 11.1597 14.0834 10.8333 15 10.8333C15.9167 10.8333 16.7014 11.1597 17.3542 11.8125C18.007 12.4653 18.3334 13.25 18.3334 14.1667C18.3334 15.0833 18.007 15.8681 17.3542 16.5208C16.7014 17.1736 15.9167 17.5 15 17.5C14.0834 17.5 13.2986 17.1736 12.6459 16.5208ZM7.64585 8.1875C6.99308 7.53472 6.66669 6.75 6.66669 5.83333C6.66669 4.91667 6.99308 4.13194 7.64585 3.47917C8.29863 2.82639 9.08335 2.5 10 2.5C10.9167 2.5 11.7014 2.82639 12.3542 3.47917C13.007 4.13194 13.3334 4.91667 13.3334 5.83333C13.3334 6.75 13.007 7.53472 12.3542 8.1875C11.7014 8.84028 10.9167 9.16667 10 9.16667C9.08335 9.16667 8.29863 8.84028 7.64585 8.1875Z" fill="currentColor"/></svg></button>
+      <!-- Content hub -->
+      <button class="rail-item" title="Content hub"><svg viewBox="7.5 7.5 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.3262 16.2797L20.0707 14.4863C20.2915 14.3436 20.402 14.1467 20.402 13.8956C20.402 13.6443 20.2915 13.4465 20.0707 13.3022L17.3262 11.5088C17.0906 11.3498 16.8479 11.3351 16.5979 11.4649C16.3477 11.5946 16.2226 11.8038 16.2226 12.0925V15.696C16.2226 15.9847 16.3477 16.1939 16.5979 16.3236C16.8479 16.4534 17.0906 16.4387 17.3262 16.2797ZM13.4342 19.9915C12.9902 19.9915 12.6438 19.8669 12.3948 19.6176C12.1458 19.3683 12.0213 19.0215 12.0213 18.5771V9.4144C12.0213 8.96999 12.1458 8.62315 12.3948 8.37389C12.6438 8.12463 12.9902 8 13.4342 8H22.5871C23.031 8 23.3775 8.12463 23.6265 8.37389C23.8755 8.62315 24 8.96999 24 9.4144V18.5771C24 19.0215 23.8755 19.3683 23.6265 19.6176C23.3775 19.8669 23.031 19.9915 22.5871 19.9915H13.4342Z" fill="currentColor"/></svg></button>
+      <!-- Marketing Automation (campaigns) -->
+      <button class="rail-item" title="Marketing Automation"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.3334 6.6666V9.99992M8.54169 4.58326H5.66669C4.26655 4.58326 3.56649 4.58326 3.03171 4.85574C2.5613 5.09543 2.17885 5.47788 1.93917 5.94828C1.66669 6.48307 1.66669 7.18313 1.66669 8.58325V9.58325C1.66669 10.3598 1.66669 10.7481 1.79355 11.0544C1.96271 11.4627 2.28717 11.7873 2.69555 11.9564C3.00184 12.0832 3.39012 12.0832 4.16669 12.0832V15.6249C4.16669 15.8184 4.16669 15.9152 4.17471 15.9966C4.25265 16.7879 4.87869 17.414 5.66999 17.4919C5.75148 17.4999 5.84821 17.4999 6.04169 17.4999C6.23516 17.4999 6.3319 17.4999 6.41339 17.4919C7.20468 17.414 7.83073 16.7879 7.90866 15.9966C7.91669 15.9152 7.91669 15.8184 7.91669 15.6249V12.0832H8.54169C10.0137 12.0832 11.8144 12.8723 13.2036 13.6297C14.014 14.0714 14.4193 14.2923 14.6847 14.2598C14.9308 14.2297 15.1169 14.1192 15.2611 13.9175C15.4167 13.7001 15.4167 13.2649 15.4167 12.3947V4.27183C15.4167 3.40159 15.4167 2.96647 15.2611 2.749C15.1169 2.54734 14.9308 2.43684 14.6847 2.4067C14.4193 2.37419 14.014 2.59509 13.2036 3.03689C11.8144 3.79418 10.0137 4.58326 8.54169 4.58326Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Referrals -->
+      <button class="rail-item" title="Referrals"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 5V18.3333M10 5H7.05359C6.61945 5 6.2031 4.82441 5.89613 4.51185C5.58914 4.19929 5.41669 3.77536 5.41669 3.33334C5.41669 2.89131 5.58914 2.46739 5.89613 2.15483C6.2031 1.84226 6.61945 1.66667 7.05359 1.66667C9.34527 1.66667 10 5 10 5ZM10 5H12.9464C13.3806 5 13.7969 4.82441 14.1039 4.51185C14.4109 4.19929 14.5834 3.77536 14.5834 3.33334C14.5834 2.89131 14.4109 2.46739 14.1039 2.15483C13.7969 1.84226 13.3806 1.66667 12.9464 1.66667C10.6548 1.66667 10 5 10 5ZM16.6667 9.16667V15.6667C16.6667 16.6001 16.6667 17.0668 16.485 17.4233C16.3253 17.7369 16.0703 17.9919 15.7567 18.1517C15.4002 18.3333 14.9334 18.3333 14 18.3333H6.00002C5.06659 18.3333 4.59989 18.3333 4.24337 18.1517C3.92976 17.9919 3.67479 17.7369 3.51501 17.4233C3.33335 17.0668 3.33335 16.6001 3.33335 15.6667V9.16667M1.66669 6.33334V7.83334C1.66669 8.30005 1.66669 8.53342 1.75751 8.71167C1.83741 8.8685 1.9649 8.99592 2.1217 9.07584C2.29995 9.16667 2.53331 9.16667 3.00002 9.16667H17C17.4668 9.16667 17.7001 9.16667 17.8784 9.07584C18.0352 8.99592 18.1626 8.8685 18.2425 8.71167C18.3334 8.53342 18.3334 8.30005 18.3334 7.83334V6.33334C18.3334 5.86663 18.3334 5.63327 18.2425 5.45501C18.1626 5.29821 18.0352 5.17073 17.8784 5.09083C17.7001 5 17.4668 5 17 5H3.00002C2.53331 5 2.29995 5 2.1217 5.09083C1.9649 5.17073 1.83741 5.29821 1.75751 5.45501C1.66669 5.63327 1.66669 5.86663 1.66669 6.33334Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Inbox -->
+      <button class="rail-item" title="Inbox" style="position:relative;"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.83333 7.08333H10M5.83333 10H12.5M8.06979 15H13.5C14.9002 15 15.6002 15 16.135 14.7275C16.6054 14.4878 16.9878 14.1054 17.2275 13.635C17.5 13.1002 17.5 12.4002 17.5 11V6.5C17.5 5.09987 17.5 4.3998 17.2275 3.86502C16.9878 3.39462 16.6054 3.01217 16.135 2.77248C15.6002 2.5 14.9002 2.5 13.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86503 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86502C2.5 4.3998 2.5 5.09987 2.5 6.5V16.9462C2.5 17.3903 2.5 17.6123 2.59103 17.7263C2.67018 17.8255 2.79023 17.8832 2.91712 17.8831C3.06303 17.8829 3.23639 17.7442 3.58313 17.4668L5.57101 15.8765C5.9771 15.5517 6.18014 15.3892 6.40624 15.2737C6.60683 15.1712 6.82036 15.0963 7.04101 15.0511C7.28973 15 7.54975 15 8.06979 15Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="position:absolute;top:2px;right:8px;width:6px;height:6px;border-radius:999px;background:#de1b0c;"></span></button>
+      <!-- Front desk -->
+      <button class="rail-item" title="Front desk"><svg viewBox="4 4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 17.4992V8.49417C6 8.08139 6.14931 7.72917 6.44792 7.4375C6.74653 7.14583 7.09722 7 7.5 7H20.5C20.9125 7 21.2656 7.14694 21.5594 7.44083C21.8531 7.73472 22 8.08806 22 8.50083V17.5058C22 17.9186 21.8531 18.2708 21.5594 18.5625C21.2656 18.8542 20.9125 19 20.5 19H18.75C18.5375 19 18.3594 18.9285 18.2156 18.7856C18.0719 18.6427 18 18.4656 18 18.2544C18 18.0431 18.0719 17.8646 18.2156 17.7188C18.3594 17.5729 18.5375 17.5 18.75 17.5H20.5V8.5H7.5V17.5H9.25C9.4625 17.5 9.64062 17.5715 9.78437 17.7144C9.92812 17.8573 10 18.0344 10 18.2456C10 18.4569 9.92812 18.6354 9.78437 18.7812C9.64062 18.9271 9.4625 19 9.25 19H7.5C7.0875 19 6.73438 18.8531 6.44063 18.5592C6.14688 18.2653 6 17.9119 6 17.4992Z" fill="currentColor"/></svg></button>
+      <!-- Surveys -->
+      <button class="rail-item" title="Surveys"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 1.66666V2.83332C12.5 3.30003 12.5 3.53339 12.4091 3.71165C12.3292 3.86845 12.2018 3.99593 12.045 4.07583C11.8667 4.16666 11.6334 4.16666 11.1666 4.16666H8.83331C8.36656 4.16666 8.13325 4.16666 7.95499 4.07583C7.79819 3.99593 7.6707 3.86845 7.5908 3.71165C7.49998 3.53339 7.49998 3.30003 7.49998 2.83332V1.66666M5.99998 18.3333H14C14.9334 18.3333 15.4001 18.3333 15.7566 18.1517C16.0702 17.9919 16.3252 17.7369 16.485 17.4233C16.6666 17.0668 16.6666 16.6001 16.6666 15.6667V4.33332C16.6666 3.3999 16.6666 2.93319 16.485 2.57667C16.3252 2.26306 16.0702 2.0081 15.7566 1.84831C15.4001 1.66666 14.9334 1.66666 14 1.66666H5.99998C5.06656 1.66666 4.59985 1.66666 4.24333 1.84831C3.92972 2.0081 3.67475 2.26306 3.51497 2.57667C3.33331 2.93319 3.33331 3.39991 3.33331 4.33332V15.6667C3.33331 16.6001 3.33331 17.0668 3.51497 17.4233C3.67475 17.7369 3.92972 17.9919 4.24333 18.1517C4.59985 18.3333 5.06655 18.3333 5.99998 18.3333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Ticketing -->
+      <button class="rail-item" title="Ticketing"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.66669 6.66668V5.83334M6.66669 10.4167V9.58334M6.66669 14.1667V13.3333M5.66669 16.6667H14.3334C15.7335 16.6667 16.4335 16.6667 16.9684 16.3942C17.4388 16.1545 17.8212 15.7721 18.0609 15.3017C18.3334 14.7668 18.3334 14.0668 18.3334 12.6667V7.33334C18.3334 5.93321 18.3334 5.23314 18.0609 4.69837C17.8212 4.22796 17.4388 3.84551 16.9684 3.60583C16.4335 3.33334 15.7335 3.33334 14.3334 3.33334H5.66669C4.26655 3.33334 3.56649 3.33334 3.03171 3.60583C2.5613 3.84551 2.17885 4.22796 1.93917 4.69837C1.66669 5.23314 1.66669 5.93321 1.66669 7.33334V12.6667C1.66669 14.0668 1.66669 14.7668 1.93917 15.3017C2.17885 15.7721 2.5613 16.1545 3.03171 16.3942C3.56649 16.6667 4.26655 16.6667 5.66669 16.6667Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Insights -->
+      <button class="rail-item" title="Insights"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.33335 14.7155V16.6667C8.33335 17.5872 9.07952 18.3334 10 18.3334C10.9205 18.3334 11.6667 17.5872 11.6667 16.6667V14.7155M10 1.66669V2.50002M2.50002 10H1.66669M4.58335 4.58335L4.08327 4.08327M15.4167 4.58335L15.9169 4.08327M18.3334 10H17.5M15 10C15 12.7614 12.7614 15 10 15C7.23859 15 5.00002 12.7614 5.00002 10C5.00002 7.23859 7.23859 5.00002 10 5.00002C12.7614 5.00002 15 7.23859 15 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Competitors -->
+      <button class="rail-item" title="Competitors"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.66669 14.1667V14.0415C1.66669 13.7777 1.66669 13.6459 1.68686 13.5174C1.70477 13.4033 1.73449 13.2914 1.77553 13.1835C1.82176 13.0619 1.88719 12.9474 2.01804 12.7185L5.00002 7.5M1.66669 14.1667C1.66669 16.0076 3.15907 17.5 5.00002 17.5C6.84097 17.5 8.33335 16.0076 8.33335 14.1667M5.00002 7.5L7.982 12.7185M5.00002 7.5L15 5.83333M15 5.83333L12.018 11.0518M15 5.83333L17.982 11.0518M11.6667 12.5C11.6667 14.3409 13.1591 15.8333 15 15.8333C16.8409 15.8333 18.3334 14.3409 18.3334 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Reports -->
+      <button class="rail-item" title="Reports"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.66667 10.8333V14.1667M13.3333 9.16667V14.1667M10 5.83333V14.1667M6.5 17.5H13.5C14.9002 17.5 15.6002 17.5 16.135 17.2275C16.6054 16.9878 16.9878 16.6054 17.2275 16.135C17.5 15.6002 17.5 14.9002 17.5 13.5V6.5C17.5 5.09987 17.5 4.3998 17.2275 3.86503C16.9878 3.39462 16.6054 3.01217 16.135 2.77248C15.6002 2.5 14.9002 2.5 13.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86503 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86503C2.5 4.3998 2.5 5.09987 2.5 6.5V13.5C2.5 14.9002 2.5 15.6002 2.77248 16.135C3.01217 16.6054 3.39462 16.9878 3.86503 17.2275C4.3998 17.5 5.09987 17.5 6.5 17.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <!-- Patients -->
+      <button class="rail-item" title="Patients"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18.3334 17.5V15.8333C18.3334 14.2802 17.271 12.9751 15.8334 12.605M12.9167 2.7423C14.1383 3.23679 15 4.43442 15 5.83333C15 7.23224 14.1383 8.42992 12.9167 8.92433M14.1667 17.5C14.1667 15.9468 14.1667 15.1703 13.9129 14.5577C13.5746 13.741 12.9257 13.0921 12.1089 12.7537C11.4964 12.5 10.7199 12.5 9.16669 12.5H6.66669C5.11354 12.5 4.33698 12.5 3.72441 12.7537C2.90765 13.0921 2.25874 13.741 1.92042 14.5577C1.66669 15.1703 1.66669 15.9468 1.66669 17.5M11.25 5.83333C11.25 7.67428 9.7576 9.16667 7.91669 9.16667C6.07574 9.16667 4.58335 7.67428 4.58335 5.83333C4.58335 3.99238 6.07574 2.5 7.91669 2.5C9.7576 2.5 11.25 3.99238 11.25 5.83333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+
+    <div class="rail-bottom">
+      <button class="rail-item active" title="Settings"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0004 12.5C11.3811 12.5 12.5004 11.3807 12.5004 10C12.5004 8.61925 11.3811 7.5 10.0004 7.5C8.61969 7.5 7.50043 8.61925 7.50043 10C7.50043 11.3807 8.61969 12.5 10.0004 12.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.74129 16.1426L8.22833 17.238C8.37314 17.564 8.60939 17.8411 8.90848 18.0355C9.20764 18.2299 9.55673 18.3334 9.91348 18.3334C10.2703 18.3334 10.6194 18.2299 10.9185 18.0355C11.2176 17.8411 11.4539 17.564 11.5987 17.238L12.0857 16.1426C12.2591 15.7539 12.5507 15.4299 12.9191 15.2167C13.2897 15.0029 13.7185 14.9118 14.1441 14.9565L15.3357 15.0834C15.6905 15.1209 16.0485 15.0547 16.3663 14.8928C16.6841 14.7309 16.9482 14.4803 17.1265 14.1714C17.305 13.8625 17.39 13.5086 17.3712 13.1524C17.3525 12.7963 17.2308 12.4532 17.0209 12.1649L16.3154 11.1954C16.0641 10.8476 15.9299 10.429 15.9321 10C15.932 9.57219 16.0675 9.15535 16.3191 8.80927L17.0246 7.83984C17.2345 7.55148 17.3562 7.20841 17.375 6.85224C17.3937 6.49609 17.3086 6.14214 17.1301 5.83335C16.9519 5.52438 16.6879 5.27376 16.37 5.11188C16.0521 4.94999 15.6941 4.88379 15.3395 4.92132L14.1478 5.04817C13.7222 5.09286 13.2934 5.00179 12.9228 4.78799C12.5537 4.57356 12.262 4.24782 12.0895 3.85743L11.5987 2.76205C11.4539 2.436 11.2176 2.15895 10.9185 1.96452C10.6194 1.77009 10.2703 1.66663 9.91348 1.66669C9.55673 1.66663 9.20764 1.77009 8.90848 1.96452C8.60939 2.15895 8.37314 2.436 8.22833 2.76205L7.74129 3.85743C7.56873 4.24782 7.27702 4.57356 6.90795 4.78799C6.5373 5.00179 6.10851 5.09286 5.68295 5.04817L4.48759 4.92132C4.13286 4.88379 3.77487 4.94999 3.45701 5.11188C3.13916 5.27376 2.8751 5.52438 2.69685 5.83335C2.51836 6.14214 2.43333 6.49609 2.45207 6.85224C2.4708 7.20841 2.5925 7.55148 2.8024 7.83984L3.50795 8.80927C3.75957 9.15535 3.89507 9.57219 3.89499 10C3.89507 10.4279 3.75957 10.8448 3.50795 11.1908L2.8024 12.1602C2.5925 12.4485 2.4708 12.7916 2.45207 13.1478C2.43333 13.5039 2.51836 13.8579 2.69685 14.1667C2.87528 14.4755 3.13937 14.726 3.45718 14.8879C3.77499 15.0497 4.13289 15.116 4.48759 15.0787L5.67925 14.9519C6.10481 14.9072 6.53359 14.9983 6.90425 15.212C7.27469 15.4259 7.56776 15.7517 7.74129 16.1426Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="rail-item" title="Help"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8.25"/><path d="M7.6 7.5a2.4 2.4 0 0 1 4.66.8c0 1.6-2.26 2-2.26 3.2"/><circle cx="10" cy="14" r="0.2" fill="currentColor"/></svg></button>
+      <div class="rail-avatar">
+        <span class="rail-avatar-circle">AC</span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main column ── -->
+  <div class="main-col">
+    <div class="topbar">
+      <span class="topbar-title">Settings</span>
+      <div class="topbar-actions">
+        <button class="icon-btn" aria-label="Create new"><span class="material-symbols-outlined">add</span></button>
+        <button class="icon-btn" aria-label="Apps"><span class="material-symbols-outlined">apps</span></button>
+        <button class="icon-btn" aria-label="Menu"><span class="material-symbols-outlined">menu</span></button>
+      </div>
+    </div>
+
+    <div class="content-wrap">
+      <div class="content-card">
+        <div class="page-header">
+          <h1 class="page-title">Business information</h1>
+          <div class="header-actions">
+            <button class="btn-cancel">Cancel</button>
+            <button class="btn-save">Save</button>
+          </div>
+        </div>
+
+        <div class="form-card">
+
+          <!-- Name -->
+          <div class="field-row">
+            <div class="field-label-col">
+              <p class="field-label">Name<span class="required">*</span></p>
+              <p class="field-hint">For guidelines to represent your business, <a href="#">click here</a></p>
+            </div>
+            <div class="field-input-col">
+              <input class="text-input" type="text" value="Test location 12 oct" />
+            </div>
+          </div>
+
+          <!-- Type -->
+          <div class="field-row">
+            <div class="field-label-col">
+              <p class="field-label">Type</p>
+            </div>
+            <div class="field-input-col">
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="type" checked /> Physical location</label>
+                <label class="radio-option"><input type="radio" name="type" /> Provider</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="field-row">
+            <div class="field-label-col">
+              <p class="field-label">Address<span class="required">*</span></p>
+            </div>
+            <div class="field-input-col">
+              <div class="input-row">
+                <button class="select-trigger" type="button">United States <span class="material-symbols-outlined">expand_more</span></button>
+                <input class="text-input" type="text" value="Tedt" />
+              </div>
+              <div class="input-row">
+                <input class="text-input" type="text" value="11" />
+                <input class="text-input" type="text" placeholder="City" />
+              </div>
+              <div class="input-row">
+                <div class="combo" id="stateCombo">
+                  <button class="select-trigger" type="button" id="stateTrigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="select-trigger-label placeholder" id="stateLabel">Select state</span>
+                    <span class="select-trigger-icons">
+                      <span class="clear-icon" id="stateClear" role="button" aria-label="Clear selection" hidden>
+                        <span class="material-symbols-outlined">close</span>
+                      </span>
+                      <span class="material-symbols-outlined chevron-icon" id="stateChevron">expand_more</span>
+                    </span>
+                  </button>
+                  <div class="dropdown-panel" id="stateDropdown" role="listbox" tabindex="-1" hidden></div>
+                </div>
+                <input class="text-input" type="text" value="10004" />
+              </div>
+
+              <label class="checkbox-row" style="margin-top:4px;">
+                <input type="checkbox" />
+                Hide address in listing
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI4IiBjeT0iOCIgcj0iNi41IiBzdHJva2U9IiMzMDMwMzAiLz48cGF0aCBkPSJNOCA3LjJWMTEiIHN0cm9rZT0iIzMwMzAzMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iOCIgY3k9IjUuMiIgcj0iMC44IiBmaWxsPSIjMzAzMDMwIi8+PC9zdmc+" width="14" height="14" alt="" />
+              </label>
+              <label class="checkbox-row">
+                <input type="checkbox" />
+                We deliver or provide service at customer locations
+              </label>
+            </div>
+          </div>
+
+          <!-- Sync name and address -->
+          <div class="field-row">
+            <div class="field-label-col">
+              <p class="field-label">Sync name and address</p>
+              <p class="field-hint">Changes to your name and address sync to your Google Business Profile</p>
+            </div>
+            <div class="field-input-col">
+              <label class="checkbox-row">
+                <input type="checkbox" />
+                Sync to your Google Business Profile
+              </label>
+            </div>
+          </div>
+
+          <!-- Map marker -->
+          <div class="field-row">
+            <div class="field-label-col">
+              <p class="field-label">Map marker<span class="required">*</span></p>
+            </div>
+            <div class="field-input-col">
+              <div class="map-box">
+                <svg class="map-pin" width="26" height="36" viewBox="0 0 26 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13 0C5.8203 0 0 5.8203 0 13C0 22.75 13 36 13 36C13 36 26 22.75 26 13C26 5.8203 20.1797 0 13 0Z" fill="#EA4335"/>
+                  <circle cx="13" cy="13" r="5" fill="#fff"/>
+                </svg>
+                <button class="map-expand" aria-label="Expand map"><span class="material-symbols-outlined">open_in_full</span></button>
+                <div class="map-footer">
+                  <span class="map-footer-left">Google</span>
+                  <span class="map-footer-right"><span>Keyboard shortcuts</span><span>Map data &copy;2026</span><span>Terms</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main phone number -->
+          <div class="field-row">
+            <div class="field-label-col">
+              <p class="field-label">Main phone number</p>
+              <p class="field-hint">We recommend you to put your local number. This will be the default number across all social listings</p>
+            </div>
+            <div class="field-input-col">
+              <input class="text-input" type="tel" value="(202) 555-0123" style="max-width: 420px;" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    var US_STATES = [
+      'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
+      'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
+      'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan',
+      'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
+      'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
+      'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota',
+      'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia',
+      'Wisconsin', 'Wyoming'
+    ];
+    var PLACEHOLDER = 'Select state';
+
+    var combo = document.getElementById('stateCombo');
+    var trigger = document.getElementById('stateTrigger');
+    var label = document.getElementById('stateLabel');
+    var clearBtn = document.getElementById('stateClear');
+    var chevron = document.getElementById('stateChevron');
+    var panel = document.getElementById('stateDropdown');
+
+    var selected = null;
+
+    panel.innerHTML = US_STATES.map(function (state) {
+      return '<button type="button" class="dropdown-option" data-state="' + state + '" role="option">' +
+        '<span>' + state + '</span>' +
+        '<span class="material-symbols-outlined">check</span>' +
+        '</button>';
+    }).join('');
+
+    var options = Array.prototype.slice.call(panel.querySelectorAll('.dropdown-option'));
+
+    function openDropdown() {
+      panel.hidden = false;
+      combo.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDropdown() {
+      panel.hidden = true;
+      combo.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    function isOpen() {
+      return !panel.hidden;
+    }
+
+    function selectState(state) {
+      selected = state;
+      label.textContent = state;
+      label.classList.remove('placeholder');
+      clearBtn.hidden = false;
+      chevron.hidden = true;
+      options.forEach(function (opt) {
+        opt.classList.toggle('selected', opt.getAttribute('data-state') === state);
+      });
+    }
+
+    function clearSelection() {
+      selected = null;
+      label.textContent = PLACEHOLDER;
+      label.classList.add('placeholder');
+      clearBtn.hidden = true;
+      chevron.hidden = false;
+      options.forEach(function (opt) {
+        opt.classList.remove('selected');
+      });
+    }
+
+    trigger.addEventListener('click', function () {
+      isOpen() ? closeDropdown() : openDropdown();
+    });
+
+    clearBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      clearSelection();
+      closeDropdown();
+    });
+
+    options.forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        selectState(opt.getAttribute('data-state'));
+        closeDropdown();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!combo.contains(e.target)) closeDropdown();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDropdown();
+    });
+  })();
+</script>
+
+</body>
+</html>
