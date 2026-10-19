@@ -490,7 +490,6 @@ a:hover { text-decoration: underline; }
 }
 
 .password-toggle {
-  position: relative;
   width: 28px;
   height: 28px;
   display: inline-flex;
@@ -637,6 +636,13 @@ a:hover { text-decoration: underline; }
   flex-shrink: 0;
 }
 
+.key-info.is-success {
+  background: #f1faf0;
+  color: #212121;
+}
+
+.key-info.is-success .material-symbols-outlined { color: var(--ok-ink); }
+
 .facts {
   display: grid;
   grid-template-columns: 180px minmax(0, 1fr);
@@ -703,8 +709,6 @@ a:hover { text-decoration: underline; }
   cursor: pointer;
   padding: 0;
 }
-
-.icon-btn.has-tooltip { position: relative; }
 
 .icon-btn:hover { background: #f5f5f5; color: var(--ink); }
 
@@ -938,75 +942,11 @@ a:hover { text-decoration: underline; }
   z-index: 2;
 }
 
-.copy-tooltip--above {
-  top: auto;
-  bottom: calc(100% + 6px);
-}
-
 .copy-btn:hover .copy-tooltip,
-.copy-btn:focus-visible .copy-tooltip,
-.icon-btn:hover .copy-tooltip,
-.icon-btn:focus-visible .copy-tooltip,
-.password-toggle:hover .copy-tooltip,
-.password-toggle:focus-visible .copy-tooltip {
+.copy-btn:focus-visible .copy-tooltip {
   opacity: 1;
   visibility: visible;
 }
-
-.toast {
-  position: fixed;
-  top: 24px;
-  left: 50%;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  max-width: min(420px, calc(100vw - 32px));
-  padding: 14px 16px;
-  border: 1px solid #eaeaea;
-  border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  color: #212121;
-  font-size: 14px;
-  line-height: 20px;
-  transform: translateX(-50%) translateY(-8px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.toast.is-visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-  pointer-events: auto;
-}
-
-.toast-icon {
-  font-size: 20px;
-  color: var(--ok-ink);
-}
-
-.toast-text { flex: 1; }
-
-.toast-close {
-  width: 24px;
-  height: 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.toast-close:hover { background: rgb(242, 244, 247); }
-
-.toast-close .material-symbols-outlined { font-size: 16px; }
 
 .dialog-footer {
   padding: 12px 24px 20px;
