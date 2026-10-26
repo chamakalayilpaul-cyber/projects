@@ -1,0 +1,10 @@
+{
+  "name": "projects",
+  "scripts": {
+    "prepare": "molt install-hook || true"
+  },
+  "private": true,
+  "optionalDependencies": {
+    "molt": "github:rishisharma-tech/molt#v0.12.0"
+  }
+}
