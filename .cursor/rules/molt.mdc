@@ -1,0 +1,33 @@
+---
+description: Molt copy check for Birdeye UI text. Applies to every commit and pull request.
+alwaysApply: true
+---
+
+# Molt copy check
+
+This repo runs Molt on every commit. Molt checks UI text against the Birdeye style guide. It prints a table with the columns Priority, Where, String, Rule and Fix.
+
+Molt sets the boundary. You report what Molt found. The designer decides what happens next.
+
+## When a commit shows a Molt table
+
+1. Show the designer the table in chat. Keep the columns: Priority, Where, String, Rule, Fix. Add one line saying whether the commit went through or was blocked.
+2. Then stop. Ask the designer what they want to do. Do not edit any file and do not run another commit on your own.
+3. Rewrite a string only when the designer asks you to.
+   - Change only the flagged string, nothing else in the file.
+   - Use Molt's Fix column. If it gives no replacement, suggest one and wait for a yes before you edit.
+   - Tell the designer the old text and the new text.
+   - Commit again only if the designer asked for that.
+4. If the flag looks wrong, say so. Suggest asking the content designer. Do not dismiss a flag on your own.
+
+## Never
+
+- Never rewrite, reword or "clean up" copy unless the designer asked you to.
+- Never run `git commit --no-verify` or `git push --no-verify`.
+- Never edit `molt.config.json`, `molt-ignore.txt` or the git hook to get past Molt.
+- Never get a commit through by leaving the flagged file or string out, unstaging it, or splitting the commit. Tell the designer instead.
+- Never write copy that breaks the style guide just to make a commit pass.
+
+## Pull requests
+
+After the PR is open, tell the designer that Molt also runs on the PR. Its findings appear as annotations in the Files changed tab. If a check fails, show the findings and ask the designer what to do. Do not fix strings on your own.
