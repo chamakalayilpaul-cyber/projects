@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Front desk agent — Language router</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&display=swap" rel="stylesheet" />
+<style>
+  /* ── Design tokens — ported from the myna-automotive prototype's tailwind.config.ts ── */
+  :root {
+    --primary: #1976D2;
+    --primary-hover: #1565C0;
+
+    --surface: #ffffff;
+    --surface-l2: #f0f1f5;
+    --surface-shell: #e0e5eb;
+    --surface-hover: #f2f4f7;
+    --surface-selected: #e5e9f0;
+    --surface-selected-l1: #c7d6f6;
+    --surface-subtle: #f7f7f7;
+
+    --border: #e5e9f0;
+    --border-strong: #cccccc;
+
+    --text-primary: #0d0d12;
+    --text-secondary: #717182;
+    --text-tertiary: #9ca3af;
+    --text-action: #1976D2;
+    --text-icon: #303030;
+
+    --success: #16a34a;
+    --success-bg: #dcfce7;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --warning: #b45309;
+    --warning-bg: #fef3c7;
+    --info: #1976D2;
+    --info-bg: #e8f1fc;
+    --neutral: #6b7280;
+    --neutral-bg: #f3f4f6;
+
+    --trigger: #1976D2;
+    --procedures: #7c3aed;
+    --branch: #b45309;
+
+    --radius: 8px;
+    --xs: 4px; --sm: 8px; --md: 12px; --lg: 16px; --xl: 20px; --xxl: 24px; --xxxl: 32px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text-primary);
+    background: var(--surface-shell);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* ── App shell ── */
+  .app { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
+
+  /* ── Icon rail (52px, collapsed) ── */
+  .rail { width: 52px; flex-shrink: 0; background: var(--surface-shell); display: flex; flex-direction: column; height: 100%; }
+  .rail-logo { height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .rail-logo svg { width: 28px; height: 28px; }
+  .rail-nav { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 6px 0; }
+  .rail-item { height: 28px; margin: 0 14px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--text-icon); background: transparent; border: none; }
+  .rail-item:hover { background: rgba(0,0,0,0.04); }
+  .rail-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .rail-item.active { background: var(--surface-selected-l1); }
+  .rail-bottom { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; padding: 12px 0; border-top: 1px solid var(--border); }
+  .rail-avatar-circle { width: 24px; height: 24px; border-radius: 999px; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-secondary); margin: 0 14px; }
+
+  /* ── Main column ── */
+  .main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: var(--surface-shell); }
+  .topbar-title { font-size: 13px; color: var(--text-secondary); }
+  .topbar-actions { display: flex; align-items: center; gap: 6px; }
+  .icon-btn { width: 30px; height: 30px; border-radius: 8px; background: var(--surface-l2); border: none; display: flex; align-items: center; justify-content: center; color: var(--text-primary); }
+  .icon-btn:hover { background: var(--surface-selected); }
+  .icon-btn .material-symbols-outlined { font-size: 18px; }
+
+  .content-wrap { flex: 1; min-height: 0; overflow: hidden auto; background: var(--surface-shell); padding: 0 10px 10px; }
+  .content-card { min-height: calc(100% - 0px); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+
+  /* ── Page header ── */
+  .page-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 32px 0; }
+  .breadcrumb { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+  .page-title { font-size: 20px; line-height: 28px; font-weight: 400; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 10px; }
+  .status-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; padding: 3px 10px 3px 8px; border-radius: 999px; }
+  .status-chip .dot { width: 6px; height: 6px; border-radius: 999px; }
+  .status-chip.active { background: var(--success-bg); color: var(--success); }
+  .status-chip.active .dot { background: var(--success); }
+  .status-chip.resolved { background: var(--success-bg); color: var(--success); }
+  .status-chip.not-resolved { background: var(--danger-bg); color: var(--danger); }
+  .status-chip.in-progress { background: var(--info-bg); color: var(--info); }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; gap: 4px; padding: 16px 32px 0; border-bottom: 1px solid var(--border); margin-top: 16px; }
+  .tab { background: none; border: none; padding: 0 2px 11px; margin-right: 24px; font-size: 14px; color: var(--text-secondary); border-bottom: 2px solid transparent; }
+  .tab:hover { color: var(--text-primary); }
+  .tab.active { color: var(--text-primary); border-bottom-color: var(--primary); }
+  .tab-panel { padding: 28px 32px 32px; }
+
+  /* ── Flow canvas ── */
+  .canvas-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 8px 0; }
+  .canvas-wrap.mini { padding: 0 0 20px; }
+  .canvas-wrap.mini .node { width: 158px; }
+  .canvas-wrap.mini .node-body { padding: 7px 9px 8px; }
+  .canvas-wrap.mini .node-type { font-size: 8.5px; margin-bottom: 1px; }
+  .canvas-wrap.mini .node-title { font-size: 11.5px; margin-bottom: 5px; }
+  .canvas-wrap.mini .node-chips { gap: 4px; }
+  .canvas-wrap.mini .node-chip { font-size: 9.5px; padding: 2px 6px; }
+  .canvas-wrap.mini .connector { height: 14px; }
+  .canvas-wrap.mini .fanout { max-width: 540px; padding-top: 14px; }
+  .canvas-wrap.mini .fanout-col { padding: 0 6px; }
+  .canvas-wrap.mini .fanout-col::before { top: -14px; height: 14px; }
+  .canvas-wrap.mini .branch-label { font-size: 10.5px; padding: 3px 9px; margin-bottom: 8px; }
+  .node { width: 300px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); overflow: hidden; transition: opacity .15s, box-shadow .15s; }
+  .node-bar { height: 4px; }
+  .node-bar.trigger { background: var(--trigger); }
+  .node-bar.procedures { background: var(--procedures); }
+  .node-bar.branch { background: var(--branch); }
+  .node-body { padding: 10px 14px 12px; }
+  .node-type { font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 2px; }
+  .node-title { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
+  .node-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .node-chip { font-size: 11.5px; color: var(--text-secondary); background: var(--surface-l2); border-radius: 5px; padding: 3px 8px; }
+  .connector { width: 2px; height: 22px; background: var(--border-strong); }
+  .fanout { display: flex; width: 100%; max-width: 980px; padding-top: 22px; margin-top: -1px; border-top: 2px solid var(--border-strong); position: relative; }
+  .fanout-col { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; padding: 0 14px; }
+  .fanout-col::before { content: ''; position: absolute; top: -22px; left: 50%; width: 2px; height: 22px; background: var(--border-strong); }
+  .branch-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--text-primary); background: var(--surface-l2); border-radius: 999px; padding: 4px 12px; margin-bottom: 14px; }
+  .branch-label.fallback { color: var(--warning); background: var(--warning-bg); }
+  .branch-label .material-symbols-outlined { font-size: 15px; }
+
+  .node.idle { opacity: 0.35; }
+  .node.executed { box-shadow: 0 0 0 2px var(--success), 0 2px 8px rgba(22,163,74,0.15); }
+  .fanout-col.idle .branch-label { opacity: 0.35; }
+  .fanout-col.executed .branch-label { background: var(--success-bg); color: var(--success); }
+
+  /* ── Logs table ── */
+  .logs-table { width: 100%; border-collapse: collapse; }
+  .logs-table th { text-align: left; font-size: 12px; font-weight: 500; color: var(--text-secondary); padding: 0 16px 10px; border-bottom: 1px solid var(--border); }
+  .logs-table td { padding: 13px 16px; font-size: 13.5px; color: var(--text-primary); border-bottom: 1px solid var(--border); }
+  .logs-table tr.log-row { cursor: pointer; }
+  .logs-table tr.log-row:hover td { background: var(--surface-hover); }
+  .logs-table td.topic { color: var(--text-secondary); }
+
+  /* ── Outcomes tab ── */
+  .outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .outcomes-card { border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+  .outcomes-card h3 { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .outcomes-card p, .outcomes-card li { font-size: 14px; line-height: 21px; color: var(--text-primary); }
+  .outcomes-card ol { margin: 0; padding-left: 18px; }
+  .outcomes-card ol li { margin-bottom: 6px; }
+  .locations-chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .locations-chip-row span { font-size: 12px; background: var(--surface-l2); color: var(--text-secondary); padding: 4px 10px; border-radius: 999px; }
+
+  /* ── Slide-over log panel ── */
+  .overlay { position: fixed; inset: 0; background: rgba(13,13,18,0.32); z-index: 40; opacity: 0; transition: opacity .15s; }
+  .overlay.open { opacity: 1; }
+  .log-panel { position: fixed; top: 0; right: -620px; width: 600px; max-width: calc(100vw - 24px); height: 100%; background: var(--surface); box-shadow: -4px 0 24px rgba(0,0,0,0.12); z-index: 50; display: flex; flex-direction: column; transition: right .2s ease-out; }
+  .log-panel.open { right: 0; }
+  .log-panel-header { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .log-panel-header h2 { font-size: 16px; font-weight: 500; margin: 0 0 4px; }
+  .log-panel-header .meta { font-size: 12.5px; color: var(--text-secondary); }
+  .log-panel-close { width: 28px; height: 28px; border-radius: 6px; border: none; background: var(--surface-l2); display: flex; align-items: center; justify-content: center; color: var(--text-primary); flex-shrink: 0; }
+  .log-panel-close:hover { background: var(--surface-selected); }
+  .log-panel-tabs { display: flex; gap: 20px; padding: 0 24px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .ptab { background: none; border: none; padding: 12px 0 11px; font-size: 13.5px; color: var(--text-secondary); border-bottom: 2px solid transparent; }
+  .ptab.active { color: var(--text-primary); border-bottom-color: var(--primary); }
+  .log-panel-body { flex: 1; overflow-y: auto; padding: 20px 24px 28px; }
+
+  .step-row { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .step-row:last-child { border-bottom: none; }
+  .step-dot { width: 22px; height: 22px; border-radius: 999px; background: var(--surface-l2); color: var(--text-secondary); font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-dot.trigger { background: var(--info-bg); color: var(--trigger); }
+  .step-dot.procedures { background: #ede9fe; color: var(--procedures); }
+  .step-dot.branch { background: var(--warning-bg); color: var(--branch); }
+  .step-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .step-title { font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
+  .step-ms { font-size: 11.5px; color: var(--text-tertiary); flex-shrink: 0; }
+  .step-kv { margin-top: 6px; display: flex; flex-direction: column; gap: 3px; }
+  .step-kv div { font-size: 12.5px; color: var(--text-secondary); }
+  .step-kv b { color: var(--text-primary); font-weight: 500; }
+
+  .transcript-line { margin-bottom: 10px; display: flex; }
+  .transcript-line.system { justify-content: center; }
+  .transcript-line.agent { justify-content: flex-start; }
+  .transcript-line.caller { justify-content: flex-end; }
+  .sys-pill { font-size: 11.5px; color: var(--text-tertiary); background: var(--surface-l2); border-radius: 999px; padding: 4px 12px; }
+  .sys-pill.highlight { color: var(--primary); background: var(--info-bg); font-weight: 500; }
+  .bubble { max-width: 78%; border-radius: 10px; padding: 9px 12px; font-size: 13.5px; line-height: 19px; }
+  .bubble.agent { background: var(--surface-l2); color: var(--text-primary); border-bottom-left-radius: 3px; }
+  .bubble.caller { background: var(--primary); color: #fff; border-bottom-right-radius: 3px; }
+  .bubble-time { font-size: 10.5px; color: var(--text-tertiary); display: block; margin-top: 4px; }
+  .bubble.caller .bubble-time { color: rgba(255,255,255,0.75); }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <nav class="rail">
+    <div class="rail-logo">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="14" fill="#1976D2"/>
+        <path d="M9 17.5c1.5-5 3.5-7.5 7-8.5-1 3-3 8.5-7 8.5z" fill="#fff"/>
+      </svg>
+    </div>
+    <div class="rail-nav">
+      <button class="rail-item" title="Overview"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 17.5H14.8333C15.7667 17.5 16.2335 17.5 16.59 17.3183C16.9036 17.1586 17.1586 16.9036 17.3183 16.59C17.5 16.2334 17.5 15.7667 17.5 14.8333V8.80425C17.5 8.32558 17.5 8.08627 17.4383 7.86587C17.3837 7.67065 17.2938 7.48703 17.1733 7.32405C17.0372 7.14005 16.8483 6.99313 16.4705 6.69928L10.8186 2.30333C10.5258 2.07562 10.3794 1.96177 10.2178 1.918C10.0752 1.87938 9.92483 1.87938 9.78225 1.918C9.62058 1.96177 9.47417 2.07562 9.18142 2.30333L3.52949 6.69927C3.15168 6.99312 2.96278 7.14005 2.82669 7.32405C2.70614 7.48703 2.61633 7.67065 2.56169 7.86587C2.5 8.08627 2.5 8.32558 2.5 8.80425V14.8333C2.5 15.7667 2.5 16.2334 2.68166 16.59C2.84144 16.9036 3.09641 17.1586 3.41002 17.3183C3.76653 17.5 4.23324 17.5 5.16667 17.5H10ZM10 17.5V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="rail-item active" title="Front desk"><svg viewBox="4 4 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 17.4992V8.49417C6 8.08139 6.14931 7.72917 6.44792 7.4375C6.74653 7.14583 7.09722 7 7.5 7H20.5C20.9125 7 21.2656 7.14694 21.5594 7.44083C21.8531 7.73472 22 8.08806 22 8.50083V17.5058C22 17.9186 21.8531 18.2708 21.5594 18.5625C21.2656 18.8542 20.9125 19 20.5 19H18.75C18.5375 19 18.3594 18.9285 18.2156 18.7856C18.0719 18.6427 18 18.4656 18 18.2544C18 18.0431 18.0719 17.8646 18.2156 17.7188C18.3594 17.5729 18.5375 17.5 18.75 17.5H20.5V8.5H7.5V17.5H9.25C9.4625 17.5 9.64062 17.5715 9.78437 17.7144C9.92812 17.8573 10 18.0344 10 18.2456C10 18.4569 9.92812 18.6354 9.78437 18.7812C9.64062 18.9271 9.4625 19 9.25 19H7.5C7.0875 19 6.73438 18.8531 6.44063 18.5592C6.14688 18.2653 6 17.9119 6 17.4992Z" fill="currentColor"/></svg></button>
+      <button class="rail-item" title="Reports"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.66667 10.8333V14.1667M13.3333 9.16667V14.1667M10 5.83333V14.1667M6.5 17.5H13.5C14.9002 17.5 15.6002 17.5 16.135 17.2275C16.6054 16.9878 16.9878 16.6054 17.2275 16.135C17.5 15.6002 17.5 14.9002 17.5 13.5V6.5C17.5 5.09987 17.5 4.3998 17.2275 3.86503C16.9878 3.39462 16.6054 3.01217 16.135 2.77248C15.6002 2.5 14.9002 2.5 13.5 2.5H6.5C5.09987 2.5 4.3998 2.5 3.86503 2.77248C3.39462 3.01217 3.01217 3.39462 2.77248 3.86503C2.5 4.3998 2.5 5.09987 2.5 6.5V13.5C2.5 14.9002 2.5 15.6002 2.77248 16.135C3.01217 16.6054 3.39462 16.9878 3.86503 17.2275C4.3998 17.5 5.09987 17.5 6.5 17.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="rail-bottom">
+      <button class="rail-item" title="Settings"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.0004 12.5C11.3811 12.5 12.5004 11.3807 12.5004 10C12.5004 8.61925 11.3811 7.5 10.0004 7.5C8.61969 7.5 7.50043 8.61925 7.50043 10C7.50043 11.3807 8.61969 12.5 10.0004 12.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.74129 16.1426L8.22833 17.238C8.37314 17.564 8.60939 17.8411 8.90848 18.0355C9.20764 18.2299 9.55673 18.3334 9.91348 18.3334C10.2703 18.3334 10.6194 18.2299 10.9185 18.0355C11.2176 17.8411 11.4539 17.564 11.5987 17.238L12.0857 16.1426C12.2591 15.7539 12.5507 15.4299 12.9191 15.2167C13.2897 15.0029 13.7185 14.9118 14.1441 14.9565L15.3357 15.0834C15.6905 15.1209 16.0485 15.0547 16.3663 14.8928C16.6841 14.7309 16.9482 14.4803 17.1265 14.1714C17.305 13.8625 17.39 13.5086 17.3712 13.1524C17.3525 12.7963 17.2308 12.4532 17.0209 12.1649L16.3154 11.1954C16.0641 10.8476 15.9299 10.429 15.9321 10C15.932 9.57219 16.0675 9.15535 16.3191 8.80927L17.0246 7.83984C17.2345 7.55148 17.3562 7.20841 17.375 6.85224C17.3937 6.49609 17.3086 6.14214 17.1301 5.83335C16.9519 5.52438 16.6879 5.27376 16.37 5.11188C16.0521 4.94999 15.6941 4.88379 15.3395 4.92132L14.1478 5.04817C13.7222 5.09286 13.2934 5.00179 12.9228 4.78799C12.5537 4.57356 12.262 4.24782 12.0895 3.85743L11.5987 2.76205C11.4539 2.436 11.2176 2.15895 10.9185 1.96452C10.6194 1.77009 10.2703 1.66663 9.91348 1.66669C9.55673 1.66663 9.20764 1.77009 8.90848 1.96452C8.60939 2.15895 8.37314 2.436 8.22833 2.76205L7.74129 3.85743C7.56873 4.24782 7.27702 4.57356 6.90795 4.78799C6.5373 5.00179 6.10851 5.09286 5.68295 5.04817L4.48759 4.92132C4.13286 4.88379 3.77487 4.94999 3.45701 5.11188C3.13916 5.27376 2.8751 5.52438 2.69685 5.83335C2.51836 6.14214 2.43333 6.49609 2.45207 6.85224C2.4708 7.20841 2.5925 7.55148 2.8024 7.83984L3.50795 8.80927C3.75957 9.15535 3.89507 9.57219 3.89499 10C3.89507 10.4279 3.75957 10.8448 3.50795 11.1908L2.8024 12.1602C2.5925 12.4485 2.4708 12.7916 2.45207 13.1478C2.43333 13.5039 2.51836 13.8579 2.69685 14.1667C2.87528 14.4755 3.13937 14.726 3.45718 14.8879C3.77499 15.0497 4.13289 15.116 4.48759 15.0787L5.67925 14.9519C6.10481 14.9072 6.53359 14.9983 6.90425 15.212C7.27469 15.4259 7.56776 15.7517 7.74129 16.1426Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <span class="rail-avatar-circle">AC</span>
+    </div>
+  </nav>
+
+  <div class="main-col">
+    <div class="topbar">
+      <span class="topbar-title">Front desk · Agents</span>
+      <div class="topbar-actions">
+        <button class="icon-btn" aria-label="Create new"><span class="material-symbols-outlined">add</span></button>
+        <button class="icon-btn" aria-label="Menu"><span class="material-symbols-outlined">menu</span></button>
+      </div>
+    </div>
+
+    <div class="content-wrap">
+      <div class="content-card">
+        <div class="page-header">
+          <div>
+            <div class="breadcrumb">Front desk agent</div>
+            <h1 class="page-title">Language router <span class="status-chip active"><span class="dot"></span>Active</span></h1>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="workflow">Workflow</button>
+          <button class="tab" data-tab="logs">Logs</button>
+          <button class="tab" data-tab="outcomes">Outcomes</button>
+        </div>
+
+        <div class="tab-panel" id="panel-workflow">
+          <div class="canvas-wrap" id="mainCanvas"></div>
+        </div>
+
+        <div class="tab-panel" id="panel-logs" hidden>
+          <table class="logs-table">
+            <thead>
+              <tr><th>Timestamp</th><th>Status</th><th>Contact</th><th>Channel</th><th>Duration</th><th>Topic</th></tr>
+            </thead>
+            <tbody id="logsBody"></tbody>
+          </table>
+        </div>
+
+        <div class="tab-panel" id="panel-outcomes" hidden>
+          <div class="outcomes-grid">
+            <div class="outcomes-card">
+              <h3>Goal</h3>
+              <p>Detects the caller's spoken or written language before anything else, then hands the conversation to a fully native-language procedure set — English or Spanish — so greetings, intent detection, scheduling, and escalation all run in the caller's own language. Falls back to a bilingual human transfer when the language can't be confidently detected.</p>
+              <div class="locations-chip-row">
+                <span>1001 · Mountain View, CA</span><span>1002 · Seattle, WA</span><span>1004 · Chicago, IL</span><span>1006 · Las Vegas, NV</span>
+              </div>
+            </div>
+            <div class="outcomes-card">
+              <h3>Outcomes</h3>
+              <ol>
+                <li>Caller's language is detected before any other procedure runs</li>
+                <li>English and Spanish callers are routed to a fully native-language procedure set</li>
+                <li>Callers whose language can't be confidently detected are handed to a bilingual human without delay</li>
+                <li>No customer is left in the wrong language track for more than one exchange</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden></div>
+<aside class="log-panel" id="logPanel">
+  <div class="log-panel-header">
+    <div>
+      <h2 id="panelTitle">—</h2>
+      <div class="meta" id="panelMeta">—</div>
+    </div>
+    <button class="log-panel-close" id="panelClose" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+  </div>
+  <div class="log-panel-tabs">
+    <button class="ptab active" data-ptab="steps">Logs</button>
+    <button class="ptab" data-ptab="transcript">Call transcript</button>
+  </div>
+  <div class="log-panel-body">
+    <div id="miniCanvas" class="canvas-wrap mini"></div>
+    <div id="stepsList"></div>
+    <div id="transcriptList" hidden></div>
+  </div>
+</aside>
+
+<script>
+(function () {
+  var NODES = [
+    { id: 'fdlr-1', type: 'trigger', title: 'Channel', sub: 'Conversation trigger', chips: ['Voice · incoming_call · business hours', 'Web chat · message_received · business hours'] },
+    { id: 'fdlr-2', type: 'procedures', title: 'Greet & Detect Language', sub: 'Procedures', chips: ['Greeting & Intent Detection'] },
+    { id: 'fdlr-3', type: 'branch', title: 'Language Detected', sub: 'Branch · based on conditions', chips: [] }
+  ];
+  var BRANCHES = [
+    { pathId: 'fdlr-3-path-1', label: 'English', nodeId: 'fdlr-4', title: 'English Procedures', chips: ['Department Transfer', 'General Inquiry', 'Handle Unclear Message', 'Emergency / Urgent Handling', 'Talk to Human', 'Schedule Service Appointment', 'Reschedule / Cancel Appointment'] },
+    { pathId: 'fdlr-3-path-2', label: 'Spanish', nodeId: 'fdlr-5', title: 'Spanish Procedures', chips: ['Spanish Language Handling', 'Department Transfer', 'Talk to Human'] },
+    { pathId: 'fdlr-3-path-fallback', label: 'Fallback', nodeId: 'fdlr-6', title: 'Fallback Procedures', chips: ['Talk to Human'], fallback: true }
+  ];
+
+  function nodeHtml(n, executedSet) {
+    var state = '';
+    if (executedSet) state = executedSet.indexOf(n.id) > -1 ? ' executed' : ' idle';
+    var chips = n.chips.map(function (c) { return '<span class="node-chip">' + c + '</span>'; }).join('');
+    return '' +
+      '<div class="node' + state + '" data-node="' + n.id + '">' +
+        '<div class="node-bar ' + n.type + '"></div>' +
+        '<div class="node-body">' +
+          '<div class="node-type">' + n.sub + '</div>' +
+          '<div class="node-title">' + n.title + '</div>' +
+          (chips ? '<div class="node-chips">' + chips + '</div>' : '') +
+        '</div>' +
+      '</div>';
+  }
+
+  function renderCanvas(container, executedSet) {
+    var html = '';
+    NODES.forEach(function (n, i) {
+      html += nodeHtml(n, executedSet);
+      if (i < NODES.length - 1) html += '<div class="connector"></div>';
+    });
+    html += '<div class="connector"></div>';
+    html += '<div class="fanout">';
+    BRANCHES.forEach(function (b) {
+      var colState = '';
+      if (executedSet) colState = executedSet.indexOf(b.pathId) > -1 ? ' executed' : ' idle';
+      var icon = b.fallback ? '<span class="material-symbols-outlined">call_split</span>' : '';
+      var node = { id: b.nodeId, type: 'procedures', title: b.title, sub: 'Procedures', chips: b.chips };
+      html += '' +
+        '<div class="fanout-col' + colState + '" data-node="' + b.pathId + '">' +
+          '<span class="branch-label' + (b.fallback ? ' fallback' : '') + '">' + icon + b.label + '</span>' +
+          nodeHtml(node, executedSet) +
+        '</div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  var LOGS = [
+    {
+      ts: 'Feb 26, 2024, 10:05 am', status: 'Resolved', contact: 'Mark Jennings', channel: 'Voice call', duration: '1:42',
+      topic: 'English — Appointment booked',
+      executed: ['fdlr-1', 'fdlr-2', 'fdlr-3', 'fdlr-3-path-1', 'fdlr-4'],
+      steps: [
+        { node: 'fdlr-1', type: 'trigger', title: 'Channel', ms: 320, kv: [['Source', 'Voice call'], ['Caller', 'Mark Jennings'], ['Comments', "Hi, I'd like to check on my appointment for next week."]] },
+        { node: 'fdlr-2', type: 'procedures', title: 'Greet & Detect Language', ms: 480, kv: [['Procedure used', 'Greeting & Intent Detection'], ['Language detected', 'English'], ['Summary', "Greeted the caller and confirmed they'd like to continue in English."]] },
+        { node: 'fdlr-3', type: 'branch', title: 'Language Detected', ms: 90, kv: [['Branches evaluated', 'English, Spanish, Fallback'], ['Path taken', 'English'], ['Reason', 'Caller spoke English throughout the greeting.']] },
+        { node: 'fdlr-4', type: 'procedures', title: 'English Procedures', ms: 650, kv: [['Procedure used', 'Schedule Service Appointment'], ['Intent detected', 'Appointment lookup / reschedule'], ['Summary', "Confirmed Mark's appointment for Thursday at 10 AM and sent a text reminder."]] }
+      ],
+      transcript: [
+        { role: 'system', text: 'Conversation started' },
+        { role: 'agent', text: 'Thanks for calling — this is the front desk assistant. How can I help you today?', time: '10:05 AM' },
+        { role: 'caller', text: "Hi, I'd like to check on my appointment for next week.", time: '10:05 AM' },
+        { role: 'system', text: 'Language detected: English', hi: true },
+        { role: 'system', text: 'Procedure switched: Greeting & Intent Detection → English Procedures', hi: true },
+        { role: 'agent', text: "Happy to help — let me pull that up. You're confirmed for Thursday at 10 AM. I've also sent a text reminder.", time: '10:06 AM' },
+        { role: 'caller', text: 'Perfect, thank you!', time: '10:06 AM' },
+        { role: 'agent', text: "You're all set. Anything else I can help with?", time: '10:06 AM' },
+        { role: 'caller', text: "No, that's everything.", time: '10:07 AM' }
+      ]
+    },
+    {
+      ts: 'Feb 20, 2024, 2:18 pm', status: 'Resolved', contact: '+1 (786) 555-0148', channel: 'Voice call', duration: '2:05',
+      topic: 'Spanish — Appointment booked',
+      executed: ['fdlr-1', 'fdlr-2', 'fdlr-3', 'fdlr-3-path-2', 'fdlr-5'],
+      steps: [
+        { node: 'fdlr-1', type: 'trigger', title: 'Channel', ms: 340, kv: [['Source', 'Voice call'], ['Caller', '+1 (786) 555-0148'], ['Comments', 'Hola, necesito agendar una cita.']] },
+        { node: 'fdlr-2', type: 'procedures', title: 'Greet & Detect Language', ms: 510, kv: [['Procedure used', 'Greeting & Intent Detection'], ['Language detected', 'Spanish'], ['Summary', 'Caller responded in Spanish when asked to confirm a language.']] },
+        { node: 'fdlr-3', type: 'branch', title: 'Language Detected', ms: 90, kv: [['Branches evaluated', 'English, Spanish, Fallback'], ['Path taken', 'Spanish'], ['Reason', 'Caller spoke Spanish throughout the greeting.']] },
+        { node: 'fdlr-5', type: 'procedures', title: 'Spanish Procedures', ms: 700, kv: [['Procedure used', 'Spanish Language Handling'], ['Intent detected', 'Agendar cita (schedule appointment)'], ['Summary', 'Agente cambió al español y confirmó una cita para el lunes a las 3 PM.']] }
+      ],
+      transcript: [
+        { role: 'system', text: 'Conversation started' },
+        { role: 'agent', text: 'Thank you for calling — how can I help you today?', time: '2:18 PM' },
+        { role: 'caller', text: 'Hola, necesito agendar una cita.', time: '2:18 PM' },
+        { role: 'system', text: 'Language detected: Spanish', hi: true },
+        { role: 'system', text: 'Procedure switched: Greeting & Intent Detection → Spanish Language Handling', hi: true },
+        { role: 'agent', text: '¡Por supuesto! Voy a continuar en español. ¿Para qué día le gustaría agendar la cita?', time: '2:19 PM' },
+        { role: 'caller', text: 'Para el próximo lunes, si es posible.', time: '2:19 PM' },
+        { role: 'agent', text: 'Tiene disponible el lunes a las 3 PM. ¿Le funciona ese horario?', time: '2:19 PM' },
+        { role: 'caller', text: 'Sí, perfecto.', time: '2:20 PM' },
+        { role: 'agent', text: 'Listo, su cita quedó confirmada para el lunes a las 3 PM. Le enviaremos un mensaje de confirmación. ¿Hay algo más en que pueda ayudarle?', time: '2:20 PM' },
+        { role: 'caller', text: 'No, eso es todo. Gracias.', time: '2:20 PM' }
+      ]
+    },
+    {
+      ts: 'Feb 12, 2024, 4:40 pm', status: 'Resolved', contact: 'Lucia Fernandez', channel: 'Web chat', duration: '1:58',
+      topic: 'Spanish — General inquiry',
+      executed: ['fdlr-1', 'fdlr-2', 'fdlr-3', 'fdlr-3-path-2', 'fdlr-5'],
+      steps: [
+        { node: 'fdlr-1', type: 'trigger', title: 'Channel', ms: 300, kv: [['Source', 'Web chat'], ['Caller', 'Lucia Fernandez'], ['Comments', 'Hola, tengo una pregunta sobre mi cita.']] },
+        { node: 'fdlr-2', type: 'procedures', title: 'Greet & Detect Language', ms: 480, kv: [['Procedure used', 'Greeting & Intent Detection'], ['Language detected', 'Spanish']] },
+        { node: 'fdlr-3', type: 'branch', title: 'Language Detected', ms: 90, kv: [['Path taken', 'Spanish']] },
+        { node: 'fdlr-5', type: 'procedures', title: 'Spanish Procedures', ms: 610, kv: [['Procedure used', 'Spanish Language Handling'], ['Summary', 'Rescheduled Thursday appointment to 1 PM.']] }
+      ],
+      transcript: [
+        { role: 'system', text: 'Conversation started' },
+        { role: 'agent', text: 'Thanks for reaching out — how can I help you today?', time: '4:40 PM' },
+        { role: 'caller', text: 'Hola, tengo una pregunta sobre mi cita.', time: '4:40 PM' },
+        { role: 'system', text: 'Language detected: Spanish', hi: true },
+        { role: 'system', text: 'Procedure switched: Greeting & Intent Detection → Spanish Language Handling', hi: true },
+        { role: 'agent', text: 'Claro que sí, continuemos en español. ¿Cuál es su pregunta sobre la cita?', time: '4:41 PM' },
+        { role: 'caller', text: '¿Puedo cambiar la hora de mi cita del jueves?', time: '4:41 PM' },
+        { role: 'agent', text: 'Sí, tiene disponible el jueves a las 11 AM o a la 1 PM. ¿Cuál prefiere?', time: '4:42 PM' },
+        { role: 'caller', text: 'La 1 PM está bien.', time: '4:42 PM' },
+        { role: 'agent', text: 'Perfecto, su cita quedó actualizada al jueves a la 1 PM. ¿Algo más?', time: '4:42 PM' },
+        { role: 'caller', text: 'No, eso es todo, gracias.', time: '4:43 PM' }
+      ]
+    },
+    {
+      ts: 'Feb 06, 2024, 11:22 am', status: 'Not resolved', contact: '+1 (415) 555-0199', channel: 'Voice call', duration: '0:47',
+      topic: 'Language unclear — Transferred to human',
+      executed: ['fdlr-1', 'fdlr-2', 'fdlr-3', 'fdlr-3-path-fallback', 'fdlr-6'],
+      steps: [
+        { node: 'fdlr-1', type: 'trigger', title: 'Channel', ms: 310, kv: [['Source', 'Voice call'], ['Caller', '+1 (415) 555-0199'], ['Comments', "Umm, hola... I mean, hi — necesito... I need some help with..."]] },
+        { node: 'fdlr-2', type: 'procedures', title: 'Greet & Detect Language', ms: 540, kv: [['Procedure used', 'Greeting & Intent Detection'], ['Language detected', 'Unclear'], ['Summary', 'Could not confidently determine English or Spanish after two clarification attempts.']] },
+        { node: 'fdlr-3', type: 'branch', title: 'Language Detected', ms: 90, kv: [['Path taken', 'Fallback'], ['Reason', 'No confident language match after 2 clarification attempts.']] },
+        { node: 'fdlr-6', type: 'procedures', title: 'Fallback Procedures', ms: 260, kv: [['Procedure used', 'Talk to Human'], ['Summary', 'Transferred to a bilingual team member — language preference unresolved.']] }
+      ],
+      transcript: [
+        { role: 'system', text: 'Conversation started' },
+        { role: 'agent', text: 'Thanks for calling — how can I help you today?', time: '11:22 AM' },
+        { role: 'caller', text: 'Umm, hola... I mean, hi — necesito... I need some help with...', time: '11:22 AM' },
+        { role: 'agent', text: 'I just want to make sure I help you in the right language — would you prefer English or Español?', time: '11:23 AM' },
+        { role: 'caller', text: "No sé... maybe both? I'm not sure.", time: '11:23 AM' },
+        { role: 'system', text: 'Language detected: Unclear', hi: true },
+        { role: 'system', text: 'Procedure switched: Greeting & Intent Detection → Fallback (Talk to Human)', hi: true },
+        { role: 'agent', text: 'No problem at all — let me connect you with a bilingual team member who can help in whichever language is easiest.', time: '11:23 AM' },
+        { role: 'system', text: 'Call transferred to a bilingual team member' }
+      ]
+    },
+    {
+      ts: 'Jan 30, 2024, 9:12 am', status: 'In progress', contact: 'Daniela Cruz', channel: 'Voice call', duration: '0:22',
+      topic: 'Detecting language',
+      executed: ['fdlr-1', 'fdlr-2'],
+      steps: [
+        { node: 'fdlr-1', type: 'trigger', title: 'Channel', ms: 300, kv: [['Source', 'Voice call'], ['Caller', 'Daniela Cruz'], ['Comments', 'Hola, buenos días, quisiera...']] },
+        { node: 'fdlr-2', type: 'procedures', title: 'Greet & Detect Language', ms: 420, kv: [['Language detected (so far)', 'Likely Spanish'], ['Status', 'Still confirming before routing to a language-specific procedure.']] }
+      ],
+      transcript: [
+        { role: 'system', text: 'Conversation started' },
+        { role: 'agent', text: 'Thanks for calling — how can I help you today?', time: '9:12 AM' },
+        { role: 'caller', text: 'Hola, buenos días, quisiera...', time: '9:12 AM' },
+        { role: 'system', text: 'Detecting language…' }
+      ]
+    }
+  ];
+
+  function statusClass(s) {
+    if (s === 'Resolved') return 'resolved';
+    if (s === 'Not resolved') return 'not-resolved';
+    return 'in-progress';
+  }
+
+  var mainCanvas = document.getElementById('mainCanvas');
+  var miniCanvas = document.getElementById('miniCanvas');
+  var logsBody = document.getElementById('logsBody');
+  var stepsList = document.getElementById('stepsList');
+  var transcriptList = document.getElementById('transcriptList');
+  var overlay = document.getElementById('overlay');
+  var panel = document.getElementById('logPanel');
+
+  renderCanvas(mainCanvas, null);
+
+  logsBody.innerHTML = LOGS.map(function (row, i) {
+    return '' +
+      '<tr class="log-row" data-idx="' + i + '">' +
+        '<td>' + row.ts + '</td>' +
+        '<td><span class="status-chip ' + statusClass(row.status) + '"><span class="dot"></span>' + row.status + '</span></td>' +
+        '<td>' + row.contact + '</td>' +
+        '<td>' + row.channel + '</td>' +
+        '<td>' + row.duration + '</td>' +
+        '<td class="topic">' + row.topic + '</td>' +
+      '</tr>';
+  }).join('');
+
+  function openPanel(row) {
+    document.getElementById('panelTitle').textContent = row.contact;
+    document.getElementById('panelMeta').textContent = row.channel + ' · ' + row.duration + ' · ' + row.ts;
+    renderCanvas(miniCanvas, row.executed);
+
+    stepsList.innerHTML = row.steps.map(function (s) {
+      var kv = s.kv.map(function (p) { return '<div><b>' + p[0] + ':</b> ' + p[1] + '</div>'; }).join('');
+      return '' +
+        '<div class="step-row">' +
+          '<div class="step-dot ' + s.type + '">' + s.title.charAt(0) + '</div>' +
+          '<div style="flex:1; min-width:0;">' +
+            '<div class="step-head"><span class="step-title">' + s.title + '</span><span class="step-ms">' + s.ms + 'ms</span></div>' +
+            '<div class="step-kv">' + kv + '</div>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+
+    transcriptList.innerHTML = row.transcript.map(function (t) {
+      if (t.role === 'system') {
+        return '<div class="transcript-line system"><span class="sys-pill' + (t.hi ? ' highlight' : '') + '">' + t.text + '</span></div>';
+      }
+      var time = t.time ? '<span class="bubble-time">' + t.time + '</span>' : '';
+      return '<div class="transcript-line ' + t.role + '"><div class="bubble ' + t.role + '">' + t.text + time + '</div></div>';
+    }).join('');
+
+    overlay.hidden = false;
+    panel.classList.add('open');
+    requestAnimationFrame(function () { overlay.classList.add('open'); });
+  }
+
+  function closePanel() {
+    overlay.classList.remove('open');
+    panel.classList.remove('open');
+    setTimeout(function () { overlay.hidden = true; }, 150);
+  }
+
+  logsBody.addEventListener('click', function (e) {
+    var tr = e.target.closest('.log-row');
+    if (!tr) return;
+    openPanel(LOGS[Number(tr.getAttribute('data-idx'))]);
+  });
+
+  document.getElementById('panelClose').addEventListener('click', closePanel);
+  overlay.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePanel(); });
+
+  Array.prototype.slice.call(document.querySelectorAll('.ptab')).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      Array.prototype.slice.call(document.querySelectorAll('.ptab')).forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var isSteps = btn.getAttribute('data-ptab') === 'steps';
+      stepsList.hidden = !isSteps;
+      transcriptList.hidden = isSteps;
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('.tab')).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      Array.prototype.slice.call(document.querySelectorAll('.tab')).forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = btn.getAttribute('data-tab');
+      ['workflow', 'logs', 'outcomes'].forEach(function (t) {
+        document.getElementById('panel-' + t).hidden = t !== target;
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
