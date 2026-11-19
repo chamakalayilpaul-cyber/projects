@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Not found</title>
+<script>
+// GitHub Pages serves this file for ANY unmatched path on the whole site. Birdeye Research
+// (BirdeyeResearch/) uses real client-side path routing, so a deep link or a hard refresh lands
+// here — this redirects those specific paths back into its app (index.html), encoding the real
+// path as a query param that its own decode script (in BirdeyeResearch/index.html) restores via
+// history.replaceState before the app's router reads the URL. Any other not-found path on the
+// site (every other project here is a single static page with no sub-routes) falls through to
+// the plain message below, unchanged from today's default behavior.
+(function () {
+  var BASE = '/projects/BirdeyeResearch';
+  var l = window.location;
+  if (l.pathname === BASE || l.pathname.indexOf(BASE + '/') === 0) {
+    var rest = l.pathname.slice(BASE.length);
+    l.replace(BASE + '/index.html?__redirect=' + encodeURIComponent(rest + l.search + l.hash));
+  }
+})();
+</script>
+<style>
+body{font-family:'Roboto',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;color:#212121}
+a{color:rgb(25,118,210)}
+</style>
+</head>
+<body>
+<p>Page not found. <a href="/projects/">Back to projects</a></p>
+</body>
+</html>

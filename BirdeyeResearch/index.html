@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- No static meta description here: every route sets its own via `useDocumentMeta`
+         (src/lib/head.ts), which upserts an element marked `data-managed="true"`. A static,
+         unmarked description tag here would sit alongside it as a duplicate rather than being
+         replaced by it, and browsers/crawlers read whichever one comes first — silently
+         defeating every page's own tailored description. -->
+    <title>Birdeye Research</title>
+    <!-- GitHub Pages SPA-fallback decode: restores the real path encoded by /404.html (the repo
+         root one, in the `projects` site) before the router reads `window.location`. Only ever
+         needed on this GitHub Pages copy; the real app has no server rewrite dependency on this. -->
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var redirect = params.get('__redirect');
+        if (redirect) {
+          history.replaceState(null, '', '/projects/BirdeyeResearch' + decodeURIComponent(redirect));
+        }
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="/projects/BirdeyeResearch/assets/index-DutE2j_K.js"></script>
+    <link rel="stylesheet" crossorigin href="/projects/BirdeyeResearch/assets/index-Bm3-q4SS.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
