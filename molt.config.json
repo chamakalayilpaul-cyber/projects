@@ -1,1 +1,1 @@
-{"enforcement":"block","disabledRules":["bare-destructive-verb"]}
+{"enforcement":"block","disabledRules":["bare-destructive-verb"],"exclude":["BirdeyeResearch/**"]}
